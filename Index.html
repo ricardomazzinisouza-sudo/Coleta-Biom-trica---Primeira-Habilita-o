@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="painel-versao" content="v5">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coleta biométrica na 1ª habilitação</title>
+<link href="https:&#47;&#47;fonts.googleapis.com/css2?family=Lato:wght@400;700;900&amp;display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<script>
+window.addEventListener('error', function (e) {
+  var box = document.getElementById('carregando');
+  if (!box || !e || !e.message || window.erroJaMostrado) return;
+  window.erroJaMostrado = true;
+  var trechos = [];
+  function corta(linha) { var c = e.colno || 0; return linha.slice(Math.max(0, c - 90), c + 90).replace(/\s+/g, ' '); }
+  try {
+    var ss = document.getElementsByTagName('script');
+    for (var k = 0; k < ss.length; k++) {
+      var ls = (ss[k].text || '').split('\n');
+      if (e.lineno && ls.length > e.lineno) trechos.push('bloco ' + (k + 1) + ', ' + ls.length + ' linhas: [' + corta(ls[e.lineno - 1]) + '] e, uma antes: [' + corta(ls[e.lineno - 2] || '') + ']');
+    }
+  } catch (x) {}
+  document.body.className = 'aguardando'; box.hidden = false; box.className = 'carregando erro';
+  box.textContent = 'A página encontrou um erro e não terminou de abrir (painel v5). Detalhe: ' + e.message + ' (linha ' + (e.lineno || '?') + ', coluna ' + (e.colno || '?') + '). ' + (trechos.length ? 'Trecho do código: ' + trechos.join(' | ') : '');
+});
+</script>
+<style>
+:root{
+  --bg:#EEF2F8; --surface:#FFFFFF; --ink:#14284B; --text:#1F2937; --muted:#5B6678; --line:#D9DEE7; --soft:#F3F6FB;
+  --navy:#14284B; --blue:#2F5597; --zebra:#FBF7EE; --pill:#14284B;
+  --g1:#C8372D; --g2:#E67E22; --g3:#2F5597; --g4:#2E9E5B; --g5:#8A93A3;
+  --focus:#E67E22;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1524; --surface:#162136; --ink:#E8EDF7; --text:#DCE3EF; --muted:#9AA7BD; --line:#2A3855; --soft:#1C2A45;
+    --zebra:#1A2640; --g3:#7FA3E6; --g5:#8F9BB0; --pill:#3A66B3;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1524; --surface:#162136; --ink:#E8EDF7; --text:#DCE3EF; --muted:#9AA7BD; --line:#2A3855; --soft:#1C2A45;
+  --zebra:#1A2640; --g3:#7FA3E6; --g5:#8F9BB0; --pill:#3A66B3;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Lato,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.45;font-variant-numeric:tabular-nums}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 20px 40px}
+
+.top{background:linear-gradient(100deg,#14284B 0%,#24457F 70%,#2F5597 100%);color:#fff}
+.top .wrap{padding-top:22px;padding-bottom:22px;display:grid;grid-template-columns:minmax(260px,1fr) auto;gap:24px;align-items:end}
+.top h1{margin:0;font-size:28px;font-weight:900;letter-spacing:-.01em;line-height:1.15}
+.top p{margin:6px 0 0;color:#C9D6EE;font-size:15px}
+.kpis{display:flex;flex-wrap:wrap;gap:10px 0}
+.kpi{padding:2px 22px;border-left:1px solid rgba(255,255,255,.22)}
+.kpi b{display:block;font-size:30px;font-weight:900;line-height:1.1}
+.kpi span{font-size:13px;color:#C9D6EE}
+.kpi.hot b{color:#FFC978}
+button.kpi{background:none;border:0;border-left:1px solid rgba(255,255,255,.22);text-align:left;color:#fff;cursor:pointer;font:inherit;border-radius:0 8px 8px 0}
+button.kpi:hover{background:rgba(255,255,255,.1)}
+button.kpi span{text-decoration:underline;text-underline-offset:3px}
+.tabs{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-top:16px}
+.tablist{display:inline-flex;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.tablist button{border:0;background:none;padding:9px 18px;border-radius:9px;font-weight:900;font-size:15.5px;color:var(--muted);cursor:pointer}
+.tablist button[aria-selected="true"]{background:var(--pill);color:#fff}
+.base{font-size:13px;color:var(--muted)}
+.go{margin-top:12px;border:1.5px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 14px;font-weight:700;cursor:pointer;color:var(--ink)}
+.go:hover{border-color:var(--blue)}
+.cross{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;font-size:14px}
+.cross b{color:var(--ink)}
+.visits{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--muted);margin-top:2px}
+.visits b{color:var(--ink)}
+.main .left, .main .right{grid-column:auto}
+.main.sup{grid-template-areas:"map table" "detail drill"}
+.main.sup .left{display:contents}
+.main.sup .map{grid-area:map}
+.main.sup .detail{grid-area:detail;align-self:start}
+.main.sup .right{grid-area:table;min-height:0}
+.tools{display:flex;gap:8px;align-items:center;flex:1 1 260px;justify-content:flex-end}
+.tools .search{flex:1 1 150px}
+.exp{flex:none;border:1.5px solid var(--pill);background:var(--pill);color:#fff;border-radius:8px;padding:7px 14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.exp:hover{filter:brightness(1.15)}
+.expmsg{flex:1 1 100%;margin:0;font-size:13px;color:var(--muted);text-align:right}
+.expmsg:empty{display:none}
+.panel.drill{grid-area:drill;border-top:4px solid var(--focus);min-width:0;align-self:start}
+.drill .scroll{max-height:520px}
+.drill .bar{width:68px}
+.drill table{min-width:540px}
+.drill th.rk2 button{white-space:nowrap;line-height:1.15;padding-top:5px;padding-bottom:5px}
+.drill th small{display:block;font-weight:400;font-size:11px;white-space:nowrap}
+.crit label[hidden]{display:none}
+.sum .nums b.red{color:var(--g1)}
+.panel.crit3{padding:16px 18px;border-left:5px solid var(--g1);margin-bottom:16px}
+.crit3 h3{font-size:18px}
+.chips3{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chips3 span{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:5px 11px 5px 5px;font-size:13.5px;font-weight:700;color:var(--ink);background:var(--surface)}
+.chips3 b{min-width:26px;text-align:center;background:var(--g1);color:#fff;border-radius:6px;padding:2px 6px;font-weight:900}
+.foot.plusgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:0}
+.foot.plusgrid .panel{padding:0}
+.foot.plusgrid table{min-width:440px}
+th span{display:block;padding:9px 10px;white-space:nowrap}
+tbody.plain tr{cursor:default}
+tbody.plain tr:hover{background:transparent}
+tbody.plain tr:nth-child(even):hover{background:var(--zebra)}
+[hidden]{display:none !important}
+body.aguardando .tabs, body.aguardando #tabA{display:none}
+.carregando{margin:28px 0;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-size:16px;font-weight:700;color:var(--ink)}
+.carregando.erro{border-left:5px solid var(--g1);font-weight:400;max-width:75ch}
+
+.ask{padding:16px 0 6px}
+.ask h2{margin:0 0 10px;font-size:15px;font-weight:700;color:var(--muted)}
+.views{display:flex;flex-wrap:wrap;gap:8px}
+.views button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:999px;font-weight:700;cursor:pointer}
+.views button:hover{border-color:var(--blue)}
+.views button[aria-pressed="true"]{background:var(--pill);border-color:var(--pill);color:#fff}
+.sum{margin:14px 0 14px;display:flex;flex-wrap:wrap;gap:6px 26px;align-items:baseline}
+.sum .desc{flex:1 1 380px;color:var(--text);font-size:15px}
+.sum .nums{display:flex;flex-wrap:wrap;gap:4px 22px;font-size:14px;color:var(--muted)}
+.sum .nums b{color:var(--ink);font-size:17px;font-weight:900;margin-right:4px}
+
+.main{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:16px;align-items:stretch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.panel h3{margin:0;font-size:16px;font-weight:900;color:var(--ink)}
+.panel .hint{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.left{display:flex;flex-direction:column;gap:16px;min-width:0}
+.map{padding:16px 16px 10px;position:relative}
+.map svg{display:block;width:100%;height:auto;margin-top:8px;touch-action:manipulation}
+.legend{display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:8px}
+.legend button{display:flex;align-items:center;gap:7px;border:1px solid transparent;background:none;padding:4px 9px;border-radius:999px;font-size:13px;cursor:pointer;color:var(--text)}
+.legend button:hover{border-color:var(--line)}
+.legend button[aria-pressed="true"]{border-color:var(--ink);background:var(--soft);font-weight:700}
+.dot{width:11px;height:11px;border-radius:50%;flex:none;display:inline-block}
+.tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;padding:8px 11px;border-radius:8px;font-size:13px;line-height:1.4;white-space:nowrap;z-index:5;transform:translate(-50%,-100%);margin-top:-12px;display:none;box-shadow:0 6px 18px rgba(10,20,45,.28)}
+.tip b{display:block;font-size:14px}
+
+.detail{padding:16px}
+.detail .who{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between}
+.detail h3{font-size:20px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--soft)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0 10px}
+.stat em{display:block;font-style:normal;font-weight:700;font-size:12.5px;color:var(--ink);margin-top:2px}
+.stat{background:var(--soft);border-radius:8px;padding:9px 12px}
+.stat b{display:block;font-size:22px;font-weight:900;color:var(--ink);line-height:1.15}
+.stat span{font-size:12.5px;color:var(--muted)}
+.split{height:12px;border-radius:6px;background:var(--g4);overflow:hidden;display:flex;justify-content:flex-end}
+.split i{display:block;height:100%;background:var(--g1)}
+.splitkey{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:4px}
+.pos{display:flex;flex-wrap:wrap;gap:6px 18px;margin:12px 0 0;font-size:13.5px;color:var(--muted)}
+.pos b{color:var(--ink)}
+.sacs{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.sacs h4{margin:0 0 8px;font-size:14px;font-weight:700;color:var(--ink)}
+.days{display:flex;align-items:flex-end;gap:2px;height:44px;margin-bottom:2px}
+.days i{flex:1;background:var(--blue);border-radius:2px 2px 0 0;min-height:1px;opacity:.9}
+.days i.z{background:var(--line)}
+.dayaxis{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin-bottom:10px}
+.protos{display:flex;flex-wrap:wrap;gap:5px;max-height:104px;overflow:auto}
+.protos span{font-size:12.5px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.protos span em{font-style:normal;color:var(--muted);margin-left:5px}
+
+.right{position:relative;min-height:520px;min-width:0}
+.right-in{position:absolute;inset:0;display:flex;flex-direction:column}
+.thead{padding:14px 16px 10px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.search{flex:1 1 180px;max-width:280px;border:1.5px solid var(--line);border-radius:8px;padding:7px 11px;background:var(--surface)}
+.scroll{overflow:auto;flex:1;border-top:1px solid var(--line);border-radius:0 0 10px 10px}
+table{border-collapse:collapse;width:100%;min-width:500px;font-size:14px}
+th{position:sticky;top:0;background:var(--navy);color:#fff;font-weight:700;font-size:13px;padding:0;text-align:right;z-index:2}
+th button{all:unset;display:block;width:100%;white-space:nowrap;padding:9px 10px;cursor:pointer;box-sizing:border-box;text-align:inherit}
+th button:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+th[aria-sort="ascending"] button::after{content:" ▲";font-size:10px}
+th[aria-sort="descending"] button::after{content:" ▼";font-size:10px}
+th[aria-sort] {background:#E67E22}
+th.l{text-align:left}
+td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+td.l{text-align:left;white-space:normal}
+tbody tr{cursor:pointer}
+tbody tr:nth-child(even){background:var(--zebra)}
+tbody tr:hover{background:var(--soft)}
+tbody tr[aria-selected="true"]{background:var(--soft);box-shadow:inset 4px 0 0 var(--focus)}
+tbody tr[aria-selected="true"] td.l{font-weight:900}
+.cell{display:flex;align-items:center;gap:8px}
+.rk{flex:none;min-width:26px;text-align:center;font-weight:900;font-size:12.5px;color:var(--ink)}
+tr.t3 .rk{background:var(--pill);color:#fff;border-radius:5px;padding:1px 0}
+.nm{font-weight:700;color:var(--ink)}
+.bar{position:relative;display:inline-block;width:78px;height:20px;vertical-align:middle;text-align:right}
+.bar i{position:absolute;left:0;top:3px;bottom:3px;border-radius:3px;opacity:.62}
+.bar b{position:relative;font-weight:700;line-height:20px;padding-right:4px;color:var(--text);text-shadow:0 0 3px var(--surface),0 0 3px var(--surface)}
+.empty{padding:28px 16px;color:var(--muted)}
+
+.foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:16px;margin-top:16px}
+.foot .panel{padding:16px}
+.crit{display:grid;gap:10px;margin-top:12px}
+.crit label{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px}
+.crit input{width:92px;text-align:center;font-weight:900;color:var(--navy);background:#FFF2CC;border:1.5px solid #E9D48A;border-radius:7px;padding:6px}
+.reset{margin-top:12px;border:1.5px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 14px;font-weight:700;cursor:pointer;color:var(--ink)}
+.notes{margin:10px 0 0;padding-left:18px;font-size:14px;color:var(--text)}
+.notes li{margin:5px 0;max-width:75ch}
+.src{margin-top:14px;font-size:12.5px;color:var(--muted)}
+
+@media (max-width:980px){
+  .top .wrap{grid-template-columns:1fr}
+  .kpi{padding:2px 16px;flex:1 1 40%}
+  .main,.foot,.foot.plusgrid{grid-template-columns:minmax(0,1fr)}
+  .main.sup{grid-template-areas:"map" "table" "detail" "drill"}
+  .right{min-height:0}
+  .right-in{position:static}
+  .scroll{max-height:70vh}
+}
+@media (max-width:560px){
+  .wrap{padding:0 14px 32px}
+  .top h1{font-size:23px}
+  .kpi b{font-size:25px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .views button{padding:8px 13px;font-size:14px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .pt{transition:opacity .2s}
+}
+</style>
+</head>
+<body class="aguardando">
+<header class="top">
+  <div class="wrap">
+    <div>
+      <h1>Coleta biométrica na 1ª habilitação</h1>
+      <p id="sub">Postos Poupatempo e unidades CIR</p>
+    </div>
+    <div class="kpis" id="kpis"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <p class="carregando" id="carregando" role="status">Abrindo o painel…</p>
+  <noscript><p class="carregando erro">O navegador está com o JavaScript desligado, e o painel precisa dele para abrir.</p></noscript>
+  <div class="tabs">
+    <div class="tablist" role="tablist" aria-label="Nível de análise" id="tabs">
+      <button role="tab" data-m="p">Postos</button>
+      <button role="tab" data-m="s">Superintendências</button>
+    </div>
+  </div>
+  <div id="tabA">
+  <section class="ask" aria-label="Escolha o que ver">
+    <h2>O que você quer ver?</h2>
+    <div class="views" id="views"></div>
+  </section>
+  <div class="sum" aria-live="polite">
+    <div class="desc" id="desc"></div>
+    <div class="nums" id="nums"></div>
+  </div>
+
+  <div class="main">
+    <div class="left">
+      <section class="panel map" id="mapbox">
+        <h3 id="maptitle">Mapa dos postos: volume e taxa</h3>
+        <p class="hint" id="maphint"></p>
+        <div id="svgbox"></div>
+        <div class="legend" id="legend"></div>
+        <div class="tip" id="tip"></div>
+      </section>
+      <section class="panel detail" id="detail" aria-live="polite"></section>
+    </div>
+
+    <section class="panel right">
+      <div class="right-in">
+        <div class="thead">
+          <div>
+            <h3 id="ttitle">Postos</h3>
+            <p class="hint" id="tabhint"></p>
+          </div>
+          <div class="tools">
+            <input class="search" id="q" type="search" placeholder="Buscar posto" aria-label="Buscar posto pelo nome">
+            <button class="exp" id="exp" hidden title="Exporta para Excel a tabela como está na tela, com o filtro e a ordem atuais">Exportar tabela</button>
+          </div>
+          <p class="expmsg" id="expmsg" role="status" aria-live="polite"></p>
+        </div>
+        <div class="scroll" tabindex="0" aria-label="Tabela de postos">
+          <table>
+            <thead><tr id="hrow"></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+          <div class="empty" id="empty" hidden></div>
+        </div>
+      </div>
+    </section>
+
+  <section class="panel drill" id="drill" hidden>
+    <div class="thead"><div><h3 id="dtitle"></h3><p class="hint" id="dhint"></p></div>
+      <button class="exp" id="dexp" hidden title="Exporta para Excel os postos desta superintendência, na ordem atual">Exportar postos</button></div>
+    <div class="scroll" tabindex="0" aria-label="Ranking dos postos da superintendência">
+      <table><thead><tr id="dhrow"></tr></thead><tbody id="drows"></tbody></table>
+    </div>
+  </section>
+
+  </div>
+
+  <div class="foot">
+    <section class="panel">
+      <h3>Critérios dos grupos</h3>
+      <p class="hint">Mude um valor e o mapa, os grupos e as listas se ajustam.</p>
+      <div class="crit">
+        <label><span id="lVol"></span> <input id="cVol" type="number" min="1" step="1" inputmode="numeric"></label>
+        <label><span>Taxa de corte, em % (padrão: média do Estado)</span> <input id="cTax" type="number" min="0" max="100" step="0.1" inputmode="decimal"></label>
+        <label id="rowMin"><span id="lMin"></span> <input id="cMin" type="number" min="1" step="1" inputmode="numeric"></label>
+        <label><span>Referência: taxa sem RENACH de até (%)</span> <input id="cRef" type="number" min="0" max="100" step="1" inputmode="numeric"></label>
+      </div>
+      <button class="reset" id="reset">Voltar ao padrão</button>
+    </section>
+    <section class="panel">
+      <h3>Como ler os números</h3>
+      <ul class="notes" id="notes"></ul>
+      <p class="src" id="src"></p>
+    </section>
+  </div>
+  </div>
+
+
+</div>
+
+<script>
+function iniciar(DADOS) {
+  const RAW = DADOS.postos;
+  const SUPS = DADOS.sups;
+  const CIR = [];
+  const SACS = DADOS.sacs;
+  const DIAS = DADOS.periodo.dias;
+  const MES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"][DADOS.periodo.mes - 1];
+  const MES3 = MES.slice(0, 3), MM = String(DADOS.periodo.mes).padStart(2, "0"), PER = MES + " de " + DADOS.periodo.ano;
+  const AVISOS = DADOS.avisos || [];
+  document.getElementById("sub").textContent = "Postos Poupatempo e unidades CIR, " + PER;
+  const $ = (id) => document.getElementById(id);
+  const nf = (n) => n.toLocaleString("pt-BR");
+  const pf = (t, d = 1) => (t * 100).toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d }) + "%";
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+  const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const MIN = new Set(["de", "do", "da", "dos", "das", "e"]);
+  function tidy(name) {
+    const SIGLA = new Set(["PPT", "CIR", "SSP"]), ws = name.split(" ");
+    let k = 0;
+    while (k < ws.length - 1 && SIGLA.has(ws[k])) k++;
+    const rest = ws.slice(k).join(" ");
+    if (rest !== rest.toUpperCase()) return name;
+    return ws.slice(0, k).concat(rest.toLowerCase().split(" ").map((w, i) => i && MIN.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(" ");
+  }
+  const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  function mix(a, b, t) {
+    const h = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+    const A = h(a), B = h(b);
+    return "rgb(" + A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(",") + ")";
+  }
+  const ord = (n) => n ? n + "º" : "–";
+  const pp = (d) => Math.abs(d).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const base = RAW.map((r, i) => ({ i, nome: tidy(r[0]), key: norm(r[0]), vol: r[1], com: r[2], bad: r[3], tx: r[1] ? r[3] / r[1] : 0, sup: r[4], z: 0, sacs: [] }));
+  SACS.forEach((s) => {
+    const p = base[s[1]];
+    p.z++;
+    p.sacs.push(s);
+  });
+  base.forEach((p) => p.sacs.sort((a, b) => a[2] - b[2] || (a[0] < b[0] ? -1 : 1)));
+  const T = base.reduce((a, p) => (a.vol += p.vol, a.com += p.com, a.bad += p.bad, a.z += p.z, a), { vol: 0, com: 0, bad: 0, z: 0 });
+  T.tx = T.bad / T.vol;
+  const sups = SUPS.map((nome, i) => ({ i, nome, curto: nome.split(" – ").pop(), key: norm(nome), vol: 0, com: 0, bad: 0, z: 0, tx: 0, postos: [], days: Array(DIAS).fill(0) }));
+  base.forEach((p) => {
+    const s = sups[p.sup];
+    s.vol += p.vol;
+    s.com += p.com;
+    s.bad += p.bad;
+    s.z += p.z;
+    s.postos.push(p.i);
+    p.sacs.forEach((c) => s.days[c[2] - 1]++);
+  });
+  sups.forEach((s) => {
+    s.tx = s.vol ? s.bad / s.vol : 0;
+    s.cir = [];
+  });
+  const cirNome = (n) => {
+    const r = n.replace(/^CIR /, "");
+    return r !== r.toUpperCase() ? r : r.toLowerCase().split(" ").map((w, i) => i && MIN.has(w) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  };
+  CIR.forEach((c) => sups[c[1]].cir.push([cirNome(c[0]), c[2]]));
+  const CIRN = CIR.reduce((a, c) => a + c[2], 0);
+  const cirObs = () => CIRN ? " Outros ".concat(nf(CIRN), " SACs do mês citam unidades CIR, que não fazem parte deste painel.") : "";
+  const mx = (rows, k) => Math.max(...rows.map((p) => p[k]));
+  function modo(id, rows, def, o) {
+    return {
+      id,
+      rows,
+      T,
+      MAXVOL: mx(rows, "vol"),
+      MAXBAD: mx(rows, "bad"),
+      MAXZ: mx(rows, "z"),
+      DEF: def,
+      C: { ...def },
+      S: { view: "crit", grp: null, sort: null, q: "" },
+      sel: null,
+      unit: "coletas",
+      volCol: "Coletas",
+      zCol: "SACs",
+      zSum: "SACs",
+      zView: "Mais SACs",
+      badCol: "Sem RENACH",
+      bad: "coletas sem RENACH",
+      badShort: "sem RENACH",
+      txName: "taxa sem RENACH",
+      txView: "Taxa mais alta",
+      ...o
+    };
+  }
+  const MODES = {
+    p: modo("p", base, { vol: 200, tax: T.tx, min: 20, ref: 0.1 }, {
+      xmin: 0.8,
+      zk: 1.55,
+      ymax: 1,
+      ystep: 0.2,
+      ticks: [1, 2, 5, 10, 20, 50, 100, 200, 500, 1e3, 2e3],
+      ticksN: [1, 5, 20, 100, 500, 2e3],
+      txTop: (c) => Math.max(0.6, c + 0.05),
+      rot: (p) => p.nome.replace(/^PPT /, "").replace("Posto Avancado ", ""),
+      nrot: (w) => w < 520 ? 4 : 7,
+      um: "posto",
+      uns: "postos",
+      col: "Posto",
+      busca: "Buscar posto",
+      todos: "Todos os postos",
+      emTodos: "em todos os postos",
+      mapa: "Mapa dos postos: volume e taxa",
+      dica: "Cada bolha é um posto Poupatempo ou unidade CIR. Quanto mais à direita, mais coletas; quanto mais alto, maior a taxa sem RENACH. Bolhas maiores têm mais SACs.",
+      dicaTab: "Clique no posto para ver o detalhe. Clique no título da coluna para reordenar.",
+      zona: "Pequenos com taxa alta",
+      dCrit: () => "Postos com ".concat(nf(m.C.vol), " ou mais coletas no mês e taxa sem RENACH acima ").concat(ref(), ", ordenados pela quantidade de coletas sem RENACH."),
+      dTaxa: () => "Postos com pelo menos ".concat(nf(m.C.min), " coletas no mês e taxa sem RENACH acima ").concat(ref(), ", da maior taxa para a menor."),
+      dZ: () => "Postos citados nos SACs abertos em ".concat(MES, ", do mais citado para o menos citado.") + cirObs(),
+      dRef: () => "Postos de qualquer tamanho com pelo menos ".concat(nf(m.C.min), " coletas no mês e taxa sem RENACH de até ").concat(pf(m.C.ref, 0), ", da menor taxa para a maior."),
+      dAll: () => "Os ".concat(nf(m.rows.length), " postos, ordenados pela quantidade de coletas sem RENACH."),
+      vazio: "Nenhum posto atende a este critério. Ajuste os critérios dos grupos no fim da página.",
+      semBusca: (q) => 'Nenhum posto com "'.concat(q, '" no nome. Confira a grafia ou apague a busca.')
+    }),
+    s: modo("s", sups, { vol: 1e3, tax: T.tx, min: 0, ref: 0.15 }, {
+      xmin: 150,
+      zk: 1.15,
+      ymax: 0.4,
+      ystep: 0.1,
+      ticks: [200, 500, 1e3, 2e3, 5e3, 1e4],
+      ticksN: [200, 1e3, 5e3],
+      txTop: (c) => Math.max(0.4, c + 0.05),
+      rot: (p) => p.curto,
+      nrot: () => 20,
+      um: "superintendência",
+      uns: "superintendências",
+      col: "Superintendência",
+      busca: "Buscar superintendência",
+      todos: "Todas as superintendências",
+      emTodos: "em todas as superintendências",
+      mapa: "Mapa das superintendências: volume e taxa",
+      dica: "Cada bolha é uma superintendência, com a soma dos seus postos. Quanto mais à direita, mais coletas; quanto mais alto, maior a taxa sem RENACH. Bolhas maiores têm mais SACs.",
+      dicaTab: "Clique na superintendência para ver o detalhe e o ranking dos postos dela.",
+      zona: "Pouco volume, taxa alta",
+      dCrit: () => "Superintendências com ".concat(nf(m.C.vol), " ou mais coletas no mês e taxa sem RENACH acima ").concat(ref(), ", ordenadas pela quantidade de coletas sem RENACH."),
+      dTaxa: () => "Superintendências com taxa sem RENACH acima ".concat(ref(), ", da maior taxa para a menor."),
+      dZ: () => "Superintendências com postos citados nos SACs abertos em ".concat(MES, ", da mais citada para a menos citada.") + cirObs(),
+      dRef: () => "Superintendências com taxa sem RENACH de até ".concat(pf(m.C.ref, 0), ", da menor taxa para a maior."),
+      dAll: () => "As ".concat(nf(m.rows.length), " superintendências, ordenadas pela quantidade de coletas sem RENACH."),
+      vazio: "Nenhuma superintendência atende a este critério. Ajuste os critérios dos grupos no fim da página.",
+      semBusca: (q) => 'Nenhuma superintendência com "'.concat(q, '" no nome. Confira a grafia ou apague a busca.')
+    })
+  };
+  let m = MODES.p;
+  const DR = { sort: ["bad", -1], rk: "bad" };
+  const RK = {
+    vol: { f: "rCol", t: "coletas", frase: "em quantidade de coletas" },
+    bad: { f: "rVol", t: "sem RENACH", frase: "em coletas sem RENACH" },
+    tx: { f: "rTx", t: "taxa", frase: "em taxa sem RENACH (postos abaixo do mínimo de coletas ficam sem posição)" },
+    z: { f: "rZ", t: "SACs", frase: "em SACs abertos (postos sem SAC no mês ficam sem posição)" }
+  };
+  const ref = () => Math.abs(m.C.tax - T.tx) < 1e-9 ? "da média" : "do corte";
+  const gname = (n) => [null, "Muito volume, taxa acima " + ref(), "Pouco volume, taxa acima " + ref(), "Muito volume, taxa abaixo " + ref(), "Pouco volume, taxa abaixo " + ref(), "Menos de " + nf(m.C.min) + " " + m.unit + " no mês"][n];
+  function classify(md) {
+    const C = md.C, rows = md.rows;
+    rows.forEach((p) => {
+      p.g = p.vol < C.min ? 5 : p.tx > C.tax ? p.vol >= C.vol ? 1 : 2 : p.vol >= C.vol ? 3 : 4;
+    });
+    const rank = (arr, f, k) => arr.slice().sort(f).forEach((p, n) => p[k] = n + 1);
+    rank(rows, (a, b) => b.bad - a.bad || b.vol - a.vol || a.i - b.i, "rVol");
+    rank(rows, (a, b) => b.vol - a.vol || b.bad - a.bad || a.i - b.i, "rCol");
+    rows.forEach((p) => {
+      p.rTx = null;
+      p.rZ = null;
+    });
+    rank(rows.filter((p) => p.vol >= C.min), (a, b) => b.tx - a.tx || b.bad - a.bad || a.i - b.i, "rTx");
+    rank(rows.filter((p) => p.z > 0), (a, b) => b.z - a.z || b.bad - a.bad || a.i - b.i, "rZ");
+    if (md.id === "s") {
+      md.ymax = Math.max(0.3, Math.ceil(mx(rows, "tx") * 10 - 1e-9) / 10);
+      md.ystep = md.ymax > 0.6 ? 0.2 : 0.1;
+    }
+  }
+  const VIEWS = {
+    crit: { label: () => "Mais críticos", f: (p) => p.g === 1, sort: ["bad", -1], desc: () => m.dCrit() },
+    taxa: { label: () => m.txView, f: (p) => p.vol >= m.C.min && p.tx > m.C.tax, sort: ["tx", -1], desc: () => m.dTaxa() },
+    z: { label: () => m.zView, f: (p) => p.z > 0, sort: ["z", -1], desc: () => m.dZ() },
+    ref: { label: () => "Referência", f: (p) => p.vol >= m.C.min && p.tx <= m.C.ref, sort: ["tx", 1], desc: () => m.dRef() },
+    all: { label: () => m.todos, f: () => true, sort: ["bad", -1], desc: () => m.dAll() },
+    grp: {
+      label: () => gname(m.S.grp),
+      f: (p) => p.g === m.S.grp,
+      sort: ["bad", -1],
+      desc: () => "Grupo: ".concat(gname(m.S.grp).toLowerCase(), ". Ordenado pela quantidade de coletas sem RENACH.")
+    }
+  };
+  const VIEWKEYS = ["crit", "taxa", "z", "ref", "all"];
+  const cols = () => [{ k: "nome", t: m.col, l: 1 }, { k: "vol", t: m.volCol }, { k: "bad", t: m.badCol }, { k: "tx", t: "Taxa" }, { k: "z", t: m.zCol }];
+  function currentList() {
+    const S = m.S, v = VIEWS[S.view];
+    let list = m.rows.filter(v.f);
+    if (S.q) {
+      const q = norm(S.q);
+      list = list.filter((p) => p.key.includes(q) || norm(p.nome).includes(q));
+    }
+    const [k, d] = S.sort || v.sort;
+    const tie = (a, b) => b.bad - a.bad || b.vol - a.vol || a.i - b.i;
+    list.sort((a, b) => k === "nome" ? d * (a.curto || a.nome).localeCompare(b.curto || b.nome, "pt-BR") : d * (a[k] - b[k]) || (k === "tx" && d > 0 ? b.vol - a.vol : 0) || tie(a, b));
+    return list;
+  }
+  function txColor(t) {
+    const g = "#2E9E5B", a = "#F2B134", r = "#C8372D", c = m.C.tax, top = m.txTop(c);
+    return t <= c ? mix(g, a, c ? t / c : 1) : mix(a, r, Math.min(1, (t - c) / (top - c)));
+  }
+  function drawHead() {
+    $("kpis").innerHTML = '<div class="kpi"><b>'.concat(nf(T.vol), '</b><span>coletas p/ 1ª habilitação</span></div>\n     <div class="kpi"><b>').concat(nf(T.bad), '</b><span>sem abertura de RENACH</span></div>\n     <div class="kpi hot"><b>').concat(pf(T.tx), '</b><span>taxa de coleta sem RENACH</span></div>\n     <div class="kpi"><b>').concat(nf(T.z), "</b><span>SACs abertos no mês</span></div>");
+    $("lVol").textContent = "Muito volume: a partir de (coletas no mês)";
+    $("lMin").textContent = "Mínimo de coletas para avaliar a taxa do posto";
+    $("rowMin").hidden = m.id === "s";
+    $("src").textContent = m.id === "s" ? "Fonte: os mesmos números da aba Postos, somados por superintendência conforme a aba Coletas da planilha." : "Fonte: abas Coletas e SACs da planilha".concat(DADOS.lidoEm ? ", lidas em " + DADOS.lidoEm : "", ".");
+    [...$("tabs").children].forEach((b) => b.setAttribute("aria-selected", String(b.dataset.m === m.id)));
+    $("maptitle").textContent = m.mapa;
+    $("maphint").textContent = m.dica;
+    $("tabhint").textContent = m.dicaTab;
+    $("q").placeholder = m.busca;
+    $("q").setAttribute("aria-label", m.busca + " pelo nome");
+    $("drill").hidden = m.id !== "s";
+    document.querySelector(".main").classList.toggle("sup", m.id === "s");
+  }
+  function abrir(id, sel) {
+    m = MODES[id];
+    if (sel != null) {
+      classify(m);
+      m.S.q = "";
+      if (!m.rows.filter(VIEWS[m.S.view].f).some((p) => p.i === sel)) {
+        m.S.view = "all";
+        m.S.grp = null;
+        m.S.sort = null;
+      }
+      m.sel = sel;
+    }
+    drawHead();
+    syncInputs();
+    render(m.sel == null ? "top" : "keep");
+  }
+  function drawViews() {
+    const box = $("views");
+    if (box.dataset.m !== m.id) {
+      box.innerHTML = VIEWKEYS.map((k) => '<button data-v="'.concat(k, '">').concat(VIEWS[k].label(), "</button>")).join("");
+      box.dataset.m = m.id;
+    }
+    [...box.children].forEach((el) => el.setAttribute("aria-pressed", String(m.S.view === el.dataset.v && !m.S.q)));
+  }
+  function drawSummary(list) {
+    const s = list.reduce((a, p) => (a.vol += p.vol, a.bad += p.bad, a.z += p.z, a), { vol: 0, bad: 0, z: 0 });
+    $("desc").textContent = m.S.q ? 'Busca por "'.concat(m.S.q, '" ').concat(m.emTodos, ".") : VIEWS[m.S.view].desc();
+    $("nums").innerHTML = "<span><b>".concat(nf(list.length), "</b>").concat(list.length === 1 ? m.um : m.uns, "</span>\n     <span><b>").concat(nf(s.bad), "</b>").concat(m.badShort, " (").concat(pf(m.T.bad ? s.bad / m.T.bad : 0), " do Estado)</span>\n     <span><b>").concat(s.vol ? pf(s.bad / s.vol) : "–", "</b>taxa do conjunto</span>\n     <span><b>").concat(nf(s.z), "</b>").concat(m.zSum, "</span>");
+  }
+  let W = 720, H = 470;
+  const M = { l: 50, r: 16, t: 14, b: 46 };
+  const xs = (v) => {
+    const a = Math.log10(m.xmin), b = Math.log10(Math.max(800, m.MAXVOL * 1.15));
+    return M.l + (Math.log10(Math.max(v, m.xmin)) - a) / (b - a) * (W - M.l - M.r);
+  };
+  const ys = (t) => M.t + (m.ymax * 1.04 - t) / (m.ymax * 1.08) * (H - M.t - M.b);
+  const rad = (p) => 4 + Math.sqrt(p.z) * m.zk;
+  function drawMap(list) {
+    const C = m.C, inView = new Set(list.map((p) => p.i));
+    W = Math.max(300, Math.round($("svgbox").clientWidth || 720));
+    H = Math.round(W < 520 ? W * 0.95 : Math.min(500, W * 0.66));
+    const ink = css("--ink"), muted = css("--muted"), line = css("--line"), surf = css("--surface");
+    const gc = [null, css("--g1"), css("--g2"), css("--g3"), css("--g4"), css("--g5")];
+    let o = '<svg viewBox="0 0 '.concat(W, " ").concat(H, '" role="img" aria-label="Gráfico de bolhas: ').concat(m.unit, " no mês por ").concat(m.txName, ", um ponto por ").concat(m.um, '">');
+    const x0 = M.l, x1 = W - M.r, y0 = ys(0), y1 = ys(m.ymax);
+    const xm = xs(C.min), xv = xs(C.vol), yt = Math.max(M.t, ys(Math.min(C.tax, m.ymax)));
+    o += '<rect x="'.concat(x0, '" y="').concat(M.t, '" width="').concat(Math.max(0, xm - x0), '" height="').concat(H - M.t - M.b, '" fill="').concat(muted, '" opacity=".09"/>');
+    o += '<rect x="'.concat(xv, '" y="').concat(M.t, '" width="').concat(Math.max(0, x1 - xv), '" height="').concat(Math.max(0, yt - M.t), '" fill="').concat(gc[1], '" opacity=".07"/>');
+    for (let t = 0; t <= m.ymax + 1e-9; t += m.ystep) {
+      o += '<line x1="'.concat(x0, '" x2="').concat(x1, '" y1="').concat(ys(t), '" y2="').concat(ys(t), '" stroke="').concat(line, '" stroke-width="1"/>\n          <text x="').concat(x0 - 8, '" y="').concat(ys(t) + 4, '" text-anchor="end" font-size="12" fill="').concat(muted, '">').concat(pf(t, 0), "</text>");
+    }
+    (W < 520 ? m.ticksN : m.ticks).filter((v) => v <= m.MAXVOL * 1.1).forEach((v) => {
+      o += '<line x1="'.concat(xs(v), '" x2="').concat(xs(v), '" y1="').concat(y0, '" y2="').concat(y0 + 5, '" stroke="').concat(muted, '"/>\n          <text x="').concat(xs(v), '" y="').concat(y0 + 19, '" text-anchor="middle" font-size="12" fill="').concat(muted, '">').concat(nf(v), "</text>");
+    });
+    o += '<text x="'.concat(x0, '" y="').concat(H - 8, '" font-size="12.5" fill="').concat(muted, '">').concat(m.unit, " no mês</text>");
+    o += '<text transform="translate(13 '.concat((y0 + y1) / 2, ') rotate(-90)" text-anchor="middle" font-size="12.5" fill="').concat(muted, '">').concat(m.txName, "</text>");
+    o += '<line x1="'.concat(xv, '" x2="').concat(xv, '" y1="').concat(M.t, '" y2="').concat(H - M.b, '" stroke="').concat(ink, '" stroke-width="1.3" stroke-dasharray="5 4"/>');
+    o += '<line x1="'.concat(x0, '" x2="').concat(x1, '" y1="').concat(yt, '" y2="').concat(yt, '" stroke="').concat(ink, '" stroke-width="1.3" stroke-dasharray="5 4"/>');
+    const tag = (x, y, a, t) => '<text x="'.concat(x, '" y="').concat(y, '" text-anchor="').concat(a, '" font-size="12" font-weight="700" fill="').concat(ink, '" stroke="').concat(surf, '" stroke-width="3" paint-order="stroke">').concat(t, "</text>");
+    o += tag(x0 + 6, yt - 6, "start", "taxa de corte " + pf(C.tax));
+    o += tag(Math.min(xv, x1 - 70), H - M.b + 34, "middle", nf(C.vol) + (W < 520 ? "" : " " + m.unit) + " ou mais →");
+    const zl = (x, y, a, t, c) => '<text x="'.concat(x, '" y="').concat(y, '" text-anchor="').concat(a, '" font-size="13" font-weight="900" fill="').concat(c, '" opacity=".9">').concat(t, "</text>");
+    o += zl(x1 - 6, M.t + 16, "end", "Mais críticos", gc[1]);
+    const yr = ys(Math.min(C.ref, m.ymax));
+    if (xm < x1 && y0 - yr > 4) {
+      o += '<rect x="'.concat(Math.max(x0, xm), '" y="').concat(yr, '" width="').concat(x1 - Math.max(x0, xm), '" height="').concat(y0 - yr, '" fill="').concat(gc[4], '" opacity=".10"/>');
+      if (y0 - yr > 18) o += '<text x="'.concat(x1 - 6, '" y="').concat(yr + 15, '" text-anchor="end" font-size="13" font-weight="900" fill="').concat(gc[4], '" stroke="').concat(surf, '" stroke-width="3" paint-order="stroke">Referência</text>');
+    }
+    if (xv - xm > 178) o += zl(xm + 8, M.t + 16, "start", m.zona, gc[2]);
+    if (xm - x0 > 130) o += '<text x="'.concat(x0 + 6, '" y="').concat(M.t + 16, '" font-size="11.5" fill="').concat(muted, '">menos de ').concat(nf(C.min), " ").concat(m.unit, "</text>");
+    const seen = {};
+    const pts = m.rows.map((p) => {
+      const k = p.vol + "|" + p.bad;
+      const n = seen[k] = (seen[k] || 0) + 1;
+      return { p, n, k };
+    });
+    pts.forEach((d) => {
+      const tot = seen[d.k], a = 2 * Math.PI * d.n / tot, off = tot > 1 ? 4.5 : 0;
+      d.x = xs(d.p.vol) + Math.cos(a) * off;
+      d.y = ys(Math.min(d.p.tx, m.ymax)) + Math.sin(a) * off;
+      d.p._x = d.x;
+      d.p._y = d.y;
+    });
+    pts.sort((a, b) => inView.has(a.p.i) - inView.has(b.p.i) || rad(b.p) - rad(a.p));
+    pts.forEach((d) => {
+      const p = d.p, on = inView.has(p.i), sel = m.sel === p.i;
+      o += '<circle class="pt" data-i="'.concat(p.i, '" cx="').concat(d.x.toFixed(1), '" cy="').concat(d.y.toFixed(1), '" r="').concat(rad(p).toFixed(1), '" fill="').concat(gc[p.g], '" opacity="').concat(on ? 0.82 : 0.16, '" stroke="').concat(sel ? ink : surf, '" stroke-width="').concat(sel ? 3 : 1, '" style="cursor:pointer"/>');
+    });
+    const boxes = [];
+    list.slice(0, m.nrot(W)).forEach((p) => {
+      const t = m.rot(p), w = t.length * 6.6 + 6, r = rad(p);
+      const tries = [[p._x + r + 4, p._y + 4, "start"], [p._x - r - 4, p._y + 4, "end"], [p._x, p._y - r - 5, "middle"], [p._x, p._y + r + 14, "middle"]];
+      let x, y, anchor, b, ok = false;
+      for (const c of tries) {
+        [x, y, anchor] = c;
+        const bx = anchor === "start" ? x : anchor === "end" ? x - w : x - w / 2;
+        b = { x: bx, y: y - 12, w, h: 15 };
+        if (bx < x0 || bx + w > x1 || b.y < M.t || y > H - M.b) continue;
+        if (boxes.some((q) => b.x < q.x + q.w && q.x < b.x + b.w && b.y < q.y + q.h && q.y < b.y + b.h)) continue;
+        ok = true;
+        break;
+      }
+      if (!ok) return;
+      boxes.push(b);
+      o += '<text x="'.concat(x.toFixed(1), '" y="').concat(y.toFixed(1), '" text-anchor="').concat(anchor, '" font-size="12" font-weight="700" fill="').concat(ink, '" stroke="').concat(surf, '" stroke-width="3" paint-order="stroke" style="pointer-events:none">').concat(esc(t), "</text>");
+    });
+    o += "</svg>";
+    $("svgbox").innerHTML = o;
+    const lg = $("legend"), cnt = (n) => m.rows.filter((p) => p.g === n).length;
+    if (lg.children.length !== 5) lg.innerHTML = [1, 2, 3, 4, 5].map((n) => '<button data-g="'.concat(n, '"><span class="dot"></span><span class="t"></span></button>')).join("");
+    [...lg.children].forEach((b, k) => {
+      const n = k + 1;
+      b.setAttribute("aria-pressed", String(m.S.view === "grp" && m.S.grp === n));
+      b.querySelector(".dot").style.background = gc[n];
+      b.querySelector(".t").textContent = "".concat(gname(n), " (").concat(cnt(n), ")");
+      b.hidden = n === 5 && m.C.min <= 0;
+    });
+  }
+  function drawTable(list) {
+    const S = m.S, [sk, sd] = S.sort || VIEWS[S.view].sort;
+    $("hrow").innerHTML = cols().map((c) => '<th class="'.concat(c.l ? "l" : "", '" ').concat(c.k === sk ? 'aria-sort="'.concat(sd > 0 ? "ascending" : "descending", '"') : "", '><button data-k="').concat(c.k, '">').concat(c.t, "</button></th>")).join("");
+    const gc = [null, css("--g1"), css("--g2"), css("--g3"), css("--g4"), css("--g5")];
+    const bar = (v, max, color, txt) => '<span class="bar"><i style="width:'.concat(max ? Math.min(100, Math.max(v ? 2 : 0, v / max * 100)) : 0, "%;background:").concat(color, '"></i><b>').concat(txt, "</b></span>");
+    $("rows").innerHTML = list.map((p, k) => '<tr tabindex="0" data-i="'.concat(p.i, '" aria-selected="').concat(m.sel === p.i, '" class="').concat(k < 3 ? "t3" : "", '">\n      <td class="l"><div class="cell"><span class="rk">').concat(k + 1, '</span><span class="dot" style="background:').concat(gc[p.g], '" title="').concat(esc(gname(p.g)), '"></span><span class="nm">').concat(esc(p.nome), "</span></div></td>\n      <td>").concat(nf(p.vol), "</td>\n      <td>").concat(bar(p.bad, m.MAXBAD, "#F4A261", nf(p.bad)), "</td>\n      <td>").concat(bar(p.tx, m.ymax, txColor(p.tx), pf(p.tx)), "</td>\n      <td>").concat(bar(p.z, m.MAXZ, "#9DB7E5", nf(p.z)), "</td>\n    </tr>")).join("");
+    const e = $("empty");
+    e.hidden = list.length > 0;
+    e.textContent = S.q ? m.semBusca(S.q) : m.vazio;
+    $("ttitle").textContent = S.q ? "Resultado da busca" : VIEWS[S.view].label();
+  }
+  function dayBars(days, label) {
+    const dmax = Math.max(1, ...days);
+    return '<div class="days" role="img" aria-label="'.concat(label, '">').concat(days.map((d, k) => '<i class="'.concat(d ? "" : "z", '" style="height:').concat(d ? Math.max(8, d / dmax * 100) : 3, '%" title="dia ').concat(k + 1, ": ").concat(d, '"></i>')).join(""), '</div>\n          <div class="dayaxis"><span>1/').concat(MES3, "</span><span>").concat(label, "</span><span>").concat(DIAS, "/").concat(MES3, "</span></div>");
+  }
+  function drawDetail() {
+    if (m.id === "s") return drawSup();
+    const p = base[m.sel], box = $("detail");
+    if (!p) {
+      box.innerHTML = '<h3>Detalhe do posto</h3><p class="hint">Clique em um posto no mapa ou na tabela para ver os números e os SACs dele.</p>';
+      return;
+    }
+    const d = (p.tx - T.tx) * 100;
+    const cmp = Math.abs(d) < 0.05 ? "igual à taxa do Estado" : "".concat(pp(d), " p.p. ").concat(d > 0 ? "acima" : "abaixo", " do Estado");
+    const days = Array(DIAS).fill(0);
+    p.sacs.forEach((s) => days[s[2] - 1]++);
+    box.innerHTML = '<div class="who"><h3>'.concat(esc(p.nome), '</h3><span class="chip"><span class="dot" style="background:').concat(css("--g" + p.g), '"></span>').concat(gname(p.g), '</span></div>\n     <div class="stats">\n       <div class="stat"><b>').concat(nf(p.vol), '</b><span>coletas no mês</span></div>\n       <div class="stat"><b>').concat(nf(p.com), '</b><span>com RENACH</span></div>\n       <div class="stat"><b style="color:').concat(css("--g1"), '">').concat(nf(p.bad), '</b><span>sem RENACH</span></div>\n       <div class="stat"><b>').concat(pf(p.tx), "</b><span>").concat(cmp, '</span></div>\n     </div>\n     <div class="split" role="img" aria-label="').concat(pf(p.tx), ' das coletas sem RENACH"><i style="width:').concat(Math.min(100, p.tx * 100), '%"></i></div>\n     <div class="splitkey"><span>com RENACH</span><span>sem RENACH ').concat(pf(p.tx), '</span></div>\n     <div class="pos">\n       <span>Em coletas sem RENACH: <b>').concat(ord(p.rVol), "</b> de ").concat(base.length, "</span>\n       <span>Em taxa: <b>").concat(ord(p.rTx), "</b>").concat(p.rTx ? "" : " (abaixo do mínimo de coletas)", "</span>\n       <span>Em SACs: <b>").concat(ord(p.rZ), "</b></span>\n       <span>Peso no Estado: <b>").concat(pf(T.bad ? p.bad / T.bad : 0), '</b> das coletas sem RENACH</span>\n     </div>\n     <div class="sacs">\n       <h4>').concat(p.z ? nf(p.z) + (p.z === 1 ? " SAC aberto" : " SACs abertos") + " em " + MES : "Nenhum SAC aberto em " + MES, "</h4>\n       ").concat(p.z ? dayBars(days, "SACs por dia de abertura") + '<div class="protos" tabindex="0" aria-label="Protocolos dos SACs">'.concat(p.sacs.map((s) => "<span>".concat(esc(s[0]), "<em>").concat(String(s[2]).padStart(2, "0"), "/").concat(MM, "</em></span>")).join(""), "</div>") : "", "\n     </div>");
+  }
+  function drawSup() {
+    const p = sups[m.sel], box = $("detail");
+    if (!p) {
+      box.innerHTML = '<h3>Detalhe da superintendência</h3><p class="hint">Clique em uma superintendência no mapa ou na tabela para ver os números e os postos dela.</p>';
+      return;
+    }
+    const d = (p.tx - T.tx) * 100;
+    const cmp = Math.abs(d) < 0.05 ? "igual à taxa do Estado" : "".concat(pp(d), " p.p. ").concat(d > 0 ? "acima" : "abaixo", " do Estado");
+    box.innerHTML = '<div class="who"><h3>'.concat(esc(p.nome), '</h3><span class="chip"><span class="dot" style="background:').concat(css("--g" + p.g), '"></span>').concat(gname(p.g), '</span></div>\n     <div class="stats">\n       <div class="stat"><b>').concat(nf(p.vol), '</b><span>coletas no mês</span></div>\n       <div class="stat"><b>').concat(nf(p.com), '</b><span>com RENACH</span></div>\n       <div class="stat"><b style="color:').concat(css("--g1"), '">').concat(nf(p.bad), '</b><span>sem RENACH</span></div>\n       <div class="stat"><b>').concat(pf(p.tx), "</b><span>").concat(cmp, '</span></div>\n     </div>\n     <div class="split" role="img" aria-label="').concat(pf(p.tx), ' das coletas sem RENACH"><i style="width:').concat(Math.min(100, p.tx * 100), '%"></i></div>\n     <div class="splitkey"><span>com RENACH</span><span>sem RENACH ').concat(pf(p.tx), '</span></div>\n     <div class="pos">\n       <span>Em coletas sem RENACH: <b>').concat(ord(p.rVol), "</b> de ").concat(sups.length, "</span>\n       <span>Em taxa: <b>").concat(ord(p.rTx), "</b></span>\n       <span>Em SACs: <b>").concat(ord(p.rZ), "</b></span>\n       <span>Peso no Estado: <b>").concat(pf(T.bad ? p.bad / T.bad : 0), "</b> das coletas sem RENACH</span>\n       <span>Postos e unidades: <b>").concat(nf(p.postos.length), '</b></span>\n     </div>\n     <div class="sacs">\n       <h4>').concat(p.z ? nf(p.z) + (p.z === 1 ? " SAC aberto" : " SACs abertos") + " em " + MES : "Nenhum SAC aberto em " + MES, "</h4>\n       ").concat(p.z ? dayBars(p.days, "SACs por dia de abertura") : "", "\n       ").concat(p.cir.length ? '<p class="hint">Fora deste painel, '.concat(nf(p.cir.reduce((a, c) => a + c[1], 0)), " ").concat(p.cir.reduce((a, c) => a + c[1], 0) === 1 ? "SAC cita" : "SACs citam", " unidades CIR desta superintendência: ").concat(p.cir.map((c) => "".concat(esc(c[0]), " (").concat(nf(c[1]), ")")).join(", "), ".</p>") : "", "\n     </div>");
+  }
+  function drillList(p) {
+    const [sk, sd] = DR.sort, f = RK[DR.rk].f, tie = (a, b) => b.bad - a.bad || b.vol - a.vol || a.i - b.i;
+    return p.postos.map((i) => base[i]).sort((a, b) => {
+      if (sk === "nome") return sd * a.nome.localeCompare(b.nome, "pt-BR");
+      if (sk === "rk") return (a[f] == null) - (b[f] == null) || sd * ((a[f] || 0) - (b[f] || 0)) || tie(a, b);
+      return sd * (a[sk] - b[sk]) || tie(a, b);
+    });
+  }
+  const GPOSTO = [null, "Muito volume, taxa acima da média", "Pouco volume, taxa acima da média", "Muito volume, taxa abaixo da média", "Pouco volume, taxa abaixo da média", "Abaixo do mínimo de coletas"];
+  function drawDrill() {
+    const p = sups[m.sel];
+    if (m.id !== "s" || !p) return;
+    const P = MODES.p, [sk, sd] = DR.sort, list = drillList(p);
+    $("dtitle").textContent = "Postos de ".concat(p.nome);
+    const rk = RK[DR.rk];
+    $("dhint").textContent = "".concat(nf(list.length), " ").concat(list.length === 1 ? "posto" : "postos", " sob responsabilidade desta superintendência, entre Poupatempo e CIR. Clique em um posto para abrir o detalhe dele na aba Postos. A última coluna é a posição do posto no Estado ").concat(rk.frase, "; ela acompanha a coluna que você escolher: Coletas, Sem RENACH, Taxa ou SACs.");
+    const gc = [null, css("--g1"), css("--g2"), css("--g3"), css("--g4"), css("--g5")];
+    const gn = (n) => GPOSTO[n];
+    const bar = (v, max, color, txt) => '<span class="bar"><i style="width:'.concat(max ? Math.min(100, Math.max(v ? 2 : 0, v / max * 100)) : 0, "%;background:").concat(color, '"></i><b>').concat(txt, "</b></span>");
+    const txc = (t) => {
+      const c = P.C.tax, top = P.txTop(c);
+      return t <= c ? mix("#2E9E5B", "#F2B134", c ? t / c : 1) : mix("#F2B134", "#C8372D", Math.min(1, (t - c) / (top - c)));
+    };
+    $("dhrow").innerHTML = [["nome", "Posto", 1], ["vol", "Coletas"], ["bad", "Sem RENACH"], ["tx", "Taxa"], ["z", "SACs"], ["rk", "No Estado<small>".concat(rk.t, "</small>")]].map((c) => '<th class="'.concat(c[2] ? "l" : "").concat(c[0] === "rk" ? "rk2" : "", '" ').concat(c[0] === sk ? 'aria-sort="'.concat(sd > 0 ? "ascending" : "descending", '"') : "", '><button data-k="').concat(c[0], '"').concat(c[0] === "rk" ? ' aria-label="Posição no Estado '.concat(rk.frase, '"') : "", ">").concat(c[1], "</button></th>")).join("");
+    $("drows").innerHTML = list.map((q, k) => '<tr tabindex="0" data-i="'.concat(q.i, '" class="').concat(k < 3 ? "t3" : "", '">\n      <td class="l"><div class="cell"><span class="rk">').concat(k + 1, '</span><span class="dot" style="background:').concat(gc[q.g], '" title="').concat(gn(q.g), '"></span><span class="nm">').concat(esc(q.nome), "</span></div></td>\n      <td>").concat(nf(q.vol), "</td>\n      <td>").concat(bar(q.bad, P.MAXBAD, "#F4A261", nf(q.bad)), "</td>\n      <td>").concat(bar(q.tx, 1, txc(q.tx), pf(q.tx)), "</td>\n      <td>").concat(bar(q.z, P.MAXZ, "#9DB7E5", nf(q.z)), "</td>\n      <td>").concat(ord(q[rk.f]), "</td>\n    </tr>")).join("");
+  }
+  function drawNotes() {
+    const over = base.filter((p) => p.com + p.bad > p.vol).length, extra = T.com + T.bad - T.vol;
+    const semZero = base.filter((p) => p.z > 0 && p.bad === 0).length;
+    const list = m.id === "s" ? [
+      "Cada superintendência soma os postos Poupatempo e as unidades CIR sob sua responsabilidade. A soma das superintendências é igual ao total do Estado da aba Postos.",
+      "Taxa sem RENACH é a quantidade sem RENACH dividida pelas coletas para 1ª habilitação.",
+      "O SAC conta pela data de abertura e pelo posto citado. A coleta pode ter ocorrido em outro mês.",
+      ...CIRN ? ["A base de SACs de ".concat(MES, " tem ").concat(nf(T.z + CIRN), " protocolos: ").concat(nf(T.z), " citam postos Poupatempo e entram nas contas; ").concat(nf(CIRN), " citam unidades CIR e aparecem só como observação no detalhe da superintendência.")] : [],
+      "No ranking de postos, a cor do ponto e a posição no Estado são as mesmas da aba Postos.",
+      "No mapa, a escala de coletas é comprimida para caber superintendências pequenas e grandes, e a escala de taxa vai só até onde há superintendências."
+    ] : [
+      "Taxa sem RENACH é a quantidade sem RENACH dividida pelas coletas para 1ª habilitação.",
+      "O painel reúne os postos Poupatempo e as demais unidades que fizeram coleta no mês, como as CIR. Cada uma aparece com o nome que tem na base.",
+      ...over ? ["Em ".concat(over, " postos, a soma de com e sem RENACH passa do total de coletas (").concat(extra, " a mais no Estado). Os valores estão como vieram da origem.")] : [],
+      "O SAC conta pela data de abertura. A coleta pode ter ocorrido em outro mês.",
+      ...CIRN ? ["A base de SACs de ".concat(MES, " tem ").concat(nf(T.z + CIRN), " protocolos: ").concat(nf(T.z), " citam postos Poupatempo e entram neste painel; ").concat(nf(CIRN), " citam unidades CIR, que não fazem parte dele.")] : [],
+      "".concat(semZero, " ").concat(semZero === 1 ? "posto tem" : "postos têm", " SAC em ").concat(MES, " e nenhuma coleta sem RENACH registrada no mês."),
+      "No mapa, a escala de coletas é comprimida para caber postos pequenos e grandes. Postos com números idênticos aparecem levemente afastados para não se esconderem."
+    ];
+    $("notes").innerHTML = list.concat(AVISOS.map(esc)).map((t) => "<li>".concat(t, "</li>")).join("");
+  }
+  const CRC = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 3988292384 ^ c >>> 1 : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  const crc32 = (u) => {
+    let c = 4294967295;
+    for (let i = 0; i < u.length; i++) c = CRC[(c ^ u[i]) & 255] ^ c >>> 8;
+    return (c ^ 4294967295) >>> 0;
+  };
+  function zip(files) {
+    const enc = new TextEncoder(), parts = [], central = [];
+    let off = 0;
+    const d = new Date(), time = d.getHours() << 11 | d.getMinutes() << 5 | d.getSeconds() >> 1, date = d.getFullYear() - 1980 << 9 | d.getMonth() + 1 << 5 | d.getDate();
+    for (const [name, text] of files) {
+      const nm = enc.encode(name), data = enc.encode(text), crc = crc32(data);
+      const h = new DataView(new ArrayBuffer(30));
+      h.setUint32(0, 67324752, true);
+      h.setUint16(4, 20, true);
+      h.setUint16(6, 2048, true);
+      h.setUint16(8, 0, true);
+      h.setUint16(10, time, true);
+      h.setUint16(12, date, true);
+      h.setUint32(14, crc, true);
+      h.setUint32(18, data.length, true);
+      h.setUint32(22, data.length, true);
+      h.setUint16(26, nm.length, true);
+      h.setUint16(28, 0, true);
+      const c = new DataView(new ArrayBuffer(46));
+      c.setUint32(0, 33639248, true);
+      c.setUint16(4, 20, true);
+      c.setUint16(6, 20, true);
+      c.setUint16(8, 2048, true);
+      c.setUint16(10, 0, true);
+      c.setUint16(12, time, true);
+      c.setUint16(14, date, true);
+      c.setUint32(16, crc, true);
+      c.setUint32(20, data.length, true);
+      c.setUint32(24, data.length, true);
+      c.setUint16(28, nm.length, true);
+      c.setUint32(42, off, true);
+      parts.push(new Uint8Array(h.buffer), nm, data);
+      central.push(new Uint8Array(c.buffer), nm);
+      off += 30 + nm.length + data.length;
+    }
+    const csize = central.reduce((a, u) => a + u.length, 0), e = new DataView(new ArrayBuffer(22));
+    e.setUint32(0, 101010256, true);
+    e.setUint16(8, files.length, true);
+    e.setUint16(10, files.length, true);
+    e.setUint32(12, csize, true);
+    e.setUint32(16, off, true);
+    const all = [...parts, ...central, new Uint8Array(e.buffer)], out = new Uint8Array(all.reduce((a, u) => a + u.length, 0));
+    let p = 0;
+    all.forEach((u) => {
+      out.set(u, p);
+      p += u.length;
+    });
+    return out;
+  }
+  const xe = (v) => String(v).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "");
+  const colL = (n) => {
+    let t = "";
+    for (n++; n > 0; n = Math.floor((n - 1) / 26)) t = String.fromCharCode(65 + (n - 1) % 26) + t;
+    return t;
+  };
+  function xlsx(sheets) {
+    const sheetXml = (sh) => {
+      const rows = sh.rows.map((r, ri) => '<row r="'.concat(ri + 1, '">') + r.map((v, ci) => {
+        const ref2 = colL(ci) + (ri + 1), head = sh.table && ri === 0;
+        if (v === null || v === void 0 || v === "") return "";
+        if (typeof v === "number") return '<c r="'.concat(ref2, '"').concat((sh.pct || []).includes(ci) ? ' s="2"' : "", "><v>").concat(v, "</v></c>");
+        return '<c r="'.concat(ref2, '" t="inlineStr"').concat(head || !sh.table && ci === 0 ? ' s="1"' : "", '><is><t xml:space="preserve">').concat(xe(v), "</t></is></c>");
+      }).join("") + "</row>").join("");
+      const last = colL(sh.rows[0].length - 1) + sh.rows.length;
+      return "<".concat("?", 'xml version="1.0" encoding="UTF-8" standalone="yes"\x3F><worksheet xmlns="http:\/\/schemas.openxmlformats.org/spreadsheetml/2006/main">') + (sh.table ? '<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>' : "") + "<cols>".concat(sh.widths.map((w, i) => '<col min="'.concat(i + 1, '" max="').concat(i + 1, '" width="').concat(w, '" customWidth="1"/>')).join(""), "</cols>") + "<sheetData>".concat(rows, "</sheetData>") + (sh.table && sh.rows.length > 1 ? '<autoFilter ref="A1:'.concat(last, '"/>') : "") + "</worksheet>";
+    };
+    const files = [
+      ["[Content_Types].xml", "<".concat("?", 'xml version="1.0" encoding="UTF-8" standalone="yes"\x3F><Types xmlns="http:\/\/schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>').concat(sheets.map((_, i) => '<Override PartName="/xl/worksheets/sheet'.concat(i + 1, '.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>')).join(""), "</Types>")],
+      ["_rels/.rels", "<".concat("?", 'xml version="1.0" encoding="UTF-8" standalone="yes"\x3F><Relationships xmlns="http:\/\/schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http:\/\/schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>')],
+      ["xl/workbook.xml", "<".concat("?", 'xml version="1.0" encoding="UTF-8" standalone="yes"\x3F><workbook xmlns="http:\/\/schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http:\/\/schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>').concat(sheets.map((sh, i) => '<sheet name="'.concat(xe(sh.name).replace(/"/g, "&quot;"), '" sheetId="').concat(i + 1, '" r:id="rId').concat(i + 1, '"/>')).join(""), "</sheets></workbook>")],
+      ["xl/_rels/workbook.xml.rels", "<".concat("?", 'xml version="1.0" encoding="UTF-8" standalone="yes"\x3F><Relationships xmlns="http:\/\/schemas.openxmlformats.org/package/2006/relationships">').concat(sheets.map((_, i) => '<Relationship Id="rId'.concat(i + 1, '" Type="http:\/\/schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet').concat(i + 1, '.xml"/>')).join(""), '<Relationship Id="rId').concat(sheets.length + 1, '" Type="http:\/\/schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>')],
+      ["xl/styles.xml", "<".concat("?", 'xml version="1.0" encoding="UTF-8" standalone="yes"\x3F><styleSheet xmlns="http:\/\/schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="0.0%"/></numFmts><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>')],
+      ...sheets.map((sh, i) => ["xl/worksheets/sheet" + (i + 1) + ".xml", sheetXml(sh)])
+    ];
+    return zip(files);
+  }
+  const slug = (t) => norm(t).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  function montarExport(kind) {
+    const P = MODES.p, crit = (c) => "muito volume a partir de ".concat(nf(c.vol), " coletas; taxa de corte de ").concat(pf(c.tax)) + (c.min > 0 ? "; mínimo de ".concat(nf(c.min), " coletas para avaliar a taxa") : "") + "; referência com taxa de até ".concat(pf(c.ref, 0));
+    const NOMES = { nome: "nome", vol: "coletas", bad: "sem RENACH", tx: "taxa sem RENACH", z: "SACs", rk: "posição no Estado" };
+    let rows, info, nome, widths, pct;
+    if (kind === "drill") {
+      const sp = sups[m.sel], list = drillList(sp), [sk, sd] = DR.sort, rk = RK[DR.rk];
+      rows = [
+        ["Posição", "Posto", "Superintendência", "Coletas", "Com RENACH", "Sem RENACH", "Taxa sem RENACH", "SACs", "Posição no Estado (".concat(rk.t, ")"), "Grupo"],
+        ...list.map((p, k) => [k + 1, p.nome, sp.nome, p.vol, p.com, p.bad, p.tx, p.z, p[rk.f], GPOSTO[p.g]])
+      ];
+      widths = [9, 38, 26, 10, 13, 13, 16, 8, 30, 36];
+      pct = [6];
+      info = [
+        ["Aba", "Superintendências"],
+        ["Tabela", "Postos de ".concat(sp.nome)],
+        ["Ordenação", "".concat(NOMES[sk], ", ").concat(sd > 0 ? "crescente" : "decrescente")],
+        ["Posição no Estado", "Posição do posto entre os ".concat(nf(base.length), " do Estado ").concat(rk.frase, ".")],
+        ["Linhas", list.length],
+        ["Critérios dos postos", crit(P.C)]
+      ];
+      nome = "coleta-biometrica_postos-de-".concat(slug(sp.nome));
+    } else {
+      const list = currentList(), S = m.S, [sk, sd] = S.sort || VIEWS[S.view].sort, visao = S.q ? "Busca" : VIEWS[S.view].label();
+      if (m.id === "s") {
+        rows = [
+          ["Posição", "Superintendência", "Postos", "Coletas", "Com RENACH", "Sem RENACH", "Taxa sem RENACH", "SACs", "Grupo"],
+          ...list.map((p, k) => [k + 1, p.nome, p.postos.length, p.vol, p.com, p.bad, p.tx, p.z, gname(p.g)])
+        ];
+        widths = [9, 30, 9, 10, 13, 13, 16, 8, 36];
+        pct = [6];
+      } else {
+        rows = [
+          ["Posição", "Posto", "Superintendência", "Coletas", "Com RENACH", "Sem RENACH", "Taxa sem RENACH", "SACs", "Grupo"],
+          ...list.map((p, k) => [k + 1, p.nome, sups[p.sup].nome, p.vol, p.com, p.bad, p.tx, p.z, gname(p.g)])
+        ];
+        widths = [9, 38, 26, 10, 13, 13, 16, 8, 36];
+        pct = [6];
+      }
+      info = [
+        ["Aba", m.id === "s" ? "Superintendências" : "Postos"],
+        ["Visão", visao],
+        ["Descrição", S.q ? 'Busca por "'.concat(S.q, '" ').concat(m.emTodos, ".") : VIEWS[S.view].desc()],
+        ["Ordenação", "".concat(NOMES[sk], ", ").concat(sd > 0 ? "crescente" : "decrescente")],
+        ["Linhas", list.length],
+        ["Critérios", crit(m.C)]
+      ];
+      nome = "coleta-biometrica_".concat(m.id === "s" ? "superintendencias" : "postos", "_").concat(slug(visao));
+    }
+    const sobre = [
+      ["Painel", "Coleta biométrica na 1ª habilitação, postos Poupatempo e unidades CIR, " + PER],
+      ...info,
+      ["Fonte", "Abas Coletas e SACs da planilha" + (DADOS.lidoEm ? ", lidas em " + DADOS.lidoEm : "") + "."]
+    ];
+    return { filename: nome + ".xlsx", data: xlsx([{ name: "Tabela", rows, pct, widths, table: true }, { name: "Filtro usado", rows: sobre, widths: [22, 110] }]), linhas: rows.length - 1 };
+  }
+  let DL = null;
+  const SOLTO = true;
+  const expMsg = (t) => {
+    $("expmsg").textContent = t;
+  };
+  function baixarDireto(arq) {
+    const url = URL.createObjectURL(new Blob([arq.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = arq.filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4e3);
+  }
+  async function exportar(kind) {
+    if (!DL && !SOLTO) return;
+    const arq = montarExport(kind);
+    if (!arq.linhas) {
+      expMsg("A tabela está vazia, não há o que exportar.");
+      return;
+    }
+    if (!DL) {
+      baixarDireto(arq);
+      expMsg("Tabela exportada com ".concat(nf(arq.linhas), " ").concat(arq.linhas === 1 ? "linha" : "linhas", "."));
+      return;
+    }
+    try {
+      await DL.save({ filename: arq.filename, data: arq.data });
+      expMsg("Tabela exportada com ".concat(nf(arq.linhas), " ").concat(arq.linhas === 1 ? "linha" : "linhas", "."));
+    } catch (e) {
+      const c = e && e.code;
+      if (c === "declined") expMsg("Exportação cancelada.");
+      else if (c === "rate_limited") expMsg("Já há uma exportação aguardando confirmação. Aguarde um instante e tente de novo.");
+      else if (c === "too_large" || c === "bad_request" || c === "transform_error") expMsg("Não foi possível gerar o arquivo desta tabela.");
+      else if (c === "rejected_extension" || c === "extension_not_enabled") expMsg("A exportação para Excel não está disponível nesta visualização.");
+      else {
+        DL = null;
+        $("exp").hidden = !SOLTO;
+        $("dexp").hidden = !SOLTO;
+        expMsg("A exportação não está disponível nesta visualização.");
+      }
+    }
+  }
+  $("exp").addEventListener("click", () => exportar("main"));
+  $("dexp").addEventListener("click", () => exportar("drill"));
+  (window.claude && typeof window.claude.use === "function" ? window.claude.use("downloads") : Promise.resolve(null)).then((d) => {
+    DL = d || null;
+    $("exp").hidden = !(DL || SOLTO);
+    $("dexp").hidden = !(DL || SOLTO);
+  }).catch(() => {
+  });
+  if (SOLTO) {
+    $("exp").hidden = false;
+    $("dexp").hidden = false;
+  }
+  function render(how) {
+    classify(MODES.p);
+    classify(MODES.s);
+    $("expmsg").textContent = "";
+    const list = currentList();
+    if (how === "top" || m.sel == null || how === "in" && !list.some((p) => p.i === m.sel)) m.sel = list.length ? list[0].i : m.sel;
+    drawViews();
+    drawSummary(list);
+    drawMap(list);
+    drawTable(list);
+    drawDetail();
+    drawDrill();
+    drawNotes();
+  }
+  function syncInputs() {
+    $("cVol").value = m.C.vol;
+    $("cTax").value = (m.C.tax * 100).toFixed(1);
+    $("cMin").value = m.C.min;
+    $("cRef").value = Math.round(m.C.ref * 100);
+    $("q").value = m.S.q;
+  }
+  function select(i, fromTable) {
+    m.sel = i;
+    const list = currentList();
+    drawMap(list);
+    drawTable(list);
+    drawDetail();
+    drawDrill();
+    const d = $("detail").getBoundingClientRect();
+    if (fromTable && (d.bottom < 0 || d.top > innerHeight)) $("detail").scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+  const resetView = () => {
+    const S = m.S;
+    S.grp = null;
+    S.sort = null;
+    S.q = "";
+    $("q").value = "";
+  };
+  $("views").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    resetView();
+    m.S.view = b.dataset.v;
+    render("top");
+  });
+  $("legend").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    resetView();
+    m.S.view = "grp";
+    m.S.grp = +b.dataset.g;
+    render("top");
+  });
+  $("hrow").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    const k = b.dataset.k, cur = m.S.sort || VIEWS[m.S.view].sort;
+    m.S.sort = [k, cur[0] === k ? -cur[1] : k === "nome" ? 1 : -1];
+    render("in");
+  });
+  $("rows").addEventListener("click", (e) => {
+    const r = e.target.closest("tr");
+    if (r) select(+r.dataset.i, true);
+  });
+  $("rows").addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const r = e.target.closest("tr");
+    if (r) {
+      e.preventDefault();
+      select(+r.dataset.i, true);
+      const n = $("rows").querySelector('tr[data-i="'.concat(r.dataset.i, '"]'));
+      if (n) n.focus();
+    }
+  });
+  $("q").addEventListener("input", (e) => {
+    const S = m.S;
+    S.q = e.target.value.trim();
+    if (S.q && S.view !== "all") {
+      S.view = "all";
+      S.grp = null;
+      S.sort = null;
+    }
+    render("in");
+  });
+  const tip = $("tip");
+  $("svgbox").addEventListener("click", (e) => {
+    const c = e.target.closest(".pt");
+    if (c) select(+c.dataset.i, false);
+  });
+  $("svgbox").addEventListener("pointermove", (e) => {
+    const c = e.target.closest(".pt");
+    if (!c) {
+      tip.style.display = "none";
+      return;
+    }
+    const p = m.rows[+c.dataset.i], box = $("mapbox").getBoundingClientRect(), r = c.getBoundingClientRect();
+    tip.innerHTML = "<b>".concat(esc(p.nome), "</b>").concat(nf(p.vol), " coletas, ").concat(nf(p.bad), " sem RENACH (").concat(pf(p.tx), ")<br>").concat(nf(p.z), " ").concat(p.z === 1 ? "SAC" : "SACs", " no mês").concat(m.id === "s" ? ", ".concat(nf(p.postos.length), " ").concat(p.postos.length === 1 ? "posto" : "postos") : "");
+    tip.style.display = "block";
+    const half = tip.offsetWidth / 2, cx = r.left + r.width / 2 - box.left;
+    tip.style.left = Math.min(box.width - half - 6, Math.max(half + 6, cx)) + "px";
+    tip.style.top = r.top - box.top + "px";
+  });
+  $("svgbox").addEventListener("pointerleave", () => tip.style.display = "none");
+  function readInputs() {
+    const C = m.C, v = parseFloat($("cVol").value), t = parseFloat($("cTax").value), mn = parseFloat($("cMin").value), r = parseFloat($("cRef").value);
+    if (v >= 1) C.vol = Math.round(v);
+    if (mn >= 1) C.min = Math.round(mn);
+    if (t >= 0 && t <= 100) C.tax = Math.abs(t - +(m.DEF.tax * 100).toFixed(1)) < 1e-9 ? m.DEF.tax : t / 100;
+    if (r >= 0 && r <= 100) C.ref = r / 100;
+    render("in");
+  }
+  ["cVol", "cTax", "cMin", "cRef"].forEach((id) => $(id).addEventListener("input", readInputs));
+  $("reset").addEventListener("click", () => {
+    Object.assign(m.C, m.DEF);
+    syncInputs();
+    render("in");
+  });
+  $("tabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (b && b.dataset.m !== m.id) abrir(b.dataset.m);
+  });
+  $("dhrow").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    const k = b.dataset.k;
+    if (RK[k]) DR.rk = k;
+    DR.sort = [k, DR.sort[0] === k ? -DR.sort[1] : k === "nome" || k === "rk" ? 1 : -1];
+    drawDrill();
+  });
+  const irPosto = (r) => {
+    if (!r) return;
+    abrir("p", +r.dataset.i);
+    scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  };
+  $("drows").addEventListener("click", (e) => irPosto(e.target.closest("tr")));
+  $("drows").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      irPosto(e.target.closest("tr"));
+    }
+  });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => render("keep"));
+  new MutationObserver(() => render("keep")).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  abrir("p");
+  let lastW = $("svgbox").clientWidth;
+  new ResizeObserver(() => {
+    const w = $("svgbox").clientWidth;
+    if (Math.abs(w - lastW) > 8) {
+      lastW = w;
+      drawMap(currentList());
+    }
+  }).observe($("svgbox"));
+}
+(function() {
+  const box = document.getElementById("carregando");
+  const falha = (msg) => {
+    document.body.classList.add("aguardando");
+    box.hidden = false;
+    box.className = "carregando erro";
+    box.textContent = msg;
+  };
+  let chamado = false;
+  window.abrirPainel = function(DADOS) {
+    chamado = true;
+    if (!DADOS) {
+      falha("O script não entregou os dados da planilha. Rode Dashboard > Conferir dados para ver o motivo.");
+      return;
+    }
+    if (DADOS.erro) {
+      falha("Não foi possível ler a planilha. " + DADOS.erro);
+      return;
+    }
+    try {
+      document.body.classList.remove("aguardando");
+      box.hidden = true;
+      iniciar(DADOS);
+    } catch (e) {
+      falha("A página encontrou um erro ao montar o painel. Detalhe: " + (e && e.message ? e.message : e));
+    }
+  };
+  const conferir = () => {
+    if (!chamado) falha("Os dados não chegaram. Esta página só funciona aberta pelo Apps Script (menu Dashboard da planilha ou endereço do app da Web), com o Code.gs e o Index da mesma versão.");
+  };
+  window.addEventListener("load", conferir);
+  setTimeout(conferir, 4e3);
+})();
+</script>
+</body>
+</html>
