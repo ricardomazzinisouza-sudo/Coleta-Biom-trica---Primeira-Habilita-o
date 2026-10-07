@@ -99,35 +99,6 @@ tbody.plain tr{cursor:default}
 tbody.plain tr:hover{background:transparent}
 tbody.plain tr:nth-child(even):hover{background:var(--zebra)}
 [hidden]{display:none !important}
-/* enquanto os dados não chegam, sem dados, e na aba Atualizar dados */
-body.aguardando .tabs, body.aguardando #tabA, body.semdados #tabA, body.atualizando #tabA, body.atualizando #carregando{display:none}
-.tablist button:disabled{opacity:.45;cursor:not-allowed}
-.tablist{max-width:100%;flex-wrap:wrap}
-@media (max-width:480px){.tablist button{padding:9px 10px;font-size:14.5px}}
-#tabU{max-width:860px;padding-top:18px;font-size:16px;line-height:1.5}
-#tabU a{color:var(--g3)}
-.passo{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
-.passo h3{margin:0 0 4px;font-size:18px;font-weight:900;color:var(--ink)}
-.passo h3 span{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--pill);color:#fff;font-size:14px;margin-right:8px}
-.passo > p{margin:6px 0 12px;color:var(--muted);max-width:68ch}
-.passo[aria-disabled="true"]{opacity:.55}
-.passo input[type=file]{display:block;width:100%;padding:14px;border:1.5px dashed var(--line);border-radius:10px;background:var(--soft);cursor:pointer}
-.passo input[type=month]{padding:7px 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface)}
-.ubtn{border:1.5px solid var(--pill);background:var(--pill);color:#fff;border-radius:9px;padding:10px 18px;font-weight:900;cursor:pointer}
-.ubtn.sec{background:none;color:var(--ink);border-color:var(--line)}
-.ubtn:disabled{opacity:.45;cursor:not-allowed}
-.uacoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-#tabU .uconf{border-collapse:collapse;width:100%;min-width:0;margin:6px 0 4px;font-size:16px}
-#tabU .uconf tr{background:none;cursor:default}
-#tabU .uconf th,#tabU .uconf td{position:static;text-align:left;padding:8px 10px;border:0;border-bottom:1px solid var(--line);vertical-align:top;background:none;font-size:16px;white-space:normal}
-#tabU .uconf th{font-weight:700;color:var(--muted);width:48%}
-.uconf td b{color:var(--ink);font-size:17px}
-.uconf td small{display:block;color:var(--muted)}
-.umsg{margin:12px 0 0;padding:11px 14px;border-radius:9px;background:var(--soft);border-left:5px solid var(--g3);max-width:72ch}
-.umsg.ok{border-left-color:var(--g4)} .umsg.warn{border-left-color:var(--g2)} .umsg.bad{border-left-color:var(--g1)}
-.umsg ul{margin:6px 0 0;padding-left:20px}
-.ucomo{margin:12px 0 0;padding-left:22px;max-width:70ch} .ucomo li{margin-bottom:6px}
-.passo code{background:var(--soft);padding:1px 6px;border-radius:5px;font-size:.93em}
 .carregando{margin:28px 0;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;font-size:16px;font-weight:700;color:var(--ink)}
 .carregando.erro{border-left:5px solid var(--g1);font-weight:400;max-width:75ch}
 
@@ -244,6 +215,111 @@ tr.t3 .rk{background:var(--pill);color:#fff;border-radius:5px;padding:1px 0}
 @media (prefers-reduced-motion:no-preference){
   .pt{transition:opacity .2s}
 }
+
+/* estados da página: carregando, sem dados, aba Evolução e tela Atualizar dados */
+body.aguardando .tabs, body.aguardando #tabA, body.aguardando .adm,
+body.semdados .tabs, body.semdados #tabA,
+body.evolucao #tabA,
+body.atualizando .tabs, body.atualizando #tabA, body.atualizando #carregando, body.atualizando .adm{display:none}
+.tablist{max-width:100%;flex-wrap:wrap}
+@media (max-width:480px){.tablist button{padding:9px 10px;font-size:14.5px}}
+
+/* período */
+.per{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex:1 1 100%}
+.per button{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:4px 11px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer}
+.per button:hover{border-color:var(--blue);color:var(--ink)}
+.per button[aria-pressed="true"]{background:var(--soft);border-color:var(--ink);color:var(--ink)}
+.per span{font-size:13px;color:var(--muted);margin-left:6px}
+.foot{grid-template-columns:minmax(0,1fr)}
+.detail .go{margin-top:0}
+
+/* botão de administração, discreto de propósito */
+.adm{display:block;margin:18px 0 0 auto;border:0;background:none;padding:4px 2px;font-size:12px;color:var(--muted);opacity:.55;cursor:pointer}
+.adm:hover,.adm:focus-visible{opacity:1;text-decoration:underline}
+.carregando .ubtn{display:block;margin-top:14px}
+
+/* aba Evolução */
+#tabE{padding-top:16px}
+.evtop{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:14px}
+.evtop label{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--muted);font-size:15px}
+.evtop select{max-width:min(420px,78vw);border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--surface);color:var(--ink);font:inherit;font-weight:700}
+.evcards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.evcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
+.evcard > span{display:block;font-size:13px;color:var(--muted)}
+.evcard b{display:block;font-size:26px;font-weight:900;color:var(--ink);line-height:1.2;font-variant-numeric:normal}
+.evcard em{display:block;font-style:normal;font-size:13px;color:var(--text);margin-top:4px}
+.evcard small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.dl{display:inline-flex;align-items:center;gap:4px;font-weight:900;color:var(--ink)}
+.dl i{font-style:normal;font-size:11px}
+.dl.ruim i{color:var(--g1)} .dl.bom i{color:var(--g4)} .dl.neutro i{color:var(--muted)}
+.evchart{padding-bottom:10px;position:relative;margin-bottom:16px}
+.evleg{display:flex;flex-wrap:wrap;gap:4px 18px;padding:0 16px 6px;font-size:13px;color:var(--text)}
+.evleg span{display:inline-flex;align-items:center;gap:7px}
+.evleg svg{flex:none}
+.evsvg{padding:0 8px;outline-offset:-2px}
+.evsvg svg{display:block;width:100%;height:auto;touch-action:pan-y}
+#evTip{transform:translate(-50%,0);margin-top:0;white-space:nowrap;text-align:left}
+#evTip b{display:block;font-size:13.5px;margin-bottom:3px}
+#evTip div{display:flex;justify-content:space-between;gap:16px}
+#evTip div span:last-child{font-weight:900}
+.evgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:16px;align-items:start}
+.evmarco{padding:16px}
+.evmarco .linha{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 4px}
+.evmarco label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.evmarco input[type=date]{border:1.5px solid var(--line);border-radius:8px;padding:6px 9px;background:var(--surface);color:var(--ink)}
+.evmarco .reset{margin-top:0}
+.evmarco .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+.evmarco .stat b{font-size:20px}
+.evrank .thead .tools{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-start}
+.evchart .thead > div{flex:1 1 420px}
+.evchart .thead .exp{align-self:flex-start}
+.evrank .scroll{max-height:560px}
+.evrank table{min-width:620px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:0;background:var(--surface);color:var(--muted);padding:7px 12px;font-weight:700;font-size:13.5px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--pill);color:#fff}
+.varc{display:inline-flex;align-items:center;gap:8px}
+.varc b{min-width:46px;text-align:right;font-weight:700;color:var(--text)}
+.var{position:relative;display:inline-block;width:92px;height:18px;vertical-align:middle}
+.var::before{content:"";position:absolute;left:50%;top:1px;bottom:1px;width:1px;background:var(--muted);opacity:.5}
+.var i{position:absolute;top:3px;bottom:3px;border-radius:2px;opacity:.75}
+td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
+@media (max-width:1100px){.evcards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:980px){.evgrid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.evcards{grid-template-columns:repeat(2,minmax(0,1fr))}.evcard b{font-size:22px}}
+
+/* tela Atualizar dados */
+#tabU{max-width:860px;padding-top:18px;font-size:16px;line-height:1.5}
+#tabU a{color:var(--g3)}
+.uhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-bottom:14px}
+.uhead h2{margin:0;font-size:22px;font-weight:900;color:var(--ink)}
+.uhead .reset{margin-top:0}
+.passo{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.passo h3{margin:0 0 4px;font-size:18px;font-weight:900;color:var(--ink)}
+.passo h3 span{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--pill);color:#fff;font-size:14px;margin-right:8px}
+.passo > p{margin:6px 0 12px;color:var(--muted);max-width:68ch}
+.passo[aria-disabled="true"]{opacity:.55}
+.passo input[type=file]{display:block;width:100%;padding:14px;border:1.5px dashed var(--line);border-radius:10px;background:var(--soft);cursor:pointer}
+.ubtn{border:1.5px solid var(--pill);background:var(--pill);color:#fff;border-radius:9px;padding:10px 18px;font-weight:900;cursor:pointer}
+.ubtn.sec{background:none;color:var(--ink);border-color:var(--line)}
+.ubtn:disabled{opacity:.45;cursor:not-allowed}
+.uacoes{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+#tabU .uconf{border-collapse:collapse;width:100%;min-width:0;margin:6px 0 4px;font-size:16px}
+#tabU .uconf tr{background:none;cursor:default}
+#tabU .uconf th,#tabU .uconf td{position:static;text-align:left;padding:8px 10px;border:0;border-bottom:1px solid var(--line);vertical-align:top;background:none;font-size:16px;white-space:normal}
+#tabU .uconf th{font-weight:700;color:var(--muted);width:44%}
+.uconf td b{color:var(--ink);font-size:17px}
+.uconf td small{display:block;color:var(--muted)}
+.umsg{margin:12px 0 0;padding:11px 14px;border-radius:9px;background:var(--soft);border-left:5px solid var(--g3);max-width:72ch}
+.umsg.ok{border-left-color:var(--g4)} .umsg.warn{border-left-color:var(--g2)} .umsg.bad{border-left-color:var(--g1)}
+.umsg ul{margin:6px 0 0;padding-left:20px}
+.ucomo{margin:12px 0 0;padding-left:22px;max-width:70ch} .ucomo li{margin-bottom:6px}
+.passo code{background:var(--soft);padding:1px 6px;border-radius:5px;font-size:.93em}
+.ucrit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 28px}
+.ucrit h4{margin:6px 0 0;font-size:15px;color:var(--ink)}
+.ucrit .crit{margin-top:8px}
+@media (max-width:700px){.ucrit{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.tools{flex-wrap:wrap;justify-content:flex-start;min-width:0}.tools .search{min-width:0}}
 </style>
 </head>
 <body class="aguardando">
@@ -258,15 +334,23 @@ tr.t3 .rk{background:var(--pill);color:#fff;border-radius:5px;padding:1px 0}
 </header>
 
 <div class="wrap">
-  <p class="carregando" id="carregando" role="status">Abrindo o painel…</p>
+  <div class="carregando" id="carregando" role="status">Abrindo o painel…</div>
   <noscript><p class="carregando erro">O navegador está com o JavaScript desligado, e o painel precisa dele para abrir.</p></noscript>
   <div class="tabs">
     <div class="tablist" role="tablist" aria-label="Nível de análise" id="tabs">
       <button role="tab" data-m="p">Postos</button>
       <button role="tab" data-m="s">Superintendências</button>
-      <button role="tab" data-m="u">Atualizar dados</button>
+      <button role="tab" data-m="e">Evolução</button>
+    </div>
+    <div class="per" id="per" role="group" aria-label="Período analisado">
+      <button data-p="all">Desde o início</button>
+      <button data-p="30">Últimos 30 dias</button>
+      <button data-p="7">Últimos 7 dias</button>
+      <button data-p="1">Último dia</button>
+      <span id="perTxt"></span>
     </div>
   </div>
+
   <div id="tabA">
   <section class="ask" aria-label="Escolha o que ver">
     <h2>O que você quer ver?</h2>
@@ -324,17 +408,6 @@ tr.t3 .rk{background:var(--pill);color:#fff;border-radius:5px;padding:1px 0}
 
   <div class="foot">
     <section class="panel">
-      <h3>Critérios dos grupos</h3>
-      <p class="hint">Mude um valor e o mapa, os grupos e as listas se ajustam.</p>
-      <div class="crit">
-        <label><span id="lVol"></span> <input id="cVol" type="number" min="1" step="1" inputmode="numeric"></label>
-        <label><span>Taxa de corte, em % (padrão: média do Estado)</span> <input id="cTax" type="number" min="0" max="100" step="0.1" inputmode="decimal"></label>
-        <label id="rowMin"><span id="lMin"></span> <input id="cMin" type="number" min="1" step="1" inputmode="numeric"></label>
-        <label><span>Referência: taxa sem RENACH de até (%)</span> <input id="cRef" type="number" min="0" max="100" step="1" inputmode="numeric"></label>
-      </div>
-      <button class="reset" id="reset">Voltar ao padrão</button>
-    </section>
-    <section class="panel">
       <h3>Como ler os números</h3>
       <ul class="notes" id="notes"></ul>
       <p class="src" id="src"></p>
@@ -342,34 +415,116 @@ tr.t3 .rk{background:var(--pill);color:#fff;border-radius:5px;padding:1px 0}
   </div>
   </div>
 
+  <div id="tabE" hidden>
+    <div class="evtop">
+      <label for="evEsc">Analisar <select id="evEsc"></select></label>
+    </div>
+    <div class="evcards" id="evCards" aria-live="polite"></div>
+
+    <section class="panel evchart" id="evBox">
+      <div class="thead">
+        <div>
+          <h3 id="evTit"></h3>
+          <p class="hint" id="evHint"></p>
+        </div>
+        <button class="exp" id="evExp" title="Exporta para Excel os números de cada dia do que está selecionado em Analisar">Exportar série diária</button>
+      </div>
+      <div class="evleg" id="evLeg"></div>
+      <div class="evsvg" id="evSvg" tabindex="0" role="group" aria-label="Gráficos por dia. Use as setas para a esquerda e para a direita para ler os valores de cada dia."></div>
+      <div class="tip" id="evTip"></div>
+    </section>
+
+    <div class="evgrid">
+      <section class="panel evmarco">
+        <h3>Antes e depois de uma data</h3>
+        <p class="hint">Informe a data de um treinamento ou de uma mudança de procedimento. O painel compara o mesmo número de dias antes e depois dela, para o que estiver escolhido em Analisar.</p>
+        <div class="linha">
+          <label for="evData">Data <input type="date" id="evData"></label>
+          <button class="reset" id="evLimpa" hidden>Limpar a data</button>
+        </div>
+        <div id="evMarco" aria-live="polite"></div>
+      </section>
+
+      <section class="panel evrank">
+        <div class="thead">
+          <div>
+            <h3 id="evRkTit">Quem melhorou e quem piorou</h3>
+            <p class="hint" id="evRkHint"></p>
+          </div>
+          <div class="tools">
+            <div class="seg" id="evUni" role="group" aria-label="Linhas da tabela">
+              <button data-u="p">Postos</button><button data-u="s">Superintendências</button>
+            </div>
+            <button class="exp" id="evRkExp" title="Exporta para Excel a tabela na ordem atual">Exportar tabela</button>
+          </div>
+        </div>
+        <div class="scroll" tabindex="0" aria-label="Tabela de variação da taxa">
+          <table><thead><tr id="evHrow"></tr></thead><tbody id="evRows"></tbody></table>
+          <div class="empty" id="evVazio" hidden></div>
+        </div>
+      </section>
+    </div>
+    <p class="src" id="evSrc"></p>
+  </div>
+
   <div id="tabU" hidden>
+    <div class="uhead">
+      <button class="reset" id="u-voltar">← Voltar ao painel</button>
+      <h2>Atualizar dados</h2>
+    </div>
+
     <section class="passo">
-      <h3><span>1</span>Escolha as planilhas do mês</h3>
-      <p>Pode ser um arquivo só com as abas de coletas e de SACs, ou os dois arquivos separados (selecione os dois juntos). As planilhas são lidas aqui no navegador e não são enviadas a lugar nenhum.</p>
+      <h3><span>1</span>Escolha as planilhas</h3>
+      <p>A planilha de coletas (Superintendência, Posto, data da coleta e Status) e a de SACs (protocolo, posto e data de abertura). Pode ser um arquivo com as duas abas ou os dois arquivos, selecionados juntos. A planilha pode trazer a base inteira ou só os dias novos: os dias que ela cobre substituem os mesmos dias na base e o restante é mantido. Nada é enviado a lugar nenhum; a leitura acontece aqui no navegador.</p>
       <input type="file" id="u-arq" multiple accept=".xlsx,.xlsm,.csv" aria-label="Planilhas de coletas e de SACs">
       <p class="umsg" id="u-mArq" role="status" hidden></p>
     </section>
 
     <section class="passo" id="u-p2" aria-disabled="true">
       <h3><span>2</span>Confira os números</h3>
-      <p>São os totais que vão aparecer no topo do painel. Se algo não bater com a sua base, pare aqui.</p>
+      <p>Se algo não bater com a sua base, pare aqui.</p>
       <div id="u-conf" hidden>
         <table class="uconf">
-          <tr><th scope="row"><label for="u-mes">Mês do painel</label></th><td><input type="month" id="u-mes"><small id="u-mesDica"></small></td></tr>
-          <tr><th scope="row">Postos e unidades</th><td><b id="u-nPostos"></b></td></tr>
-          <tr><th scope="row">Superintendências</th><td><b id="u-nSups"></b></td></tr>
-          <tr><th scope="row">Coletas</th><td><b id="u-nCol"></b></td></tr>
+          <tr><th scope="row">Coletas na planilha</th><td><b id="u-nCol"></b><small id="u-perCol"></small></td></tr>
           <tr><th scope="row">Sem abertura de RENACH</th><td><b id="u-nSem"></b><small id="u-nTaxa"></small></td></tr>
-          <tr><th scope="row">SACs abertos no mês</th><td><b id="u-nSac"></b></td></tr>
+          <tr><th scope="row">Postos e unidades</th><td><b id="u-nPostos"></b><small id="u-nSups"></small></td></tr>
+          <tr><th scope="row">SACs na planilha</th><td><b id="u-nSac"></b><small id="u-perSac"></small></td></tr>
+          <tr><th scope="row">Como a base fica depois da importação</th><td><b id="u-fica"></b><small id="u-ficaDet"></small></td></tr>
         </table>
         <div class="umsg warn" id="u-avisos" hidden></div>
         <p class="umsg" id="u-naBase" role="status" hidden></p>
       </div>
     </section>
 
-    <section class="passo" id="u-p3" aria-disabled="true">
-      <h3><span>3</span>Gere o arquivo e importe no Firebase</h3>
-      <p>O arquivo leva o que já está na base e mais este mês, então os meses anteriores são mantidos na importação.</p>
+    <section class="passo">
+      <h3><span>3</span>Critérios dos grupos</h3>
+      <p>Definem quem é "muito volume", "taxa alta" e "referência" no mapa, nos grupos e nas listas. Os volumes são informados para 30 dias e o painel ajusta sozinho ao período escolhido (em 7 dias, 200 coletas viram 47). Uma mudança aqui aparece só para você até entrar no arquivo e ser importada; depois disso vale para todos.</p>
+      <div class="ucrit">
+        <div>
+          <h4>Postos</h4>
+          <div class="crit">
+            <label><span>Muito volume: a partir de (coletas a cada 30 dias)</span> <input id="cpVol" type="number" min="1" step="1" inputmode="numeric"></label>
+            <label><span>Taxa de corte, em % (vazio: média do Estado no período)</span> <input id="cpTax" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="média"></label>
+            <label><span>Mínimo de coletas para avaliar a taxa (a cada 30 dias)</span> <input id="cpMin" type="number" min="1" step="1" inputmode="numeric"></label>
+            <label><span>Referência: taxa sem RENACH de até (%)</span> <input id="cpRef" type="number" min="0" max="100" step="1" inputmode="numeric"></label>
+          </div>
+        </div>
+        <div>
+          <h4>Superintendências</h4>
+          <div class="crit">
+            <label><span>Muito volume: a partir de (coletas a cada 30 dias)</span> <input id="csVol" type="number" min="1" step="1" inputmode="numeric"></label>
+            <label><span>Taxa de corte, em % (vazio: média do Estado no período)</span> <input id="csTax" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="média"></label>
+            <label><span>Referência: taxa sem RENACH de até (%)</span> <input id="csRef" type="number" min="0" max="100" step="1" inputmode="numeric"></label>
+          </div>
+        </div>
+      </div>
+      <button class="reset" id="u-critPadrao">Voltar ao padrão</button>
+      <p class="umsg" id="u-mCrit" role="status" hidden></p>
+    </section>
+
+    <section class="passo" id="u-p4">
+      <h3><span>4</span>Gere o arquivo e importe no Firebase</h3>
+      <p>O arquivo leva a base inteira já atualizada: o que estava lá, os dias da planilha e os critérios acima.</p>
       <div class="uacoes">
         <button class="ubtn" id="u-gerar" disabled>Baixar arquivo para o Firebase</button>
         <button class="ubtn sec" id="u-checar" disabled>Conferir a importação</button>
@@ -385,6 +540,7 @@ tr.t3 .rk{background:var(--pill);color:#fff;border-radius:5px;padding:1px 0}
     </section>
   </div>
 
+  <button class="adm" id="adm">Atualizar dados</button>
 </div>
 
 <script>
@@ -392,15 +548,201 @@ tr.t3 .rk{background:var(--pill);color:#fff;border-radius:5px;padding:1px 0}
 const BASE = 'https://coleta-biometrica-default-rtdb.firebaseio.com';
 const PROJETO = 'coleta-biometrica';
 
-/* ── o painel: montado dentro de iniciar(), chamada no fim deste arquivo com os dados lidos do Firebase ── */
-function iniciar(DADOS) {
+/* ── exportação para Excel ──────────────────────────────── */
+const MIN = new Set(['de', 'do', 'da', 'dos', 'das', 'e']);
+function tidy(name) {                       // só aparência: nomes em caixa alta viram caixa normal (as siglas ficam)
+  const SIGLA = new Set(['PPT', 'CIR', 'SSP']), ws = name.split(' ');
+  let k = 0; while (k < ws.length - 1 && SIGLA.has(ws[k])) k++;
+  const rest = ws.slice(k).join(' ');
+  if (rest !== rest.toUpperCase()) return name;
+  return ws.slice(0, k).concat(rest.toLowerCase().split(' ').map((w, i) => (i && MIN.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
+}
+
+// planilha .xlsx montada na própria página (um zip sem compressão com os XML da planilha)
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+const crc32 = u => { let c = 0xFFFFFFFF; for (let i = 0; i < u.length; i++) c = CRC[(c ^ u[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+function zip(files) {
+  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
+  const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+  for (const [name, text] of files) {
+    const nm = enc.encode(name), data = enc.encode(text), crc = crc32(data);
+    const h = new DataView(new ArrayBuffer(30));
+    h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(8, 0, true); h.setUint16(10, time, true); h.setUint16(12, date, true);
+    h.setUint32(14, crc, true); h.setUint32(18, data.length, true); h.setUint32(22, data.length, true); h.setUint16(26, nm.length, true); h.setUint16(28, 0, true);
+    const c = new DataView(new ArrayBuffer(46));
+    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(10, 0, true); c.setUint16(12, time, true); c.setUint16(14, date, true);
+    c.setUint32(16, crc, true); c.setUint32(20, data.length, true); c.setUint32(24, data.length, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
+    parts.push(new Uint8Array(h.buffer), nm, data); central.push(new Uint8Array(c.buffer), nm);
+    off += 30 + nm.length + data.length;
+  }
+  const csize = central.reduce((a, u) => a + u.length, 0), e = new DataView(new ArrayBuffer(22));
+  e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, csize, true); e.setUint32(16, off, true);
+  const all = [...parts, ...central, new Uint8Array(e.buffer)], out = new Uint8Array(all.reduce((a, u) => a + u.length, 0));
+  let p = 0; all.forEach(u => { out.set(u, p); p += u.length; });
+  return out;
+}
+const xe = v => String(v).replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+const colL = n => { let t = ''; for (n++; n > 0; n = Math.floor((n - 1) / 26)) t = String.fromCharCode(65 + (n - 1) % 26) + t; return t; };
+// sheets: [{name, rows, pct: colunas em porcentagem, widths, table: true = cabeçalho fixo com filtro}]
+function xlsx(sheets) {
+  const sheetXml = sh => {
+    const rows = sh.rows.map((r, ri) => `<row r="${ri + 1}">` + r.map((v, ci) => {
+      const ref = colL(ci) + (ri + 1), head = sh.table && ri === 0;
+      if (v === null || v === undefined || v === '') return '';
+      if (typeof v === 'number') return `<c r="${ref}"${(sh.pct || []).includes(ci) ? ' s="2"' : ''}><v>${v}</v></c>`;
+      return `<c r="${ref}" t="inlineStr"${head || (!sh.table && ci === 0) ? ' s="1"' : ''}><is><t xml:space="preserve">${xe(v)}</t></is></c>`;
+    }).join('') + '</row>').join('');
+    const last = colL(sh.rows[0].length - 1) + sh.rows.length;
+    return `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">` +
+      (sh.table ? `<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>` : '') +
+      `<cols>${sh.widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('')}</cols>` +
+      `<sheetData>${rows}</sheetData>` + (sh.table && sh.rows.length > 1 ? `<autoFilter ref="A1:${last}"/>` : '') + `</worksheet>`;
+  };
+  const files = [
+    ['[Content_Types].xml', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`],
+    ['_rels/.rels', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`],
+    ['xl/workbook.xml', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map((sh, i) => `<sheet name="${xe(sh.name).replace(/"/g, '&quot;')}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('')}</sheets></workbook>`],
+    ['xl/_rels/workbook.xml.rels', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('')}<Relationship Id="rId${sheets.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`],
+    ['xl/styles.xml', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="0.0%"/></numFmts><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`],
+    ...sheets.map((sh, i) => ['xl/worksheets/sheet' + (i + 1) + '.xml', sheetXml(sh)])
+  ];
+  return zip(files);
+}
+function baixarDireto(arq) {
+  const url = URL.createObjectURL(new Blob([arq.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+  const a = document.createElement('a'); a.href = url; a.download = arq.filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+/* ── dados: a base no Firebase e o recorte por período ──
+   Estrutura da base (Realtime Database), tudo dentro de "painel":
+     painel/atualizadoEm          texto, por exemplo "07/10/2026 15:10"
+     painel/postos                lista de {posto, superintendencia}; a posição na lista é o número do posto
+     painel/coletas/AAAA-MM-DD    um texto por dia: "posto:com:sem;posto:com:sem;…"  (coletas com e sem abertura de RENACH)
+     painel/sacs/AAAA-MM-DD       lista de [protocolo, posto] dos SACs abertos no dia
+     painel/criterios             {p: {vol, min, ref, tax}, s: {vol, ref, tax}}  volumes para 30 dias, taxas em %
+     painel/avisos                lista de textos (opcional) */
+const DIA_MS = 86400000;
+const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const SEMANA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+const ISO = /^\d{4}-\d{2}-\d{2}$/;
+const nDia = iso => Math.round(Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10)) / DIA_MS);   // dia contado a partir de 1970
+const isoDia = n => new Date(n * DIA_MS).toISOString().slice(0, 10);
+const dataCurta = n => { const s = isoDia(n); return s.slice(8, 10) + '/' + s.slice(5, 7); };
+const dataCheia = n => { const s = isoDia(n); return s.slice(8, 10) + '/' + s.slice(5, 7) + '/' + s.slice(0, 4); };
+const diaSemana = n => SEMANA[new Date(n * DIA_MS).getUTCDay()];
+function textoPeriodo(a, b) {                       // "de 1 de setembro a 6 de outubro de 2026"
+  const A = isoDia(a), B = isoDia(b), d = s => +s.slice(8, 10), m = s => MESES[+s.slice(5, 7) - 1], y = s => s.slice(0, 4);
+  if (a === b) return `${d(B)} de ${m(B)} de ${y(B)}`;
+  if (A.slice(0, 7) === B.slice(0, 7)) return `de ${d(A)} a ${d(B)} de ${m(B)} de ${y(B)}`;
+  if (y(A) === y(B)) return `de ${d(A)} de ${m(A)} a ${d(B)} de ${m(B)} de ${y(B)}`;
+  return `de ${d(A)} de ${m(A)} de ${y(A)} a ${d(B)} de ${m(B)} de ${y(B)}`;
+}
+const txt = v => String(v === null || v === undefined ? '' : v).trim();
+const chave = v => txt(v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+const lista = v => (Array.isArray(v) ? v : v && typeof v === 'object' ? Object.keys(v).map(k => v[k]) : []).filter(x => x !== null && x !== undefined);
+
+// critérios dos grupos: volumes para 30 dias, taxas em %; tax vazio = média do Estado no período
+const CRIT_PADRAO = {p: {vol: 200, min: 20, ref: 10, tax: null}, s: {vol: 1000, ref: 15, tax: null}};
+function criterios(c) {
+  const num = (v, pad, lo, hi) => { const n = Number(v); return v !== null && v !== undefined && v !== '' && isFinite(n) && n >= lo && n <= hi ? n : pad; };
+  const p = (c && c.p) || {}, s = (c && c.s) || {}, P = CRIT_PADRAO;
+  return {p: {vol: Math.round(num(p.vol, P.p.vol, 1, 1e9)), min: Math.round(num(p.min, P.p.min, 1, 1e9)), ref: num(p.ref, P.p.ref, 0, 100), tax: num(p.tax, null, 0, 100)},
+          s: {vol: Math.round(num(s.vol, P.s.vol, 1, 1e9)), ref: num(s.ref, P.s.ref, 0, 100), tax: num(s.tax, null, 0, 100)}};
+}
+
+// Lê o registro "painel" da base e devolve tudo por dia, pronto para qualquer recorte
+function decodificar(reg) {
+  if (!reg || typeof reg !== 'object') throw new Error('A base de dados ainda não tem dados. Clique em Atualizar dados para carregar as planilhas e gerar o arquivo de importação.');
+  const postos = lista(reg.postos).map(p => ({nome: txt(p.posto), sup: txt(p.superintendencia) || 'Sem superintendência'}));
+  const col = reg.coletas && typeof reg.coletas === 'object' ? reg.coletas : {};
+  const dias = Object.keys(col).filter(k => ISO.test(k)).sort();
+  if (!postos.length || !dias.length) throw new Error('A base de dados está sem a lista de postos ou sem coletas. Clique em Atualizar dados para carregar as planilhas de novo.');
+  const d0 = nDia(dias[0]), d1 = nDia(dias[dias.length - 1]), N = d1 - d0 + 1, P = postos.length;
+  const com = postos.map(() => new Int32Array(N)), sem = postos.map(() => new Int32Array(N));
+  const eCol = new Int32Array(N), eSem = new Int32Array(N), eSac = new Int32Array(N);
+  dias.forEach(k => {
+    const d = nDia(k) - d0;
+    txt(col[k]).split(';').forEach(par => {
+      const v = par.split(':'), i = +v[0], c = Math.max(0, Math.round(+v[1]) || 0), s = Math.max(0, Math.round(+v[2]) || 0);
+      if (v.length !== 3 || !(i >= 0 && i < P) || c + s === 0) return;
+      com[i][d] += c; sem[i][d] += s; eCol[d] += c + s; eSem[d] += s;
+    });
+  });
+  const sacs = [], vistos = {}, avisos = lista(reg.avisos).map(txt).filter(Boolean);
+  let fora = 0;
+  const sr = reg.sacs && typeof reg.sacs === 'object' ? reg.sacs : {};
+  Object.keys(sr).filter(k => ISO.test(k)).sort().forEach(k => {
+    const d = nDia(k) - d0;
+    lista(sr[k]).forEach(s => {
+      const prot = txt(lista(s)[0]), i = +lista(s)[1];
+      if (!prot || vistos[prot] || !(i >= 0 && i < P)) return;
+      vistos[prot] = true;
+      if (d < 0 || d >= N) { fora++; return; }
+      sacs.push([prot, i, d]); eSac[d]++;
+    });
+  });
+  if (fora) avisos.push(`${fora} ${fora === 1 ? 'SAC ficou' : 'SACs ficaram'} de fora por ter data de abertura antes do primeiro ou depois do último dia com coleta na base.`);
+  return {postos, d0, d1, N, com, sem, sacs, eCol, eSem, eSac, crit: criterios(reg.criterios), avisos, lidoEm: txt(reg.atualizadoEm)};
+}
+
+// Dias do período escolhido, como posições a partir do primeiro dia da base. O fim é sempre o último dia com coleta.
+function faixa(ALL, per) {
+  const b = ALL.N - 1;
+  return per === 'all' ? [0, b] : [Math.max(0, b - (+per - 1)), b];
+}
+// Critérios na escala de um período de n dias
+function critNaEscala(crit, n) {
+  const f = n / 30, esc = v => Math.max(1, Math.round(v * f)), fr = v => v == null ? null : v / 100;
+  return {p: {vol: esc(crit.p.vol), min: esc(crit.p.min), ref: crit.p.ref / 100, tax: fr(crit.p.tax)}, s: {vol: esc(crit.s.vol), min: 0, ref: crit.s.ref / 100, tax: fr(crit.s.tax)}};
+}
+// Soma os dias a..b e devolve os dados no formato que iniciar() usa
+function recorte(ALL, a, b) {
+  const P = ALL.postos.length, linhas = [];
+  const z = new Int32Array(P);
+  ALL.sacs.forEach(s => { if (s[2] >= a && s[2] <= b) z[s[1]]++; });
+  for (let i = 0; i < P; i++) {
+    let c = 0, s = 0;
+    for (let d = a; d <= b; d++) { c += ALL.com[i][d]; s += ALL.sem[i][d]; }
+    if (c + s > 0 || z[i] > 0) linhas.push({gi: i, nome: ALL.postos[i].nome, sup: ALL.postos[i].sup, com: c, sem: s});   // só quem teve coleta ou SAC no período
+  }
+  const sups = [];
+  linhas.forEach(p => { if (sups.indexOf(p.sup) < 0) sups.push(p.sup); });
+  sups.sort((x, y) => chave(x) < chave(y) ? -1 : chave(x) > chave(y) ? 1 : 0);
+  // mesma ordem da tabela "Todos os postos": mais coletas sem RENACH primeiro
+  linhas.sort((x, y) => y.sem - x.sem || (y.com + y.sem) - (x.com + x.sem) || (x.nome < y.nome ? -1 : x.nome > y.nome ? 1 : 0));
+  const novo = {};
+  linhas.forEach((p, i) => { novo[p.gi] = i; });
+  const dias = b - a + 1;
+  return {
+    periodo: {dias, ini: ALL.d0 + a, fim: ALL.d0 + b, texto: textoPeriodo(ALL.d0 + a, ALL.d0 + b), dm: k => dataCurta(ALL.d0 + a + k)},
+    sups, postos: linhas.map(p => [p.nome, p.com + p.sem, p.com, p.sem, sups.indexOf(p.sup)]), gid: linhas.map(p => p.gi),
+    sacs: ALL.sacs.filter(s => s[2] >= a && s[2] <= b).map(s => [s[0], novo[s[1]], s[2] - a + 1]),
+    crit: critNaEscala(ALL.crit, dias), avisos: ALL.avisos, lidoEm: ALL.lidoEm
+  };
+}
+
+// leitura de um caminho da base, com as falhas explicadas em português
+async function lerBase(caminho) {
+  let r;
+  try { r = await fetch(BASE + '/' + caminho, {cache: 'no-store'}); }
+  catch (e) { throw new Error('Não foi possível falar com a base de dados. Confira a conexão com a internet e tente de novo.'); }
+  if (r.status === 401 || r.status === 403) throw new Error('A base de dados recusou a leitura. No Firebase, em Realtime Database > Regras, a leitura precisa estar liberada (".read": true).');
+  if (!r.ok) throw new Error('A base de dados respondeu com o erro ' + r.status + '. Tente de novo em alguns minutos.');
+  return r.json();
+}
+
+/* ── o painel (abas Postos e Superintendências): montado dentro de iniciar() com os dados de um período ── */
+function iniciar(DADOS, antes) {
+document.getElementById('tabA').innerHTML = MOLDE_PAINEL;   // tela limpa a cada período: os botões antigos saem junto com os ouvintes
+const FIM = new AbortController();                          // desliga os ouvintes globais quando o período muda
 const RAW = DADOS.postos;        // por posto: [posto, coletas, com RENACH, sem RENACH, índice da superintendência]
 const SUPS = DADOS.sups;         // nomes das superintendências
 const CIR = [];                  // sem uso: as unidades CIR já fazem parte dos postos
-const SACS = DADOS.sacs;         // SACs abertos no mês: [protocolo, índice do posto, dia de abertura]
+const SACS = DADOS.sacs;         // SACs abertos no período: [protocolo, índice do posto, dia do período (1 = primeiro dia)]
 const DIAS = DADOS.periodo.dias;
-const MES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'][DADOS.periodo.mes - 1];
-const MES3 = MES.slice(0, 3), MM = String(DADOS.periodo.mes).padStart(2, '0'), PER = MES + ' de ' + DADOS.periodo.ano;
+const PER = DADOS.periodo.texto; // "de 1 de setembro a 6 de outubro de 2026"
+const dm = DADOS.periodo.dm;     // dia do período (0 = primeiro) no formato dd/mm
 const AVISOS = DADOS.avisos || [];
 document.getElementById('sub').textContent = 'Postos Poupatempo e unidades CIR, ' + PER;
 
@@ -410,14 +752,6 @@ const nf = n => n.toLocaleString('pt-BR');
 const pf = (t, d = 1) => (t * 100).toLocaleString('pt-BR', {minimumFractionDigits: d, maximumFractionDigits: d}) + '%';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-const MIN = new Set(['de', 'do', 'da', 'dos', 'das', 'e']);
-function tidy(name) {                       // só aparência: nomes em caixa alta viram caixa normal (as siglas ficam)
-  const SIGLA = new Set(['PPT', 'CIR', 'SSP']), ws = name.split(' ');
-  let k = 0; while (k < ws.length - 1 && SIGLA.has(ws[k])) k++;
-  const rest = ws.slice(k).join(' ');
-  if (rest !== rest.toUpperCase()) return name;
-  return ws.slice(0, k).concat(rest.toLowerCase().split(' ').map((w, i) => (i && MIN.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1))).join(' ');
-}
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 function mix(a, b, t) {
   const h = x => [1, 3, 5].map(i => parseInt(x.slice(i, i + 2), 16));
@@ -433,7 +767,7 @@ const base = RAW.map((r, i) => ({i, nome: tidy(r[0]), key: norm(r[0]), vol: r[1]
 SACS.forEach(s => { const p = base[s[1]]; p.z++; p.sacs.push(s); });
 base.forEach(p => p.sacs.sort((a, b) => a[2] - b[2] || (a[0] < b[0] ? -1 : 1)));
 const T = base.reduce((a, p) => (a.vol += p.vol, a.com += p.com, a.bad += p.bad, a.z += p.z, a), {vol: 0, com: 0, bad: 0, z: 0});
-T.tx = T.bad / T.vol;
+T.tx = T.vol ? T.bad / T.vol : 0;
 // cada superintendência é a soma dos seus postos
 const sups = SUPS.map((nome, i) => ({i, nome, curto: nome.split(' – ').pop(), key: norm(nome), vol: 0, com: 0, bad: 0, z: 0, tx: 0, postos: [], days: Array(DIAS).fill(0)}));
 base.forEach(p => { const s = sups[p.sup]; s.vol += p.vol; s.com += p.com; s.bad += p.bad; s.z += p.z; s.postos.push(p.i); p.sacs.forEach(c => s.days[c[2] - 1]++); });
@@ -442,43 +776,45 @@ sups.forEach(s => { s.tx = s.vol ? s.bad / s.vol : 0; s.cir = []; });
 const cirNome = n => { const r = n.replace(/^CIR /, ''); return r !== r.toUpperCase() ? r : r.toLowerCase().split(' ').map((w, i) => (i && MIN.has(w)) ? w : w.charAt(0).toUpperCase() + w.slice(1)).join(' '); };
 CIR.forEach(c => sups[c[1]].cir.push([cirNome(c[0]), c[2]]));
 const CIRN = CIR.reduce((a, c) => a + c[2], 0);
-const cirObs = () => CIRN ? ` Outros ${nf(CIRN)} SACs do mês citam unidades CIR, que não fazem parte deste painel.` : '';
-const mx = (rows, k) => Math.max(...rows.map(p => p[k]));
+const cirObs = () => CIRN ? ` Outros ${nf(CIRN)} SACs do período citam unidades CIR, que não fazem parte deste painel.` : '';
+const mx = (rows, k) => Math.max(0, ...rows.map(p => p[k]));
+const critDe = c => ({vol: c.vol, tax: c.tax == null ? T.tx : c.tax, min: c.min, ref: c.ref});   // taxa de corte vazia = média do Estado no período
+const TICKS = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000], TICKSN = [1, 5, 20, 100, 500, 2000, 10000, 50000, 200000];
 function modo(id, rows, def, o) {
   return {id, rows, T, MAXVOL: mx(rows, 'vol'), MAXBAD: mx(rows, 'bad'), MAXZ: mx(rows, 'z'), DEF: def, C: {...def}, S: {view: 'crit', grp: null, sort: null, q: ''}, sel: null,
     unit: 'coletas', volCol: 'Coletas', zCol: 'SACs', zSum: 'SACs', zView: 'Mais SACs', badCol: 'Sem RENACH', bad: 'coletas sem RENACH', badShort: 'sem RENACH',
     txName: 'taxa sem RENACH', txView: 'Taxa mais alta', ...o};
 }
 const MODES = {
-  p: modo('p', base, {vol: 200, tax: T.tx, min: 20, ref: .10}, {
-    xmin: .8, zk: 1.55, ymax: 1, ystep: .2, ticks: [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000], ticksN: [1, 5, 20, 100, 500, 2000],
+  p: modo('p', base, critDe(DADOS.crit.p), {
+    xmin: .8, zk: 1.55, ymax: 1, ystep: .2, ticks: TICKS, ticksN: TICKSN,
     txTop: c => Math.max(.6, c + .05), rot: p => p.nome.replace(/^PPT /, '').replace('Posto Avancado ', ''), nrot: w => w < 520 ? 4 : 7,
     um: 'posto', uns: 'postos', col: 'Posto', busca: 'Buscar posto', todos: 'Todos os postos', emTodos: 'em todos os postos',
     mapa: 'Mapa dos postos: volume e taxa',
     dica: 'Cada bolha é um posto Poupatempo ou unidade CIR. Quanto mais à direita, mais coletas; quanto mais alto, maior a taxa sem RENACH. Bolhas maiores têm mais SACs.',
     dicaTab: 'Clique no posto para ver o detalhe. Clique no título da coluna para reordenar.',
     zona: 'Pequenos com taxa alta',
-    dCrit: () => `Postos com ${nf(m.C.vol)} ou mais coletas no mês e taxa sem RENACH acima ${ref()}, ordenados pela quantidade de coletas sem RENACH.`,
-    dTaxa: () => `Postos com pelo menos ${nf(m.C.min)} coletas no mês e taxa sem RENACH acima ${ref()}, da maior taxa para a menor.`,
-    dZ: () => `Postos citados nos SACs abertos em ${MES}, do mais citado para o menos citado.` + cirObs(),
-    dRef: () => `Postos de qualquer tamanho com pelo menos ${nf(m.C.min)} coletas no mês e taxa sem RENACH de até ${pf(m.C.ref, 0)}, da menor taxa para a maior.`,
+    dCrit: () => `Postos com ${nf(m.C.vol)} ou mais coletas no período e taxa sem RENACH acima ${ref()}, ordenados pela quantidade de coletas sem RENACH.`,
+    dTaxa: () => `Postos com pelo menos ${nf(m.C.min)} coletas no período e taxa sem RENACH acima ${ref()}, da maior taxa para a menor.`,
+    dZ: () => `Postos citados nos SACs abertos no período, do mais citado para o menos citado.` + cirObs(),
+    dRef: () => `Postos de qualquer tamanho com pelo menos ${nf(m.C.min)} coletas no período e taxa sem RENACH de até ${pf(m.C.ref, 0)}, da menor taxa para a maior.`,
     dAll: () => `Os ${nf(m.rows.length)} postos, ordenados pela quantidade de coletas sem RENACH.`,
-    vazio: 'Nenhum posto atende a este critério. Ajuste os critérios dos grupos no fim da página.',
+    vazio: 'Nenhum posto atende a este critério. Experimente um período maior.',
     semBusca: q => `Nenhum posto com "${q}" no nome. Confira a grafia ou apague a busca.`}),
-  s: modo('s', sups, {vol: 1000, tax: T.tx, min: 0, ref: .15}, {
-    xmin: 150, zk: 1.15, ymax: .4, ystep: .1, ticks: [200, 500, 1000, 2000, 5000, 10000], ticksN: [200, 1000, 5000],
+  s: modo('s', sups, critDe(DADOS.crit.s), {
+    xmin: Math.min(150, Math.max(.8, Math.min(...sups.map(s => s.vol).filter(v => v > 0)) * .7)), zk: 1.15, ymax: .4, ystep: .1, ticks: TICKS, ticksN: TICKSN,
     txTop: c => Math.max(.4, c + .05), rot: p => p.curto, nrot: () => 20,
     um: 'superintendência', uns: 'superintendências', col: 'Superintendência', busca: 'Buscar superintendência', todos: 'Todas as superintendências', emTodos: 'em todas as superintendências',
     mapa: 'Mapa das superintendências: volume e taxa',
     dica: 'Cada bolha é uma superintendência, com a soma dos seus postos. Quanto mais à direita, mais coletas; quanto mais alto, maior a taxa sem RENACH. Bolhas maiores têm mais SACs.',
     dicaTab: 'Clique na superintendência para ver o detalhe e o ranking dos postos dela.',
     zona: 'Pouco volume, taxa alta',
-    dCrit: () => `Superintendências com ${nf(m.C.vol)} ou mais coletas no mês e taxa sem RENACH acima ${ref()}, ordenadas pela quantidade de coletas sem RENACH.`,
+    dCrit: () => `Superintendências com ${nf(m.C.vol)} ou mais coletas no período e taxa sem RENACH acima ${ref()}, ordenadas pela quantidade de coletas sem RENACH.`,
     dTaxa: () => `Superintendências com taxa sem RENACH acima ${ref()}, da maior taxa para a menor.`,
-    dZ: () => `Superintendências com postos citados nos SACs abertos em ${MES}, da mais citada para a menos citada.` + cirObs(),
+    dZ: () => `Superintendências com postos citados nos SACs abertos no período, da mais citada para a menos citada.` + cirObs(),
     dRef: () => `Superintendências com taxa sem RENACH de até ${pf(m.C.ref, 0)}, da menor taxa para a maior.`,
     dAll: () => `As ${nf(m.rows.length)} superintendências, ordenadas pela quantidade de coletas sem RENACH.`,
-    vazio: 'Nenhuma superintendência atende a este critério. Ajuste os critérios dos grupos no fim da página.',
+    vazio: 'Nenhuma superintendência atende a este critério. Experimente um período maior.',
     semBusca: q => `Nenhuma superintendência com "${q}" no nome. Confira a grafia ou apague a busca.`})
 };
 let m = MODES.p;                                   // aba aberta
@@ -488,12 +824,12 @@ const RK = {
   vol: {f: 'rCol', t: 'coletas', frase: 'em quantidade de coletas'},
   bad: {f: 'rVol', t: 'sem RENACH', frase: 'em coletas sem RENACH'},
   tx: {f: 'rTx', t: 'taxa', frase: 'em taxa sem RENACH (postos abaixo do mínimo de coletas ficam sem posição)'},
-  z: {f: 'rZ', t: 'SACs', frase: 'em SACs abertos (postos sem SAC no mês ficam sem posição)'}
+  z: {f: 'rZ', t: 'SACs', frase: 'em SACs abertos (postos sem SAC no período ficam sem posição)'}
 };
 
 /* ── grupos e posições ──────────────────────────────────── */
 const ref = () => Math.abs(m.C.tax - T.tx) < 1e-9 ? 'da média' : 'do corte';
-const gname = n => [null, 'Muito volume, taxa acima ' + ref(), 'Pouco volume, taxa acima ' + ref(), 'Muito volume, taxa abaixo ' + ref(), 'Pouco volume, taxa abaixo ' + ref(), 'Menos de ' + nf(m.C.min) + ' ' + m.unit + ' no mês'][n];
+const gname = n => [null, 'Muito volume, taxa acima ' + ref(), 'Pouco volume, taxa acima ' + ref(), 'Muito volume, taxa abaixo ' + ref(), 'Pouco volume, taxa abaixo ' + ref(), 'Menos de ' + nf(m.C.min) + ' ' + m.unit + ' no período'][n];
 function classify(md) {
   const C = md.C, rows = md.rows;
   rows.forEach(p => { p.g = p.vol < C.min ? 5 : p.tx > C.tax ? (p.vol >= C.vol ? 1 : 2) : (p.vol >= C.vol ? 3 : 4); });
@@ -538,14 +874,12 @@ function drawHead() {
     `<div class="kpi"><b>${nf(T.vol)}</b><span>coletas p/ 1ª habilitação</span></div>
      <div class="kpi"><b>${nf(T.bad)}</b><span>sem abertura de RENACH</span></div>
      <div class="kpi hot"><b>${pf(T.tx)}</b><span>taxa de coleta sem RENACH</span></div>
-     <div class="kpi"><b>${nf(T.z)}</b><span>SACs abertos no mês</span></div>`;
-  $('lVol').textContent = 'Muito volume: a partir de (coletas no mês)';
-  $('lMin').textContent = 'Mínimo de coletas para avaliar a taxa do posto';
-  $('rowMin').hidden = m.id === 's';
+     <div class="kpi"><b>${nf(T.z)}</b><span>SACs abertos no período</span></div>`;
   $('src').textContent = m.id === 's'
     ? 'Fonte: os mesmos números da aba Postos, somados por superintendência.'
     : `Fonte: base de dados do painel${DADOS.lidoEm ? ', atualizada em ' + DADOS.lidoEm : ''}.`;
-  ABA = m.id; marcarAbas();
+  if (ABA !== 'e') ABA = m.id;
+  marcarAbas();
   $('maptitle').textContent = m.mapa; $('maphint').textContent = m.dica; $('tabhint').textContent = m.dicaTab;
   $('q').placeholder = m.busca; $('q').setAttribute('aria-label', m.busca + ' pelo nome');
   $('drill').hidden = m.id !== 's'; document.querySelector('.main').classList.toggle('sup', m.id === 's');
@@ -572,7 +906,7 @@ function drawSummary(list) {
 
 /* ── mapa ───────────────────────────────────────────────── */
 let W = 720, H = 470; const M = {l: 50, r: 16, t: 14, b: 46};
-const xs = v => { const a = Math.log10(m.xmin), b = Math.log10(Math.max(800, m.MAXVOL * 1.15)); return M.l + (Math.log10(Math.max(v, m.xmin)) - a) / (b - a) * (W - M.l - M.r); };
+const xs = v => { const a = Math.log10(m.xmin), b = Math.log10(Math.max(m.xmin * 40, m.MAXVOL * 1.15)); return M.l + (Math.log10(Math.max(v, m.xmin)) - a) / (b - a) * (W - M.l - M.r); };
 const ys = t => M.t + (m.ymax * 1.04 - t) / (m.ymax * 1.08) * (H - M.t - M.b);
 const rad = p => 4 + Math.sqrt(p.z) * m.zk;
 function drawMap(list) {
@@ -580,7 +914,7 @@ function drawMap(list) {
   W = Math.max(300, Math.round($('svgbox').clientWidth || 720)); H = Math.round(W < 520 ? W * .95 : Math.min(500, W * .66));
   const ink = css('--ink'), muted = css('--muted'), line = css('--line'), surf = css('--surface');
   const gc = [null, css('--g1'), css('--g2'), css('--g3'), css('--g4'), css('--g5')];
-  let o = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de bolhas: ${m.unit} no mês por ${m.txName}, um ponto por ${m.um}">`;
+  let o = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de bolhas: ${m.unit} no período por ${m.txName}, um ponto por ${m.um}">`;
   const x0 = M.l, x1 = W - M.r, y0 = ys(0), y1 = ys(m.ymax);
   const xm = xs(C.min), xv = xs(C.vol), yt = Math.max(M.t, ys(Math.min(C.tax, m.ymax)));
   o += `<rect x="${x0}" y="${M.t}" width="${Math.max(0, xm - x0)}" height="${H - M.t - M.b}" fill="${muted}" opacity=".09"/>`;
@@ -589,11 +923,11 @@ function drawMap(list) {
     o += `<line x1="${x0}" x2="${x1}" y1="${ys(t)}" y2="${ys(t)}" stroke="${line}" stroke-width="1"/>
           <text x="${x0 - 8}" y="${ys(t) + 4}" text-anchor="end" font-size="12" fill="${muted}">${pf(t, 0)}</text>`;
   }
-  (W < 520 ? m.ticksN : m.ticks).filter(v => v <= m.MAXVOL * 1.1).forEach(v => {
+  (W < 520 ? m.ticksN : m.ticks).filter(v => v >= m.xmin && v <= m.MAXVOL * 1.1).forEach(v => {
     o += `<line x1="${xs(v)}" x2="${xs(v)}" y1="${y0}" y2="${y0 + 5}" stroke="${muted}"/>
           <text x="${xs(v)}" y="${y0 + 19}" text-anchor="middle" font-size="12" fill="${muted}">${nf(v)}</text>`;
   });
-  o += `<text x="${x0}" y="${H - 8}" font-size="12.5" fill="${muted}">${m.unit} no mês</text>`;
+  o += `<text x="${x0}" y="${H - 8}" font-size="12.5" fill="${muted}">${m.unit} no período</text>`;
   o += `<text transform="translate(13 ${(y0 + y1) / 2}) rotate(-90)" text-anchor="middle" font-size="12.5" fill="${muted}">${m.txName}</text>`;
   o += `<line x1="${xv}" x2="${xv}" y1="${M.t}" y2="${H - M.b}" stroke="${ink}" stroke-width="1.3" stroke-dasharray="5 4"/>`;
   o += `<line x1="${x0}" x2="${x1}" y1="${yt}" y2="${yt}" stroke="${ink}" stroke-width="1.3" stroke-dasharray="5 4"/>`;
@@ -674,8 +1008,8 @@ function drawTable(list) {
 /* ── detalhe do posto ───────────────────────────────────── */
 function dayBars(days, label) {
   const dmax = Math.max(1, ...days);
-  return `<div class="days" role="img" aria-label="${label}">${days.map((d, k) => `<i class="${d ? '' : 'z'}" style="height:${d ? Math.max(8, d / dmax * 100) : 3}%" title="dia ${k + 1}: ${d}"></i>`).join('')}</div>
-          <div class="dayaxis"><span>1/${MES3}</span><span>${label}</span><span>${DIAS}/${MES3}</span></div>`;
+  return `<div class="days" role="img" aria-label="${label}">${days.map((d, k) => `<i class="${d ? '' : 'z'}" style="height:${d ? Math.max(8, d / dmax * 100) : 3}%" title="${dm(k)}: ${d}"></i>`).join('')}</div>
+          <div class="dayaxis"><span>${dm(0)}</span><span>${label}</span><span>${DIAS > 1 ? dm(DIAS - 1) : ''}</span></div>`;
 }
 function drawDetail() {
   if (m.id === 's') return drawSup();
@@ -687,7 +1021,7 @@ function drawDetail() {
   box.innerHTML =
     `<div class="who"><h3>${esc(p.nome)}</h3><span class="chip"><span class="dot" style="background:${css('--g' + p.g)}"></span>${gname(p.g)}</span></div>
      <div class="stats">
-       <div class="stat"><b>${nf(p.vol)}</b><span>coletas no mês</span></div>
+       <div class="stat"><b>${nf(p.vol)}</b><span>coletas no período</span></div>
        <div class="stat"><b>${nf(p.com)}</b><span>com RENACH</span></div>
        <div class="stat"><b style="color:${css('--g1')}">${nf(p.bad)}</b><span>sem RENACH</span></div>
        <div class="stat"><b>${pf(p.tx)}</b><span>${cmp}</span></div>
@@ -700,10 +1034,11 @@ function drawDetail() {
        <span>Em SACs: <b>${ord(p.rZ)}</b></span>
        <span>Peso no Estado: <b>${pf(T.bad ? p.bad / T.bad : 0)}</b> das coletas sem RENACH</span>
      </div>
+     <button class="go" data-evo="p:${DADOS.gid[p.i]}">Ver a evolução deste posto no tempo</button>
      <div class="sacs">
-       <h4>${p.z ? nf(p.z) + (p.z === 1 ? ' SAC aberto' : ' SACs abertos') + ' em ' + MES : 'Nenhum SAC aberto em ' + MES}</h4>
+       <h4>${p.z ? nf(p.z) + (p.z === 1 ? ' SAC aberto' : ' SACs abertos') + ' no período' : 'Nenhum SAC aberto no período'}</h4>
        ${p.z ? dayBars(days, 'SACs por dia de abertura') +
-       `<div class="protos" tabindex="0" aria-label="Protocolos dos SACs">${p.sacs.map(s => `<span>${esc(s[0])}<em>${String(s[2]).padStart(2, '0')}/${MM}</em></span>`).join('')}</div>` : ''}
+       `<div class="protos" tabindex="0" aria-label="Protocolos dos SACs">${p.sacs.map(s => `<span>${esc(s[0])}<em>${dm(s[2] - 1)}</em></span>`).join('')}</div>` : ''}
      </div>`;
 }
 
@@ -716,7 +1051,7 @@ function drawSup() {
   box.innerHTML =
     `<div class="who"><h3>${esc(p.nome)}</h3><span class="chip"><span class="dot" style="background:${css('--g' + p.g)}"></span>${gname(p.g)}</span></div>
      <div class="stats">
-       <div class="stat"><b>${nf(p.vol)}</b><span>coletas no mês</span></div>
+       <div class="stat"><b>${nf(p.vol)}</b><span>coletas no período</span></div>
        <div class="stat"><b>${nf(p.com)}</b><span>com RENACH</span></div>
        <div class="stat"><b style="color:${css('--g1')}">${nf(p.bad)}</b><span>sem RENACH</span></div>
        <div class="stat"><b>${pf(p.tx)}</b><span>${cmp}</span></div>
@@ -730,8 +1065,9 @@ function drawSup() {
        <span>Peso no Estado: <b>${pf(T.bad ? p.bad / T.bad : 0)}</b> das coletas sem RENACH</span>
        <span>Postos e unidades: <b>${nf(p.postos.length)}</b></span>
      </div>
+     <button class="go" data-evo="s:${esc(p.nome)}">Ver a evolução desta superintendência no tempo</button>
      <div class="sacs">
-       <h4>${p.z ? nf(p.z) + (p.z === 1 ? ' SAC aberto' : ' SACs abertos') + ' em ' + MES : 'Nenhum SAC aberto em ' + MES}</h4>
+       <h4>${p.z ? nf(p.z) + (p.z === 1 ? ' SAC aberto' : ' SACs abertos') + ' no período' : 'Nenhum SAC aberto no período'}</h4>
        ${p.z ? dayBars(p.days, 'SACs por dia de abertura') : ''}
        ${p.cir.length ? `<p class="hint">Fora deste painel, ${nf(p.cir.reduce((a, c) => a + c[1], 0))} ${p.cir.reduce((a, c) => a + c[1], 0) === 1 ? 'SAC cita' : 'SACs citam'} unidades CIR desta superintendência: ${p.cir.map(c => `${esc(c[0])} (${nf(c[1])})`).join(', ')}.</p>` : ''}
      </div>`;
@@ -776,71 +1112,21 @@ function drawNotes() {
   const list = m.id === 's'
     ? ['Cada superintendência soma os postos Poupatempo e as unidades CIR sob sua responsabilidade. A soma das superintendências é igual ao total do Estado da aba Postos.',
        'Taxa sem RENACH é a quantidade sem RENACH dividida pelas coletas para 1ª habilitação.',
-       'O SAC conta pela data de abertura e pelo posto citado. A coleta pode ter ocorrido em outro mês.',
-       ...(CIRN ? [`A base de SACs de ${MES} tem ${nf(T.z + CIRN)} protocolos: ${nf(T.z)} citam postos Poupatempo e entram nas contas; ${nf(CIRN)} citam unidades CIR e aparecem só como observação no detalhe da superintendência.`] : []),
+       'O SAC conta pela data de abertura e pelo posto citado. A coleta pode ter ocorrido em outro dia, fora do período.',
+       ...(CIRN ? [`A base de SACs do período tem ${nf(T.z + CIRN)} protocolos: ${nf(T.z)} citam postos Poupatempo e entram nas contas; ${nf(CIRN)} citam unidades CIR e aparecem só como observação no detalhe da superintendência.`] : []),
        'No ranking de postos, a cor do ponto e a posição no Estado são as mesmas da aba Postos.',
        'No mapa, a escala de coletas é comprimida para caber superintendências pequenas e grandes, e a escala de taxa vai só até onde há superintendências.']
     : ['Taxa sem RENACH é a quantidade sem RENACH dividida pelas coletas para 1ª habilitação.',
-       'O painel reúne os postos Poupatempo e as demais unidades que fizeram coleta no mês, como as CIR. Cada uma aparece com o nome que tem na base.',
+       'O painel reúne os postos Poupatempo e as demais unidades que fizeram coleta no período, como as CIR. Cada uma aparece com o nome que tem na base.',
        ...(over ? [`Em ${over} postos, a soma de com e sem RENACH passa do total de coletas (${extra} a mais no Estado). Os valores estão como vieram da origem.`] : []),
-       'O SAC conta pela data de abertura. A coleta pode ter ocorrido em outro mês.',
-       ...(CIRN ? [`A base de SACs de ${MES} tem ${nf(T.z + CIRN)} protocolos: ${nf(T.z)} citam postos Poupatempo e entram neste painel; ${nf(CIRN)} citam unidades CIR, que não fazem parte dele.`] : []),
-       `${semZero} ${semZero === 1 ? 'posto tem' : 'postos têm'} SAC em ${MES} e nenhuma coleta sem RENACH registrada no mês.`,
+       'O SAC conta pela data de abertura. A coleta pode ter ocorrido em outro dia, fora do período.',
+       ...(CIRN ? [`A base de SACs do período tem ${nf(T.z + CIRN)} protocolos: ${nf(T.z)} citam postos Poupatempo e entram neste painel; ${nf(CIRN)} citam unidades CIR, que não fazem parte dele.`] : []),
+       `${semZero} ${semZero === 1 ? 'posto tem' : 'postos têm'} SAC no período e nenhuma coleta sem RENACH registrada nele.`,
        'No mapa, a escala de coletas é comprimida para caber postos pequenos e grandes. Postos com números idênticos aparecem levemente afastados para não se esconderem.'];
   $('notes').innerHTML = list.concat(AVISOS.map(esc)).map(t => `<li>${t}</li>`).join('');
 }
 
 /* ── exportação para Excel ──────────────────────────────── */
-// planilha .xlsx montada na própria página (um zip sem compressão com os XML da planilha)
-const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
-const crc32 = u => { let c = 0xFFFFFFFF; for (let i = 0; i < u.length; i++) c = CRC[(c ^ u[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
-function zip(files) {
-  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
-  const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
-  for (const [name, text] of files) {
-    const nm = enc.encode(name), data = enc.encode(text), crc = crc32(data);
-    const h = new DataView(new ArrayBuffer(30));
-    h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(8, 0, true); h.setUint16(10, time, true); h.setUint16(12, date, true);
-    h.setUint32(14, crc, true); h.setUint32(18, data.length, true); h.setUint32(22, data.length, true); h.setUint16(26, nm.length, true); h.setUint16(28, 0, true);
-    const c = new DataView(new ArrayBuffer(46));
-    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true); c.setUint16(10, 0, true); c.setUint16(12, time, true); c.setUint16(14, date, true);
-    c.setUint32(16, crc, true); c.setUint32(20, data.length, true); c.setUint32(24, data.length, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
-    parts.push(new Uint8Array(h.buffer), nm, data); central.push(new Uint8Array(c.buffer), nm);
-    off += 30 + nm.length + data.length;
-  }
-  const csize = central.reduce((a, u) => a + u.length, 0), e = new DataView(new ArrayBuffer(22));
-  e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, csize, true); e.setUint32(16, off, true);
-  const all = [...parts, ...central, new Uint8Array(e.buffer)], out = new Uint8Array(all.reduce((a, u) => a + u.length, 0));
-  let p = 0; all.forEach(u => { out.set(u, p); p += u.length; });
-  return out;
-}
-const xe = v => String(v).replace(/[&<>]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;'}[c])).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
-const colL = n => { let t = ''; for (n++; n > 0; n = Math.floor((n - 1) / 26)) t = String.fromCharCode(65 + (n - 1) % 26) + t; return t; };
-// sheets: [{name, rows, pct: colunas em porcentagem, widths, table: true = cabeçalho fixo com filtro}]
-function xlsx(sheets) {
-  const sheetXml = sh => {
-    const rows = sh.rows.map((r, ri) => `<row r="${ri + 1}">` + r.map((v, ci) => {
-      const ref = colL(ci) + (ri + 1), head = sh.table && ri === 0;
-      if (v === null || v === undefined || v === '') return '';
-      if (typeof v === 'number') return `<c r="${ref}"${(sh.pct || []).includes(ci) ? ' s="2"' : ''}><v>${v}</v></c>`;
-      return `<c r="${ref}" t="inlineStr"${head || (!sh.table && ci === 0) ? ' s="1"' : ''}><is><t xml:space="preserve">${xe(v)}</t></is></c>`;
-    }).join('') + '</row>').join('');
-    const last = colL(sh.rows[0].length - 1) + sh.rows.length;
-    return `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">` +
-      (sh.table ? `<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>` : '') +
-      `<cols>${sh.widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('')}</cols>` +
-      `<sheetData>${rows}</sheetData>` + (sh.table && sh.rows.length > 1 ? `<autoFilter ref="A1:${last}"/>` : '') + `</worksheet>`;
-  };
-  const files = [
-    ['[Content_Types].xml', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>${sheets.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')}</Types>`],
-    ['_rels/.rels', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`],
-    ['xl/workbook.xml', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheets.map((sh, i) => `<sheet name="${xe(sh.name).replace(/"/g, '&quot;')}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('')}</sheets></workbook>`],
-    ['xl/_rels/workbook.xml.rels', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('')}<Relationship Id="rId${sheets.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`],
-    ['xl/styles.xml', `<${'?'}xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="0.0%"/></numFmts><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`],
-    ...sheets.map((sh, i) => ['xl/worksheets/sheet' + (i + 1) + '.xml', sheetXml(sh)])
-  ];
-  return zip(files);
-}
 const slug = t => norm(t).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 // monta o arquivo da tabela que está na tela: 'main' = tabela da aba aberta, 'drill' = postos da superintendência selecionada
 function montarExport(kind) {
@@ -878,11 +1164,6 @@ let DL = null;
 // fora do Claude a exportação usa o download normal do navegador
 const SOLTO = true;
 const expMsg = t => { $('expmsg').textContent = t; };
-function baixarDireto(arq) {
-  const url = URL.createObjectURL(new Blob([arq.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
-  const a = document.createElement('a'); a.href = url; a.download = arq.filename; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
-}
 async function exportar(kind) {
   if (!DL && !SOLTO) return;
   const arq = montarExport(kind);
@@ -912,7 +1193,7 @@ function render(how) {                      // how: 'top' escolhe o 1º da lista
   if (how === 'top' || m.sel == null || (how === 'in' && !list.some(p => p.i === m.sel))) m.sel = list.length ? list[0].i : m.sel;
   drawViews(); drawSummary(list); drawMap(list); drawTable(list); drawDetail(); drawDrill(); drawNotes();
 }
-function syncInputs() { $('cVol').value = m.C.vol; $('cTax').value = (m.C.tax * 100).toFixed(1); $('cMin').value = m.C.min; $('cRef').value = Math.round(m.C.ref * 100); $('q').value = m.S.q; }
+function syncInputs() { $('q').value = m.S.q; }
 function select(i, fromTable) {
   m.sel = i; const list = currentList();
   drawMap(list); drawTable(list); drawDetail(); drawDrill();
@@ -927,28 +1208,18 @@ $('rows').addEventListener('click', e => { const r = e.target.closest('tr'); if 
 $('rows').addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const r = e.target.closest('tr'); if (r) { e.preventDefault(); select(+r.dataset.i, true); const n = $('rows').querySelector(`tr[data-i="${r.dataset.i}"]`); if (n) n.focus(); } });
 $('q').addEventListener('input', e => { const S = m.S; S.q = e.target.value.trim(); if (S.q && S.view !== 'all') { S.view = 'all'; S.grp = null; S.sort = null; } render('in'); });
 const tip = $('tip');
+$('detail').addEventListener('click', e => { const b = e.target.closest('[data-evo]'); if (b) verEvolucao(b.dataset.evo); });
 $('svgbox').addEventListener('click', e => { const c = e.target.closest('.pt'); if (c) select(+c.dataset.i, false); });
 $('svgbox').addEventListener('pointermove', e => {
   const c = e.target.closest('.pt'); if (!c) { tip.style.display = 'none'; return; }
   const p = m.rows[+c.dataset.i], box = $('mapbox').getBoundingClientRect(), r = c.getBoundingClientRect();
-  tip.innerHTML = `<b>${esc(p.nome)}</b>${nf(p.vol)} coletas, ${nf(p.bad)} sem RENACH (${pf(p.tx)})<br>${nf(p.z)} ${p.z === 1 ? 'SAC' : 'SACs'} no mês${m.id === 's' ? `, ${nf(p.postos.length)} ${p.postos.length === 1 ? 'posto' : 'postos'}` : ''}`;
+  tip.innerHTML = `<b>${esc(p.nome)}</b>${nf(p.vol)} coletas, ${nf(p.bad)} sem RENACH (${pf(p.tx)})<br>${nf(p.z)} ${p.z === 1 ? 'SAC' : 'SACs'} no período${m.id === 's' ? `, ${nf(p.postos.length)} ${p.postos.length === 1 ? 'posto' : 'postos'}` : ''}`;
   tip.style.display = 'block';
   const half = tip.offsetWidth / 2, cx = r.left + r.width / 2 - box.left;
   tip.style.left = Math.min(box.width - half - 6, Math.max(half + 6, cx)) + 'px';
   tip.style.top = (r.top - box.top) + 'px';
 });
 $('svgbox').addEventListener('pointerleave', () => tip.style.display = 'none');
-function readInputs() {
-  const C = m.C, v = parseFloat($('cVol').value), t = parseFloat($('cTax').value), mn = parseFloat($('cMin').value), r = parseFloat($('cRef').value);
-  if (v >= 1) C.vol = Math.round(v);
-  if (mn >= 1) C.min = Math.round(mn);
-  if (t >= 0 && t <= 100) C.tax = Math.abs(t - +(m.DEF.tax * 100).toFixed(1)) < 1e-9 ? m.DEF.tax : t / 100;
-  if (r >= 0 && r <= 100) C.ref = r / 100;
-  render('in');
-}
-['cVol', 'cTax', 'cMin', 'cRef'].forEach(id => $(id).addEventListener('input', readInputs));
-$('reset').addEventListener('click', () => { Object.assign(m.C, m.DEF); syncInputs(); render('in'); });
-$('tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.dataset.m !== 'u' && b.dataset.m !== m.id) abrir(b.dataset.m); });
 $('dhrow').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k;
   if (RK[k]) DR.rk = k;                            // Coletas, Sem RENACH, Taxa ou SACs: a coluna "No Estado" passa a mostrar essa posição
@@ -957,370 +1228,717 @@ $('dhrow').addEventListener('click', e => {
 const irPosto = r => { if (!r) return; abrir('p', +r.dataset.i); scrollTo({top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'}); };
 $('drows').addEventListener('click', e => irPosto(e.target.closest('tr')));
 $('drows').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); irPosto(e.target.closest('tr')); } });
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => render('keep'));
-new MutationObserver(() => render('keep')).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => render('keep'), {signal: FIM.signal});
+const obsTema = new MutationObserver(() => render('keep'));
+obsTema.observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
 
-abrir('p');
+// volta ao que estava aberto antes da troca de período: aba, visão, ordem, busca e o posto selecionado (pelo nome)
+if (antes) {
+  ['p', 's'].forEach(id => {
+    const a = antes[id], md = MODES[id]; if (!a) return;
+    md.S = {...a.S};
+    const r = a.sel == null ? null : md.rows.find(x => x.nome === a.sel);
+    md.sel = r ? r.i : null;
+  });
+  Object.assign(DR, antes.DR);
+}
+abrir(antes && MODES[antes.aba] ? antes.aba : 'p');
 let lastW = $('svgbox').clientWidth;
-new ResizeObserver(() => { const w = $('svgbox').clientWidth; if (w && Math.abs(w - lastW) > 8) { lastW = w; drawMap(currentList()); } }).observe($('svgbox'));
-addEventListener('painel-visivel', () => { lastW = $('svgbox').clientWidth; render('keep'); });   // volta da aba Atualizar dados
+const obsLargura = new ResizeObserver(() => { const w = $('svgbox').clientWidth; if (w && Math.abs(w - lastW) > 8) { lastW = w; drawMap(currentList()); } });
+obsLargura.observe($('svgbox'));
+const nomeSel = md => { const r = md.sel == null ? null : md.rows[md.sel]; return r ? r.nome : null; };
+return {
+  abrir: (id, nome) => {                           // chamada pelas abas; nome abre um posto ou superintendência específico
+    const r = nome == null ? null : MODES[id].rows.find(x => x.nome === nome);
+    if (r) abrir(id, r.i); else if (id !== m.id) abrir(id); else { drawHead(); render('keep'); }
+    lastW = $('svgbox').clientWidth;
+  },
+  estado: () => ({aba: m.id, p: {S: {...MODES.p.S}, sel: nomeSel(MODES.p)}, s: {S: {...MODES.s.S}, sel: nomeSel(MODES.s)}, DR: {sort: DR.sort.slice(), rk: DR.rk}}),
+  sair: () => { FIM.abort(); obsTema.disconnect(); obsLargura.disconnect(); }
+};
 }
 
-/* ── abertura: os dados vêm do Firebase (Realtime Database) ──
-   Estrutura esperada na base:
-     meses/AAAA-MM/atualizadoEm   texto, por exemplo "07/10/2026 12:10"
-     meses/AAAA-MM/postos         lista de {posto, superintendencia, com, sem}   (coletas com e sem abertura de RENACH)
-     meses/AAAA-MM/sacs           lista de {protocolo, posto, data}              (data como AAAA-MM-DD)
-     meses/AAAA-MM/avisos         lista de textos (opcional)
-   O painel abre o mês mais recente. Para abrir outro: ?mes=2026-09 no fim do endereço. */
+/* ── aba Evolução: a linha do tempo da taxa, o antes e depois, e quem melhorou ou piorou ── */
+const EV = {esc: 'e', marco: null, uni: 'p', sort: ['var', -1], dia: null, montado: null};
 
-// Transforma o registro de um mês da base no formato que o painel usa
-function montar(mes, reg) {
-  const txt = v => String(v === null || v === undefined ? '' : v).trim();
-  const chave = v => txt(v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
-  const lista = v => (Array.isArray(v) ? v : v && typeof v === 'object' ? Object.keys(v).map(k => v[k]) : []).filter(x => x !== null && x !== undefined);
-  const inteiro = v => { const n = Math.round(Number(v)); return Number.isFinite(n) && n > 0 ? n : 0; };
-  const plural = (n, um, varios) => n + ' ' + (n === 1 ? um : varios);
-  const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-  const ano = +mes.slice(0, 4), m = +mes.slice(5, 7);
-  if (!reg || typeof reg !== 'object') throw new Error('O mês ' + mes + ' está na base de dados sem conteúdo.');
-  const avisos = lista(reg.avisos).map(txt).filter(Boolean);
+// série diária do que está em Analisar: 'e' = Estado, 's:Nome' = superintendência, 'p:número' = posto
+function evSerie(esc) {
+  const N = ALL.N;
+  if (esc === 'e') return {nome: 'Estado', tipo: 'e', col: ALL.eCol, sem: ALL.eSem, sac: ALL.eSac};
+  const col = new Int32Array(N), sem = new Int32Array(N), sac = new Int32Array(N);
+  let ids, nome;
+  if (esc[0] === 's') { nome = esc.slice(2); ids = ALL.postos.map((p, i) => p.sup === nome ? i : -1).filter(i => i >= 0); }
+  else { const i = +esc.slice(2), p = ALL.postos[i]; nome = p ? tidy(p.nome) : ''; ids = p ? [i] : []; }
+  const set = new Set(ids);
+  ids.forEach(i => { for (let d = 0; d < N; d++) { col[d] += ALL.com[i][d] + ALL.sem[i][d]; sem[d] += ALL.sem[i][d]; } });
+  ALL.sacs.forEach(s => { if (set.has(s[1])) sac[s[2]]++; });
+  return {nome, tipo: esc[0], col, sem, sac};
+}
+function evSoma(S, f) {                             // totais de uma faixa [a, b] de dias
+  let col = 0, sem = 0, sac = 0, dias = 0;
+  for (let d = f[0]; d <= f[1]; d++) { col += S.col[d]; sem += S.sem[d]; sac += S.sac[d]; if (S.col[d]) dias++; }
+  return {col, sem, sac, dias, n: f[1] - f[0] + 1, tx: col ? sem / col : null};
+}
+function evMM(S) {                                  // média móvel de 7 dias: sem RENACH dos 7 dias até a data, dividido pelas coletas dos mesmos dias
+  const out = new Array(ALL.N).fill(null);
+  let c = 0, s = 0;
+  for (let d = 0; d < ALL.N; d++) {
+    c += S.col[d]; s += S.sem[d];
+    if (d >= 7) { c -= S.col[d - 7]; s -= S.sem[d - 7]; }
+    if (c > 0) out[d] = s / c;
+  }
+  return out;
+}
+function evTend(S, f) {                             // reta ajustada à taxa de cada dia, com peso pelo volume do dia
+  let n = 0, sw = 0, sx = 0, sy = 0, sxx = 0, sxy = 0;
+  for (let d = f[0]; d <= f[1]; d++) { const w = S.col[d]; if (!w) continue; const y = S.sem[d] / w; n++; sw += w; sx += w * d; sy += w * y; sxx += w * d * d; sxy += w * d * y; }
+  const den = sw * sxx - sx * sx;
+  if (n < 5 || den <= 0) return null;
+  const k = (sw * sxy - sx * sy) / den, c = (sy - k * sx) / sw;
+  return {semana: k * 7, y0: c + k * f[0], y1: c + k * f[1]};
+}
+const evRot = f => f[0] === f[1] ? dataCurta(ALL.d0 + f[0]) : dataCurta(ALL.d0 + f[0]) + ' a ' + dataCurta(ALL.d0 + f[1]);
+// As duas faixas que a aba compara. Com data informada: antes e depois dela. Sem data: o período escolhido e o anterior de mesmo tamanho.
+function evJanelas() {
+  const N = ALL.N, tot = faixa(ALL, PERIODO), L = tot[1] - tot[0] + 1;
+  let J;
+  if (PERIODO === 'all') {
+    const h = Math.floor(N / 2);
+    J = {tipo: 'metades', agora: [h, N - 1], antes: h ? [0, h - 1] : null, nomeAntes: '1ª metade', nomeAgora: '2ª metade'};
+  } else if (L === 1) {
+    let j = tot[0] - 1; while (j >= 0 && !ALL.eCol[j]) j--;
+    J = {tipo: 'dia', agora: tot, antes: j >= 0 ? [j, j] : null, nomeAntes: 'dia anterior com coleta', nomeAgora: 'último dia'};
+  } else {
+    const a = tot[0] - L;
+    J = {tipo: 'periodo', agora: tot, antes: tot[0] > 0 ? [Math.max(0, a), tot[0] - 1] : null, incompleto: a < 0, nomeAntes: L + ' dias anteriores', nomeAgora: 'últimos ' + L + ' dias'};
+  }
+  J.tot = tot;
+  if (EV.marco != null) {
+    const m = EV.marco, k = N - m;
+    J.marco = {m, depois: [m, N - 1], antes: [Math.max(0, m - k), m - 1], k, incompleto: m - k < 0};
+  }
+  return J;
+}
 
-  const porPosto = {}, ordem = [];
-  let vazios = 0;
-  lista(reg.postos).forEach(p => {
-    const nome = txt(p.posto), com = inteiro(p.com), sem = inteiro(p.sem);
-    if (!nome || com + sem === 0) { vazios++; return; }
-    let o = porPosto[nome];
-    if (!o) { o = porPosto[nome] = {nome, sup: txt(p.superintendencia) || 'Sem superintendência', com: 0, sem: 0}; ordem.push(o); }
-    o.com += com; o.sem += sem;
+(function () {
+  const $ = id => document.getElementById(id);
+  const nf = n => Math.round(n).toLocaleString('pt-BR');
+  const n1 = n => n.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+  const pf = (t, d = 1) => t == null ? '–' : (t * 100).toLocaleString('pt-BR', {minimumFractionDigits: d, maximumFractionDigits: d}) + '%';
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const h = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+  const liso = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  // variação com seta: sobe = piora (taxa, sem RENACH, SACs) quando ruim = true; neutro para o volume de coletas
+  const seta = (v, texto, ruimSeSobe) => {
+    const parado = Math.abs(v) < 1e-9, cls = parado || ruimSeSobe == null ? 'neutro' : (v > 0) === ruimSeSobe ? 'ruim' : 'bom';
+    return `<span class="dl ${cls}"><i>${parado ? '●' : v > 0 ? '▲' : '▼'}</i>${texto}</span>`;
+  };
+  const ppTxt = d => (d > 0 ? '+' : d < 0 ? '−' : '') + n1(Math.abs(d * 100)) + ' p.p.';
+  const pcTxt = (a, b) => b ? ((a - b) / b > 0 ? '+' : (a - b) / b < 0 ? '−' : '') + n1(Math.abs((a - b) / b * 100)) + '%' : '';
+  let S = null, E = null, J = null, G = null;      // série escolhida, série do Estado, janelas e geometria do gráfico
+
+  /* ── o seletor "Analisar" ── */
+  function montarSeletor() {
+    if (EV.montado === ALL) return;
+    EV.montado = ALL;
+    const sel = $('evEsc'); sel.textContent = '';
+    const op = (pai, v, t) => { const o = document.createElement('option'); o.value = v; o.textContent = t; pai.append(o); };
+    const grupo = t => { const g = document.createElement('optgroup'); g.label = t; sel.append(g); return g; };
+    op(sel, 'e', 'Estado (todos os postos)');
+    const gs = grupo('Superintendências');
+    [...new Set(ALL.postos.map(p => p.sup))].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(s => op(gs, 's:' + s, s));
+    const gp = grupo('Postos e unidades');
+    ALL.postos.map((p, i) => [tidy(p.nome), i]).sort((a, b) => a[0].localeCompare(b[0], 'pt-BR')).forEach(p => op(gp, 'p:' + p[1], p[0]));
+    if (![...sel.options].some(o => o.value === EV.esc)) EV.esc = 'e';
+    if (EV.marco != null && !(EV.marco >= 1 && EV.marco <= ALL.N - 1)) EV.marco = null;
+    $('evData').min = isoDia(ALL.d0 + 1); $('evData').max = isoDia(ALL.d1);
+  }
+
+  /* ── cartões: como está e como estava ── */
+  function cartoes() {
+    const A = evSoma(S, J.tot), B = evSoma(S, J.agora), C = J.antes ? evSoma(S, J.antes) : null, T = evTend(S, J.tot);
+    const card = (rot, val, em, small) => `<div class="evcard"><span>${rot}</span><b>${val}</b>${em ? `<em>${em}</em>` : ''}${small ? `<small>${small}</small>` : ''}</div>`;
+    let emTx = '', smTx = '';
+    if (!C || C.tx == null || B.tx == null) emTx = 'Sem coletas no período anterior para comparar.';
+    else if (J.tipo === 'metades') { emTx = seta(B.tx - C.tx, ppTxt(B.tx - C.tx), true) + ' da 1ª para a 2ª metade'; smTx = `${evRot(J.antes)}: ${pf(C.tx)} · ${evRot(J.agora)}: ${pf(B.tx)}`; }
+    else {
+      emTx = seta(B.tx - C.tx, ppTxt(B.tx - C.tx), true) + (J.tipo === 'dia' ? ' sobre o dia anterior com coleta' : ' sobre os ' + J.nomeAntes);
+      smTx = `${evRot(J.antes)}: ${pf(C.tx)}` + (J.incompleto ? ` (a base só tem ${C.n} desses ${B.n} dias)` : '');
+    }
+    const comparavel = C && (J.tipo === 'dia' || (J.tipo === 'periodo' && !J.incompleto));
+    const vol = (k, ruim) => comparavel && C[k]
+      ? [seta(B[k] - C[k], pcTxt(B[k], C[k]), ruim) + (J.tipo === 'dia' ? ' sobre o dia anterior' : ' sobre o período anterior'), `${evRot(J.antes)}: ${nf(C[k])}`]
+      : ['', k === 'sac' ? `média de ${n1(A.sac / A.n)} por dia` : A.dias ? `média de ${nf(A[k] / A.dias)} por dia com coleta` : ''];
+    const tend = T
+      ? card('Tendência da taxa no período', ppTxt(T.semana), seta(Math.abs(T.semana) < .005 ? 0 : T.semana, Math.abs(T.semana) < .005 ? 'estável' : T.semana > 0 ? 'em alta' : 'em queda', true) + ' por semana', 'reta ajustada à taxa de cada dia, com peso pelo volume')
+      : card('Tendência da taxa no período', '–', '', 'são precisos pelo menos 5 dias com coleta no período');
+    $('evCards').innerHTML =
+      card('Taxa sem RENACH', pf(A.tx), emTx, smTx) +
+      card('Coletas', nf(A.col), ...vol('col', null)) +
+      card('Sem abertura de RENACH', nf(A.sem), ...vol('sem', true)) +
+      card('SACs abertos', nf(A.sac), ...vol('sac', true)) + tend;
+  }
+
+  /* ── gráfico: três quadros com o mesmo eixo de dias (taxa, coletas, SACs) ── */
+  const teto = v => { if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))), f = v / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; };
+  function grafico() {
+    const box = $('evSvg'), N = ALL.N;
+    const W = Math.max(320, Math.round((box.clientWidth || 916) - 16)), estreito = W < 560;
+    const L = 46, R = 56, x0 = L, x1 = W - R, passo = (x1 - x0) / N, X = d => x0 + (d + .5) * passo;
+    const H1 = estreito ? 190 : 250, H2 = 104, H3 = 76, V = 36, y1t = 22, y1b = y1t + H1, y2t = y1b + V, y2b = y2t + H2, y3t = y2b + V, y3b = y3t + H3, H = y3b + 28;
+    const ink = css('--ink'), muted = css('--muted'), line = css('--line'), surf = css('--surface'), azul = css('--g3'), laranja = css('--g2'), cinza = css('--g5');
+    const mm = evMM(S), mmE = E ? evMM(E) : null, tx = d => S.col[d] ? S.sem[d] / S.col[d] : null;
+    // escala da taxa: pela média móvel e pelos dias de volume normal, para um sábado de 3 coletas não achatar o gráfico
+    const vols = [...S.col].filter(v => v > 0).sort((a, b) => a - b), lim = Math.max(3, (vols[Math.floor(vols.length / 2)] || 0) * .25);
+    let topo = 0;
+    for (let d = 0; d < N; d++) { if (mm[d] != null) topo = Math.max(topo, mm[d]); if (mmE && mmE[d] != null) topo = Math.max(topo, mmE[d]); if (S.col[d] >= lim) topo = Math.max(topo, tx(d)); }
+    let ymax = Math.min(1, Math.max(.2, Math.ceil(topo * 10 - 1e-9) / 10)); if (ymax < 1 && topo > ymax - .015) ymax += .1;
+    const ystep = ymax > .6 ? .2 : .1, Y = t => y1b - Math.min(t, ymax) / ymax * H1;
+    const maxC = teto(Math.max(1, ...S.col)), maxS = teto(Math.max(1, ...S.sac));
+    const bw = Math.max(1, Math.min(24, passo - 2));
+    const titulo = (y, t) => `<text x="${x0}" y="${y - 9}" font-size="12.5" font-weight="700" fill="${ink}">${t}</text>`;
+    const grade = (y, rot) => `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="${line}" stroke-width="1"/><text x="${x0 - 7}" y="${y + 4}" text-anchor="end" font-size="11.5" fill="${muted}">${rot}</text>`;
+    let o = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Três gráficos por dia de ${h(S.nome)}: taxa sem RENACH com média móvel de 7 dias, coletas com e sem RENACH, e SACs abertos">`;
+    if (J.tot[0] > 0) o += `<rect x="${x0 + J.tot[0] * passo}" y="${y1t}" width="${(J.tot[1] - J.tot[0] + 1) * passo}" height="${y3b - y1t}" fill="${ink}" opacity=".06"/>`;
+    // quadro 1: taxa
+    o += titulo(y1t, 'Taxa sem RENACH');
+    for (let t = 0; t <= ymax + 1e-9; t += ystep) o += grade(Y(t), pf(t, 0));
+    const caminho = (v, f) => { let p = '', on = false; for (let d = 0; d < N; d++) { if (v[d] == null) { on = false; continue; } p += (on ? 'L' : 'M') + X(d).toFixed(1) + ' ' + f(v[d]).toFixed(1); on = true; } return p; };
+    if (mmE) o += `<path d="${caminho(mmE, Y)}" fill="none" stroke="${cinza}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    const rp = passo < 7 ? 2 : 3;
+    for (let d = 0; d < N; d++) { const t = tx(d); if (t != null) o += `<circle cx="${X(d).toFixed(1)}" cy="${Y(t).toFixed(1)}" r="${rp}" fill="${azul}" opacity="${t > ymax ? .18 : .38}"/>`; }
+    o += `<path d="${caminho(mm, Y)}" fill="none" stroke="${azul}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    const T = evTend(S, J.tot);
+    if (T) o += `<line x1="${X(J.tot[0])}" y1="${Y(Math.max(0, T.y0))}" x2="${X(J.tot[1])}" y2="${Y(Math.max(0, T.y1))}" stroke="${ink}" stroke-width="1.6" stroke-dasharray="6 5"/>`;
+    let ult = N - 1; while (ult >= 0 && mm[ult] == null) ult--;
+    if (ult >= 0) o += `<circle cx="${X(ult).toFixed(1)}" cy="${Y(mm[ult]).toFixed(1)}" r="4.5" fill="${azul}" stroke="${surf}" stroke-width="2"/><text x="${X(ult) + 9}" y="${Y(mm[ult]) + 4}" font-size="12.5" font-weight="700" fill="${ink}">${pf(mm[ult])}</text>`;
+    // quadro 2: coletas, com o sem RENACH na base da coluna
+    o += titulo(y2t, 'Coletas por dia');
+    [0, maxC / 2, maxC].forEach(v => { o += grade(y2b - v / maxC * H2, nf(v)); });
+    for (let d = 0; d < N; d++) {
+      if (!S.col[d]) continue;
+      const hs = S.sem[d] / maxC * H2, hc = (S.col[d] - S.sem[d]) / maxC * H2, x = (X(d) - bw / 2).toFixed(1), vao = hs > 2 && hc > 3 ? 1.5 : 0;
+      if (hs > 0) o += `<rect x="${x}" y="${(y2b - hs).toFixed(1)}" width="${bw.toFixed(1)}" height="${hs.toFixed(1)}" fill="${laranja}"/>`;
+      if (hc > 0) o += `<rect x="${x}" y="${(y2b - hs - hc).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(.5, hc - vao).toFixed(1)}" fill="${cinza}" opacity=".5"/>`;
+    }
+    // quadro 3: SACs
+    o += titulo(y3t, 'SACs abertos por dia');
+    [0, maxS].forEach(v => { o += grade(y3b - v / maxS * H3, nf(v)); });
+    for (let d = 0; d < N; d++) if (S.sac[d]) { const hh = S.sac[d] / maxS * H3; o += `<rect x="${(X(d) - bw / 2).toFixed(1)}" y="${(y3b - hh).toFixed(1)}" width="${bw.toFixed(1)}" height="${hh.toFixed(1)}" fill="${azul}" opacity=".6"/>`; }
+    // eixo dos dias
+    const cabe = Math.max(2, Math.floor((x1 - x0) / 58)), cada = [1, 2, 7, 14, 28, 56, 91, 182, 365].find(k => N / k <= cabe) || 365;
+    for (let d = 0; d < N; d += cada) o += `<text x="${X(d).toFixed(1)}" y="${y3b + 18}" text-anchor="middle" font-size="11.5" fill="${muted}">${dataCurta(ALL.d0 + d)}</text>`;
+    // data informada em "Antes e depois"
+    if (J.marco) { const xm = x0 + J.marco.m * passo; o += `<line x1="${xm}" x2="${xm}" y1="${y1t - 4}" y2="${y3b}" stroke="${laranja}" stroke-width="2"/><text x="${Math.min(xm + 5, x1 - 4)}" y="${y1t + 8}" text-anchor="${xm + 60 > x1 ? 'end' : 'start'}" font-size="11.5" font-weight="700" fill="${ink}" stroke="${surf}" stroke-width="3" paint-order="stroke">${dataCurta(ALL.d0 + J.marco.m)}</text>`; }
+    o += `<line id="evCruz" x1="0" x2="0" y1="${y1t}" y2="${y3b}" stroke="${ink}" stroke-width="1" opacity="0"/>`;
+    o += `<rect id="evAlvo" x="${x0}" y="${y1t}" width="${x1 - x0}" height="${y3b - y1t}" fill="transparent"/></svg>`;
+    box.innerHTML = o;
+    G = {W, x0, passo, X, mm, mmE};
+    const key = (cor, estilo) => `<svg width="22" height="10" aria-hidden="true">${estilo === 'ponto' ? `<circle cx="11" cy="5" r="3.5" fill="${cor}" opacity=".5"/>` : estilo === 'caixa' ? `<rect x="5" y="0" width="12" height="10" fill="${cor}" opacity="${cor === cinza ? .5 : 1}"/>` : `<line x1="1" x2="21" y1="5" y2="5" stroke="${cor}" stroke-width="${estilo === 'traco' ? 1.6 : 2.4}" ${estilo === 'traco' ? 'stroke-dasharray="6 5"' : ''}/>`}</svg>`;
+    $('evLeg').innerHTML = [
+      [azul, 'linha', 'Média móvel de 7 dias'], [azul, 'ponto', 'Taxa de cada dia'],
+      ...(mmE ? [[cinza, 'linha', 'Estado, média móvel de 7 dias']] : []),
+      ...(T ? [[ink, 'traco', 'Tendência no período']] : []),
+      [laranja, 'caixa', 'Coletas sem RENACH'], [cinza, 'caixa', 'Coletas com RENACH'],
+      ...(J.marco ? [[laranja, 'linha', 'Data informada']] : [])
+    ].map(l => `<span>${key(l[0], l[1])}${l[2]}</span>`).join('') + (J.tot[0] > 0 ? `<span><svg width="22" height="10" aria-hidden="true"><rect width="22" height="10" fill="${ink}" opacity=".12"/></svg>Período escolhido</span>` : '');
+    $('evTit').textContent = 'A taxa sem RENACH no tempo: ' + S.nome;
+    $('evHint').textContent = 'Cada ponto é a taxa de um dia. A linha é a média móvel de 7 dias (as coletas sem RENACH dos 7 dias até a data, divididas pelas coletas dos mesmos dias), que tira o efeito do dia da semana. Passe o mouse ou use as setas do teclado para ler um dia.';
+    if (EV.dia != null) mostrarDia(Math.min(EV.dia, N - 1));
+  }
+  function mostrarDia(d) {
+    const tip = $('evTip'), cruz = $('evCruz');
+    if (d == null || !G) { EV.dia = null; tip.style.display = 'none'; if (cruz) cruz.setAttribute('opacity', '0'); return; }
+    EV.dia = d;
+    cruz.setAttribute('x1', G.X(d)); cruz.setAttribute('x2', G.X(d)); cruz.setAttribute('opacity', '.55');
+    tip.textContent = '';
+    const b = document.createElement('b'); b.textContent = dataCheia(ALL.d0 + d) + ', ' + diaSemana(ALL.d0 + d); tip.append(b);
+    const linha = (rot, val) => { const r = document.createElement('div'), a = document.createElement('span'), v = document.createElement('span'); a.textContent = rot; v.textContent = val; r.append(a, v); tip.append(r); };
+    linha('Taxa do dia', S.col[d] ? pf(S.sem[d] / S.col[d]) : 'sem coleta');
+    linha('Média móvel de 7 dias', pf(G.mm[d]));
+    if (G.mmE) linha('Estado, média de 7 dias', pf(G.mmE[d]));
+    linha('Coletas', nf(S.col[d])); linha('Sem RENACH', nf(S.sem[d])); linha('SACs abertos', nf(S.sac[d]));
+    tip.style.display = 'block';
+    const svg = $('evSvg').querySelector('svg'), r = svg.getBoundingClientRect(), bx = $('evBox').getBoundingClientRect(), k = r.width / G.W;
+    const px = r.left - bx.left + G.X(d) * k, w = tip.offsetWidth;
+    tip.style.left = Math.max(w / 2 + 6, Math.min(bx.width - w / 2 - 6, px + (px > bx.width / 2 ? -(w / 2 + 14) : w / 2 + 14))) + 'px';
+    tip.style.top = (r.top - bx.top + 26 * k) + 'px';
+  }
+
+  /* ── antes e depois de uma data ── */
+  function marco() {
+    const box = $('evMarco'), M = J.marco;
+    $('evLimpa').hidden = !M; $('evData').value = M ? isoDia(ALL.d0 + M.m) : $('evData').value;
+    if (!M) { box.innerHTML = ''; return; }
+    const A = evSoma(S, M.antes), D = evSoma(S, M.depois);
+    const dif = A.tx != null && D.tx != null ? D.tx - A.tx : null;
+    box.innerHTML =
+      `<div class="stats">
+         <div class="stat"><b>${pf(A.tx)}</b><span>antes: ${evRot(M.antes)}, ${nf(A.col)} coletas</span></div>
+         <div class="stat"><b>${pf(D.tx)}</b><span>depois: ${evRot(M.depois)}, ${nf(D.col)} coletas</span></div>
+         <div class="stat"><b>${dif == null ? '–' : ppTxt(dif)}</b><span>${dif == null ? 'sem coletas em um dos lados' : seta(Math.abs(dif) < .0005 ? 0 : dif, Math.abs(dif) < .0005 ? 'igual' : dif > 0 ? 'piorou' : 'melhorou', true)}</span></div>
+       </div>
+       <p class="hint">${h(S.nome)}: ${M.depois[1] - M.depois[0] + 1} ${M.k === 1 ? 'dia' : 'dias'} a partir da data, contra ${M.antes[1] - M.antes[0] + 1} antes dela${M.incompleto ? ' (a base não tem mais dias anteriores)' : ''}. A tabela ao lado passa a usar essas mesmas duas faixas.</p>`;
+  }
+
+  /* ── quem melhorou e quem piorou ── */
+  function linhasRank() {
+    const fa = J.marco ? J.marco.antes : J.antes, fb = J.marco ? J.marco.depois : J.agora;
+    if (!fa) return {rows: [], fora: 0, min: 0, fa, fb};
+    const menor = Math.min(fa[1] - fa[0] + 1, fb[1] - fb[0] + 1), min = Math.max(5, Math.round(ALL.crit.p.min * menor / 30));
+    const som = (i, f) => { let c = 0, s = 0; for (let d = f[0]; d <= f[1]; d++) { c += ALL.com[i][d] + ALL.sem[i][d]; s += ALL.sem[i][d]; } return [c, s]; };
+    let itens;
+    if (EV.uni === 'p') itens = ALL.postos.map((p, i) => ({k: 'p:' + i, nome: tidy(p.nome), sup: p.sup, ids: [i]}));
+    else { const g = {}; ALL.postos.forEach((p, i) => { (g[p.sup] = g[p.sup] || {k: 's:' + p.sup, nome: p.sup, sup: '', ids: []}).ids.push(i); }); itens = Object.keys(g).map(k => g[k]); }
+    const sacB = {}; ALL.sacs.forEach(s => { if (s[2] >= fb[0] && s[2] <= fb[1]) sacB[s[1]] = (sacB[s[1]] || 0) + 1; });
+    let fora = 0; const rows = [];
+    itens.forEach(it => {
+      let ca = 0, sa = 0, cb = 0, sb = 0, z = 0;
+      it.ids.forEach(i => { const x = som(i, fa), y = som(i, fb); ca += x[0]; sa += x[1]; cb += y[0]; sb += y[1]; z += sacB[i] || 0; });
+      if (ca + cb === 0) return;
+      if (ca < min || cb < min) { fora++; return; }
+      rows.push({k: it.k, nome: it.nome, sup: it.sup, a: sa / ca, b: sb / cb, var: sb / cb - sa / ca, ca, cb, col: cb, sac: z});
+    });
+    const [sk, sd] = EV.sort;
+    rows.sort((x, y) => sk === 'nome' ? sd * x.nome.localeCompare(y.nome, 'pt-BR') : sd * (x[sk] - y[sk]) || y.cb - x.cb || x.nome.localeCompare(y.nome, 'pt-BR'));
+    return {rows, fora, min, fa, fb};
+  }
+  function ranking() {
+    const R = linhasRank(), um = EV.uni === 'p' ? 'posto' : 'superintendência', uns = EV.uni === 'p' ? 'postos' : 'superintendências';
+    const rotA = J.marco ? 'Antes' : J.tipo === 'metades' ? '1ª metade' : 'Antes', rotB = J.marco ? 'Depois' : J.tipo === 'metades' ? '2ª metade' : 'Agora';
+    [...$('evUni').children].forEach(b => b.setAttribute('aria-pressed', String(b.dataset.u === EV.uni)));
+    const [sk, sd] = EV.sort;
+    $('evHrow').innerHTML = [['nome', EV.uni === 'p' ? 'Posto' : 'Superintendência', 1], ['a', rotA], ['b', rotB], ['var', 'Variação'], ['col', 'Coletas'], ['sac', 'SACs']].map(c =>
+      `<th class="${c[2] ? 'l' : ''}" ${c[0] === sk ? `aria-sort="${sd > 0 ? 'ascending' : 'descending'}"` : ''}><button data-k="${c[0]}">${c[1]}</button></th>`).join('');
+    const maxV = Math.max(.01, ...R.rows.map(r => Math.abs(r.var)));
+    const g1 = css('--g1'), g4 = css('--g4');
+    const barra = v => { const w = Math.abs(v) / maxV * 50; return `<span class="varc"><b>${ppTxt(v).replace(' p.p.', '')}</b><span class="var"><i style="${v >= 0 ? 'left:50%' : 'right:50%'};width:${w.toFixed(1)}%;background:${v > 0 ? g1 : g4}"></i></span></span>`; };
+    $('evRows').innerHTML = R.rows.map((r, k) =>
+      `<tr tabindex="0" data-k="${h(r.k)}" aria-selected="${r.k === EV.esc}">
+        <td class="l"><div class="cell"><span class="rk">${k + 1}</span><span class="nm">${h(r.nome)}</span></div></td>
+        <td>${pf(r.a)}<small class="n">${nf(r.ca)} coletas</small></td>
+        <td>${pf(r.b)}<small class="n">${nf(r.cb)} coletas</small></td>
+        <td>${barra(r.var)}</td>
+        <td>${nf(r.col)}</td>
+        <td>${nf(r.sac)}</td>
+      </tr>`).join('');
+    const e = $('evVazio'); e.hidden = R.rows.length > 0;
+    e.textContent = !R.fa ? 'A base ainda não tem um período anterior para comparar. Escolha um período menor ou informe uma data em "Antes e depois de uma data".'
+      : `Nenhum${EV.uni === 'p' ? '' : 'a'} ${um} tem pelo menos ${nf(R.min)} coletas nas duas faixas comparadas.`;
+    $('evRkTit').textContent = EV.uni === 'p' ? 'Postos: quem melhorou e quem piorou' : 'Superintendências: quem melhorou e quem piorou';
+    $('evRkHint').textContent = !R.fa ? '' :
+      `Taxa sem RENACH de ${evRot(R.fa)} (${rotA.toLowerCase()}) comparada com a de ${evRot(R.fb)} (${rotB.toLowerCase()}). A variação é em pontos percentuais: para cima, piorou; para baixo, melhorou. Entram ${uns} com pelo menos ${nf(R.min)} coletas em cada faixa` +
+      (R.fora ? `; ${nf(R.fora)} ${R.fora === 1 ? 'ficou' : 'ficaram'} de fora` : '') + `. Coletas e SACs são da faixa mais recente. Clique em uma linha para ver a evolução dela no gráfico.`;
+    return R;
+  }
+
+  /* ── exportações ── */
+  const sobre = () => [['Painel', 'Coleta biométrica na 1ª habilitação, postos Poupatempo e unidades CIR'], ['Base', `${textoPeriodo(ALL.d0, ALL.d1)}` + (ALL.lidoEm ? `, atualizada em ${ALL.lidoEm}` : '')]];
+  function exportarSerie() {
+    const mm = evMM(S), mmE = E ? evMM(E) : null, rows = [['Data', 'Dia da semana', 'Coletas', 'Com RENACH', 'Sem RENACH', 'Taxa sem RENACH', 'Média móvel de 7 dias', 'SACs abertos'].concat(mmE ? ['Estado: média móvel de 7 dias'] : [])];
+    for (let d = 0; d < ALL.N; d++) rows.push([dataCheia(ALL.d0 + d), diaSemana(ALL.d0 + d), S.col[d], S.col[d] - S.sem[d], S.sem[d], S.col[d] ? S.sem[d] / S.col[d] : '', mm[d] == null ? '' : mm[d], S.sac[d]].concat(mmE ? [mmE[d] == null ? '' : mmE[d]] : []));
+    const info = [...sobre(), ['Analisado', S.nome], ['Média móvel de 7 dias', 'Coletas sem RENACH dos 7 dias até a data, divididas pelas coletas dos mesmos dias.']];
+    baixarDireto({filename: 'coleta-biometrica_evolucao_' + slugG(S.nome) + '.xlsx', data: xlsx([{name: 'Série diária', rows, pct: [5, 6, 8], widths: [12, 15, 10, 13, 13, 16, 22, 13, 30], table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
+  }
+  function exportarRank() {
+    const R = linhasRank(); if (!R.rows.length) return;
+    const p = EV.uni === 'p', rows = [['Posição', p ? 'Posto' : 'Superintendência'].concat(p ? ['Superintendência'] : [], ['Taxa antes', 'Coletas antes', 'Taxa depois', 'Coletas depois', 'Variação (pontos percentuais)', 'SACs depois'])];
+    R.rows.forEach((r, k) => rows.push([k + 1, r.nome].concat(p ? [r.sup] : [], [r.a, r.ca, r.b, r.cb, +(r.var * 100).toFixed(2), r.sac])));
+    const o = p ? 1 : 0, info = [...sobre(), ['Antes', evRot(R.fa)], ['Depois', evRot(R.fb)], ['Critério', `Pelo menos ${nf(R.min)} coletas em cada faixa.`], ['Linhas', R.rows.length]];
+    baixarDireto({filename: `coleta-biometrica_variacao_${p ? 'postos' : 'superintendencias'}.xlsx`, data: xlsx([{name: 'Variação', rows, pct: [2 + o, 4 + o], widths: [9, 38].concat(p ? [26] : [], [13, 15, 13, 15, 28, 13]), table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
+  }
+  const slugG = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  /* ── ciclo ── */
+  window.desenharEvolucao = function () {
+    if (!ALL) return;
+    montarSeletor();
+    $('evEsc').value = EV.esc;
+    S = evSerie(EV.esc); E = EV.esc === 'e' ? null : evSerie('e'); J = evJanelas();
+    cartoes(); grafico(); marco(); ranking();
+    $('evSrc').textContent = `Fonte: base de dados do painel, ${textoPeriodo(ALL.d0, ALL.d1)}` + (ALL.lidoEm ? `, atualizada em ${ALL.lidoEm}` : '') + '. O período termina sempre no último dia com coleta na base.';
+  };
+  const redesenhar = () => { if (ABA === 'e' && !document.body.classList.contains('atualizando')) window.desenharEvolucao(); };
+  $('evEsc').addEventListener('change', e => { EV.esc = e.target.value; EV.dia = null; redesenhar(); });
+  $('evData').addEventListener('change', e => {
+    const v = e.target.value, m = ISO.test(v) ? nDia(v) - ALL.d0 : null;
+    EV.marco = m != null && m >= 1 && m <= ALL.N - 1 ? m : null;
+    if (v && EV.marco == null) { e.target.value = ''; $('evMarco').innerHTML = `<p class="hint">Escolha uma data entre ${dataCheia(ALL.d0 + 1)} e ${dataCheia(ALL.d1)}, que é o intervalo da base.</p>`; S = evSerie(EV.esc); J = evJanelas(); $('evLimpa').hidden = true; grafico(); ranking(); return; }
+    redesenhar();
   });
-  if (!ordem.length) throw new Error('O mês ' + mes + ' está na base de dados sem a lista de postos.');
-  if (vazios) avisos.push(plural(vazios, 'registro de posto ficou', 'registros de posto ficaram') + ' de fora por estar sem nome ou sem coletas.');
-
-  const sups = [];
-  ordem.forEach(p => { if (sups.indexOf(p.sup) < 0) sups.push(p.sup); });
-  sups.sort((a, b) => chave(a) < chave(b) ? -1 : chave(a) > chave(b) ? 1 : 0);
-  // mesma ordem da tabela "Todos os postos": mais coletas sem RENACH primeiro
-  ordem.sort((a, b) => b.sem - a.sem || (b.com + b.sem) - (a.com + a.sem) || (a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0));
-  const iPosto = {};
-  ordem.forEach((p, i) => { iPosto[p.nome] = i; });
-
-  const sacs = [], vistos = {};
-  let fora = 0;
-  lista(reg.sacs).forEach(s => {
-    const prot = txt(s.protocolo), posto = txt(s.posto), data = txt(s.data);
-    if (!prot || vistos[prot] || !(posto in iPosto) || data.slice(0, 7) !== mes || !/^\d{4}-\d{2}-\d{2}/.test(data)) { fora++; return; }
-    vistos[prot] = true;
-    sacs.push([prot, iPosto[posto], +data.slice(8, 10)]);
+  $('evLimpa').addEventListener('click', () => { EV.marco = null; $('evData').value = ''; redesenhar(); });
+  $('evUni').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { EV.uni = b.dataset.u; ranking(); } });
+  $('evHrow').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k; EV.sort = [k, EV.sort[0] === k ? -EV.sort[1] : (k === 'nome' ? 1 : -1)]; ranking(); });
+  const abrirLinha = r => { if (!r) return; EV.esc = r.dataset.k; EV.dia = null; redesenhar(); $('evBox').scrollIntoView({block: 'start', behavior: liso()}); };
+  $('evRows').addEventListener('click', e => abrirLinha(e.target.closest('tr')));
+  $('evRows').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirLinha(e.target.closest('tr')); } });
+  $('evExp').addEventListener('click', exportarSerie);
+  $('evRkExp').addEventListener('click', exportarRank);
+  const diaDoPonteiro = e => { const svg = $('evSvg').querySelector('svg'); if (!svg || !G) return null; const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * G.W / r.width; return Math.max(0, Math.min(ALL.N - 1, Math.floor((x - G.x0) / G.passo))); };
+  $('evSvg').addEventListener('pointermove', e => { if (e.target.id === 'evAlvo') mostrarDia(diaDoPonteiro(e)); });
+  $('evSvg').addEventListener('pointerdown', e => { if (e.target.id === 'evAlvo') mostrarDia(diaDoPonteiro(e)); });
+  $('evSvg').addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') mostrarDia(null); });
+  $('evSvg').addEventListener('keydown', e => {
+    if (e.key === 'Escape') { mostrarDia(null); return; }
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    mostrarDia(Math.max(0, Math.min(ALL.N - 1, (EV.dia == null ? (e.key === 'ArrowLeft' ? ALL.N : -1) : EV.dia) + (e.key === 'ArrowLeft' ? -1 : 1))));
   });
-  if (fora) avisos.push(plural(fora, 'SAC da base ficou', 'SACs da base ficaram') + ' de fora por estar sem protocolo, repetido, com posto sem coleta ou com data fora de ' + MESES[m - 1] + ' de ' + ano + '.');
+  $('evSvg').addEventListener('blur', () => mostrarDia(null));
+  let largura = 0;
+  new ResizeObserver(() => { const w = $('evSvg').clientWidth; if (w && Math.abs(w - largura) > 8) { largura = w; if (S && ABA === 'e') { EV.dia = null; grafico(); } } }).observe($('evSvg'));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redesenhar);
+})();
 
-  return {periodo: {ano, mes: m, dias: new Date(ano, m, 0).getDate()}, sups,
-    postos: ordem.map(p => [p.nome, p.com + p.sem, p.com, p.sem, sups.indexOf(p.sup)]), sacs, avisos, lidoEm: txt(reg.atualizadoEm)};
-}
+/* ── controle: abas, período e abertura ── */
+const MOLDE_PAINEL = document.getElementById('tabA').innerHTML;
+let ALL = null;                                     // a base inteira, por dia
+let PERIODO = 'all';                                // 'all', '30', '7' ou '1'
+let ABA = 'p';                                      // 'p' postos, 's' superintendências, 'e' evolução
+let PAINEL = null;                                  // o painel montado para o período em uso
 
-// leitura de um caminho da base, com as falhas explicadas em português
-async function lerBase(caminho) {
-  let r;
-  try { r = await fetch(BASE + '/' + caminho, {cache: 'no-store'}); }
-  catch (e) { throw new Error('Não foi possível falar com a base de dados. Confira a conexão com a internet e tente de novo.'); }
-  if (r.status === 401 || r.status === 403) throw new Error('A base de dados recusou a leitura. No Firebase, em Realtime Database > Regras, a leitura precisa estar liberada (".read": true).');
-  if (!r.ok) throw new Error('A base de dados respondeu com o erro ' + r.status + '. Tente de novo em alguns minutos.');
-  return r.json();
-}
-
-/* ── abas: Postos e Superintendências são o painel; Atualizar dados é a tela de carga do mês ── */
-let ABA = '';                                       // aba do painel em uso: 'p' ou 's'
 function marcarAbas() {
-  const u = document.body.classList.contains('atualizando');
-  [...document.getElementById('tabs').children].forEach(b => b.setAttribute('aria-selected', String(u ? b.dataset.m === 'u' : b.dataset.m === ABA)));
+  [...document.getElementById('tabs').children].forEach(b => b.setAttribute('aria-selected', String(b.dataset.m === ABA)));
+}
+// monta o painel para o período escolhido, guardando o que estava aberto
+function aplicarPeriodo() {
+  if (!ALL) return;
+  const f = faixa(ALL, PERIODO), antes = PAINEL ? PAINEL.estado() : null;
+  if (PAINEL) PAINEL.sair();
+  PAINEL = iniciar(recorte(ALL, f[0], f[1]), antes);
+  [...document.getElementById('per').querySelectorAll('button')].forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === PERIODO)));
+  const n = f[1] - f[0] + 1;
+  document.getElementById('perTxt').textContent = (n === 1 ? dataCheia(ALL.d0 + f[1]) + ', ' + diaSemana(ALL.d0 + f[1]) : dataCheia(ALL.d0 + f[0]) + ' a ' + dataCheia(ALL.d0 + f[1]) + ' · ' + n + ' dias');
+  if (ABA === 'e') desenharEvolucao();
+}
+function irAba(id, nome) {
+  if (!PAINEL) return;
+  ABA = id;
+  document.body.classList.toggle('evolucao', id === 'e');
+  document.getElementById('tabE').hidden = id !== 'e';
+  if (id === 'e') { marcarAbas(); desenharEvolucao(); }
+  else PAINEL.abrir(id, nome);
+}
+// chamado pelo botão "Ver a evolução" do detalhe de um posto ou de uma superintendência
+function verEvolucao(chaveEsc) {
+  EV.esc = chaveEsc; EV.dia = null;
+  irAba('e');
+  scrollTo({top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
 }
 function telaAtualizar(sim) {
   if (document.body.classList.contains('atualizando') === sim) return;
   document.body.classList.toggle('atualizando', sim);
   document.getElementById('tabU').hidden = !sim;
-  marcarAbas();
+  document.getElementById('tabE').hidden = sim || ABA !== 'e' || !PAINEL;
   try { history.replaceState(null, '', location.pathname + location.search + (sim ? '#atualizar' : '')); } catch (e) {}
-  if (!sim) window.dispatchEvent(new Event('painel-visivel'));   // o mapa é redesenhado no tamanho certo
+  if (sim) { scrollTo(0, 0); window.dispatchEvent(new Event('abriu-atualizar')); }
+  else if (PAINEL) irAba(ABA);                       // redesenha no tamanho certo
 }
 
 (function () {
-  const box = document.getElementById('carregando'), abas = document.getElementById('tabs');
-  const falha = msg => {                            // sem dados: sobra só a aba Atualizar dados
+  const box = document.getElementById('carregando');
+  const falha = msg => {                            // sem dados: fica o aviso e o caminho para carregar as planilhas
     document.body.classList.remove('aguardando'); document.body.classList.add('semdados');
-    [...abas.children].forEach(b => { if (b.dataset.m !== 'u') b.disabled = true; });
     box.hidden = false; box.className = 'carregando erro'; box.textContent = msg;
+    const b = document.createElement('button'); b.className = 'ubtn'; b.textContent = 'Atualizar dados'; b.addEventListener('click', () => telaAtualizar(true)); box.append(b);
   };
-  abas.addEventListener('click', e => { const b = e.target.closest('button'); if (b && !b.disabled) telaAtualizar(b.dataset.m === 'u'); });
+  document.getElementById('tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) irAba(b.dataset.m); });
+  document.getElementById('per').addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.dataset.p !== PERIODO) { PERIODO = b.dataset.p; aplicarPeriodo(); } });
+  document.getElementById('adm').addEventListener('click', () => telaAtualizar(true));
+  document.getElementById('u-voltar').addEventListener('click', () => telaAtualizar(false));
   if (location.hash === '#atualizar') telaAtualizar(true);
+  addEventListener('hashchange', () => telaAtualizar(location.hash === '#atualizar'));
   (async () => {
-    let DADOS;
-    try {
-      const pedido = (new URLSearchParams(location.search).get('mes') || '').trim();
-      const meses = Object.keys(await lerBase('meses.json?shallow=true') || {}).filter(k => /^\d{4}-\d{2}$/.test(k)).sort();
-      if (!meses.length) throw new Error('A base de dados ainda não tem nenhum mês carregado. Abra a aba "Atualizar dados", gere o arquivo do mês e importe no Firebase.');
-      if (pedido && meses.indexOf(pedido) < 0) throw new Error('Não há dados de ' + pedido + ' na base. Meses disponíveis: ' + meses.join(', ') + '.');
-      const mes = pedido || meses[meses.length - 1];
-      DADOS = montar(mes, await lerBase('meses/' + mes + '.json'));
-    } catch (e) { falha(e && e.message ? e.message : String(e)); return; }
-    try { document.body.classList.remove('aguardando'); box.hidden = true; iniciar(DADOS); }
-    catch (e) { falha('A página encontrou um erro ao montar o painel. Detalhe: ' + (e && e.message ? e.message : e)); }
+    try { ALL = decodificar(await lerBase('painel.json')); }
+    catch (e) { falha(e && e.message ? e.message : String(e)); return; }
+    try { document.body.classList.remove('aguardando'); box.hidden = true; aplicarPeriodo(); }
+    catch (e) { ALL = null; PAINEL = null; falha('A página encontrou um erro ao montar o painel. Detalhe: ' + (e && e.message ? e.message : e)); }
   })();
 })();
 
-/* ── aba Atualizar dados: lê as planilhas do mês, confere e gera o arquivo para importar no Firebase ── */
+/* ── tela Atualizar dados: lê as planilhas, confere, guarda os critérios e gera o arquivo para importar no Firebase ── */
 (function () {
-const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  const $ = id => document.getElementById(id);
+  const nf = n => Number(n).toLocaleString('pt-BR');
+  const plural = (n, um, varios) => nf(n) + ' ' + (n === 1 ? um : varios);
+  const taxa = (sem, col) => col ? (sem / col * 100).toFixed(1).replace('.', ',') + '%' : '–';
+  const msg = (id, texto, tipo) => { const e = $(id); e.hidden = !texto; e.className = 'umsg' + (tipo ? ' ' + tipo : ''); e.textContent = texto || ''; };
+  const br = iso => iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4);
+  const intervalo = (a, b) => a === b ? br(a) : br(a) + ' a ' + br(b);
 
-const $ = id => document.getElementById(id);
-const nf = n => Number(n).toLocaleString('pt-BR');
-const txt = v => String(v === null || v === undefined ? '' : v).trim();
-const chave = v => txt(v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
-const plural = (n, um, varios) => nf(n) + ' ' + (n === 1 ? um : varios);
-const nomeMes = k => MESES[+k.slice(5, 7) - 1] + ' de ' + k.slice(0, 4);
-const msg = (id, texto, tipo) => { const e = $(id); e.hidden = !texto; e.className = 'umsg' + (tipo ? ' ' + tipo : ''); e.textContent = texto || ''; };
+  $('u-console').href = 'https://console.firebase.google.com/project/' + PROJETO + '/database/' + PROJETO + '-default-rtdb/data';
+  $('u-raiz').textContent = BASE.replace('https://', '') + '/';
 
-$('u-console').href = 'https://console.firebase.google.com/project/' + PROJETO + '/database/' + PROJETO + '-default-rtdb/data';
-$('u-raiz').textContent = BASE.replace('https://', '') + '/';
+  /* ── colunas reconhecidas pelo nome do cabeçalho (maiúsculas, acentos e sublinhados não importam) ── */
+  const COL = {
+    sup: ['superintendencia'],
+    posto: ['posto poupatempo', 'posto', 'unidade'],
+    status: ['status'],
+    dataColeta: ['data coleta', 'data da coleta', 'dt coleta', 'data'],
+    prot: ['numero protocolo', 'protocolo', 'sac protocolo', 'sac'],
+    dataSac: ['data abertura sac', 'sac data abertura', 'data abertura', 'data de abertura', 'data']
+  };
+  const acha = (cab, nomes) => { for (const n of nomes) { const i = cab.findIndex(c => chave(c) === n); if (i >= 0) return i; } return -1; };
+  const tipoDaAba = cab => {
+    if (acha(cab, COL.status) >= 0 && acha(cab, COL.posto) >= 0 && acha(cab, COL.sup) >= 0) return 'coletas';
+    if (acha(cab, COL.prot) >= 0 && acha(cab, COL.posto) >= 0 && acha(cab, COL.dataSac) >= 0) return 'sacs';
+    return '';
+  };
 
-/* ── colunas reconhecidas pelo nome do cabeçalho (maiúsculas, acentos e sublinhados não importam) ── */
-const COL = {
-  sup: ['superintendencia'],
-  posto: ['posto poupatempo', 'posto', 'unidade'],
-  status: ['status'],
-  prot: ['numero protocolo', 'protocolo', 'sac protocolo', 'sac'],
-  data: ['data abertura sac', 'sac data abertura', 'data abertura', 'data']
-};
-const acha = (cab, nomes) => cab.findIndex(c => nomes.indexOf(chave(c)) >= 0);
-const tipoDaAba = cab => {
-  if (acha(cab, COL.status) >= 0 && acha(cab, COL.posto) >= 0 && acha(cab, COL.sup) >= 0) return 'coletas';
-  if (acha(cab, COL.prot) >= 0 && acha(cab, COL.posto) >= 0 && acha(cab, COL.data) >= 0) return 'sacs';
-  return '';
-};
-
-/* ── datas: número de série do Excel, AAAA-MM-DD ou DD/MM/AAAA viram 'AAAA-MM-DD' ── */
-function dataISO(v, sistema1904) {
-  if (typeof v === 'number' && isFinite(v) && v > 1) {
-    const d = new Date(Date.UTC(1899, 11, 30) + (Math.floor(v) + (sistema1904 ? 1462 : 0)) * 86400000);
-    return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0');
-  }
-  const t = txt(v);
-  let m = t.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (m) return m[1] + '-' + m[2] + '-' + m[3];
-  m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m) return m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0');
-  return '';
-}
-
-/* ── as contas: linhas das planilhas viram o registro do mês que vai para a base ──
-   Tudo o que fica de fora dos números entra em "avisos", com o motivo. */
-function agregar(coletas, sacs, mesFixo) {
-  const avisos = [];
-  const lista = (nomes, max) => nomes.slice(0, max).join(', ') + (nomes.length > max ? ' e mais ' + (nomes.length - max) : '');
-
-  const cabC = coletas.linhas[0];
-  const cSup = acha(cabC, COL.sup), cPosto = acha(cabC, COL.posto), cStatus = acha(cabC, COL.status);
-  const porPosto = {}, ordem = [], doisSup = {};
-  let incompletas = 0, semStatus = 0;
-  for (let r = 1; r < coletas.linhas.length; r++) {
-    const L = coletas.linhas[r], sup = txt(L[cSup]), posto = txt(L[cPosto]), st = chave(L[cStatus]);
-    if (!sup && !posto && !st) continue;
-    if (!sup || !posto) { incompletas++; continue; }
-    const tipo = st.indexOf('sem') === 0 ? 'sem' : st.indexOf('com') === 0 ? 'com' : '';
-    if (!tipo) { semStatus++; continue; }
-    let p = porPosto[posto];
-    if (!p) { p = porPosto[posto] = {nome: posto, sup, com: 0, sem: 0}; ordem.push(p); }
-    else if (p.sup !== sup) doisSup[posto] = true;
-    p[tipo]++;
-  }
-  if (!ordem.length) throw new Error('A planilha de coletas não tem nenhuma linha válida (com superintendência, posto e status "Com Abertura" ou "Sem Abertura").');
-  if (incompletas) avisos.push(plural(incompletas, 'linha de coleta ficou', 'linhas de coleta ficaram') + ' de fora por estar sem posto ou sem superintendência.');
-  if (semStatus) avisos.push(plural(semStatus, 'linha de coleta ficou', 'linhas de coleta ficaram') + ' de fora porque o status não é "Com Abertura" nem "Sem Abertura".');
-  const dois = Object.keys(doisSup);
-  if (dois.length) avisos.push(plural(dois.length, 'posto aparece', 'postos aparecem') + ' em mais de uma superintendência e ' + (dois.length === 1 ? 'ficou' : 'ficaram') + ' na primeira: ' + lista(dois, 5) + '.');
-
-  // superintendências sem o número romano da frente ("XIX – São Paulo" vira "São Paulo")
-  const semRomano = s => s.replace(/^\s*[IVXLCDM]+\s*[–—-]\s*/, '') || s;
-  ordem.forEach(p => { p.sup = semRomano(p.sup); });
-  ordem.sort((a, b) => b.sem - a.sem || (b.com + b.sem) - (a.com + a.sem) || (a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0));
-
-  const lidos = [];
-  let sacIncompleto = 0, dataRuim = 0, repetidos = 0;
-  if (sacs) {
-    const cabS = sacs.linhas[0];
-    const sProt = acha(cabS, COL.prot), sPosto = acha(cabS, COL.posto), sData = acha(cabS, COL.data);
-    const vistos = {};
-    for (let r = 1; r < sacs.linhas.length; r++) {
-      const L = sacs.linhas[r], prot = txt(L[sProt]), posto = txt(L[sPosto]), bruto = L[sData];
-      if (!prot && !posto && txt(bruto) === '') continue;
-      if (!prot || !posto) { sacIncompleto++; continue; }
-      const data = dataISO(bruto, sacs.sistema1904);
-      if (!data) { dataRuim++; continue; }
-      if (vistos[prot]) { repetidos++; continue; }
-      vistos[prot] = true;
-      lidos.push({protocolo: prot, posto, data});
+  /* ── datas: número de série do Excel, AAAA-MM-DD ou DD/MM/AAAA viram 'AAAA-MM-DD' ── */
+  function dataISO(v, sistema1904) {
+    let s = '';
+    if (typeof v === 'number' && isFinite(v) && v > 1) s = new Date(Date.UTC(1899, 11, 30) + (Math.floor(v) + (sistema1904 ? 1462 : 0)) * DIA_MS).toISOString().slice(0, 10);
+    else {
+      const t = txt(v);
+      let m = t.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (m) s = m[1] + '-' + m[2] + '-' + m[3];
+      else if ((m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/))) s = m[3] + '-' + m[2].padStart(2, '0') + '-' + m[1].padStart(2, '0');
     }
-  } else avisos.push('Nenhuma planilha de SACs foi lida: o painel ficará sem SACs neste mês.');
-  if (sacIncompleto) avisos.push(plural(sacIncompleto, 'linha de SAC ficou', 'linhas de SAC ficaram') + ' de fora por estar sem protocolo ou sem posto.');
-  if (dataRuim) avisos.push(plural(dataRuim, 'SAC ficou', 'SACs ficaram') + ' de fora porque a data de abertura não foi reconhecida.');
-  if (repetidos) avisos.push(plural(repetidos, 'protocolo de SAC estava repetido e foi contado', 'protocolos de SAC estavam repetidos e foram contados') + ' uma vez só.');
-
-  // mês do painel: o informado na tela ou, na primeira leitura, o mês com mais SACs
-  let mes = /^\d{4}-\d{2}$/.test(mesFixo || '') ? mesFixo : '';
-  if (!mes) {
-    const conta = {};
-    lidos.forEach(s => { const k = s.data.slice(0, 7); conta[k] = (conta[k] || 0) + 1; });
-    mes = Object.keys(conta).sort((a, b) => conta[b] - conta[a] || (a < b ? 1 : -1))[0] || '';
+    return ISO.test(s) && isoDia(nDia(s)) === s && s >= '2000-01-01' && s <= '2100-12-31' ? s : '';   // recusa datas que não existem, como 31/02
   }
 
-  let foraDoMes = 0;
-  const semPosto = {}, sacsOk = [];
-  if (mes) lidos.forEach(s => {
-    if (s.data.slice(0, 7) !== mes) { foraDoMes++; return; }
-    if (!(s.posto in porPosto)) { semPosto[s.posto] = (semPosto[s.posto] || 0) + 1; return; }
-    sacsOk.push(s);
-  });
-  if (foraDoMes) avisos.push(plural(foraDoMes, 'SAC ficou', 'SACs ficaram') + ' de fora por ter data de abertura fora de ' + nomeMes(mes) + '.');
-  const orfaos = Object.keys(semPosto);
-  if (orfaos.length) avisos.push(plural(orfaos.reduce((a, k) => a + semPosto[k], 0), 'SAC ficou', 'SACs ficaram') + ' de fora porque o posto citado não tem coleta na base: ' + lista(orfaos, 5) + '.');
+  /* ── as contas da planilha: coletas por posto e por dia, e a lista de SACs ──
+     Tudo o que fica de fora dos números entra em "avisos", com o motivo. */
+  function agregar(coletas, sacs) {
+    const avisos = [];
+    const nomes = (lst, max) => lst.slice(0, max).join(', ') + (lst.length > max ? ' e mais ' + (lst.length - max) : '');
+    const cab = coletas.linhas[0];
+    const cSup = acha(cab, COL.sup), cPosto = acha(cab, COL.posto), cStatus = acha(cab, COL.status), cData = acha(cab, COL.dataColeta);
+    if (cData < 0) throw new Error('A planilha de coletas precisa da coluna com a data da coleta (data_coleta). Sem ela o painel não consegue montar a evolução por dia.');
+    const porPosto = {}, postos = [], dias = {}, doisSup = {};
+    let incompletas = 0, semStatus = 0, semData = 0, col = 0, sem = 0;
+    for (let r = 1; r < coletas.linhas.length; r++) {
+      const L = coletas.linhas[r], sup = txt(L[cSup]), posto = txt(L[cPosto]), st = chave(L[cStatus]);
+      if (!sup && !posto && !st && txt(L[cData]) === '') continue;
+      if (!sup || !posto) { incompletas++; continue; }
+      const tipo = st.indexOf('sem') === 0 ? 1 : st.indexOf('com') === 0 ? 0 : -1;
+      if (tipo < 0) { semStatus++; continue; }
+      const data = dataISO(L[cData], coletas.sistema1904);
+      if (!data) { semData++; continue; }
+      let p = porPosto[posto];
+      if (!p) { p = porPosto[posto] = {posto, superintendencia: sup}; postos.push(p); }
+      else if (p.superintendencia !== sup) doisSup[posto] = true;
+      const d = dias[data] || (dias[data] = {}), v = d[posto] || (d[posto] = [0, 0]);
+      v[tipo]++; col++; sem += tipo;
+    }
+    if (!postos.length) throw new Error('A planilha de coletas não tem nenhuma linha válida (com superintendência, posto, data e status "Com Abertura" ou "Sem Abertura").');
+    if (incompletas) avisos.push(plural(incompletas, 'linha de coleta ficou', 'linhas de coleta ficaram') + ' de fora por estar sem posto ou sem superintendência.');
+    if (semStatus) avisos.push(plural(semStatus, 'linha de coleta ficou', 'linhas de coleta ficaram') + ' de fora porque o status não é "Com Abertura" nem "Sem Abertura".');
+    if (semData) avisos.push(plural(semData, 'linha de coleta ficou', 'linhas de coleta ficaram') + ' de fora porque a data da coleta não foi reconhecida.');
+    const dois = Object.keys(doisSup);
+    if (dois.length) avisos.push(plural(dois.length, 'posto aparece', 'postos aparecem') + ' em mais de uma superintendência e ' + (dois.length === 1 ? 'ficou' : 'ficaram') + ' na primeira: ' + nomes(dois, 5) + '.');
+    // superintendências sem o número romano da frente ("XIX – São Paulo" vira "São Paulo")
+    const semRomano = s => s.replace(/^\s*[IVXLCDM]+\s*[–—-]\s*/, '') || s;
+    postos.forEach(p => { p.superintendencia = semRomano(p.superintendencia); });
+    const dc = Object.keys(dias).sort();
 
-  const postos = ordem.map(p => ({posto: p.nome, superintendencia: p.sup, com: p.com, sem: p.sem}));
-  return {mes, registro: {postos, sacs: sacsOk, avisos}};
-}
+    const lidos = [];
+    let sacIncompleto = 0, dataRuim = 0, repetidos = 0;
+    if (sacs) {
+      const cs = sacs.linhas[0], sProt = acha(cs, COL.prot), sPosto = acha(cs, COL.posto), sData = acha(cs, COL.dataSac), vistos = {};
+      for (let r = 1; r < sacs.linhas.length; r++) {
+        const L = sacs.linhas[r], prot = txt(L[sProt]), posto = txt(L[sPosto]), bruto = L[sData];
+        if (!prot && !posto && txt(bruto) === '') continue;
+        if (!prot || !posto) { sacIncompleto++; continue; }
+        const data = dataISO(bruto, sacs.sistema1904);
+        if (!data) { dataRuim++; continue; }
+        if (vistos[prot]) { repetidos++; continue; }
+        vistos[prot] = true;
+        lidos.push({prot, posto, data});
+      }
+    }
+    if (sacIncompleto) avisos.push(plural(sacIncompleto, 'linha de SAC ficou', 'linhas de SAC ficaram') + ' de fora por estar sem protocolo ou sem posto.');
+    if (dataRuim) avisos.push(plural(dataRuim, 'SAC ficou', 'SACs ficaram') + ' de fora porque a data de abertura não foi reconhecida.');
+    if (repetidos) avisos.push(plural(repetidos, 'protocolo de SAC estava repetido e foi contado', 'protocolos de SAC estavam repetidos e foram contados') + ' uma vez só.');
+    const ds = lidos.map(s => s.data).sort();
+    return {postos, dias, cmin: dc[0], cmax: dc[dc.length - 1], ndias: dc.length, col, sem, temSacs: !!sacs, sacs: lidos, smin: ds[0] || '', smax: ds[ds.length - 1] || '', avisos};
+  }
 
-const resumo = reg => {
-  const postos = Array.isArray(reg && reg.postos) ? reg.postos : Object.values((reg && reg.postos) || {});
-  const sacs = Array.isArray(reg && reg.sacs) ? reg.sacs : Object.values((reg && reg.sacs) || {});
-  const sem = postos.reduce((a, p) => a + (+p.sem || 0), 0), col = postos.reduce((a, p) => a + (+p.com || 0) + (+p.sem || 0), 0);
-  return {postos: postos.length, sups: new Set(postos.map(p => p.superintendencia)).size, col, sem, sac: sacs.length};
-};
-const taxa = (sem, col) => col ? (sem / col * 100).toFixed(1).replace('.', ',') + '%' : '–';
-const igual = (a, b) => ['postos', 'sups', 'col', 'sem', 'sac'].every(k => a[k] === b[k]);
+  /* ── junta a planilha com o que já está na base ──
+     Os dias cobertos pela planilha (do primeiro ao último) substituem os mesmos dias da base; os demais ficam como estão.
+     Os postos guardam o número que já tinham; os novos entram no fim da lista. */
+  function fundir(antigo, up, crit, agora) {
+    const a = antigo && typeof antigo === 'object' ? antigo : {};
+    const postos = lista(a.postos).map(p => ({posto: txt(p.posto), superintendencia: txt(p.superintendencia)}));
+    const coletas = {}, sacs = {};
+    const ac = a.coletas && typeof a.coletas === 'object' ? a.coletas : {}, as = a.sacs && typeof a.sacs === 'object' ? a.sacs : {};
+    Object.keys(ac).forEach(k => { if (ISO.test(k)) coletas[k] = ac[k]; });
+    Object.keys(as).forEach(k => { if (ISO.test(k)) sacs[k] = lista(as[k]).map(s => [txt(lista(s)[0]), +lista(s)[1]]); });
+    let avisos = lista(a.avisos).map(txt).filter(Boolean);
+    if (up) {
+      const num = {};
+      postos.forEach((p, i) => { num[p.posto] = i; });
+      up.postos.forEach(p => { if (p.posto in num) postos[num[p.posto]].superintendencia = p.superintendencia; else { num[p.posto] = postos.length; postos.push({posto: p.posto, superintendencia: p.superintendencia}); } });
+      Object.keys(coletas).forEach(k => { if (k >= up.cmin && k <= up.cmax) delete coletas[k]; });
+      Object.keys(up.dias).forEach(k => { coletas[k] = Object.keys(up.dias[k]).map(n => [num[n], up.dias[k][n][0], up.dias[k][n][1]]).sort((x, y) => x[0] - y[0]).map(v => v.join(':')).join(';'); });
+      avisos = up.avisos.slice();
+      if (up.temSacs && up.sacs.length) {
+        Object.keys(sacs).forEach(k => { if (k >= up.smin && k <= up.smax) delete sacs[k]; });
+        const jaTem = {}; Object.keys(sacs).forEach(k => sacs[k].forEach(s => { jaTem[s[0]] = true; }));
+        const orfaos = {}; let nOrf = 0, dup = 0;
+        up.sacs.forEach(s => {
+          if (!(s.posto in num)) { orfaos[s.posto] = true; nOrf++; return; }
+          if (jaTem[s.prot]) { dup++; return; }
+          (sacs[s.data] = sacs[s.data] || []).push([s.prot, num[s.posto]]);
+        });
+        const o = Object.keys(orfaos);
+        if (nOrf) avisos.push(plural(nOrf, 'SAC ficou', 'SACs ficaram') + ' de fora porque o posto citado não tem coleta na base: ' + o.slice(0, 5).join(', ') + (o.length > 5 ? ' e mais ' + (o.length - 5) : '') + '.');
+        if (dup) avisos.push(plural(dup, 'SAC ficou', 'SACs ficaram') + ' de fora porque o protocolo já está na base em outra data.');
+      }
+    }
+    const novo = {atualizadoEm: agora, postos, coletas, sacs, criterios: crit};
+    if (avisos.length) novo.avisos = avisos;
+    return novo;
+  }
+  const resumo = reg => {                           // totais de um registro "painel", pelos mesmos passos que o painel usa para ler
+    try { const A = decodificar(reg); let col = 0, sem = 0; for (let d = 0; d < A.N; d++) { col += A.eCol[d]; sem += A.eSem[d]; } return {d0: isoDia(A.d0), d1: isoDia(A.d1), col, sem, sac: A.sacs.length, postos: A.postos.length, crit: JSON.stringify(A.crit), avisos: A.avisos}; }
+    catch (e) { return null; }
+  };
+  const igual = (a, b) => !!a && !!b && ['d0', 'd1', 'col', 'sem', 'sac', 'crit'].every(k => a[k] === b[k]);
+  const frase = r => `${intervalo(r.d0, r.d1)}: ${nf(r.col)} coletas, ${nf(r.sem)} sem RENACH (${taxa(r.sem, r.col)}) e ${nf(r.sac)} SACs`;
 
-/* ── leitura dos arquivos ── */
-async function lerArquivo(f) {
-  const buf = await f.arrayBuffer();
-  let wb;
-  if (/\.csv$/i.test(f.name)) {
-    let texto;
-    try { texto = new TextDecoder('utf-8', {fatal: true}).decode(buf); } catch (e) { texto = new TextDecoder('windows-1252').decode(buf); }
-    wb = XLSX.read(texto.replace(/^﻿/, ''), {type: 'string', raw: true});
-  } else wb = XLSX.read(buf, {type: 'array'});
-  const sistema1904 = !!(wb.Workbook && wb.Workbook.WBProps && wb.Workbook.WBProps.date1904);
-  return wb.SheetNames.map(nome => {
-    const linhas = XLSX.utils.sheet_to_json(wb.Sheets[nome], {header: 1, raw: true, defval: '', blankrows: false});
-    return {arquivo: f.name, aba: nome, linhas, sistema1904, tipo: linhas.length > 1 ? tipoDaAba(linhas[0]) : ''};
-  });
-}
+  /* ── leitura dos arquivos ── */
+  async function lerArquivo(f) {
+    const buf = await f.arrayBuffer();
+    let wb;
+    if (/\.csv$/i.test(f.name)) {
+      let texto;
+      try { texto = new TextDecoder('utf-8', {fatal: true}).decode(buf); } catch (e) { texto = new TextDecoder('windows-1252').decode(buf); }
+      wb = XLSX.read(texto.replace(/^﻿/, ''), {type: 'string', raw: true});
+    } else wb = XLSX.read(buf, {type: 'array'});
+    const sistema1904 = !!(wb.Workbook && wb.Workbook.WBProps && wb.Workbook.WBProps.date1904);
+    return wb.SheetNames.map(nome => {
+      const linhas = XLSX.utils.sheet_to_json(wb.Sheets[nome], {header: 1, raw: true, defval: '', blankrows: false});
+      return {arquivo: f.name, aba: nome, linhas, sistema1904, tipo: linhas.length > 1 ? tipoDaAba(linhas[0]) : ''};
+    });
+  }
 
-const E = {coletas: null, sacs: null, mes: '', registro: null, naBase: undefined};
+  /* ── estado da tela ── */
+  const E = {up: null, base: undefined, erroBase: '', crit: null, critBase: null, esperado: null};
+  const agoraTxt = () => { const a = new Date(), d2 = n => String(n).padStart(2, '0'); return d2(a.getDate()) + '/' + d2(a.getMonth() + 1) + '/' + a.getFullYear() + ' ' + d2(a.getHours()) + ':' + d2(a.getMinutes()); };
 
-function mostrar() {
-  let r;
-  try { r = agregar(E.coletas, E.sacs, E.mes); }
-  catch (e) { msg('u-mArq', e.message, 'bad'); travar(); return; }
-  E.mes = r.mes; E.registro = r.registro;
-  const s = resumo(r.registro);
-  $('u-p2').removeAttribute('aria-disabled'); $('u-conf').hidden = false;
-  $('u-mes').value = r.mes;
-  $('u-mesDica').textContent = r.mes ? 'Identificado pelas datas dos SACs. Mude aqui se estiver errado.' : 'Não há SACs para indicar o mês: informe aqui.';
-  $('u-nPostos').textContent = nf(s.postos); $('u-nSups').textContent = nf(s.sups); $('u-nCol').textContent = nf(s.col);
-  $('u-nSem').textContent = nf(s.sem); $('u-nTaxa').textContent = taxa(s.sem, s.col) + ' das coletas'; $('u-nSac').textContent = nf(s.sac);
-  const av = $('u-avisos');
-  av.hidden = !r.registro.avisos.length;
-  av.innerHTML = '';
-  if (r.registro.avisos.length) {
+  // critérios: os campos da tela, o que está na base e o que vale agora no painel
+  const CAMPOS = [['cpVol', 'p', 'vol'], ['cpTax', 'p', 'tax'], ['cpMin', 'p', 'min'], ['cpRef', 'p', 'ref'], ['csVol', 's', 'vol'], ['csTax', 's', 'tax'], ['csRef', 's', 'ref']];
+  const mostrarCrit = () => CAMPOS.forEach(c => { const v = E.crit[c[1]][c[2]]; $(c[0]).value = v == null ? '' : String(v); });
+  function lerCrit() {
+    const bruto = {p: {}, s: {}};
+    CAMPOS.forEach(c => { const t = $(c[0]).value.trim().replace(',', '.'); bruto[c[1]][c[2]] = t === '' ? (c[2] === 'tax' ? null : undefined) : +t; });
+    E.crit = criterios(bruto);
+    if (ALL) { ALL.crit = E.crit; aplicarPeriodo(); }               // o painel já mostra o efeito, só nesta sessão
+    estadoBotoes();
+  }
+  const critMudou = () => JSON.stringify(E.crit) !== JSON.stringify(E.critBase);
+  function estadoBotoes() {
+    const pode = !!E.up || (E.base !== undefined && !!resumo(E.base) && critMudou());
+    $('u-gerar').disabled = !pode; $('u-checar').disabled = !E.esperado;
+    msg('u-mCrit', critMudou() ? 'Os critérios estão diferentes dos que estão na base. Para valerem para todos, baixe o arquivo no passo 4 e importe.' : '', 'warn');
+  }
+
+  function mostrar() {
+    const u = E.up;
+    $('u-p2').removeAttribute('aria-disabled'); $('u-conf').hidden = false;
+    $('u-nCol').textContent = nf(u.col); $('u-perCol').textContent = intervalo(u.cmin, u.cmax) + ', ' + plural(u.ndias, 'dia com coleta', 'dias com coleta');
+    $('u-nSem').textContent = nf(u.sem); $('u-nTaxa').textContent = taxa(u.sem, u.col) + ' das coletas';
+    $('u-nPostos').textContent = nf(u.postos.length); $('u-nSups').textContent = plural(new Set(u.postos.map(p => p.superintendencia)).size, 'superintendência', 'superintendências');
+    $('u-nSac').textContent = u.temSacs ? nf(u.sacs.length) : '–'; $('u-perSac').textContent = u.temSacs && u.sacs.length ? intervalo(u.smin, u.smax) : 'Nenhuma planilha de SACs foi lida: os SACs da base ficam como estão.';
+    previa();
+  }
+  function previa() {                                // como a base fica: o que está lá mais a planilha
+    const u = E.up; if (!u) return;
+    if (E.base === undefined) { $('u-fica').textContent = '…'; $('u-ficaDet').textContent = E.erroBase || 'Consultando a base…'; msg('u-naBase', E.erroBase, 'bad'); listarAvisos(u.avisos); return; }
+    const novo = fundir(E.base, u, E.crit, ''), depois = resumo(novo), antes = resumo(E.base);
+    $('u-fica').textContent = depois ? intervalo(depois.d0, depois.d1) : '–';
+    $('u-ficaDet').textContent = depois ? `${nf(depois.col)} coletas, ${nf(depois.sem)} sem RENACH (${taxa(depois.sem, depois.col)}), ${nf(depois.sac)} SACs, ${nf(depois.postos)} postos e unidades` : '';
+    listarAvisos(novo.avisos || []);
+    if (!antes) msg('u-naBase', 'A base ainda não tem dados no formato por dia: este será o primeiro carregamento.');
+    else if (igual(antes, depois)) msg('u-naBase', 'A base já está com estes mesmos números. Não é preciso importar de novo.', 'ok');
+    else if (u.cmin > antes.d1 || u.cmax < antes.d0) msg('u-naBase', `Hoje a base tem ${frase(antes)}. A planilha acrescenta ${u.cmin === u.cmax ? 'o dia ' + br(u.cmin) : 'os dias de ' + intervalo(u.cmin, u.cmax)}; o que já está na base fica como está.`);
+    else msg('u-naBase', `Hoje a base tem ${frase(antes)}. Os dias de ${intervalo(u.cmin, u.cmax)} serão substituídos pelos da planilha` + (u.cmin > antes.d0 || u.cmax < antes.d1 ? ' e os outros dias ficam como estão.' : '.'), 'warn');
+  }
+  function listarAvisos(lst) {
+    const av = $('u-avisos'); av.hidden = !lst.length; av.textContent = '';
+    if (!lst.length) return;
     av.append('Ficou de fora das contas (também aparece no painel, em "Como ler os números"):');
     const ul = document.createElement('ul');
-    r.registro.avisos.forEach(a => { const li = document.createElement('li'); li.textContent = a; ul.append(li); });
+    lst.forEach(a => { const li = document.createElement('li'); li.textContent = a; ul.append(li); });
     av.append(ul);
   }
-  const pronto = !!r.mes;
-  if (pronto) $('u-p3').removeAttribute('aria-disabled'); else $('u-p3').setAttribute('aria-disabled', 'true');
-  $('u-gerar').disabled = !pronto; $('u-checar').disabled = !pronto;
-  msg('u-mGerar', '');
-  compararComBase();
-}
-function travar() {
-  $('u-p2').setAttribute('aria-disabled', 'true'); $('u-p3').setAttribute('aria-disabled', 'true'); $('u-conf').hidden = true;
-  $('u-gerar').disabled = true; $('u-checar').disabled = true; E.registro = null; $('u-abrir').hidden = true;
-}
+  function travar() { $('u-p2').setAttribute('aria-disabled', 'true'); $('u-conf').hidden = true; E.up = null; E.esperado = null; $('u-abrir').hidden = true; msg('u-mGerar', ''); estadoBotoes(); }
 
-async function compararComBase() {
-  const mes = E.mes; if (!mes) { msg('u-naBase', ''); return; }
-  msg('u-naBase', 'Consultando a base…');
-  try {
-    const reg = await lerBase('meses/' + mes + '.json');
-    if (mes !== E.mes) return;
-    if (!reg) { msg('u-naBase', nomeMes(mes) + ' ainda não está na base: será incluído.'); return; }
-    const b = resumo(reg), s = resumo(E.registro);
-    msg('u-naBase', igual(b, s)
-      ? nomeMes(mes) + ' já está na base com estes mesmos totais' + (reg.atualizadoEm ? ' (atualizado em ' + reg.atualizadoEm + ')' : '') + '.'
-      : nomeMes(mes) + ' já está na base e será substituído. Hoje a base tem ' + nf(b.col) + ' coletas, ' + nf(b.sem) + ' sem RENACH e ' + nf(b.sac) + ' SACs' + (reg.atualizadoEm ? ', de ' + reg.atualizadoEm : '') + '.',
-      igual(b, s) ? 'ok' : 'warn');
-  } catch (e) { if (mes === E.mes) msg('u-naBase', e.message, 'bad'); }
-}
+  async function consultarBase() {
+    E.erroBase = '';
+    try { E.base = await lerBase('painel.json'); }
+    catch (e) { E.base = undefined; E.erroBase = e.message; }
+    if (E.base !== undefined && !E.critBase) { E.critBase = criterios(E.base && E.base.criterios); if (!E.tocou) { E.crit = criterios(E.base && E.base.criterios); mostrarCrit(); } }
+    previa(); estadoBotoes();
+  }
 
-$('u-arq').addEventListener('change', async () => {
-  const arquivos = [...$('u-arq').files];
-  if (!arquivos.length) return;
-  travar(); msg('u-mArq', 'Lendo ' + (arquivos.length === 1 ? 'a planilha' : 'as planilhas') + '…');
-  await new Promise(r => setTimeout(r, 30));
-  let abas = [];
-  try { for (const f of arquivos) abas = abas.concat(await lerArquivo(f)); }
-  catch (e) { msg('u-mArq', 'Não consegui abrir um dos arquivos. Use planilhas .xlsx ou .csv. Detalhe: ' + (e && e.message ? e.message : e), 'bad'); return; }
-  const col = abas.filter(a => a.tipo === 'coletas'), sac = abas.filter(a => a.tipo === 'sacs');
-  const onde = a => 'aba "' + a.aba + '" de ' + a.arquivo;
-  if (!col.length) { msg('u-mArq', 'Não encontrei a planilha de coletas. Ela precisa ter, na primeira linha, as colunas Superintendência, Posto Poupatempo e Status.', 'bad'); return; }
-  if (col.length > 1) { msg('u-mArq', 'Há mais de uma planilha de coletas (' + col.map(onde).join('; ') + '). Selecione só a do mês.', 'bad'); return; }
-  if (sac.length > 1) { msg('u-mArq', 'Há mais de uma planilha de SACs (' + sac.map(onde).join('; ') + '). Selecione só a do mês.', 'bad'); return; }
-  E.coletas = col[0]; E.sacs = sac[0] || null; E.mes = '';
-  msg('u-mArq', 'Coletas: ' + onde(col[0]) + ', ' + plural(col[0].linhas.length - 1, 'linha', 'linhas') + '. '
-    + (sac[0] ? 'SACs: ' + onde(sac[0]) + ', ' + plural(sac[0].linhas.length - 1, 'linha', 'linhas') + '.' : 'SACs: nenhuma planilha com as colunas numero_protocolo, Posto Poupatempo e data_abertura_sac.'), sac[0] ? 'ok' : 'warn');
-  mostrar();
-});
+  $('u-arq').addEventListener('change', async () => {
+    const arquivos = [...$('u-arq').files];
+    if (!arquivos.length) return;
+    travar(); msg('u-mArq', 'Lendo ' + (arquivos.length === 1 ? 'a planilha' : 'as planilhas') + '…');
+    await new Promise(r => setTimeout(r, 30));
+    let abas = [];
+    try { for (const f of arquivos) abas = abas.concat(await lerArquivo(f)); }
+    catch (e) { msg('u-mArq', 'Não consegui abrir um dos arquivos. Use planilhas .xlsx ou .csv. Detalhe: ' + (e && e.message ? e.message : e), 'bad'); return; }
+    const col = abas.filter(a => a.tipo === 'coletas'), sac = abas.filter(a => a.tipo === 'sacs');
+    const onde = a => 'aba "' + a.aba + '" de ' + a.arquivo;
+    if (!col.length) { msg('u-mArq', 'Não encontrei a planilha de coletas. Ela precisa ter, na primeira linha, as colunas Superintendência, Posto Poupatempo, data_coleta e Status.', 'bad'); return; }
+    if (col.length > 1) { msg('u-mArq', 'Há mais de uma planilha de coletas (' + col.map(onde).join('; ') + '). Selecione só uma.', 'bad'); return; }
+    if (sac.length > 1) { msg('u-mArq', 'Há mais de uma planilha de SACs (' + sac.map(onde).join('; ') + '). Selecione só uma.', 'bad'); return; }
+    try { E.up = agregar(col[0], sac[0] || null); }
+    catch (e) { msg('u-mArq', e.message, 'bad'); return; }
+    msg('u-mArq', 'Coletas: ' + onde(col[0]) + ', ' + plural(col[0].linhas.length - 1, 'linha', 'linhas') + '. '
+      + (sac[0] ? 'SACs: ' + onde(sac[0]) + ', ' + plural(sac[0].linhas.length - 1, 'linha', 'linhas') + '.' : 'SACs: nenhuma planilha com as colunas numero_protocolo, Posto Poupatempo e data_abertura_sac.'), sac[0] ? 'ok' : 'warn');
+    mostrar(); estadoBotoes();
+    consultarBase();
+  });
 
-$('u-mes').addEventListener('change', () => { if (E.coletas && /^\d{4}-\d{2}$/.test($('u-mes').value)) { E.mes = $('u-mes').value; mostrar(); } });
+  CAMPOS.forEach(c => $(c[0]).addEventListener('change', () => { E.tocou = true; lerCrit(); mostrarCrit(); previa(); }));
+  $('u-critPadrao').addEventListener('click', () => { E.tocou = true; E.crit = criterios(null); mostrarCrit(); if (ALL) { ALL.crit = E.crit; aplicarPeriodo(); } previa(); estadoBotoes(); });
 
-$('u-gerar').addEventListener('click', async () => {
-  if (!E.registro || !E.mes) return;
-  $('u-gerar').disabled = true; msg('u-mGerar', 'Lendo o que já está na base…');
-  try {
-    let tudo = await lerBase('.json');
-    if (!tudo || typeof tudo !== 'object' || Array.isArray(tudo)) tudo = {};
-    if (!tudo.meses || typeof tudo.meses !== 'object' || Array.isArray(tudo.meses)) tudo.meses = {};
-    const outros = Object.keys(tudo.meses).filter(k => k !== E.mes).sort();
-    const agora = new Date(), d2 = n => String(n).padStart(2, '0');
-    const reg = Object.assign({atualizadoEm: d2(agora.getDate()) + '/' + d2(agora.getMonth() + 1) + '/' + agora.getFullYear() + ' ' + d2(agora.getHours()) + ':' + d2(agora.getMinutes())}, E.registro);
-    tudo.meses[E.mes] = reg;
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(tudo)], {type: 'application/json'}));
-    a.download = 'firebase_importar_' + E.mes + '.json';
-    document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    msg('u-mGerar', 'Arquivo ' + a.download + ' baixado, com ' + nomeMes(E.mes) + (outros.length ? ' e os meses que já estavam na base (' + outros.join(', ') + ')' : '') + '. Agora importe no Firebase, seguindo os passos abaixo.', 'ok');
-  } catch (e) { msg('u-mGerar', e.message + ' O arquivo não foi gerado, para não haver risco de apagar os meses anteriores na importação.', 'bad'); }
-  $('u-gerar').disabled = false;
-});
+  $('u-gerar').addEventListener('click', async () => {
+    $('u-gerar').disabled = true; msg('u-mGerar', 'Lendo o que já está na base…');
+    try {
+      let tudo = await lerBase('.json');
+      if (!tudo || typeof tudo !== 'object' || Array.isArray(tudo)) tudo = {};
+      const tinhaAntigo = 'meses' in tudo;
+      delete tudo.meses;                                           // formato antigo, por mês: substituído pela base por dia
+      E.base = tudo.painel === undefined ? null : tudo.painel;
+      tudo.painel = fundir(E.base, E.up, E.crit, agoraTxt());
+      E.esperado = resumo(tudo.painel);
+      if (!E.esperado) throw new Error('Não há coletas para gravar: carregue a planilha de coletas no passo 1.');
+      const a = document.createElement('a'), fim = E.esperado.d1;
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(tudo)], {type: 'application/json'}));
+      a.download = 'firebase_importar_ate_' + fim + '.json';
+      document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      msg('u-mGerar', 'Arquivo ' + a.download + ' baixado. A base ficará com ' + frase(E.esperado) + '.' + (tinhaAntigo ? ' Os dados antigos, guardados por mês, saem na importação: a base por dia toma o lugar deles.' : '') + ' Agora importe no Firebase, seguindo os passos abaixo.', 'ok');
+    } catch (e) { msg('u-mGerar', e.message + ' O arquivo não foi gerado, para não haver risco de apagar o que já está na base.', 'bad'); }
+    estadoBotoes();
+  });
 
-$('u-checar').addEventListener('click', async () => {
-  if (!E.registro || !E.mes) return;
-  msg('u-mGerar', 'Consultando a base…');
-  try {
-    const reg = await lerBase('meses/' + E.mes + '.json');
-    if (!reg) { msg('u-mGerar', nomeMes(E.mes) + ' ainda não está na base. Confira se a importação foi feita na raiz da base.', 'warn'); return; }
-    const b = resumo(reg), s = resumo(E.registro);
-    $('u-abrir').hidden = !igual(b, s);
-    if (igual(b, s)) msg('u-mGerar', 'Importação conferida: a base está com ' + nomeMes(E.mes) + ' igual a esta planilha (' + nf(b.col) + ' coletas, ' + nf(b.sem) + ' sem RENACH, ' + nf(b.sac) + ' SACs). Clique em Abrir o painel atualizado.', 'ok');
-    else msg('u-mGerar', 'A base ainda está diferente desta planilha: tem ' + nf(b.col) + ' coletas, ' + nf(b.sem) + ' sem RENACH e ' + nf(b.sac) + ' SACs em ' + nomeMes(E.mes) + '. A importação ainda não foi feita ou foi feita com outro arquivo.', 'warn');
-    compararComBase();
-  } catch (e) { msg('u-mGerar', e.message, 'bad'); }
-});
+  $('u-checar').addEventListener('click', async () => {
+    if (!E.esperado) return;
+    msg('u-mGerar', 'Consultando a base…');
+    try {
+      const reg = await lerBase('painel.json'), b = resumo(reg);
+      $('u-abrir').hidden = !igual(b, E.esperado);
+      if (igual(b, E.esperado)) { E.base = reg; E.critBase = criterios(reg.criterios); msg('u-mGerar', 'Importação conferida: a base está com ' + frase(b) + '. Clique em Abrir o painel atualizado.', 'ok'); }
+      else if (!b) msg('u-mGerar', 'A base ainda não tem os dados novos. Confira se a importação foi feita com a raiz da base selecionada.', 'warn');
+      else msg('u-mGerar', 'A base ainda está diferente do arquivo gerado: tem ' + frase(b) + '. A importação ainda não foi feita ou foi feita com outro arquivo.', 'warn');
+      estadoBotoes();
+    } catch (e) { msg('u-mGerar', e.message, 'bad'); }
+  });
+  $('u-abrir').addEventListener('click', () => { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} location.reload(); });
 
-$('u-abrir').addEventListener('click', () => { location.replace(location.pathname + '?mes=' + E.mes); });
+  // ao abrir a tela: critérios e situação da base
+  E.crit = criterios(ALL ? ALL.crit : null); mostrarCrit();
+  addEventListener('abriu-atualizar', () => { if (!E.tocou && ALL) { E.crit = criterios(ALL.crit); mostrarCrit(); } consultarBase(); });
+  if (document.body.classList.contains('atualizando')) consultarBase();
 })();
 </script>
-<!-- Biblioteca SheetJS 0.18.5 (licença Apache 2.0): lê as planilhas na aba Atualizar dados. Não editar daqui para baixo. -->
+<!-- Biblioteca SheetJS 0.18.5 (licença Apache 2.0): lê as planilhas na tela Atualizar dados. Não editar daqui para baixo. -->
 <script>
 /*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
 var XLSX={};function make_xlsx_lib(e){e.version="0.18.5";var r=1200,t=1252;var a=[874,932,936,949,950,1250,1251,1252,1253,1254,1255,1256,1257,1258,1e4];var n={0:1252,1:65001,2:65001,77:1e4,128:932,129:949,130:1361,134:936,136:950,161:1253,162:1254,163:1258,177:1255,178:1256,186:1257,204:1251,222:874,238:1250,255:1252,69:6969};var i=function(e){if(a.indexOf(e)==-1)return;t=n[0]=e};function s(){i(1252)}var l=function(e){r=e;i(e)};function o(){l(1200);s()}function c(e){var r=[];for(var t=0,a=e.length;t<a;++t)r[t]=e.charCodeAt(t);return r}function f(e){var r=[];for(var t=0;t<e.length>>1;++t)r[t]=String.fromCharCode(e.charCodeAt(2*t)+(e.charCodeAt(2*t+1)<<8));return r.join("")}function u(e){var r=[];for(var t=0;t<e.length>>1;++t)r[t]=String.fromCharCode(e.charCodeAt(2*t+1)+(e.charCodeAt(2*t)<<8));return r.join("")}var h=function(e){var r=e.charCodeAt(0),t=e.charCodeAt(1);if(r==255&&t==254)return f(e.slice(2));if(r==254&&t==255)return u(e.slice(2));if(r==65279)return e.slice(1);return e};var p=function xc(e){return String.fromCharCode(e)};var d=function Sc(e){return String.fromCharCode(e)};var m=null;var v=true;var g="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";function b(e){var r="";var t=0,a=0,n=0,i=0,s=0,l=0,o=0;for(var c=0;c<e.length;){t=e.charCodeAt(c++);i=t>>2;a=e.charCodeAt(c++);s=(t&3)<<4|a>>4;n=e.charCodeAt(c++);l=(a&15)<<2|n>>6;o=n&63;if(isNaN(a)){l=o=64}else if(isNaN(n)){o=64}r+=g.charAt(i)+g.charAt(s)+g.charAt(l)+g.charAt(o)}return r}function w(e){var r="";var t=0,a=0,n=0,i=0,s=0,l=0,o=0;e=e.replace(/[^\w\+\/\=]/g,"");for(var c=0;c<e.length;){i=g.indexOf(e.charAt(c++));s=g.indexOf(e.charAt(c++));t=i<<2|s>>4;r+=String.fromCharCode(t);l=g.indexOf(e.charAt(c++));a=(s&15)<<4|l>>2;if(l!==64){r+=String.fromCharCode(a)}o=g.indexOf(e.charAt(c++));n=(l&3)<<6|o;if(o!==64){r+=String.fromCharCode(n)}}return r}var y=function(){return typeof Buffer!=="undefined"&&typeof undefined!=="undefined"&&typeof{}!=="undefined"&&!!{}.node}();var k=function(){if(typeof Buffer!=="undefined"){var e=!Buffer.from;if(!e)try{Buffer.from("foo","utf8")}catch(r){e=true}return e?function(e,r){return r?new Buffer(e,r):new Buffer(e)}:Buffer.from.bind(Buffer)}return function(){}}();function x(e){if(y)return Buffer.alloc?Buffer.alloc(e):new Buffer(e);return typeof Uint8Array!="undefined"?new Uint8Array(e):new Array(e)}function S(e){if(y)return Buffer.allocUnsafe?Buffer.allocUnsafe(e):new Buffer(e);return typeof Uint8Array!="undefined"?new Uint8Array(e):new Array(e)}var C=function Cc(e){if(y)return k(e,"binary");return e.split("").map(function(e){return e.charCodeAt(0)&255})};function _(e){if(typeof ArrayBuffer==="undefined")return C(e);var r=new ArrayBuffer(e.length),t=new Uint8Array(r);for(var a=0;a!=e.length;++a)t[a]=e.charCodeAt(a)&255;return r}function A(e){if(Array.isArray(e))return e.map(function(e){return String.fromCharCode(e)}).join("");var r=[];for(var t=0;t<e.length;++t)r[t]=String.fromCharCode(e[t]);return r.join("")}function T(e){if(typeof Uint8Array==="undefined")throw new Error("Unsupported");return new Uint8Array(e)}function E(e){if(typeof ArrayBuffer=="undefined")throw new Error("Unsupported");if(e instanceof ArrayBuffer)return E(new Uint8Array(e));var r=new Array(e.length);for(var t=0;t<e.length;++t)r[t]=e[t];return r}var F=y?function(e){return Buffer.concat(e.map(function(e){return Buffer.isBuffer(e)?e:k(e)}))}:function(e){if(typeof Uint8Array!=="undefined"){var r=0,t=0;for(r=0;r<e.length;++r)t+=e[r].length;var a=new Uint8Array(t);var n=0;for(r=0,t=0;r<e.length;t+=n,++r){n=e[r].length;if(e[r]instanceof Uint8Array)a.set(e[r],t);else if(typeof e[r]=="string"){throw"wtf"}else a.set(new Uint8Array(e[r]),t)}return a}return[].concat.apply([],e.map(function(e){return Array.isArray(e)?e:[].slice.call(e)}))};function D(e){var r=[],t=0,a=e.length+250;var n=x(e.length+255);for(var i=0;i<e.length;++i){var s=e.charCodeAt(i);if(s<128)n[t++]=s;else if(s<2048){n[t++]=192|s>>6&31;n[t++]=128|s&63}else if(s>=55296&&s<57344){s=(s&1023)+64;var l=e.charCodeAt(++i)&1023;n[t++]=240|s>>8&7;n[t++]=128|s>>2&63;n[t++]=128|l>>6&15|(s&3)<<4;n[t++]=128|l&63}else{n[t++]=224|s>>12&15;n[t++]=128|s>>6&63;n[t++]=128|s&63}if(t>a){r.push(n.slice(0,t));t=0;n=x(65535);a=65530}}r.push(n.slice(0,t));return F(r)}var O=/\u0000/g,M=/[\u0001-\u0006]/g;function N(e){var r="",t=e.length-1;while(t>=0)r+=e.charAt(t--);return r}function P(e,r){var t=""+e;return t.length>=r?t:br("0",r-t.length)+t}function I(e,r){var t=""+e;return t.length>=r?t:br(" ",r-t.length)+t}function R(e,r){var t=""+e;return t.length>=r?t:t+br(" ",r-t.length)}function L(e,r){var t=""+Math.round(e);return t.length>=r?t:br("0",r-t.length)+t}function B(e,r){var t=""+e;return t.length>=r?t:br("0",r-t.length)+t}var z=Math.pow(2,32);function U(e,r){if(e>z||e<-z)return L(e,r);var t=Math.round(e);return B(t,r)}function W(e,r){r=r||0;return e.length>=7+r&&(e.charCodeAt(r)|32)===103&&(e.charCodeAt(r+1)|32)===101&&(e.charCodeAt(r+2)|32)===110&&(e.charCodeAt(r+3)|32)===101&&(e.charCodeAt(r+4)|32)===114&&(e.charCodeAt(r+5)|32)===97&&(e.charCodeAt(r+6)|32)===108}var j=[["Sun","Sunday"],["Mon","Monday"],["Tue","Tuesday"],["Wed","Wednesday"],["Thu","Thursday"],["Fri","Friday"],["Sat","Saturday"]];var H=[["J","Jan","January"],["F","Feb","February"],["M","Mar","March"],["A","Apr","April"],["M","May","May"],["J","Jun","June"],["J","Jul","July"],["A","Aug","August"],["S","Sep","September"],["O","Oct","October"],["N","Nov","November"],["D","Dec","December"]];function V(e){if(!e)e={};e[0]="General";e[1]="0";e[2]="0.00";e[3]="#,##0";e[4]="#,##0.00";e[9]="0%";e[10]="0.00%";e[11]="0.00E+00";e[12]="# ?/?";e[13]="# ??/??";e[14]="m/d/yy";e[15]="d-mmm-yy";e[16]="d-mmm";e[17]="mmm-yy";e[18]="h:mm AM/PM";e[19]="h:mm:ss AM/PM";e[20]="h:mm";e[21]="h:mm:ss";e[22]="m/d/yy h:mm";e[37]="#,##0 ;(#,##0)";e[38]="#,##0 ;[Red](#,##0)";e[39]="#,##0.00;(#,##0.00)";e[40]="#,##0.00;[Red](#,##0.00)";e[45]="mm:ss";e[46]="[h]:mm:ss";e[47]="mmss.0";e[48]="##0.0E+0";e[49]="@";e[56]='"上午/下午 "hh"時"mm"分"ss"秒 "';return e}var X={0:"General",1:"0",2:"0.00",3:"#,##0",4:"#,##0.00",9:"0%",10:"0.00%",11:"0.00E+00",12:"# ?/?",13:"# ??/??",14:"m/d/yy",15:"d-mmm-yy",16:"d-mmm",17:"mmm-yy",18:"h:mm AM/PM",19:"h:mm:ss AM/PM",20:"h:mm",21:"h:mm:ss",22:"m/d/yy h:mm",37:"#,##0 ;(#,##0)",38:"#,##0 ;[Red](#,##0)",39:"#,##0.00;(#,##0.00)",40:"#,##0.00;[Red](#,##0.00)",45:"mm:ss",46:"[h]:mm:ss",47:"mmss.0",48:"##0.0E+0",49:"@",56:'"上午/下午 "hh"時"mm"分"ss"秒 "'};var G={5:37,6:38,7:39,8:40,23:0,24:0,25:0,26:0,27:14,28:14,29:14,30:14,31:14,50:14,51:14,52:14,53:14,54:14,55:14,56:14,57:14,58:14,59:1,60:2,61:3,62:4,67:9,68:10,69:12,70:13,71:14,72:14,73:15,74:16,75:17,76:20,77:21,78:22,79:45,80:46,81:47,82:0};var Y={5:'"$"#,##0_);\\("$"#,##0\\)',63:'"$"#,##0_);\\("$"#,##0\\)',6:'"$"#,##0_);[Red]\\("$"#,##0\\)',64:'"$"#,##0_);[Red]\\("$"#,##0\\)',7:'"$"#,##0.00_);\\("$"#,##0.00\\)',65:'"$"#,##0.00_);\\("$"#,##0.00\\)',8:'"$"#,##0.00_);[Red]\\("$"#,##0.00\\)',66:'"$"#,##0.00_);[Red]\\("$"#,##0.00\\)',41:'_(* #,##0_);_(* \\(#,##0\\);_(* "-"_);_(@_)',42:'_("$"* #,##0_);_("$"* \\(#,##0\\);_("$"* "-"_);_(@_)',43:'_(* #,##0.00_);_(* \\(#,##0.00\\);_(* "-"??_);_(@_)',44:'_("$"* #,##0.00_);_("$"* \\(#,##0.00\\);_("$"* "-"??_);_(@_)'};function J(e,r,t){var a=e<0?-1:1;var n=e*a;var i=0,s=1,l=0;var o=1,c=0,f=0;var u=Math.floor(n);while(c<r){u=Math.floor(n);l=u*s+i;f=u*c+o;if(n-u<5e-8)break;n=1/(n-u);i=s;s=l;o=c;c=f}if(f>r){if(c>r){f=o;l=i}else{f=c;l=s}}if(!t)return[0,a*l,f];var h=Math.floor(a*l/f);return[h,a*l-h*f,f]}function K(e,r,t){if(e>2958465||e<0)return null;var a=e|0,n=Math.floor(86400*(e-a)),i=0;var s=[];var l={D:a,T:n,u:86400*(e-a)-n,y:0,m:0,d:0,H:0,M:0,S:0,q:0};if(Math.abs(l.u)<1e-6)l.u=0;if(r&&r.date1904)a+=1462;if(l.u>.9999){l.u=0;if(++n==86400){l.T=n=0;++a;++l.D}}if(a===60){s=t?[1317,10,29]:[1900,2,29];i=3}else if(a===0){s=t?[1317,8,29]:[1900,1,0];i=6}else{if(a>60)--a;var o=new Date(1900,0,1);o.setDate(o.getDate()+a-1);s=[o.getFullYear(),o.getMonth()+1,o.getDate()];i=o.getDay();if(a<60)i=(i+6)%7;if(t)i=le(o,s)}l.y=s[0];l.m=s[1];l.d=s[2];l.S=n%60;n=Math.floor(n/60);l.M=n%60;n=Math.floor(n/60);l.H=n;l.q=i;return l}var q=new Date(1899,11,31,0,0,0);var Z=q.getTime();var Q=new Date(1900,2,1,0,0,0);function ee(e,r){var t=e.getTime();if(r)t-=1461*24*60*60*1e3;else if(e>=Q)t+=24*60*60*1e3;return(t-(Z+(e.getTimezoneOffset()-q.getTimezoneOffset())*6e4))/(24*60*60*1e3)}function re(e){return e.indexOf(".")==-1?e:e.replace(/(?:\.0*|(\.\d*[1-9])0+)$/,"$1")}function te(e){if(e.indexOf("E")==-1)return e;return e.replace(/(?:\.0*|(\.\d*[1-9])0+)[Ee]/,"$1E").replace(/(E[+-])(\d)$/,"$10$2")}function ae(e){var r=e<0?12:11;var t=re(e.toFixed(12));if(t.length<=r)return t;t=e.toPrecision(10);if(t.length<=r)return t;return e.toExponential(5)}function ne(e){var r=re(e.toFixed(11));return r.length>(e<0?12:11)||r==="0"||r==="-0"?e.toPrecision(6):r}function ie(e){var r=Math.floor(Math.log(Math.abs(e))*Math.LOG10E),t;if(r>=-4&&r<=-1)t=e.toPrecision(10+r);else if(Math.abs(r)<=9)t=ae(e);else if(r===10)t=e.toFixed(10).substr(0,12);else t=ne(e);return re(te(t.toUpperCase()))}function se(e,r){switch(typeof e){case"string":return e;case"boolean":return e?"TRUE":"FALSE";case"number":return(e|0)===e?e.toString(10):ie(e);case"undefined":return"";case"object":if(e==null)return"";if(e instanceof Date)return Be(14,ee(e,r&&r.date1904),r);}throw new Error("unsupported value in General format: "+e)}function le(e,r){r[0]-=581;var t=e.getDay();if(e<60)t=(t+6)%7;return t}function oe(e,r,t,a){var n="",i=0,s=0,l=t.y,o,c=0;switch(e){case 98:l=t.y+543;case 121:switch(r.length){case 1:;case 2:o=l%100;c=2;break;default:o=l%1e4;c=4;break;}break;case 109:switch(r.length){case 1:;case 2:o=t.m;c=r.length;break;case 3:return H[t.m-1][1];case 5:return H[t.m-1][0];default:return H[t.m-1][2];}break;case 100:switch(r.length){case 1:;case 2:o=t.d;c=r.length;break;case 3:return j[t.q][0];default:return j[t.q][1];}break;case 104:switch(r.length){case 1:;case 2:o=1+(t.H+11)%12;c=r.length;break;default:throw"bad hour format: "+r;}break;case 72:switch(r.length){case 1:;case 2:o=t.H;c=r.length;break;default:throw"bad hour format: "+r;}break;case 77:switch(r.length){case 1:;case 2:o=t.M;c=r.length;break;default:throw"bad minute format: "+r;}break;case 115:if(r!="s"&&r!="ss"&&r!=".0"&&r!=".00"&&r!=".000")throw"bad second format: "+r;if(t.u===0&&(r=="s"||r=="ss"))return P(t.S,r.length);if(a>=2)s=a===3?1e3:100;else s=a===1?10:1;i=Math.round(s*(t.S+t.u));if(i>=60*s)i=0;if(r==="s")return i===0?"0":""+i/s;n=P(i,2+a);if(r==="ss")return n.substr(0,2);return"."+n.substr(2,r.length-1);case 90:switch(r){case"[h]":;case"[hh]":o=t.D*24+t.H;break;case"[m]":;case"[mm]":o=(t.D*24+t.H)*60+t.M;break;case"[s]":;case"[ss]":o=((t.D*24+t.H)*60+t.M)*60+Math.round(t.S+t.u);break;default:throw"bad abstime format: "+r;}c=r.length===3?1:2;break;case 101:o=l;c=1;break;}var f=c>0?P(o,c):"";return f}function ce(e){var r=3;if(e.length<=r)return e;var t=e.length%r,a=e.substr(0,t);for(;t!=e.length;t+=r)a+=(a.length>0?",":"")+e.substr(t,r);return a}var fe=/%/g;function ue(e,r,t){var a=r.replace(fe,""),n=r.length-a.length;return De(e,a,t*Math.pow(10,2*n))+br("%",n)}function he(e,r,t){var a=r.length-1;while(r.charCodeAt(a-1)===44)--a;return De(e,r.substr(0,a),t/Math.pow(10,3*(r.length-a)))}function pe(e,r){var t;var a=e.indexOf("E")-e.indexOf(".")-1;if(e.match(/^#+0.0E\+0$/)){if(r==0)return"0.0E+0";else if(r<0)return"-"+pe(e,-r);var n=e.indexOf(".");if(n===-1)n=e.indexOf("E");var i=Math.floor(Math.log(r)*Math.LOG10E)%n;if(i<0)i+=n;t=(r/Math.pow(10,i)).toPrecision(a+1+(n+i)%n);if(t.indexOf("e")===-1){var s=Math.floor(Math.log(r)*Math.LOG10E);if(t.indexOf(".")===-1)t=t.charAt(0)+"."+t.substr(1)+"E+"+(s-t.length+i);else t+="E+"+(s-i);while(t.substr(0,2)==="0."){t=t.charAt(0)+t.substr(2,n)+"."+t.substr(2+n);t=t.replace(/^0+([1-9])/,"$1").replace(/^0+\./,"0.")}t=t.replace(/\+-/,"-")}t=t.replace(/^([+-]?)(\d*)\.(\d*)[Ee]/,function(e,r,t,a){return r+t+a.substr(0,(n+i)%n)+"."+a.substr(i)+"E"})}else t=r.toExponential(a);if(e.match(/E\+00$/)&&t.match(/e[+-]\d$/))t=t.substr(0,t.length-1)+"0"+t.charAt(t.length-1);if(e.match(/E\-/)&&t.match(/e\+/))t=t.replace(/e\+/,"e");return t.replace("e","E")}var de=/# (\?+)( ?)\/( ?)(\d+)/;function me(e,r,t){var a=parseInt(e[4],10),n=Math.round(r*a),i=Math.floor(n/a);var s=n-i*a,l=a;return t+(i===0?"":""+i)+" "+(s===0?br(" ",e[1].length+1+e[4].length):I(s,e[1].length)+e[2]+"/"+e[3]+P(l,e[4].length))}function ve(e,r,t){return t+(r===0?"":""+r)+br(" ",e[1].length+2+e[4].length)}var ge=/^#*0*\.([0#]+)/;var be=/\).*[0#]/;var we=/\(###\) ###\\?-####/;function ye(e){var r="",t;for(var a=0;a!=e.length;++a)switch(t=e.charCodeAt(a)){case 35:break;case 63:r+=" ";break;case 48:r+="0";break;default:r+=String.fromCharCode(t);}return r}function ke(e,r){var t=Math.pow(10,r);return""+Math.round(e*t)/t}function xe(e,r){var t=e-Math.floor(e),a=Math.pow(10,r);if(r<(""+Math.round(t*a)).length)return 0;return Math.round(t*a)}function Se(e,r){if(r<(""+Math.round((e-Math.floor(e))*Math.pow(10,r))).length){return 1}return 0}function Ce(e){if(e<2147483647&&e>-2147483648)return""+(e>=0?e|0:e-1|0);return""+Math.floor(e)}function _e(e,r,t){if(e.charCodeAt(0)===40&&!r.match(be)){var a=r.replace(/\( */,"").replace(/ \)/,"").replace(/\)/,"");if(t>=0)return _e("n",a,t);return"("+_e("n",a,-t)+")"}if(r.charCodeAt(r.length-1)===44)return he(e,r,t);if(r.indexOf("%")!==-1)return ue(e,r,t);if(r.indexOf("E")!==-1)return pe(r,t);if(r.charCodeAt(0)===36)return"$"+_e(e,r.substr(r.charAt(1)==" "?2:1),t);var n;var i,s,l,o=Math.abs(t),c=t<0?"-":"";if(r.match(/^00+$/))return c+U(o,r.length);if(r.match(/^[#?]+$/)){n=U(t,0);if(n==="0")n="";return n.length>r.length?n:ye(r.substr(0,r.length-n.length))+n}if(i=r.match(de))return me(i,o,c);if(r.match(/^#+0+$/))return c+U(o,r.length-r.indexOf("0"));if(i=r.match(ge)){n=ke(t,i[1].length).replace(/^([^\.]+)$/,"$1."+ye(i[1])).replace(/\.$/,"."+ye(i[1])).replace(/\.(\d*)$/,function(e,r){return"."+r+br("0",ye(i[1]).length-r.length)});return r.indexOf("0.")!==-1?n:n.replace(/^0\./,".")}r=r.replace(/^#+([0.])/,"$1");if(i=r.match(/^(0*)\.(#*)$/)){return c+ke(o,i[2].length).replace(/\.(\d*[1-9])0*$/,".$1").replace(/^(-?\d*)$/,"$1.").replace(/^0\./,i[1].length?"0.":".")}if(i=r.match(/^#{1,3},##0(\.?)$/))return c+ce(U(o,0));if(i=r.match(/^#,##0\.([#0]*0)$/)){return t<0?"-"+_e(e,r,-t):ce(""+(Math.floor(t)+Se(t,i[1].length)))+"."+P(xe(t,i[1].length),i[1].length)}if(i=r.match(/^#,#*,#0/))return _e(e,r.replace(/^#,#*,/,""),t);if(i=r.match(/^([0#]+)(\\?-([0#]+))+$/)){n=N(_e(e,r.replace(/[\\-]/g,""),t));s=0;return N(N(r.replace(/\\/g,"")).replace(/[0#]/g,function(e){return s<n.length?n.charAt(s++):e==="0"?"0":""}))}if(r.match(we)){n=_e(e,"##########",t);return"("+n.substr(0,3)+") "+n.substr(3,3)+"-"+n.substr(6)}var f="";if(i=r.match(/^([#0?]+)( ?)\/( ?)([#0?]+)/)){s=Math.min(i[4].length,7);l=J(o,Math.pow(10,s)-1,false);n=""+c;f=De("n",i[1],l[1]);if(f.charAt(f.length-1)==" ")f=f.substr(0,f.length-1)+"0";n+=f+i[2]+"/"+i[3];f=R(l[2],s);if(f.length<i[4].length)f=ye(i[4].substr(i[4].length-f.length))+f;n+=f;return n}if(i=r.match(/^# ([#0?]+)( ?)\/( ?)([#0?]+)/)){s=Math.min(Math.max(i[1].length,i[4].length),7);l=J(o,Math.pow(10,s)-1,true);return c+(l[0]||(l[1]?"":"0"))+" "+(l[1]?I(l[1],s)+i[2]+"/"+i[3]+R(l[2],s):br(" ",2*s+1+i[2].length+i[3].length))}if(i=r.match(/^[#0?]+$/)){n=U(t,0);if(r.length<=n.length)return n;return ye(r.substr(0,r.length-n.length))+n}if(i=r.match(/^([#0?]+)\.([#0]+)$/)){n=""+t.toFixed(Math.min(i[2].length,10)).replace(/([^0])0+$/,"$1");s=n.indexOf(".");var u=r.indexOf(".")-s,h=r.length-n.length-u;return ye(r.substr(0,u)+n+r.substr(r.length-h))}if(i=r.match(/^00,000\.([#0]*0)$/)){s=xe(t,i[1].length);return t<0?"-"+_e(e,r,-t):ce(Ce(t)).replace(/^\d,\d{3}$/,"0$&").replace(/^\d*$/,function(e){return"00,"+(e.length<3?P(0,3-e.length):"")+e})+"."+P(s,i[1].length)}switch(r){case"###,##0.00":return _e(e,"#,##0.00",t);case"###,###":;case"##,###":;case"#,###":var p=ce(U(o,0));return p!=="0"?c+p:"";case"###,###.00":return _e(e,"###,##0.00",t).replace(/^0\./,".");case"#,###.00":return _e(e,"#,##0.00",t).replace(/^0\./,".");default:;}throw new Error("unsupported format |"+r+"|")}function Ae(e,r,t){var a=r.length-1;while(r.charCodeAt(a-1)===44)--a;return De(e,r.substr(0,a),t/Math.pow(10,3*(r.length-a)))}function Te(e,r,t){var a=r.replace(fe,""),n=r.length-a.length;return De(e,a,t*Math.pow(10,2*n))+br("%",n)}function Ee(e,r){var t;var a=e.indexOf("E")-e.indexOf(".")-1;if(e.match(/^#+0.0E\+0$/)){if(r==0)return"0.0E+0";else if(r<0)return"-"+Ee(e,-r);var n=e.indexOf(".");if(n===-1)n=e.indexOf("E");var i=Math.floor(Math.log(r)*Math.LOG10E)%n;if(i<0)i+=n;t=(r/Math.pow(10,i)).toPrecision(a+1+(n+i)%n);if(!t.match(/[Ee]/)){var s=Math.floor(Math.log(r)*Math.LOG10E);if(t.indexOf(".")===-1)t=t.charAt(0)+"."+t.substr(1)+"E+"+(s-t.length+i);else t+="E+"+(s-i);t=t.replace(/\+-/,"-")}t=t.replace(/^([+-]?)(\d*)\.(\d*)[Ee]/,function(e,r,t,a){return r+t+a.substr(0,(n+i)%n)+"."+a.substr(i)+"E"})}else t=r.toExponential(a);if(e.match(/E\+00$/)&&t.match(/e[+-]\d$/))t=t.substr(0,t.length-1)+"0"+t.charAt(t.length-1);if(e.match(/E\-/)&&t.match(/e\+/))t=t.replace(/e\+/,"e");return t.replace("e","E")}function Fe(e,r,t){if(e.charCodeAt(0)===40&&!r.match(be)){var a=r.replace(/\( */,"").replace(/ \)/,"").replace(/\)/,"");if(t>=0)return Fe("n",a,t);return"("+Fe("n",a,-t)+")"}if(r.charCodeAt(r.length-1)===44)return Ae(e,r,t);if(r.indexOf("%")!==-1)return Te(e,r,t);if(r.indexOf("E")!==-1)return Ee(r,t);if(r.charCodeAt(0)===36)return"$"+Fe(e,r.substr(r.charAt(1)==" "?2:1),t);var n;var i,s,l,o=Math.abs(t),c=t<0?"-":"";if(r.match(/^00+$/))return c+P(o,r.length);if(r.match(/^[#?]+$/)){n=""+t;if(t===0)n="";return n.length>r.length?n:ye(r.substr(0,r.length-n.length))+n}if(i=r.match(de))return ve(i,o,c);if(r.match(/^#+0+$/))return c+P(o,r.length-r.indexOf("0"));if(i=r.match(ge)){n=(""+t).replace(/^([^\.]+)$/,"$1."+ye(i[1])).replace(/\.$/,"."+ye(i[1]));n=n.replace(/\.(\d*)$/,function(e,r){return"."+r+br("0",ye(i[1]).length-r.length)});return r.indexOf("0.")!==-1?n:n.replace(/^0\./,".")}r=r.replace(/^#+([0.])/,"$1");if(i=r.match(/^(0*)\.(#*)$/)){return c+(""+o).replace(/\.(\d*[1-9])0*$/,".$1").replace(/^(-?\d*)$/,"$1.").replace(/^0\./,i[1].length?"0.":".")}if(i=r.match(/^#{1,3},##0(\.?)$/))return c+ce(""+o);if(i=r.match(/^#,##0\.([#0]*0)$/)){return t<0?"-"+Fe(e,r,-t):ce(""+t)+"."+br("0",i[1].length)}if(i=r.match(/^#,#*,#0/))return Fe(e,r.replace(/^#,#*,/,""),t);if(i=r.match(/^([0#]+)(\\?-([0#]+))+$/)){n=N(Fe(e,r.replace(/[\\-]/g,""),t));s=0;return N(N(r.replace(/\\/g,"")).replace(/[0#]/g,function(e){return s<n.length?n.charAt(s++):e==="0"?"0":""}))}if(r.match(we)){n=Fe(e,"##########",t);return"("+n.substr(0,3)+") "+n.substr(3,3)+"-"+n.substr(6)}var f="";if(i=r.match(/^([#0?]+)( ?)\/( ?)([#0?]+)/)){s=Math.min(i[4].length,7);l=J(o,Math.pow(10,s)-1,false);n=""+c;f=De("n",i[1],l[1]);if(f.charAt(f.length-1)==" ")f=f.substr(0,f.length-1)+"0";n+=f+i[2]+"/"+i[3];f=R(l[2],s);if(f.length<i[4].length)f=ye(i[4].substr(i[4].length-f.length))+f;n+=f;return n}if(i=r.match(/^# ([#0?]+)( ?)\/( ?)([#0?]+)/)){s=Math.min(Math.max(i[1].length,i[4].length),7);l=J(o,Math.pow(10,s)-1,true);return c+(l[0]||(l[1]?"":"0"))+" "+(l[1]?I(l[1],s)+i[2]+"/"+i[3]+R(l[2],s):br(" ",2*s+1+i[2].length+i[3].length))}if(i=r.match(/^[#0?]+$/)){n=""+t;if(r.length<=n.length)return n;return ye(r.substr(0,r.length-n.length))+n}if(i=r.match(/^([#0]+)\.([#0]+)$/)){n=""+t.toFixed(Math.min(i[2].length,10)).replace(/([^0])0+$/,"$1");s=n.indexOf(".");var u=r.indexOf(".")-s,h=r.length-n.length-u;return ye(r.substr(0,u)+n+r.substr(r.length-h))}if(i=r.match(/^00,000\.([#0]*0)$/)){return t<0?"-"+Fe(e,r,-t):ce(""+t).replace(/^\d,\d{3}$/,"0$&").replace(/^\d*$/,function(e){return"00,"+(e.length<3?P(0,3-e.length):"")+e})+"."+P(0,i[1].length)}switch(r){case"###,###":;case"##,###":;case"#,###":var p=ce(""+o);return p!=="0"?c+p:"";default:if(r.match(/\.[0#?]*$/))return Fe(e,r.slice(0,r.lastIndexOf(".")),t)+ye(r.slice(r.lastIndexOf(".")));}throw new Error("unsupported format |"+r+"|")}function De(e,r,t){return(t|0)===t?Fe(e,r,t):_e(e,r,t)}function Oe(e){var r=[];var t=false;for(var a=0,n=0;a<e.length;++a)switch(e.charCodeAt(a)){case 34:t=!t;break;case 95:;case 42:;case 92:++a;break;case 59:r[r.length]=e.substr(n,a-n);n=a+1;}r[r.length]=e.substr(n);if(t===true)throw new Error("Format |"+e+"| unterminated string ");return r}var Me=/\[[HhMmSs\u0E0A\u0E19\u0E17]*\]/;function Ne(e){var r=0,t="",a="";while(r<e.length){switch(t=e.charAt(r)){case"G":if(W(e,r))r+=6;r++;break;case'"':for(;e.charCodeAt(++r)!==34&&r<e.length;){}++r;break;case"\\":r+=2;break;case"_":r+=2;break;case"@":++r;break;case"B":;case"b":if(e.charAt(r+1)==="1"||e.charAt(r+1)==="2")return true;case"M":;case"D":;case"Y":;case"H":;case"S":;case"E":;case"m":;case"d":;case"y":;case"h":;case"s":;case"e":;case"g":return true;case"A":;case"a":;case"上":if(e.substr(r,3).toUpperCase()==="A/P")return true;if(e.substr(r,5).toUpperCase()==="AM/PM")return true;if(e.substr(r,5).toUpperCase()==="上午/下午")return true;++r;break;case"[":a=t;while(e.charAt(r++)!=="]"&&r<e.length)a+=e.charAt(r);if(a.match(Me))return true;break;case".":;case"0":;case"#":while(r<e.length&&("0#?.,E+-%".indexOf(t=e.charAt(++r))>-1||t=="\\"&&e.charAt(r+1)=="-"&&"0#".indexOf(e.charAt(r+2))>-1)){}break;case"?":while(e.charAt(++r)===t){}break;case"*":++r;if(e.charAt(r)==" "||e.charAt(r)=="*")++r;break;case"(":;case")":++r;break;case"1":;case"2":;case"3":;case"4":;case"5":;case"6":;case"7":;case"8":;case"9":while(r<e.length&&"0123456789".indexOf(e.charAt(++r))>-1){}break;case" ":++r;break;default:++r;break;}}return false}function Pe(e,r,t,a){var n=[],i="",s=0,l="",o="t",c,f,u;var h="H";while(s<e.length){switch(l=e.charAt(s)){case"G":if(!W(e,s))throw new Error("unrecognized character "+l+" in "+e);n[n.length]={t:"G",v:"General"};s+=7;break;case'"':for(i="";(u=e.charCodeAt(++s))!==34&&s<e.length;)i+=String.fromCharCode(u);n[n.length]={t:"t",v:i};++s;break;case"\\":var p=e.charAt(++s),d=p==="("||p===")"?p:"t";n[n.length]={t:d,v:p};++s;break;case"_":n[n.length]={t:"t",v:" "};s+=2;break;case"@":n[n.length]={t:"T",v:r};++s;break;case"B":;case"b":if(e.charAt(s+1)==="1"||e.charAt(s+1)==="2"){if(c==null){c=K(r,t,e.charAt(s+1)==="2");if(c==null)return""}n[n.length]={t:"X",v:e.substr(s,2)};o=l;s+=2;break};case"M":;case"D":;case"Y":;case"H":;case"S":;case"E":l=l.toLowerCase();case"m":;case"d":;case"y":;case"h":;case"s":;case"e":;case"g":if(r<0)return"";if(c==null){c=K(r,t);if(c==null)return""}i=l;while(++s<e.length&&e.charAt(s).toLowerCase()===l)i+=l;if(l==="m"&&o.toLowerCase()==="h")l="M";if(l==="h")l=h;n[n.length]={t:l,v:i};o=l;break;case"A":;case"a":;case"上":var m={t:l,v:l};if(c==null)c=K(r,t);if(e.substr(s,3).toUpperCase()==="A/P"){if(c!=null)m.v=c.H>=12?"P":"A";m.t="T";h="h";s+=3}else if(e.substr(s,5).toUpperCase()==="AM/PM"){if(c!=null)m.v=c.H>=12?"PM":"AM";m.t="T";s+=5;h="h"}else if(e.substr(s,5).toUpperCase()==="上午/下午"){if(c!=null)m.v=c.H>=12?"下午":"上午";m.t="T";s+=5;h="h"}else{m.t="t";++s}if(c==null&&m.t==="T")return"";n[n.length]=m;o=l;break;case"[":i=l;while(e.charAt(s++)!=="]"&&s<e.length)i+=e.charAt(s);if(i.slice(-1)!=="]")throw'unterminated "[" block: |'+i+"|";if(i.match(Me)){if(c==null){c=K(r,t);if(c==null)return""}n[n.length]={t:"Z",v:i.toLowerCase()};o=i.charAt(1)}else if(i.indexOf("$")>-1){i=(i.match(/\$([^-\[\]]*)/)||[])[1]||"$";if(!Ne(e))n[n.length]={t:"t",v:i}}break;case".":if(c!=null){i=l;while(++s<e.length&&(l=e.charAt(s))==="0")i+=l;n[n.length]={t:"s",v:i};break};case"0":;case"#":i=l;while(++s<e.length&&"0#?.,E+-%".indexOf(l=e.charAt(s))>-1)i+=l;n[n.length]={t:"n",v:i};break;case"?":i=l;while(e.charAt(++s)===l)i+=l;n[n.length]={t:l,v:i};o=l;break;case"*":++s;if(e.charAt(s)==" "||e.charAt(s)=="*")++s;break;case"(":;case")":n[n.length]={t:a===1?"t":l,v:l};++s;break;case"1":;case"2":;case"3":;case"4":;case"5":;case"6":;case"7":;case"8":;case"9":i=l;while(s<e.length&&"0123456789".indexOf(e.charAt(++s))>-1)i+=e.charAt(s);n[n.length]={t:"D",v:i};break;case" ":n[n.length]={t:l,v:l};++s;break;case"$":n[n.length]={t:"t",v:"$"};++s;break;default:if(",$-+/():!^&'~{}<>=€acfijklopqrtuvwxzP".indexOf(l)===-1)throw new Error("unrecognized character "+l+" in "+e);n[n.length]={t:"t",v:l};++s;break;}}var v=0,g=0,b;for(s=n.length-1,o="t";s>=0;--s){switch(n[s].t){case"h":;case"H":n[s].t=h;o="h";if(v<1)v=1;break;case"s":if(b=n[s].v.match(/\.0+$/))g=Math.max(g,b[0].length-1);if(v<3)v=3;case"d":;case"y":;case"M":;case"e":o=n[s].t;break;case"m":if(o==="s"){n[s].t="M";if(v<2)v=2}break;case"X":break;case"Z":if(v<1&&n[s].v.match(/[Hh]/))v=1;if(v<2&&n[s].v.match(/[Mm]/))v=2;if(v<3&&n[s].v.match(/[Ss]/))v=3;}}switch(v){case 0:break;case 1:if(c.u>=.5){c.u=0;++c.S}if(c.S>=60){c.S=0;++c.M}if(c.M>=60){c.M=0;++c.H}break;case 2:if(c.u>=.5){c.u=0;++c.S}if(c.S>=60){c.S=0;++c.M}break;}var w="",y;for(s=0;s<n.length;++s){switch(n[s].t){case"t":;case"T":;case" ":;case"D":break;case"X":n[s].v="";n[s].t=";";break;case"d":;case"m":;case"y":;case"h":;case"H":;case"M":;case"s":;case"e":;case"b":;case"Z":n[s].v=oe(n[s].t.charCodeAt(0),n[s].v,c,g);n[s].t="t";break;case"n":;case"?":y=s+1;while(n[y]!=null&&((l=n[y].t)==="?"||l==="D"||(l===" "||l==="t")&&n[y+1]!=null&&(n[y+1].t==="?"||n[y+1].t==="t"&&n[y+1].v==="/")||n[s].t==="("&&(l===" "||l==="n"||l===")")||l==="t"&&(n[y].v==="/"||n[y].v===" "&&n[y+1]!=null&&n[y+1].t=="?"))){n[s].v+=n[y].v;n[y]={v:"",t:";"};++y}w+=n[s].v;s=y-1;break;case"G":n[s].t="t";n[s].v=se(r,t);break;}}var k="",x,S;if(w.length>0){if(w.charCodeAt(0)==40){x=r<0&&w.charCodeAt(0)===45?-r:r;S=De("n",w,x)}else{x=r<0&&a>1?-r:r;S=De("n",w,x);if(x<0&&n[0]&&n[0].t=="t"){S=S.substr(1);n[0].v="-"+n[0].v}}y=S.length-1;var C=n.length;for(s=0;s<n.length;++s)if(n[s]!=null&&n[s].t!="t"&&n[s].v.indexOf(".")>-1){C=s;break}var _=n.length;if(C===n.length&&S.indexOf("E")===-1){for(s=n.length-1;s>=0;--s){if(n[s]==null||"n?".indexOf(n[s].t)===-1)continue;if(y>=n[s].v.length-1){y-=n[s].v.length;n[s].v=S.substr(y+1,n[s].v.length)}else if(y<0)n[s].v="";else{n[s].v=S.substr(0,y+1);y=-1}n[s].t="t";_=s}if(y>=0&&_<n.length)n[_].v=S.substr(0,y+1)+n[_].v}else if(C!==n.length&&S.indexOf("E")===-1){y=S.indexOf(".")-1;for(s=C;s>=0;--s){if(n[s]==null||"n?".indexOf(n[s].t)===-1)continue;f=n[s].v.indexOf(".")>-1&&s===C?n[s].v.indexOf(".")-1:n[s].v.length-1;k=n[s].v.substr(f+1);for(;f>=0;--f){if(y>=0&&(n[s].v.charAt(f)==="0"||n[s].v.charAt(f)==="#"))k=S.charAt(y--)+k}n[s].v=k;n[s].t="t";_=s}if(y>=0&&_<n.length)n[_].v=S.substr(0,y+1)+n[_].v;y=S.indexOf(".")+1;for(s=C;s<n.length;++s){if(n[s]==null||"n?(".indexOf(n[s].t)===-1&&s!==C)continue;f=n[s].v.indexOf(".")>-1&&s===C?n[s].v.indexOf(".")+1:0;k=n[s].v.substr(0,f);for(;f<n[s].v.length;++f){if(y<S.length)k+=S.charAt(y++)}n[s].v=k;n[s].t="t";_=s}}}for(s=0;s<n.length;++s)if(n[s]!=null&&"n?".indexOf(n[s].t)>-1){x=a>1&&r<0&&s>0&&n[s-1].v==="-"?-r:r;n[s].v=De(n[s].t,n[s].v,x);n[s].t="t"}var A="";for(s=0;s!==n.length;++s)if(n[s]!=null)A+=n[s].v;return A}var Ie=/\[(=|>[=]?|<[>=]?)(-?\d+(?:\.\d*)?)\]/;function Re(e,r){if(r==null)return false;var t=parseFloat(r[2]);switch(r[1]){case"=":if(e==t)return true;break;case">":if(e>t)return true;break;case"<":if(e<t)return true;break;case"<>":if(e!=t)return true;break;case">=":if(e>=t)return true;break;case"<=":if(e<=t)return true;break;}return false}function Le(e,r){var t=Oe(e);var a=t.length,n=t[a-1].indexOf("@");if(a<4&&n>-1)--a;if(t.length>4)throw new Error("cannot find right format for |"+t.join("|")+"|");if(typeof r!=="number")return[4,t.length===4||n>-1?t[t.length-1]:"@"];switch(t.length){case 1:t=n>-1?["General","General","General",t[0]]:[t[0],t[0],t[0],"@"];break;case 2:t=n>-1?[t[0],t[0],t[0],t[1]]:[t[0],t[1],t[0],"@"];break;case 3:t=n>-1?[t[0],t[1],t[0],t[2]]:[t[0],t[1],t[2],"@"];break;case 4:break;}var i=r>0?t[0]:r<0?t[1]:t[2];if(t[0].indexOf("[")===-1&&t[1].indexOf("[")===-1)return[a,i];if(t[0].match(/\[[=<>]/)!=null||t[1].match(/\[[=<>]/)!=null){var s=t[0].match(Ie);var l=t[1].match(Ie);return Re(r,s)?[a,t[0]]:Re(r,l)?[a,t[1]]:[a,t[s!=null&&l!=null?2:1]]}return[a,i]}function Be(e,r,t){if(t==null)t={};var a="";switch(typeof e){case"string":if(e=="m/d/yy"&&t.dateNF)a=t.dateNF;else a=e;break;case"number":if(e==14&&t.dateNF)a=t.dateNF;else a=(t.table!=null?t.table:X)[e];if(a==null)a=t.table&&t.table[G[e]]||X[G[e]];if(a==null)a=Y[e]||"General";break;}if(W(a,0))return se(r,t);if(r instanceof Date)r=ee(r,t.date1904);var n=Le(a,r);if(W(n[1]))return se(r,t);if(r===true)r="TRUE";else if(r===false)r="FALSE";else if(r===""||r==null)return"";return Pe(n[1],r,t,n[0])}function $e(e,r){if(typeof r!="number"){r=+r||-1;for(var t=0;t<392;++t){if(X[t]==undefined){if(r<0)r=t;continue}if(X[t]==e){r=t;break}}if(r<0)r=391}X[r]=e;return r}function ze(e){for(var r=0;r!=392;++r)if(e[r]!==undefined)$e(e[r],r)}function Ue(){X=V()}var We={format:Be,load:$e,_table:X,load_table:ze,parse_date_code:K,is_date:Ne,get_table:function _c(){return We._table=X}};var je={5:'"$"#,##0_);\\("$"#,##0\\)',6:'"$"#,##0_);[Red]\\("$"#,##0\\)',7:'"$"#,##0.00_);\\("$"#,##0.00\\)',8:'"$"#,##0.00_);[Red]\\("$"#,##0.00\\)',23:"General",24:"General",25:"General",26:"General",27:"m/d/yy",28:"m/d/yy",29:"m/d/yy",30:"m/d/yy",31:"m/d/yy",32:"h:mm:ss",33:"h:mm:ss",34:"h:mm:ss",35:"h:mm:ss",36:"m/d/yy",41:'_(* #,##0_);_(* (#,##0);_(* "-"_);_(@_)',42:'_("$"* #,##0_);_("$"* (#,##0);_("$"* "-"_);_(@_)',43:'_(* #,##0.00_);_(* (#,##0.00);_(* "-"??_);_(@_)',44:'_("$"* #,##0.00_);_("$"* (#,##0.00);_("$"* "-"??_);_(@_)',50:"m/d/yy",51:"m/d/yy",52:"m/d/yy",53:"m/d/yy",54:"m/d/yy",55:"m/d/yy",56:"m/d/yy",57:"m/d/yy",58:"m/d/yy",59:"0",60:"0.00",61:"#,##0",62:"#,##0.00",63:'"$"#,##0_);\\("$"#,##0\\)',64:'"$"#,##0_);[Red]\\("$"#,##0\\)',65:'"$"#,##0.00_);\\("$"#,##0.00\\)',66:'"$"#,##0.00_);[Red]\\("$"#,##0.00\\)',67:"0%",68:"0.00%",69:"# ?/?",70:"# ??/??",71:"m/d/yy",72:"m/d/yy",73:"d-mmm-yy",74:"d-mmm",75:"mmm-yy",76:"h:mm",77:"h:mm:ss",78:"m/d/yy h:mm",79:"mm:ss",80:"[h]:mm:ss",81:"mmss.0"};var He=/[dD]+|[mM]+|[yYeE]+|[Hh]+|[Ss]+/g;function Ve(e){var r=typeof e=="number"?X[e]:e;r=r.replace(He,"(\\d+)");return new RegExp("^"+r+"$")}function Xe(e,r,t){var a=-1,n=-1,i=-1,s=-1,l=-1,o=-1;(r.match(He)||[]).forEach(function(e,r){var c=parseInt(t[r+1],10);switch(e.toLowerCase().charAt(0)){case"y":a=c;break;case"d":i=c;break;case"h":s=c;break;case"s":o=c;break;case"m":if(s>=0)l=c;else n=c;break;}});if(o>=0&&l==-1&&n>=0){l=n;n=-1}var c=(""+(a>=0?a:(new Date).getFullYear())).slice(-4)+"-"+("00"+(n>=1?n:1)).slice(-2)+"-"+("00"+(i>=1?i:1)).slice(-2);if(c.length==7)c="0"+c;if(c.length==8)c="20"+c;var f=("00"+(s>=0?s:0)).slice(-2)+":"+("00"+(l>=0?l:0)).slice(-2)+":"+("00"+(o>=0?o:0)).slice(-2);if(s==-1&&l==-1&&o==-1)return c;if(a==-1&&n==-1&&i==-1)return f;return c+"T"+f}var Ge=function(){var e={};e.version="1.2.0";function r(){var e=0,r=new Array(256);for(var t=0;t!=256;++t){e=t;e=e&1?-306674912^e>>>1:e>>>1;e=e&1?-306674912^e>>>1:e>>>1;e=e&1?-306674912^e>>>1:e>>>1;e=e&1?-306674912^e>>>1:e>>>1;e=e&1?-306674912^e>>>1:e>>>1;e=e&1?-306674912^e>>>1:e>>>1;e=e&1?-306674912^e>>>1:e>>>1;e=e&1?-306674912^e>>>1:e>>>1;r[t]=e}return typeof Int32Array!=="undefined"?new Int32Array(r):r}var t=r();function a(e){var r=0,t=0,a=0,n=typeof Int32Array!=="undefined"?new Int32Array(4096):new Array(4096);for(a=0;a!=256;++a)n[a]=e[a];for(a=0;a!=256;++a){t=e[a];for(r=256+a;r<4096;r+=256)t=n[r]=t>>>8^e[t&255]}var i=[];for(a=1;a!=16;++a)i[a-1]=typeof Int32Array!=="undefined"?n.subarray(a*256,a*256+256):n.slice(a*256,a*256+256);return i}var n=a(t);var i=n[0],s=n[1],l=n[2],o=n[3],c=n[4];var f=n[5],u=n[6],h=n[7],p=n[8],d=n[9];var m=n[10],v=n[11],g=n[12],b=n[13],w=n[14];function y(e,r){var a=r^-1;for(var n=0,i=e.length;n<i;)a=a>>>8^t[(a^e.charCodeAt(n++))&255];return~a}function k(e,r){var a=r^-1,n=e.length-15,y=0;for(;y<n;)a=w[e[y++]^a&255]^b[e[y++]^a>>8&255]^g[e[y++]^a>>16&255]^v[e[y++]^a>>>24]^m[e[y++]]^d[e[y++]]^p[e[y++]]^h[e[y++]]^u[e[y++]]^f[e[y++]]^c[e[y++]]^o[e[y++]]^l[e[y++]]^s[e[y++]]^i[e[y++]]^t[e[y++]];n+=15;while(y<n)a=a>>>8^t[(a^e[y++])&255];return~a}function x(e,r){var a=r^-1;for(var n=0,i=e.length,s=0,l=0;n<i;){
