@@ -240,53 +240,68 @@ body.atualizando .tabs, body.atualizando #tabA, body.atualizando #carregando, bo
 
 /* aba Evolução */
 #tabE{padding-top:16px}
-.evtop{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:14px}
-.evtop label{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--muted);font-size:15px}
-.evtop select{max-width:min(420px,78vw);border:1.5px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--surface);color:var(--ink);font:inherit;font-weight:700}
-.evcards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.evcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;min-width:0}
-.evcard > span{display:block;font-size:13px;color:var(--muted)}
-.evcard b{display:block;font-size:26px;font-weight:900;color:var(--ink);line-height:1.2;font-variant-numeric:normal}
-.evcard em{display:block;font-style:normal;font-size:13px;color:var(--text);margin-top:4px}
-.evcard small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
-.dl{display:inline-flex;align-items:center;gap:4px;font-weight:900;color:var(--ink)}
-.dl i{font-style:normal;font-size:11px}
+.exp{padding:5px 11px;font-size:13px}
+.evtop{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-end;margin-bottom:14px}
+.combo{flex:0 1 340px;min-width:0}
+.combo label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.combox{position:relative}
+.combox input{width:100%;border:1.5px solid var(--line);border-radius:8px;padding:8px 30px 8px 11px;background:var(--surface);color:var(--ink);font-weight:700;text-overflow:ellipsis}
+.combox::after{content:"";position:absolute;right:12px;top:50%;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.combox ul{position:absolute;z-index:20;left:0;right:0;top:calc(100% + 4px);margin:0;padding:4px;list-style:none;max-height:320px;overflow:auto;background:var(--surface);border:1.5px solid var(--line);border-radius:8px;box-shadow:0 10px 26px rgba(10,20,40,.22)}
+.combox li{padding:7px 9px;border-radius:6px;cursor:pointer;font-size:14.5px;color:var(--text)}
+.combox li:hover,.combox li[aria-selected="true"]{background:var(--soft)}
+.combox li.atual{font-weight:900;color:var(--ink)}
+.combox li.nada{cursor:default;color:var(--muted)}
+.dl{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:var(--text)}
+.dl i{font-style:normal;font-size:10px}
 .dl.ruim i{color:var(--g1)} .dl.bom i{color:var(--g4)} .dl.neutro i{color:var(--muted)}
 .evchart{padding-bottom:10px;position:relative;margin-bottom:16px}
+.evchart .thead .evtit{flex:1 1 360px}
+.evchart .thead .hint{max-width:90ch}
+.evchart .tools{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-start}
+.evmet{display:flex;flex-wrap:wrap;gap:6px}
+.evmet button{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 13px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer}
+.evmet button:hover{border-color:var(--blue)}
+.evmet button[aria-pressed="true"]{background:var(--pill);border-color:var(--pill);color:#fff}
 .evleg{display:flex;flex-wrap:wrap;gap:4px 18px;padding:0 16px 6px;font-size:13px;color:var(--text)}
 .evleg span{display:inline-flex;align-items:center;gap:7px}
 .evleg svg{flex:none}
 .evsvg{padding:0 8px;outline-offset:-2px}
 .evsvg svg{display:block;width:100%;height:auto;touch-action:pan-y}
-#evTip{transform:translate(-50%,0);margin-top:0;white-space:nowrap;text-align:left}
-#evTip b{display:block;font-size:13.5px;margin-bottom:3px}
-#evTip div{display:flex;justify-content:space-between;gap:16px}
-#evTip div span:last-child{font-weight:900}
-.evgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:16px;align-items:start}
-.evmarco{padding:16px}
-.evmarco .linha{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0 4px}
-.evmarco label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
-.evmarco input[type=date]{border:1.5px solid var(--line);border-radius:8px;padding:6px 9px;background:var(--surface);color:var(--ink)}
-.evmarco .reset{margin-top:0}
-.evmarco .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
-.evmarco .stat b{font-size:20px}
+.limpar{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;padding:5px 12px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.limpar:hover{border-color:var(--blue)}
+#evTip{transform:translate(-50%,0);margin-top:0;white-space:nowrap;text-align:left;padding:12px 14px 11px;min-width:232px;border-radius:10px;font-size:13px;line-height:1.35}
+#evTip .quando{font-size:12px;font-weight:700;letter-spacing:.02em;opacity:.78;text-transform:uppercase;margin-bottom:8px}
+#evTip .lin{display:grid;grid-template-columns:16px 1fr auto;column-gap:8px;align-items:center;margin-top:6px}
+#evTip .lin b{padding-left:14px}
+#evTip .lin i{height:4px;border-radius:2px}
+#evTip .lin span{font-weight:700}
+#evTip .lin b{display:inline;font-size:18px;font-weight:900;line-height:1.1;text-align:right}
+#evTip .det{margin:1px 0 0 24px;font-size:12px;opacity:.78}
+#evTip .dif{margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,255,255,.28);font-size:12.5px;font-weight:700}
+.evgrid{display:grid;grid-template-columns:minmax(260px,330px) minmax(0,1fr);gap:16px;align-items:start}
+.evper{padding:16px}
+.perlinha{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:12px;font-size:14px}
+.perlinha span{flex:1 1 100%;font-weight:700;color:var(--ink)}
+.perlinha i{font-style:normal;color:var(--muted)}
+.perlinha input{flex:1 1 118px;min-width:0;border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--surface);color:var(--ink)}
+.evper .reset{margin-top:14px}
+.evper .hint:empty{display:none}
 .evrank .thead .tools{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-start}
-.evchart .thead > div{flex:1 1 420px}
-.evchart .thead .exp{align-self:flex-start}
-.evrank .scroll{max-height:560px}
-.evrank table{min-width:620px}
+.evrank .scroll{max-height:620px}
+.evrank table{min-width:640px}
+.evrank td b{color:var(--ink)}
+.evrank th small{display:block;font-weight:400;font-size:11px;opacity:.85;line-height:1.1;white-space:nowrap}
 .seg{display:inline-flex;border:1.5px solid var(--line);border-radius:8px;overflow:hidden}
-.seg button{border:0;background:var(--surface);color:var(--muted);padding:7px 12px;font-weight:700;font-size:13.5px;cursor:pointer}
+.seg button{border:0;background:var(--surface);color:var(--muted);padding:6px 11px;font-weight:700;font-size:13px;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--pill);color:#fff}
 .varc{display:inline-flex;align-items:center;gap:8px}
-.varc b{min-width:46px;text-align:right;font-weight:700;color:var(--text)}
+.varc b{min-width:54px;text-align:right;font-weight:700;color:var(--text)}
 .var{position:relative;display:inline-block;width:92px;height:18px;vertical-align:middle}
 .var::before{content:"";position:absolute;left:50%;top:1px;bottom:1px;width:1px;background:var(--muted);opacity:.5}
 .var i{position:absolute;top:3px;bottom:3px;border-radius:2px;opacity:.75}
-td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
-@media (max-width:1100px){.evcards{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:980px){.evgrid{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:560px){.evcards{grid-template-columns:repeat(2,minmax(0,1fr))}.evcard b{font-size:22px}}
+body:not(.local) .so-local, body.local .so-firebase{display:none}
 
 /* tela Atualizar dados */
 #tabU{max-width:860px;padding-top:18px;font-size:16px;line-height:1.5}
@@ -296,7 +311,7 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
 .uhead .reset{margin-top:0}
 .passo{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:16px}
 .passo h3{margin:0 0 4px;font-size:18px;font-weight:900;color:var(--ink)}
-.passo h3 span{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--pill);color:#fff;font-size:14px;margin-right:8px}
+.passo h3 > span:first-child{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--pill);color:#fff;font-size:14px;margin-right:8px}
 .passo > p{margin:6px 0 12px;color:var(--muted);max-width:68ch}
 .passo[aria-disabled="true"]{opacity:.55}
 .passo input[type=file]{display:block;width:100%;padding:14px;border:1.5px dashed var(--line);border-radius:10px;background:var(--soft);cursor:pointer}
@@ -320,6 +335,82 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
 .ucrit .crit{margin-top:8px}
 @media (max-width:700px){.ucrit{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:560px){.tools{flex-wrap:wrap;justify-content:flex-start;min-width:0}.tools .search{min-width:0}}
+.evrank th.rk2 button{line-height:1.15;padding-top:5px;padding-bottom:5px}
+
+/* Evolução: postos da superintendência e quadro do posto */
+.evsup{margin-bottom:16px}
+.evsup .scroll{max-height:560px}
+.evsup table{min-width:640px}
+.evsup th small{display:block;font-weight:400;font-size:11px;opacity:.85;line-height:1.1;white-space:nowrap}
+.evsup th.rk2 button{line-height:1.15;padding-top:5px;padding-bottom:5px}
+.evsup td b{color:var(--ink)}
+.evquadro{padding:18px 20px 20px;margin-bottom:16px}
+.qhead{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:flex-start;justify-content:space-between}
+.qhead h3{font-size:24px;margin:0}
+.qsup{margin:0 0 2px;font-size:12.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.qhead .tools{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-start}
+.qlead{margin:14px 0 2px;padding:14px 16px 14px 34px;background:var(--soft);border-left:5px solid var(--g3);border-radius:8px;font-size:15.5px;color:var(--text);max-width:none}
+.qlead li{margin:4px 0;max-width:95ch}
+.qlead b{color:var(--ink)}
+.qgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.qcard{border:1px solid var(--line);border-radius:10px;padding:14px 15px;min-width:0;background:var(--surface)}
+.qcard.w2{grid-column:span 2}
+.qcard h4{margin:0 0 8px;font-size:12.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.qnum{display:block;font-size:30px;font-weight:900;line-height:1.1;color:var(--ink);font-variant-numeric:normal}
+.qnum small{font-size:15px;font-weight:700;color:var(--muted)}
+.qsub{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+.qpar{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.qbar{display:grid;grid-template-columns:minmax(0,7.5em) minmax(0,1fr) 3.6em;gap:8px;align-items:center;font-size:13px;margin-top:8px}
+.qbar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.qbar i{display:block;height:12px;border-radius:3px;min-width:2px}
+.qbar b{text-align:right;color:var(--ink)}
+.qtrilho{background:var(--soft);border-radius:3px}
+.qsacs{display:flex;flex-wrap:wrap;gap:5px;max-height:104px;overflow:auto;margin-top:9px}
+.qsacs span{border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-size:12.5px;white-space:nowrap;color:var(--text)}
+.qsacs em{font-style:normal;color:var(--muted);margin-left:6px}
+.qref{display:grid;grid-template-columns:minmax(0,1fr) 4.2em minmax(0,1.25fr);gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+.qref:first-of-type{border-top:0;padding-top:2px}
+.qref button{all:unset;cursor:pointer;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:3px;overflow:hidden;text-overflow:ellipsis}
+.qref button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.qref b{text-align:right;color:var(--ink)}
+.qref span{color:var(--muted);font-size:13px}
+.qsem{display:flex;gap:10px;align-items:flex-end;margin-top:6px}
+.qsem > div{flex:1 1 0;min-width:0;text-align:center}
+.qsem .col{position:relative;height:96px;background:var(--soft);border-radius:4px 4px 0 0}
+.qsem .col i{position:absolute;left:18%;right:18%;bottom:0;background:var(--g3);border-radius:4px 4px 0 0}
+.qsem .col u{position:absolute;left:4%;right:4%;height:3px;background:var(--g2);border-radius:2px;text-decoration:none}
+.qsem b{display:block;font-size:13px;color:var(--ink);margin-bottom:3px}
+.qsem span{display:block;font-size:11.5px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qleg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.qleg span{display:inline-flex;align-items:center;gap:6px}
+.qleg i{width:14px;height:10px;border-radius:2px;background:var(--g3)} .qleg u{width:16px;height:3px;border-radius:2px;background:var(--g2)}
+.qcard p{margin:0;font-size:14px;color:var(--text)}
+.qcard p + p{margin-top:8px}
+@media (max-width:1100px){.qgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.qgrid{grid-template-columns:minmax(0,1fr)}.qcard.w2{grid-column:auto}.qhead h3{font-size:21px}}
+
+/* Evolução: a comparação entre períodos abre por um botão */
+.evcomp{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0 0 16px;padding:13px 18px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;font-size:16px;font-weight:900;cursor:pointer;text-align:left}
+.evcomp:hover{border-color:var(--blue)}
+.evcomp i{width:9px;height:9px;border-right:2.5px solid var(--muted);border-bottom:2.5px solid var(--muted);transform:rotate(45deg);margin:0 6px 4px 0;flex:none}
+.evcomp[aria-expanded="true"] i{transform:rotate(-135deg);margin:4px 6px 0 0}
+.tools{flex-wrap:wrap}
+.drill .thead .tools,.evsup .thead .tools{flex:0 1 auto;justify-content:flex-start}
+
+/* janela de senha */
+.acesso{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:linear-gradient(100deg,#14284B 0%,#24457F 70%,#2F5597 100%)}
+.acesso[hidden]{display:none}
+body.pedindo{overflow:hidden}
+.accard{width:100%;max-width:400px;background:var(--surface);color:var(--text);border-radius:16px;padding:28px 26px 24px;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+.accard h2{margin:0 0 6px;font-size:21px;color:var(--ink);line-height:1.25}
+.accard > p:not(.umsg){margin:0 0 18px;color:var(--muted);font-size:14.5px}
+.accard label{display:block;font-weight:800;font-size:13.5px;margin-bottom:6px;color:var(--ink)}
+.accard input{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:11px 12px;border:1.5px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text)}
+.accard input:focus{outline:3px solid var(--focus);outline-offset:1px;border-color:transparent}
+.accard .umsg{max-width:none}
+.acbot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}
+.acbot .ubtn:disabled{opacity:.7;cursor:wait}
+.acesso.sobre{background:rgba(10,18,34,.62);backdrop-filter:blur(3px)}
 </style>
 </head>
 <body class="aguardando">
@@ -344,8 +435,9 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
     </div>
     <div class="per" id="per" role="group" aria-label="Período analisado">
       <button data-p="all">Desde o início</button>
-      <button data-p="30">Últimos 30 dias</button>
-      <button data-p="7">Últimos 7 dias</button>
+      <button data-p="mes" title="Do dia 1 do mês até o último dia da base">Mês atual</button>
+      <button data-p="sem" title="A última semana fechada, de segunda a domingo">Última semana</button>
+      <button data-p="semAtual" title="Da segunda-feira até o último dia da base">Semana atual</button>
       <button data-p="1">Último dia</button>
       <span id="perTxt"></span>
     </div>
@@ -383,6 +475,7 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
           <div class="tools">
             <input class="search" id="q" type="search" placeholder="Buscar posto" aria-label="Buscar posto pelo nome">
             <button class="exp" id="exp" hidden title="Exporta para Excel a tabela como está na tela, com o filtro e a ordem atuais">Exportar tabela</button>
+            <button class="exp" id="expPdf" hidden title="Gera um PDF de uma página com as 50 primeiras linhas da tabela, na ordem em que está na tela">Exportar PDF</button>
           </div>
           <p class="expmsg" id="expmsg" role="status" aria-live="polite"></p>
         </div>
@@ -398,7 +491,8 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
 
   <section class="panel drill" id="drill" hidden>
     <div class="thead"><div><h3 id="dtitle"></h3><p class="hint" id="dhint"></p></div>
-      <button class="exp" id="dexp" hidden title="Exporta para Excel os postos desta superintendência, na ordem atual">Exportar postos</button></div>
+      <div class="tools"><button class="exp" id="dexp" hidden title="Exporta para Excel os postos desta superintendência, na ordem atual">Exportar postos</button>
+        <button class="exp" id="dexpPdf" title="Gera um PDF de uma página com os postos desta superintendência (até 50), na ordem atual">Exportar PDF</button></div></div>
     <div class="scroll" tabindex="0" aria-label="Ranking dos postos da superintendência">
       <table><thead><tr id="dhrow"></tr></thead><tbody id="drows"></tbody></table>
     </div>
@@ -417,32 +511,52 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
 
   <div id="tabE" hidden>
     <div class="evtop">
-      <label for="evEsc">Analisar <select id="evEsc"></select></label>
+      <div class="combo" id="cbSup">
+        <label for="cbSupI">Superintendência</label>
+        <div class="combox"><input id="cbSupI" type="text" role="combobox" aria-expanded="false" aria-controls="cbSupL" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Digite ou escolha"><ul id="cbSupL" role="listbox" hidden></ul></div>
+      </div>
+      <div class="combo" id="cbPosto">
+        <label for="cbPostoI">Posto</label>
+        <div class="combox"><input id="cbPostoI" type="text" role="combobox" aria-expanded="false" aria-controls="cbPostoL" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Digite ou escolha"><ul id="cbPostoL" role="listbox" hidden></ul></div>
+      </div>
     </div>
-    <div class="evcards" id="evCards" aria-live="polite"></div>
+
+    <section class="panel evquadro" id="evQuadro" aria-live="polite" hidden></section>
 
     <section class="panel evchart" id="evBox">
       <div class="thead">
-        <div>
-          <h3 id="evTit"></h3>
-          <p class="hint" id="evHint"></p>
+        <div class="evtit"><h3 id="evTit"></h3><p class="hint" id="evHint"></p></div>
+        <div class="tools">
+          <button class="limpar" id="evLimpar" title="Volta o gráfico para o Estado, com todas as superintendências e todos os postos">Limpar filtros</button>
         </div>
-        <button class="exp" id="evExp" title="Exporta para Excel os números de cada dia do que está selecionado em Analisar">Exportar série diária</button>
       </div>
       <div class="evleg" id="evLeg"></div>
-      <div class="evsvg" id="evSvg" tabindex="0" role="group" aria-label="Gráficos por dia. Use as setas para a esquerda e para a direita para ler os valores de cada dia."></div>
+      <div class="evsvg" id="evSvg" tabindex="0" role="group" aria-label="Gráfico por dia. Use as setas para a esquerda e para a direita para ler os valores de cada dia."></div>
       <div class="tip" id="evTip"></div>
     </section>
 
-    <div class="evgrid">
-      <section class="panel evmarco">
-        <h3>Antes e depois de uma data</h3>
-        <p class="hint">Informe a data de um treinamento ou de uma mudança de procedimento. O painel compara o mesmo número de dias antes e depois dela, para o que estiver escolhido em Analisar.</p>
-        <div class="linha">
-          <label for="evData">Data <input type="date" id="evData"></label>
-          <button class="reset" id="evLimpa" hidden>Limpar a data</button>
+    <section class="panel evsup" id="evSupBox" hidden>
+      <div class="thead">
+        <div>
+          <h3 id="evSupTit"></h3>
+          <p class="hint" id="evSupHint"></p>
         </div>
-        <div id="evMarco" aria-live="polite"></div>
+        <div class="tools"><button class="exp" id="evSupExp" title="Exporta para Excel os postos desta superintendência, na ordem atual">Exportar postos</button>
+          <button class="exp" id="evSupPdf" title="Gera um PDF de uma página com os postos desta superintendência (até 50), na ordem atual">Exportar PDF</button></div>
+      </div>
+      <div class="scroll" tabindex="0" aria-label="Postos da superintendência">
+        <table><thead><tr id="evSupH"></tr></thead><tbody id="evSupRows"></tbody></table>
+      </div>
+    </section>
+
+    <button class="evcomp" id="evComp" aria-expanded="false" aria-controls="evGrid"><span>Comparação entre períodos</span><i aria-hidden="true"></i></button>
+    <div class="evgrid" id="evGrid" hidden>
+      <section class="panel evper">
+        <h3>Escolha o período</h3>
+        <div class="perlinha"><span>1º período</span><input type="date" id="evP1a" aria-label="1º período, de"><i>a</i><input type="date" id="evP1b" aria-label="1º período, até"></div>
+        <div class="perlinha"><span>2º período</span><input type="date" id="evP2a" aria-label="2º período, de"><i>a</i><input type="date" id="evP2b" aria-label="2º período, até"></div>
+        <button class="reset" id="evPVolta" hidden>Voltar ao período dos botões</button>
+        <p class="hint" id="evPMsg" role="status"></p>
       </section>
 
       <section class="panel evrank">
@@ -453,12 +567,14 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
           </div>
           <div class="tools">
             <div class="seg" id="evUni" role="group" aria-label="Linhas da tabela">
-              <button data-u="p">Postos</button><button data-u="s">Superintendências</button>
+              <button data-u="p">Posto</button><button data-u="s">Superintendência</button>
             </div>
             <button class="exp" id="evRkExp" title="Exporta para Excel a tabela na ordem atual">Exportar tabela</button>
+            <button class="exp" id="evRkPdf" title="Gera um PDF de uma página com as 50 primeiras linhas da tabela, na ordem atual">Exportar PDF</button>
+            <button class="limpar" id="evRkVolta" hidden title="Volta para a comparação entre as superintendências">← Superintendências</button>
           </div>
         </div>
-        <div class="scroll" tabindex="0" aria-label="Tabela de variação da taxa">
+        <div class="scroll" tabindex="0" aria-label="Tabela de variação entre os dois períodos">
           <table><thead><tr id="evHrow"></tr></thead><tbody id="evRows"></tbody></table>
           <div class="empty" id="evVazio" hidden></div>
         </div>
@@ -523,15 +639,16 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
     </section>
 
     <section class="passo" id="u-p4">
-      <h3><span>4</span>Gere o arquivo e importe no Firebase</h3>
-      <p>O arquivo leva a base inteira já atualizada: o que estava lá, os dias da planilha e os critérios acima.</p>
+      <h3><span>4</span><span class="so-firebase">Gere o arquivo e importe no Firebase</span><span class="so-local">Aplique ao painel</span></h3>
+      <p class="so-firebase">O arquivo leva a base inteira já atualizada: o que estava lá, os dias da planilha e os critérios acima.</p>
+      <p class="so-local">Neste arquivo de teste os dados ficam dentro do próprio HTML. O que você aplicar aqui vale enquanto a página estiver aberta; ao recarregar, voltam os dados que vieram no arquivo.</p>
       <div class="uacoes">
         <button class="ubtn" id="u-gerar" disabled>Baixar arquivo para o Firebase</button>
-        <button class="ubtn sec" id="u-checar" disabled>Conferir a importação</button>
+        <button class="ubtn sec so-firebase" id="u-checar" disabled>Conferir a importação</button>
         <button class="ubtn" id="u-abrir" hidden>Abrir o painel atualizado</button>
       </div>
       <p class="umsg" id="u-mGerar" role="status" hidden></p>
-      <ol class="ucomo">
+      <ol class="ucomo so-firebase">
         <li>Abra o <a id="u-console" target="_blank" rel="noopener">Realtime Database no console do Firebase</a>.</li>
         <li>Com a raiz da base na tela (a linha com o endereço <code id="u-raiz"></code>), clique nos três pontinhos à direita e em <b>Importar JSON</b>.</li>
         <li>Escolha o arquivo baixado e confirme em <b>Importar</b>.</li>
@@ -541,12 +658,28 @@ td small.n{display:block;font-size:11.5px;color:var(--muted);line-height:1.1}
   </div>
 
   <button class="adm" id="adm">Atualizar dados</button>
+  <div class="acesso" id="acesso" hidden role="dialog" aria-modal="true" aria-labelledby="acTit" aria-describedby="acTxt">
+    <form class="accard" id="acForm" autocomplete="off">
+      <h2 id="acTit"></h2>
+      <p id="acTxt"></p>
+      <label for="acSenha">Senha</label>
+      <input id="acSenha" type="password" autocomplete="current-password" spellcheck="false">
+      <p class="umsg bad" id="acErro" role="alert" hidden></p>
+      <div class="acbot"><button type="button" class="limpar" id="acCancelar" hidden>Voltar ao painel</button><button type="submit" class="ubtn" id="acOk">Entrar</button></div>
+    </form>
+  </div>
 </div>
 
 <script>
-/* ── configuração: endereço da base de dados no Firebase ── */
+/* ── configuração ──
+   BASE: endereço da base de dados no Firebase.
+   EMBUTIDO: no arquivo de teste, os dados vêm aqui dentro e o Firebase não é usado; na versão do site fica null. */
 const BASE = 'https://coleta-biometrica-default-rtdb.firebaseio.com';
 const PROJETO = 'coleta-biometrica';
+const EMBUTIDO = null;
+/* ACESSO: ADM_OK confere a senha de Atualizar dados; CHAVE_LOCAL só existe no arquivo de teste. */
+const ADM_OK = 'a01791fb5704f864bf26b909b8968410';
+const CHAVE_LOCAL = null;
 
 /* ── exportação para Excel ──────────────────────────────── */
 const MIN = new Set(['de', 'do', 'da', 'dos', 'das', 'e']);
@@ -609,10 +742,148 @@ function xlsx(sheets) {
   return zip(files);
 }
 function baixarDireto(arq) {
-  const url = URL.createObjectURL(new Blob([arq.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
+  const url = URL.createObjectURL(new Blob([arq.data], {type: arq.tipo || 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}));
   const a = document.createElement('a'); a.href = url; a.download = arq.filename; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 4000);
 }
+
+/* ── PDF de uma página, escrito pela própria página: retângulos e texto nas fontes Helvetica que todo leitor de PDF já tem ── */
+// larguras dos caracteres (códigos 32 a 255 da codificação WinAnsi), em milésimos do tamanho da letra
+const PDF_LARG = {
+  n: [278, 278, 355, 556, 556, 889, 667, 191, 333, 333, 389, 584, 278, 333, 278, 278, 556, 556, 556, 556, 556, 556, 556, 556, 556, 556, 278, 278, 584, 584, 584, 556, 1015, 667, 667, 722, 722, 667, 611, 778, 722, 278, 500, 667, 556, 833, 722, 778, 667, 778, 722, 667, 611, 722, 667, 944, 667, 667, 611, 278, 278, 278, 469, 556, 333, 556, 556, 500, 556, 556, 278, 556, 556, 222, 222, 500, 222, 833, 556, 556, 556, 556, 333, 500, 278, 556, 500, 722, 500, 500, 500, 334, 260, 334, 584, 350, 556, 350, 222, 556, 333, 1000, 556, 556, 333, 1000, 667, 333, 1000, 350, 611, 350, 350, 222, 222, 333, 333, 350, 556, 1000, 333, 1000, 500, 333, 944, 350, 500, 667, 278, 333, 556, 556, 556, 556, 260, 556, 333, 737, 370, 556, 584, 333, 737, 333, 400, 584, 333, 333, 333, 556, 537, 278, 333, 333, 365, 556, 834, 834, 834, 611, 667, 667, 667, 667, 667, 667, 1000, 722, 667, 667, 667, 667, 278, 278, 278, 278, 722, 722, 778, 778, 778, 778, 778, 584, 778, 722, 722, 722, 722, 667, 667, 611, 556, 556, 556, 556, 556, 556, 889, 500, 556, 556, 556, 556, 278, 278, 278, 278, 556, 556, 556, 556, 556, 556, 556, 584, 611, 556, 556, 556, 556, 500, 556, 500],
+  b: [278, 333, 474, 556, 556, 889, 722, 238, 333, 333, 389, 584, 278, 333, 278, 278, 556, 556, 556, 556, 556, 556, 556, 556, 556, 556, 333, 333, 584, 584, 584, 611, 975, 722, 722, 722, 722, 667, 611, 778, 722, 278, 556, 722, 611, 833, 722, 778, 667, 778, 722, 667, 611, 722, 667, 944, 667, 667, 611, 333, 278, 333, 584, 556, 333, 556, 611, 556, 611, 556, 333, 611, 611, 278, 278, 556, 278, 889, 611, 611, 611, 611, 389, 556, 333, 611, 556, 778, 556, 556, 500, 389, 280, 389, 584, 350, 556, 350, 278, 556, 500, 1000, 556, 556, 333, 1000, 667, 333, 1000, 350, 611, 350, 350, 278, 278, 500, 500, 350, 556, 1000, 333, 1000, 556, 333, 944, 350, 500, 667, 278, 333, 556, 556, 556, 556, 280, 556, 333, 737, 370, 556, 584, 333, 737, 333, 400, 584, 333, 333, 333, 611, 556, 278, 333, 333, 365, 556, 834, 834, 834, 611, 722, 722, 722, 722, 722, 722, 1000, 722, 667, 667, 667, 667, 278, 278, 278, 278, 722, 722, 778, 778, 778, 778, 778, 584, 778, 722, 722, 722, 722, 667, 667, 611, 556, 556, 556, 556, 556, 556, 889, 556, 556, 556, 556, 556, 278, 278, 278, 278, 611, 611, 611, 611, 611, 611, 611, 584, 611, 611, 611, 611, 611, 556, 611, 556]
+};
+const PDF_ESPECIAL = {'\u2212': 0x2D, '\u2013': 0x96, '\u2014': 0x97, '\u2026': 0x85, '\u201C': 0x93, '\u201D': 0x94, '\u2018': 0x91, '\u2019': 0x92, '\u2022': 0x95, '\u20AC': 0x80};
+const pdfCodigos = t => [...String(t)].map(ch => { const c = ch.charCodeAt(0); return PDF_ESPECIAL[ch] || (c >= 32 && c < 256 && !(c >= 127 && c < 160) ? c : 63); });
+const pdfLargura = (t, tam, negrito) => pdfCodigos(t).reduce((a, c) => a + PDF_LARG[negrito ? 'b' : 'n'][c - 32], 0) * tam / 1000;
+// Folha com a origem no canto de cima, medidas em pontos (1/72 de polegada)
+function criarPdf(W, H) {
+  const ops = [], n = v => (+v.toFixed(2)).toString();
+  const rgb = hex => [1, 3, 5].map(i => n(parseInt(hex.slice(i, i + 2), 16) / 255)).join(' ');
+  return {
+    ret(x, y, w, h, cor) { ops.push(`${rgb(cor)} rg ${n(x)} ${n(H - y - h)} ${n(w)} ${n(h)} re f`); },
+    // alinh: 'l', 'c' ou 'r' em relação a x; max: largura disponível (o texto aperta até 78% e, se ainda não couber, é cortado com reticências)
+    texto(t, x, y, tam, o) {
+      o = o || {}; t = String(t);
+      let w = pdfLargura(t, tam, o.negrito), esc = 100;
+      if (o.max && w > o.max) {
+        esc = Math.max(78, o.max / w * 100);
+        if (w * esc / 100 > o.max) { while (t.length > 1 && pdfLargura(t + '\u2026', tam, o.negrito) * esc / 100 > o.max) t = t.slice(0, -1); t = t.replace(/\s+$/, '') + '\u2026'; }
+        w = pdfLargura(t, tam, o.negrito) * esc / 100;
+      }
+      const xi = o.alinh === 'c' ? x - w / 2 : o.alinh === 'r' ? x - w : x;
+      ops.push(`BT /F${o.negrito ? 2 : 1} ${n(tam)} Tf ${rgb(o.cor || '#111827')} rg ${n(esc)} Tz 1 0 0 1 ${n(xi)} ${n(H - y)} Tm <${pdfCodigos(t).map(c => c.toString(16).padStart(2, '0')).join('')}> Tj ET`);
+    },
+    bytes() {
+      const conteudo = ops.join('\n');
+      const objs = ['<< /Type /Catalog /Pages 2 0 R >>', '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
+        `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${n(W)} ${n(H)}] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R >> >> >>`,
+        `<< /Length ${conteudo.length} >>\nstream\n${conteudo}\nendstream`,
+        '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>', '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'];
+      let pdf = '%PDF-1.4\n'; const pos = [];
+      objs.forEach((o, i) => { pos.push(pdf.length); pdf += `${i + 1} 0 obj\n${o}\nendobj\n`; });
+      const xref = pdf.length;
+      pdf += `xref\n0 ${objs.length + 1}\n0000000000 65535 f \n` + pos.map(p => String(p).padStart(10, '0') + ' 00000 n \n').join('') + `trailer\n<< /Size ${objs.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`;
+      return new TextEncoder().encode(pdf);                 // só há caracteres ASCII: o texto vai em hexadecimal
+    }
+  };
+}
+// Tabela no estilo escolhido pela direção: faixa de título azul-marinho, cabeçalho e linhas em azul que clareia de cima para baixo.
+// spec: {titulo, periodo, colunas: [{t, w, alinh, negrito}], linhas: [[...]], rodape: [textos]}
+function pdfTabela(spec) {
+  const W = 595, M = 20, LT = W - 2 * M, hT = 22, hP = 16, hC = 28, hL = 14.2, hR = 10;
+  const H = M + hT + hP + hC + spec.linhas.length * hL + 8 + spec.rodape.length * hR + M - 4;
+  const P = criarPdf(W, H), MARINHO = '#1F2A44', BRANCO = '#FFFFFF';
+  P.ret(M, M, LT, hT + hP + hC, MARINHO);
+  P.texto(spec.titulo.toUpperCase(), W / 2, M + 15.5, 10.5, {negrito: true, cor: BRANCO, alinh: 'c', max: LT - 16});
+  P.texto(spec.periodo.toUpperCase(), W / 2, M + hT + 9.5, 8.5, {negrito: true, cor: '#C9D6EE', alinh: 'c', max: LT - 16});
+  const xs = []; let x = M; spec.colunas.forEach(c => { xs.push(x); x += c.w; });
+  const pos = (c, k) => c.alinh === 'l' ? xs[k] + 6 : c.alinh === 'r' ? xs[k] + c.w - 6 : xs[k] + c.w / 2;
+  const yC = M + hT + hP;
+  spec.colunas.forEach((c, k) => { const ls = c.t.split('\n'); ls.forEach((l, j) => P.texto(l, c.alinh === 'l' ? xs[k] + c.w / 2 : pos(c, k), yC + hC / 2 + 3.4 + (j - (ls.length - 1) / 2) * 10.5, 9.5, {negrito: true, cor: BRANCO, alinh: 'c', max: c.w - 4})); });
+  const mis = (a, b, t) => '#' + [1, 3, 5].map(i => Math.round(parseInt(a.slice(i, i + 2), 16) + (parseInt(b.slice(i, i + 2), 16) - parseInt(a.slice(i, i + 2), 16)) * t).toString(16).padStart(2, '0')).join('');
+  const n = spec.linhas.length;
+  spec.linhas.forEach((l, i) => {
+    const y = yC + hC + i * hL;
+    P.ret(M, y + .7, LT, hL - .7, mis('#B3CDE8', '#F2F6FB', Math.pow(i / Math.max(1, Math.max(n, 12) - 1), .6)));
+    l.forEach((v, k) => { const c = spec.colunas[k]; P.texto(v, pos(c, k), y + hL / 2 + 3.3, 9, {negrito: c.negrito, alinh: c.alinh, max: c.w - (c.alinh === 'l' ? 10 : 4)}); });
+  });
+  spec.rodape.forEach((t, k) => P.texto(t, M, yC + hC + n * hL + 15 + k * hR, 7.2, {cor: '#5B6678', max: LT}));
+  return P.bytes();
+}
+
+/* ── acesso: uma senha para abrir o painel e outra para a tela Atualizar dados ──
+   A senha do painel não fica escrita em lugar nenhum: dela sai, por PBKDF2, o nome do endereço onde os dados
+   estão guardados no Firebase. Com a senha errada, o endereço calculado não existe e nada é lido.
+   A senha de Atualizar dados é conferida aqui mesmo, contra o resultado do mesmo cálculo. */
+const ACESSO = (function () {
+  const SAL_LER = 'coleta-biometrica|leitura', SAL_ADM = 'coleta-biometrica|atualizar', VOLTAS = 150000;
+  const $ = id => document.getElementById(id);
+  const pegar = k => { try { return sessionStorage.getItem(k); } catch (e) { return null; } };
+  const guardar = (k, v) => { try { sessionStorage.setItem(k, v); } catch (e) {} };
+  async function derivar(senha, sal) {
+    const enc = new TextEncoder(), k = await crypto.subtle.importKey('raw', enc.encode(senha), 'PBKDF2', false, ['deriveBits']);
+    const b = await crypto.subtle.deriveBits({name: 'PBKDF2', hash: 'SHA-256', salt: enc.encode(sal), iterations: VOLTAS}, k, 128);
+    return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
+  }
+  const A = {chave: pegar('cb_chave'), adm: pegar('cb_adm') === '1'};
+
+  // a janela de senha; verificar(senha) devolve '' quando está certa ou o texto do erro
+  function pedir(o) {
+    return new Promise(fim => {
+      const box = $('acesso'), form = $('acForm'), inp = $('acSenha'), err = $('acErro'), ok = $('acOk'), cancelar = $('acCancelar');
+      $('acTit').textContent = o.titulo; $('acTxt').textContent = o.texto; ok.textContent = o.botao;
+      cancelar.hidden = !o.cancelar; box.classList.toggle('sobre', !!o.cancelar); err.hidden = true; inp.value = ''; box.hidden = false;
+      document.body.classList.add('pedindo');
+      setTimeout(() => inp.focus(), 30);
+      const fechar = v => { form.onsubmit = null; cancelar.onclick = null; box.onkeydown = null; box.hidden = true; document.body.classList.remove('pedindo'); fim(v); };
+      form.onsubmit = async e => {
+        e.preventDefault();
+        const senha = inp.value.trim();
+        if (!senha) { err.textContent = 'Digite a senha.'; err.hidden = false; return; }
+        ok.disabled = true; const rot = ok.textContent; ok.textContent = 'Conferindo…'; err.hidden = true;
+        let erro;
+        try { erro = await o.verificar(senha); } catch (x) { erro = x && x.message ? x.message : String(x); }
+        ok.disabled = false; ok.textContent = rot;
+        if (!erro) { fechar(true); return; }
+        err.textContent = erro; err.hidden = false; inp.select();
+      };
+      if (o.cancelar) { cancelar.onclick = () => fechar(false); box.onkeydown = e => { if (e.key === 'Escape') fechar(false); }; }
+    });
+  }
+
+  // senha do painel: no site, o endereço calculado precisa existir na base; no arquivo de teste, confere com o valor guardado no próprio arquivo
+  async function entrar() {
+    if (A.chave) return;
+    await pedir({
+      titulo: 'Coleta biométrica na 1ª habilitação', texto: 'Painel de uso interno. Digite a senha de acesso.', botao: 'Entrar',
+      verificar: async senha => {
+        const k = 'k' + await derivar(senha, SAL_LER);
+        if (EMBUTIDO) { if (k !== CHAVE_LOCAL) return 'Senha incorreta.'; }
+        else {
+          let r;
+          try { r = await fetch(BASE + '/' + k + '/painel/atualizadoEm.json', {cache: 'no-store'}); }
+          catch (e) { return 'Não foi possível falar com a base de dados. Confira a conexão com a internet e tente de novo.'; }
+          if (r.status === 401 || r.status === 403) return 'Senha incorreta.';
+          if (!r.ok) return 'A base de dados respondeu com o erro ' + r.status + '. Tente de novo em alguns minutos.';
+          if ((await r.json()) == null) return 'Senha incorreta.';
+        }
+        A.chave = k; guardar('cb_chave', k); return '';
+      }
+    });
+  }
+  // senha da tela Atualizar dados: pedida uma vez por aba do navegador
+  async function liberarAdm() {
+    if (A.adm) return true;
+    const ok = await pedir({
+      titulo: 'Atualizar dados', texto: 'Digite a senha para carregar planilhas e mudar os critérios.', botao: 'Continuar', cancelar: true,
+      verificar: async senha => (await derivar(senha, SAL_ADM)) === ADM_OK ? '' : 'Senha incorreta.'
+    });
+    if (ok) { A.adm = true; guardar('cb_adm', '1'); }
+    return ok;
+  }
+  return {entrar, liberarAdm, get chave() { return A.chave; }, get adm() { return A.adm; }};
+})();
 
 /* ── dados: a base no Firebase e o recorte por período ──
    Estrutura da base (Realtime Database), tudo dentro de "painel":
@@ -686,10 +957,36 @@ function decodificar(reg) {
   return {postos, d0, d1, N, com, sem, sacs, eCol, eSem, eSac, crit: criterios(reg.criterios), avisos, lidoEm: txt(reg.atualizadoEm)};
 }
 
-// Dias do período escolhido, como posições a partir do primeiro dia da base. O fim é sempre o último dia com coleta.
+// Dias do período escolhido, como posições a partir do primeiro dia da base.
 function faixa(ALL, per) {
   const b = ALL.N - 1;
-  return per === 'all' ? [0, b] : [Math.max(0, b - (+per - 1)), b];
+  if (per === 'all') return [0, b];
+  if (per === 'sem') {                               // última semana fechada, de segunda a domingo
+    const dia = new Date(ALL.d1 * DIA_MS).getUTCDay(), seg = b - (dia + 6) % 7;     // seg: a segunda-feira da semana do último dia da base
+    if (dia === 6 || dia === 0) return [Math.max(0, seg), b];                        // a base termina no sábado ou no domingo: a semana dela já fechou
+    return seg >= 1 ? [Math.max(0, seg - 7), seg - 1] : [0, b];                      // senão vale a semana anterior inteira
+  }
+  if (per === 'semAtual') {                          // semana em andamento: da segunda-feira até o último dia da base
+    const dia = new Date(ALL.d1 * DIA_MS).getUTCDay();
+    return [Math.max(0, b - (dia + 6) % 7), b];
+  }
+  if (per === 'mes') {                               // mês em andamento: do dia 1 até o último dia da base
+    const dt = new Date(ALL.d1 * DIA_MS);
+    return [Math.max(0, Math.round(Date.UTC(dt.getUTCFullYear(), dt.getUTCMonth(), 1) / DIA_MS) - ALL.d0), b];
+  }
+  return [Math.max(0, b - (+per - 1)), b];
+}
+// O período anterior equivalente: os mesmos dias do mês anterior, os mesmos dias da semana anterior.
+// Devolve null quando não há equivalente próprio (aí vale o anterior de mesmo tamanho).
+function faixaAnterior(ALL, per, f) {
+  if (per === 'semAtual' || per === 'sem') return [f[0] - 7, f[1] - 7];
+  if (per === 'mes') {
+    const a = new Date((ALL.d0 + f[0]) * DIA_MS), y = a.getUTCFullYear(), m = a.getUTCMonth();
+    const ini = Math.round(Date.UTC(y, m - 1, 1) / DIA_MS), ult = Math.round(Date.UTC(y, m, 0) / DIA_MS);   // 1º e último dia do mês anterior
+    const dA = a.getUTCDate(), dB = new Date((ALL.d0 + f[1]) * DIA_MS).getUTCDate();
+    return [Math.min(ini + dA - 1, ult) - ALL.d0, Math.min(ini + dB - 1, ult) - ALL.d0];
+  }
+  return null;
 }
 // Critérios na escala de um período de n dias
 function critNaEscala(crit, n) {
@@ -723,11 +1020,15 @@ function recorte(ALL, a, b) {
 }
 
 // leitura de um caminho da base, com as falhas explicadas em português
+const LOCAL = {painel: EMBUTIDO};                  // arquivo de teste: os dados vêm dentro do HTML, sem Firebase
 async function lerBase(caminho) {
+  if (EMBUTIDO) return caminho === 'painel.json' ? LOCAL.painel : {painel: LOCAL.painel};
   let r;
-  try { r = await fetch(BASE + '/' + caminho, {cache: 'no-store'}); }
+  // tudo fica dentro do endereço que sai da senha: 'painel.json' vira '<chave>/painel.json' e '.json' vira '<chave>.json'
+  const url = BASE + '/' + ACESSO.chave + (caminho === '.json' ? '' : '/') + caminho;
+  try { r = await fetch(url, {cache: 'no-store'}); }
   catch (e) { throw new Error('Não foi possível falar com a base de dados. Confira a conexão com a internet e tente de novo.'); }
-  if (r.status === 401 || r.status === 403) throw new Error('A base de dados recusou a leitura. No Firebase, em Realtime Database > Regras, a leitura precisa estar liberada (".read": true).');
+  if (r.status === 401 || r.status === 403) throw new Error('A base de dados recusou a leitura. Confira as regras do Realtime Database no Firebase.');
   if (!r.ok) throw new Error('A base de dados respondeu com o erro ' + r.status + '. Tente de novo em alguns minutos.');
   return r.json();
 }
@@ -781,7 +1082,7 @@ const mx = (rows, k) => Math.max(0, ...rows.map(p => p[k]));
 const critDe = c => ({vol: c.vol, tax: c.tax == null ? T.tx : c.tax, min: c.min, ref: c.ref});   // taxa de corte vazia = média do Estado no período
 const TICKS = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000], TICKSN = [1, 5, 20, 100, 500, 2000, 10000, 50000, 200000];
 function modo(id, rows, def, o) {
-  return {id, rows, T, MAXVOL: mx(rows, 'vol'), MAXBAD: mx(rows, 'bad'), MAXZ: mx(rows, 'z'), DEF: def, C: {...def}, S: {view: 'crit', grp: null, sort: null, q: ''}, sel: null,
+  return {id, rows, T, MAXVOL: mx(rows, 'vol'), MAXBAD: mx(rows, 'bad'), MAXZ: mx(rows, 'z'), DEF: def, C: {...def}, S: {view: 'all', grp: null, sort: null, q: ''}, sel: null,
     unit: 'coletas', volCol: 'Coletas', zCol: 'SACs', zSum: 'SACs', zView: 'Mais SACs', badCol: 'Sem RENACH', bad: 'coletas sem RENACH', badShort: 'sem RENACH',
     txName: 'taxa sem RENACH', txView: 'Taxa mais alta', ...o};
 }
@@ -794,7 +1095,6 @@ const MODES = {
     dica: 'Cada bolha é um posto Poupatempo ou unidade CIR. Quanto mais à direita, mais coletas; quanto mais alto, maior a taxa sem RENACH. Bolhas maiores têm mais SACs.',
     dicaTab: 'Clique no posto para ver o detalhe. Clique no título da coluna para reordenar.',
     zona: 'Pequenos com taxa alta',
-    dCrit: () => `Postos com ${nf(m.C.vol)} ou mais coletas no período e taxa sem RENACH acima ${ref()}, ordenados pela quantidade de coletas sem RENACH.`,
     dTaxa: () => `Postos com pelo menos ${nf(m.C.min)} coletas no período e taxa sem RENACH acima ${ref()}, da maior taxa para a menor.`,
     dZ: () => `Postos citados nos SACs abertos no período, do mais citado para o menos citado.` + cirObs(),
     dRef: () => `Postos de qualquer tamanho com pelo menos ${nf(m.C.min)} coletas no período e taxa sem RENACH de até ${pf(m.C.ref, 0)}, da menor taxa para a maior.`,
@@ -809,7 +1109,6 @@ const MODES = {
     dica: 'Cada bolha é uma superintendência, com a soma dos seus postos. Quanto mais à direita, mais coletas; quanto mais alto, maior a taxa sem RENACH. Bolhas maiores têm mais SACs.',
     dicaTab: 'Clique na superintendência para ver o detalhe e o ranking dos postos dela.',
     zona: 'Pouco volume, taxa alta',
-    dCrit: () => `Superintendências com ${nf(m.C.vol)} ou mais coletas no período e taxa sem RENACH acima ${ref()}, ordenadas pela quantidade de coletas sem RENACH.`,
     dTaxa: () => `Superintendências com taxa sem RENACH acima ${ref()}, da maior taxa para a menor.`,
     dZ: () => `Superintendências com postos citados nos SACs abertos no período, da mais citada para a menos citada.` + cirObs(),
     dRef: () => `Superintendências com taxa sem RENACH de até ${pf(m.C.ref, 0)}, da menor taxa para a maior.`,
@@ -844,7 +1143,6 @@ function classify(md) {
 
 /* ── visões (as perguntas do coordenador) ───────────────── */
 const VIEWS = {
-  crit: {label: () => 'Mais críticos', f: p => p.g === 1, sort: ['bad', -1], desc: () => m.dCrit()},
   taxa: {label: () => m.txView, f: p => p.vol >= m.C.min && p.tx > m.C.tax, sort: ['tx', -1], desc: () => m.dTaxa()},
   z: {label: () => m.zView, f: p => p.z > 0, sort: ['z', -1], desc: () => m.dZ()},
   ref: {label: () => 'Referência', f: p => p.vol >= m.C.min && p.tx <= m.C.ref, sort: ['tx', 1], desc: () => m.dRef()},
@@ -852,7 +1150,7 @@ const VIEWS = {
   grp: {label: () => gname(m.S.grp), f: p => p.g === m.S.grp, sort: ['bad', -1],
     desc: () => `Grupo: ${gname(m.S.grp).toLowerCase()}. Ordenado pela quantidade de coletas sem RENACH.`}
 };
-const VIEWKEYS = ['crit', 'taxa', 'z', 'ref', 'all'];
+const VIEWKEYS = ['all', 'taxa', 'z', 'ref'];
 const cols = () => [{k: 'nome', t: m.col, l: 1}, {k: 'vol', t: m.volCol}, {k: 'bad', t: m.badCol}, {k: 'tx', t: 'Taxa'}, {k: 'z', t: m.zCol}];
 function currentList() {
   const S = m.S, v = VIEWS[S.view];
@@ -892,14 +1190,13 @@ function abrir(id, sel) {                          // troca de aba; sel abre um 
 function drawViews() {
   const box = $('views');
   if (box.dataset.m !== m.id) { box.innerHTML = VIEWKEYS.map(k => `<button data-v="${k}">${VIEWS[k].label()}</button>`).join(''); box.dataset.m = m.id; }
-  [...box.children].forEach(el => el.setAttribute('aria-pressed', String(m.S.view === el.dataset.v && !m.S.q)));
+  [...box.children].forEach(el => el.setAttribute('aria-pressed', String(m.S.view === el.dataset.v)));
 }
 function drawSummary(list) {
   const s = list.reduce((a, p) => (a.vol += p.vol, a.bad += p.bad, a.z += p.z, a), {vol: 0, bad: 0, z: 0});
   $('desc').textContent = m.S.q ? `Busca por "${m.S.q}" ${m.emTodos}.` : VIEWS[m.S.view].desc();
   $('nums').innerHTML =
-    `<span><b>${nf(list.length)}</b>${list.length === 1 ? m.um : m.uns}</span>
-     <span><b>${nf(s.bad)}</b>${m.badShort} (${pf(m.T.bad ? s.bad / m.T.bad : 0)} do Estado)</span>
+    `<span><b>${nf(s.bad)}</b>${m.badShort} (${pf(m.T.bad ? s.bad / m.T.bad : 0)} do Estado)</span>
      <span><b>${s.vol ? pf(s.bad / s.vol) : '–'}</b>taxa do conjunto</span>
      <span><b>${nf(s.z)}</b>${m.zSum}</span>`;
 }
@@ -935,7 +1232,7 @@ function drawMap(list) {
   o += tag(x0 + 6, yt - 6, 'start', 'taxa de corte ' + pf(C.tax));
   o += tag(Math.min(xv, x1 - 70), H - M.b + 34, 'middle', nf(C.vol) + (W < 520 ? '' : ' ' + m.unit) + ' ou mais →');
   const zl = (x, y, a, t, c) => `<text x="${x}" y="${y}" text-anchor="${a}" font-size="13" font-weight="900" fill="${c}" opacity=".9">${t}</text>`;
-  o += zl(x1 - 6, M.t + 16, 'end', 'Mais críticos', gc[1]);
+  o += zl(x1 - 6, M.t + 16, 'end', 'Muito volume, taxa alta', gc[1]);
   const yr = ys(Math.min(C.ref, m.ymax));
   if (xm < x1 && y0 - yr > 4) {
     o += `<rect x="${Math.max(x0, xm)}" y="${yr}" width="${x1 - Math.max(x0, xm)}" height="${y0 - yr}" fill="${gc[4]}" opacity=".10"/>`;
@@ -1180,6 +1477,44 @@ async function exportar(kind) {
   }
 }
 $('exp').addEventListener('click', () => exportar('main'));
+function exportarPdf() {
+  const list = currentList(), S = m.S, [sk, sd] = S.sort || VIEWS[S.view].sort, sup = m.id === 's';
+  if (!list.length) { expMsg('A tabela está vazia, não há o que exportar.'); return; }
+  const top = list.slice(0, 50), quem = sup ? 'Superintendências' : 'Postos', visao = S.q ? 'Busca' : VIEWS[S.view].label();
+  const TIT = {tx: ['com maior percentual de erros ao fazer coleta sem gerar RENACH', 'com menor percentual de erros ao fazer coleta sem gerar RENACH'], bad: ['com mais coletas sem gerar RENACH', 'com menos coletas sem gerar RENACH'],
+    z: ['com mais SACs abertos', 'com menos SACs abertos'], vol: ['com mais coletas', 'com menos coletas'], nome: ['em ordem alfabética', 'em ordem alfabética']};
+  const rotPer = {all: 'desde o início', mes: 'mês atual', sem: 'última semana', semAtual: 'semana atual', 1: 'último dia'}[PERIODO] || '';
+  const P = DADOS.periodo, datas = P.ini === P.fim ? dataCheia(P.fim) : dataCheia(P.ini) + ' a ' + dataCheia(P.fim);
+  const colunas = sup
+    ? [{t: 'Pos.', w: 34, alinh: 'c'}, {t: 'Superintendência', w: 250, alinh: 'l'}, {t: 'Postos', w: 55, alinh: 'c'}, {t: 'Coletas', w: 60, alinh: 'c'}, {t: 'Sem\nRENACH', w: 60, alinh: 'c'}, {t: 'Taxa', w: 55, alinh: 'c', negrito: true}, {t: 'SACs', w: 41, alinh: 'c'}]
+    : [{t: 'Pos.', w: 34, alinh: 'c'}, {t: 'Posto', w: 196, alinh: 'l'}, {t: 'Superintendência', w: 150, alinh: 'l'}, {t: 'Coletas', w: 46, alinh: 'c'}, {t: 'Sem\nRENACH', w: 48, alinh: 'c'}, {t: 'Taxa', w: 45, alinh: 'c', negrito: true}, {t: 'SACs', w: 36, alinh: 'c'}];
+  const linhas = top.map((p, k) => [String(k + 1), p.nome, sup ? nf(p.postos.length) : sups[p.sup].nome, nf(p.vol), nf(p.bad), pf(p.tx), nf(p.z)]);
+  const agora = new Date(), d2 = n => String(n).padStart(2, '0');
+  const data = pdfTabela({titulo: quem + ' ' + TIT[sk][sd < 0 ? 0 : 1], periodo: 'Período analisado: ' + datas + (rotPer ? ' (' + rotPer + ')' : ''), colunas, linhas,
+    rodape: ['Lista: ' + visao + '. ' + (S.q ? `Busca por "${S.q}" ${m.emTodos}.` : VIEWS[S.view].desc()),
+      `${nf(top.length)} de ${nf(list.length)} ${list.length === 1 ? m.um : m.uns} da lista. Gerado em ${d2(agora.getDate())}/${d2(agora.getMonth() + 1)}/${agora.getFullYear()}` + (DADOS.lidoEm ? ', com a base atualizada em ' + DADOS.lidoEm : '') + '.']});
+  baixarDireto({filename: `coleta-biometrica_${sup ? 'superintendencias' : 'postos'}_${slug(visao)}_${slug(datas)}.pdf`, data, tipo: 'application/pdf'});
+  expMsg(`PDF exportado com ${nf(top.length)} ${top.length === 1 ? m.um : m.uns}` + (list.length > 50 ? `, ${top.length === 50 ? 'os 50 primeiros' : ''} da lista de ${nf(list.length)}.` : '.'));
+}
+$('expPdf').hidden = false;
+$('expPdf').addEventListener('click', exportarPdf);
+function exportarPdfPostosSup() {
+  const sp = sups[m.sel]; if (m.id !== 's' || !sp) return;
+  const list = drillList(sp), [sk, sd] = DR.sort, rk = RK[DR.rk], top = list.slice(0, 50);
+  if (!list.length) return;
+  const TIT = {tx: ['com maior percentual de erros ao fazer coleta sem gerar RENACH', 'com menor percentual de erros ao fazer coleta sem gerar RENACH'], bad: ['com mais coletas sem gerar RENACH', 'com menos coletas sem gerar RENACH'],
+    z: ['com mais SACs abertos', 'com menos SACs abertos'], vol: ['com mais coletas', 'com menos coletas'], nome: ['em ordem alfabética', 'em ordem alfabética'], rk: ['pela posição no Estado', 'pela posição no Estado']};
+  const rotPer = {all: 'desde o início', mes: 'mês atual', sem: 'última semana', semAtual: 'semana atual', 1: 'último dia'}[PERIODO] || '';
+  const P = DADOS.periodo, datas = P.ini === P.fim ? dataCheia(P.fim) : dataCheia(P.ini) + ' a ' + dataCheia(P.fim);
+  const agora = new Date(), d2 = n => String(n).padStart(2, '0');
+  const data = pdfTabela({titulo: `Postos de ${sp.nome} ` + TIT[sk][sd < 0 ? 0 : 1], periodo: 'Período analisado: ' + datas + (rotPer ? ' (' + rotPer + ')' : ''),
+    colunas: [{t: 'Pos.', w: 34, alinh: 'c'}, {t: 'Posto', w: 230, alinh: 'l'}, {t: 'Coletas', w: 55, alinh: 'c'}, {t: 'Sem\nRENACH', w: 58, alinh: 'c'}, {t: 'Taxa', w: 55, alinh: 'c', negrito: true}, {t: 'SACs', w: 45, alinh: 'c'}, {t: 'No Estado\n' + rk.t, w: 78, alinh: 'c'}],
+    linhas: top.map((p, k) => [String(k + 1), p.nome, nf(p.vol), nf(p.bad), pf(p.tx), nf(p.z), ord(p[rk.f])]),
+    rodape: [`Superintendência ${sp.nome}. A última coluna é a posição do posto entre os ${nf(base.length)} do Estado ${rk.frase}.`,
+      `${nf(top.length)} de ${nf(list.length)} ${list.length === 1 ? 'posto' : 'postos'}. Gerado em ${d2(agora.getDate())}/${d2(agora.getMonth() + 1)}/${agora.getFullYear()}` + (DADOS.lidoEm ? ', com a base atualizada em ' + DADOS.lidoEm : '') + '.']});
+  baixarDireto({filename: `coleta-biometrica_postos-de-${slug(sp.nome)}_${slug(datas)}.pdf`, data, tipo: 'application/pdf'});
+}
+$('dexpPdf').addEventListener('click', exportarPdfPostosSup);
 $('dexp').addEventListener('click', () => exportar('drill'));
 (window.claude && typeof window.claude.use === 'function' ? window.claude.use('downloads') : Promise.resolve(null))
   .then(d => { DL = d || null; $('exp').hidden = !(DL || SOLTO); $('dexp').hidden = !(DL || SOLTO); }).catch(() => {});
@@ -1258,323 +1593,558 @@ return {
 };
 }
 
-/* ── aba Evolução: a linha do tempo da taxa, o antes e depois, e quem melhorou ou piorou ── */
-const EV = {esc: 'e', marco: null, uni: 'p', sort: ['var', -1], dia: null, montado: null};
+/* ── aba Evolução: a linha do tempo de um posto ou superintendência, comparada com a média, e quem melhorou ou piorou ── */
+const EV = {sup: '', posto: null, met: 'tx', custom: null, comp: false, uni: 'p', sort: ['var', -1], supSort: ['tx', -1], supRk: 'tx', rkSup: null, dia: null, montado: null};
 
-// série diária do que está em Analisar: 'e' = Estado, 's:Nome' = superintendência, 'p:número' = posto
-function evSerie(esc) {
-  const N = ALL.N;
-  if (esc === 'e') return {nome: 'Estado', tipo: 'e', col: ALL.eCol, sem: ALL.eSem, sac: ALL.eSac};
-  const col = new Int32Array(N), sem = new Int32Array(N), sac = new Int32Array(N);
-  let ids, nome;
-  if (esc[0] === 's') { nome = esc.slice(2); ids = ALL.postos.map((p, i) => p.sup === nome ? i : -1).filter(i => i >= 0); }
-  else { const i = +esc.slice(2), p = ALL.postos[i]; nome = p ? tidy(p.nome) : ''; ids = p ? [i] : []; }
-  const set = new Set(ids);
+const evSomaFaixa = (S, f) => { let col = 0, sem = 0, sac = 0; for (let d = f[0]; d <= f[1]; d++) { col += S.col[d]; sem += S.sem[d]; sac += S.sac[d]; } return {col, sem, sac}; };
+// soma por dia de um conjunto de postos (pelos números deles na base)
+function evSerie(ids) {
+  const N = ALL.N, col = new Int32Array(N), sem = new Int32Array(N), sac = new Int32Array(N), set = new Set(ids);
   ids.forEach(i => { for (let d = 0; d < N; d++) { col[d] += ALL.com[i][d] + ALL.sem[i][d]; sem[d] += ALL.sem[i][d]; } });
   ALL.sacs.forEach(s => { if (set.has(s[1])) sac[s[2]]++; });
-  return {nome, tipo: esc[0], col, sem, sac};
-}
-function evSoma(S, f) {                             // totais de uma faixa [a, b] de dias
-  let col = 0, sem = 0, sac = 0, dias = 0;
-  for (let d = f[0]; d <= f[1]; d++) { col += S.col[d]; sem += S.sem[d]; sac += S.sac[d]; if (S.col[d]) dias++; }
-  return {col, sem, sac, dias, n: f[1] - f[0] + 1, tx: col ? sem / col : null};
-}
-function evMM(S) {                                  // média móvel de 7 dias: sem RENACH dos 7 dias até a data, dividido pelas coletas dos mesmos dias
-  const out = new Array(ALL.N).fill(null);
-  let c = 0, s = 0;
-  for (let d = 0; d < ALL.N; d++) {
-    c += S.col[d]; s += S.sem[d];
-    if (d >= 7) { c -= S.col[d - 7]; s -= S.sem[d - 7]; }
-    if (c > 0) out[d] = s / c;
-  }
-  return out;
-}
-function evTend(S, f) {                             // reta ajustada à taxa de cada dia, com peso pelo volume do dia
-  let n = 0, sw = 0, sx = 0, sy = 0, sxx = 0, sxy = 0;
-  for (let d = f[0]; d <= f[1]; d++) { const w = S.col[d]; if (!w) continue; const y = S.sem[d] / w; n++; sw += w; sx += w * d; sy += w * y; sxx += w * d * d; sxy += w * d * y; }
-  const den = sw * sxx - sx * sx;
-  if (n < 5 || den <= 0) return null;
-  const k = (sw * sxy - sx * sy) / den, c = (sy - k * sx) / sw;
-  return {semana: k * 7, y0: c + k * f[0], y1: c + k * f[1]};
+  return {col, sem, sac, n: ids.length};
 }
 const evRot = f => f[0] === f[1] ? dataCurta(ALL.d0 + f[0]) : dataCurta(ALL.d0 + f[0]) + ' a ' + dataCurta(ALL.d0 + f[1]);
-// As duas faixas que a aba compara. Com data informada: antes e depois dela. Sem data: o período escolhido e o anterior de mesmo tamanho.
-function evJanelas() {
-  const N = ALL.N, tot = faixa(ALL, PERIODO), L = tot[1] - tot[0] + 1;
-  let J;
-  if (PERIODO === 'all') {
-    const h = Math.floor(N / 2);
-    J = {tipo: 'metades', agora: [h, N - 1], antes: h ? [0, h - 1] : null, nomeAntes: '1ª metade', nomeAgora: '2ª metade'};
-  } else if (L === 1) {
-    let j = tot[0] - 1; while (j >= 0 && !ALL.eCol[j]) j--;
-    J = {tipo: 'dia', agora: tot, antes: j >= 0 ? [j, j] : null, nomeAntes: 'dia anterior com coleta', nomeAgora: 'último dia'};
-  } else {
-    const a = tot[0] - L;
-    J = {tipo: 'periodo', agora: tot, antes: tot[0] > 0 ? [Math.max(0, a), tot[0] - 1] : null, incompleto: a < 0, nomeAntes: L + ' dias anteriores', nomeAgora: 'últimos ' + L + ' dias'};
+// Os dois períodos comparados. Sem escolha na tela: o período dos botões e o anterior de mesmo tamanho;
+// quando a base não tem o anterior inteiro, as duas metades do que existe.
+function evPeriodos(soBotoes) {
+  if (EV.custom && !soBotoes) return {a: EV.custom.a, b: EV.custom.b, custom: true};
+  const tot = faixa(ALL, PERIODO), L = tot[1] - tot[0] + 1;
+  if (PERIODO === '1' && L === 1 && tot[0] > 0) { let j = tot[0] - 1; while (j >= 0 && !ALL.eCol[j]) j--; if (j >= 0) return {a: [j, j], b: tot}; }
+  const eq = faixaAnterior(ALL, PERIODO, tot);
+  if (eq) { if (eq[0] >= 0) return {a: eq, b: tot}; }
+  else if (PERIODO !== 'all' && tot[0] - L >= 0) return {a: [tot[0] - L, tot[0] - 1], b: tot};
+  const fim = tot[1], h = Math.floor((fim + 1) / 2);
+  return h ? {a: [0, h - 1], b: [fim - h + 1, fim]} : {a: null, b: tot};
+}
+
+/* ── caixa de escolha com digitação: lista completa ao clicar, filtra enquanto se digita ── */
+function caixaBusca(raiz, aoEscolher) {
+  const inp = raiz.querySelector('input'), ul = raiz.querySelector('ul');
+  const semAcento = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  let itens = [], valor = null, vis = [], ativo = -1;
+  const rotulo = () => { const it = itens.find(i => i.v === valor); return it ? it.t : ''; };
+  function pintar() {
+    ul.textContent = '';
+    vis.forEach((it, k) => { const li = document.createElement('li'); li.setAttribute('role', 'option'); li.id = ul.id + '-' + k; li.dataset.k = k; li.textContent = it.t; li.setAttribute('aria-selected', String(k === ativo)); if (it.v === valor) li.className = 'atual'; ul.append(li); });
+    if (!vis.length) { const li = document.createElement('li'); li.className = 'nada'; li.textContent = 'Nenhum nome com esse texto'; ul.append(li); }
+    inp.setAttribute('aria-activedescendant', ativo >= 0 ? ul.id + '-' + ativo : '');
+    const el = ul.children[ativo]; if (el && el.scrollIntoView) el.scrollIntoView({block: 'nearest'});
   }
-  J.tot = tot;
-  if (EV.marco != null) {
-    const m = EV.marco, k = N - m;
-    J.marco = {m, depois: [m, N - 1], antes: [Math.max(0, m - k), m - 1], k, incompleto: m - k < 0};
+  function abrir(filtrar) {
+    const q = filtrar ? semAcento(inp.value.trim()) : '';
+    vis = itens.filter(i => !q || semAcento(i.t).includes(q));
+    ativo = filtrar ? (vis.length ? 0 : -1) : vis.findIndex(i => i.v === valor);
+    ul.hidden = false; inp.setAttribute('aria-expanded', 'true'); pintar();
   }
-  return J;
+  function fechar() { ul.hidden = true; inp.setAttribute('aria-expanded', 'false'); inp.value = rotulo(); }
+  function escolher(it) { if (!it) return; valor = it.v; fechar(); inp.blur(); aoEscolher(it.v); }
+  inp.addEventListener('focus', () => { inp.select(); abrir(false); });
+  inp.addEventListener('click', () => { if (ul.hidden) abrir(false); });
+  inp.addEventListener('input', () => abrir(true));
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (ul.hidden) abrir(false); else if (vis.length) { ativo = (ativo + (e.key === 'ArrowDown' ? 1 : -1) + vis.length) % vis.length; pintar(); } }
+    else if (e.key === 'Enter') { e.preventDefault(); escolher(vis[ativo >= 0 ? ativo : 0]); }
+    else if (e.key === 'Escape') { fechar(); inp.blur(); }
+  });
+  ul.addEventListener('mousedown', e => { e.preventDefault(); const li = e.target.closest('li[data-k]'); if (li) escolher(vis[+li.dataset.k]); });
+  inp.addEventListener('blur', () => setTimeout(fechar, 0));
+  return {definir: (lst, v) => { itens = lst; valor = v; inp.value = rotulo(); }};
 }
 
 (function () {
   const $ = id => document.getElementById(id);
   const nf = n => Math.round(n).toLocaleString('pt-BR');
   const n1 = n => n.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1});
-  const pf = (t, d = 1) => t == null ? '–' : (t * 100).toLocaleString('pt-BR', {minimumFractionDigits: d, maximumFractionDigits: d}) + '%';
+  const pf = t => t == null ? '–' : (t * 100).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + '%';
   const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
   const h = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
   const liso = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-  // variação com seta: sobe = piora (taxa, sem RENACH, SACs) quando ruim = true; neutro para o volume de coletas
-  const seta = (v, texto, ruimSeSobe) => {
-    const parado = Math.abs(v) < 1e-9, cls = parado || ruimSeSobe == null ? 'neutro' : (v > 0) === ruimSeSobe ? 'ruim' : 'bom';
-    return `<span class="dl ${cls}"><i>${parado ? '●' : v > 0 ? '▲' : '▼'}</i>${texto}</span>`;
-  };
-  const ppTxt = d => (d > 0 ? '+' : d < 0 ? '−' : '') + n1(Math.abs(d * 100)) + ' p.p.';
-  const pcTxt = (a, b) => b ? ((a - b) / b > 0 ? '+' : (a - b) / b < 0 ? '−' : '') + n1(Math.abs((a - b) / b * 100)) + '%' : '';
-  let S = null, E = null, J = null, G = null;      // série escolhida, série do Estado, janelas e geometria do gráfico
+  const sinal = v => v > 0 ? '+' : v < 0 ? '−' : '';
+  const MET = {tx: {nome: 'Taxa sem RENACH', k: 'tx'}, col: {nome: 'Coletas', k: 'col'}, sem: {nome: 'Sem RENACH', k: 'sem'}, sac: {nome: 'SACs', k: 'sac'}};
+  const idsDaSup = nome => ALL.postos.map((p, i) => p.sup === nome ? i : -1).filter(i => i >= 0);
+  let cbSup = null, cbPosto = null, LIN = [], G = null;
 
-  /* ── o seletor "Analisar" ── */
-  function montarSeletor() {
-    if (EV.montado === ALL) return;
-    EV.montado = ALL;
-    const sel = $('evEsc'); sel.textContent = '';
-    const op = (pai, v, t) => { const o = document.createElement('option'); o.value = v; o.textContent = t; pai.append(o); };
-    const grupo = t => { const g = document.createElement('optgroup'); g.label = t; sel.append(g); return g; };
-    op(sel, 'e', 'Estado (todos os postos)');
-    const gs = grupo('Superintendências');
-    [...new Set(ALL.postos.map(p => p.sup))].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(s => op(gs, 's:' + s, s));
-    const gp = grupo('Postos e unidades');
-    ALL.postos.map((p, i) => [tidy(p.nome), i]).sort((a, b) => a[0].localeCompare(b[0], 'pt-BR')).forEach(p => op(gp, 'p:' + p[1], p[0]));
-    if (![...sel.options].some(o => o.value === EV.esc)) EV.esc = 'e';
-    if (EV.marco != null && !(EV.marco >= 1 && EV.marco <= ALL.N - 1)) EV.marco = null;
-    $('evData').min = isoDia(ALL.d0 + 1); $('evData').max = isoDia(ALL.d1);
+  /* ── as duas caixas: superintendência e, dentro dela, o posto ── */
+  function listas() {
+    const sups = [...new Set(ALL.postos.map(p => p.sup))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    if (EV.posto != null && !ALL.postos[EV.posto]) EV.posto = null;
+    if (EV.sup && sups.indexOf(EV.sup) < 0) { EV.sup = ''; EV.posto = null; }
+    cbSup.definir([{v: '', t: 'Todas (Estado)'}].concat(sups.map(s => ({v: s, t: s}))), EV.sup);
+    const ps = ALL.postos.map((p, i) => ({v: i, t: tidy(p.nome), sup: p.sup})).filter(p => !EV.sup || p.sup === EV.sup).sort((a, b) => a.t.localeCompare(b.t, 'pt-BR'));
+    cbPosto.definir([{v: null, t: EV.sup ? `Todos os ${ps.length} postos de ${EV.sup}` : `Todos os ${ps.length} postos`}].concat(ps), EV.posto);
   }
 
-  /* ── cartões: como está e como estava ── */
-  function cartoes() {
-    const A = evSoma(S, J.tot), B = evSoma(S, J.agora), C = J.antes ? evSoma(S, J.antes) : null, T = evTend(S, J.tot);
-    const card = (rot, val, em, small) => `<div class="evcard"><span>${rot}</span><b>${val}</b>${em ? `<em>${em}</em>` : ''}${small ? `<small>${small}</small>` : ''}</div>`;
-    let emTx = '', smTx = '';
-    if (!C || C.tx == null || B.tx == null) emTx = 'Sem coletas no período anterior para comparar.';
-    else if (J.tipo === 'metades') { emTx = seta(B.tx - C.tx, ppTxt(B.tx - C.tx), true) + ' da 1ª para a 2ª metade'; smTx = `${evRot(J.antes)}: ${pf(C.tx)} · ${evRot(J.agora)}: ${pf(B.tx)}`; }
-    else {
-      emTx = seta(B.tx - C.tx, ppTxt(B.tx - C.tx), true) + (J.tipo === 'dia' ? ' sobre o dia anterior com coleta' : ' sobre os ' + J.nomeAntes);
-      smTx = `${evRot(J.antes)}: ${pf(C.tx)}` + (J.incompleto ? ` (a base só tem ${C.n} desses ${B.n} dias)` : '');
-    }
-    const comparavel = C && (J.tipo === 'dia' || (J.tipo === 'periodo' && !J.incompleto));
-    const vol = (k, ruim) => comparavel && C[k]
-      ? [seta(B[k] - C[k], pcTxt(B[k], C[k]), ruim) + (J.tipo === 'dia' ? ' sobre o dia anterior' : ' sobre o período anterior'), `${evRot(J.antes)}: ${nf(C[k])}`]
-      : ['', k === 'sac' ? `média de ${n1(A.sac / A.n)} por dia` : A.dias ? `média de ${nf(A[k] / A.dias)} por dia com coleta` : ''];
-    const tend = T
-      ? card('Tendência da taxa no período', ppTxt(T.semana), seta(Math.abs(T.semana) < .005 ? 0 : T.semana, Math.abs(T.semana) < .005 ? 'estável' : T.semana > 0 ? 'em alta' : 'em queda', true) + ' por semana', 'reta ajustada à taxa de cada dia, com peso pelo volume')
-      : card('Tendência da taxa no período', '–', '', 'são precisos pelo menos 5 dias com coleta no período');
-    $('evCards').innerHTML =
-      card('Taxa sem RENACH', pf(A.tx), emTx, smTx) +
-      card('Coletas', nf(A.col), ...vol('col', null)) +
-      card('Sem abertura de RENACH', nf(A.sem), ...vol('sem', true)) +
-      card('SACs abertos', nf(A.sac), ...vol('sac', true)) + tend;
+  /* ── linhas do gráfico: o que foi escolhido e as médias que servem de comparação ── */
+  function linhas(seg) {
+    const m = EV.met, taxa = m === 'tx', E = {col: ALL.eCol, sem: ALL.eSem, sac: ALL.eSac, n: ALL.postos.length};
+    const nSups = new Set(ALL.postos.map(p => p.sup)).size;
+    const L = [];
+    if (EV.posto != null) {
+      const p = ALL.postos[EV.posto], S = evSerie([EV.posto]), SS = evSerie(idsDaSup(p.sup));
+      L.push({papel: 'foco', nome: tidy(p.nome), S, div: 1});
+      L.push({papel: 'ref', nome: taxa ? `${p.sup} (superintendência)` : `${p.sup}: média por posto`, curto: 'a superintendência', media: 'da média por posto', S: SS, div: SS.n});
+    } else if (EV.sup) {
+      L.push({papel: 'foco', nome: EV.sup, S: evSerie(idsDaSup(EV.sup)), div: 1});
+      L.push({papel: 'ref', nome: taxa ? 'Estado' : 'Estado: média por superintendência', curto: 'o Estado', media: 'da média por superintendência', S: E, div: nSups});
+    } else L.push({papel: 'foco', nome: 'Estado', S: E, div: 1});
+    // dias sem nenhuma coleta no Estado (domingos e feriados) não entram na linha de coletas, sem RENACH e taxa
+    // taxa média do período: as coletas sem RENACH desde o primeiro dia do período até a data, divididas pelas coletas do mesmo intervalo;
+    // cada período começa do zero, e o último ponto é a taxa do período inteiro
+    L.forEach(l => {
+      l.v = new Array(ALL.N).fill(null);
+      seg.forEach(f => { let c = 0, s = 0; for (let d = f[0]; d <= f[1]; d++) {
+        c += l.S.col[d]; s += l.S.sem[d];
+        if (m !== 'sac' && !ALL.eCol[d]) { l.v[d] = null; continue; }
+        l.v[d] = taxa ? (c ? s / c : null) : l.S[m][d] / l.div;
+      } });
+    });
+    return L;
   }
-
-  /* ── gráfico: três quadros com o mesmo eixo de dias (taxa, coletas, SACs) ── */
+  const fmt = v => v == null ? 'sem coleta' : EV.met === 'tx' ? pf(v) : Number.isInteger(v) ? nf(v) : n1(v);
   const teto = v => { if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))), f = v / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; };
-  function grafico() {
-    const box = $('evSvg'), N = ALL.N;
-    const W = Math.max(320, Math.round((box.clientWidth || 916) - 16)), estreito = W < 560;
-    const L = 46, R = 56, x0 = L, x1 = W - R, passo = (x1 - x0) / N, X = d => x0 + (d + .5) * passo;
-    const H1 = estreito ? 190 : 250, H2 = 104, H3 = 76, V = 36, y1t = 22, y1b = y1t + H1, y2t = y1b + V, y2b = y2t + H2, y3t = y2b + V, y3b = y3t + H3, H = y3b + 28;
-    const ink = css('--ink'), muted = css('--muted'), line = css('--line'), surf = css('--surface'), azul = css('--g3'), laranja = css('--g2'), cinza = css('--g5');
-    const mm = evMM(S), mmE = E ? evMM(E) : null, tx = d => S.col[d] ? S.sem[d] / S.col[d] : null;
-    // escala da taxa: pela média móvel e pelos dias de volume normal, para um sábado de 3 coletas não achatar o gráfico
-    const vols = [...S.col].filter(v => v > 0).sort((a, b) => a - b), lim = Math.max(3, (vols[Math.floor(vols.length / 2)] || 0) * .25);
-    let topo = 0;
-    for (let d = 0; d < N; d++) { if (mm[d] != null) topo = Math.max(topo, mm[d]); if (mmE && mmE[d] != null) topo = Math.max(topo, mmE[d]); if (S.col[d] >= lim) topo = Math.max(topo, tx(d)); }
-    let ymax = Math.min(1, Math.max(.2, Math.ceil(topo * 10 - 1e-9) / 10)); if (ymax < 1 && topo > ymax - .015) ymax += .1;
-    const ystep = ymax > .6 ? .2 : .1, Y = t => y1b - Math.min(t, ymax) / ymax * H1;
-    const maxC = teto(Math.max(1, ...S.col)), maxS = teto(Math.max(1, ...S.sac));
-    const bw = Math.max(1, Math.min(24, passo - 2));
-    const titulo = (y, t) => `<text x="${x0}" y="${y - 9}" font-size="12.5" font-weight="700" fill="${ink}">${t}</text>`;
-    const grade = (y, rot) => `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="${line}" stroke-width="1"/><text x="${x0 - 7}" y="${y + 4}" text-anchor="end" font-size="11.5" fill="${muted}">${rot}</text>`;
-    let o = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Três gráficos por dia de ${h(S.nome)}: taxa sem RENACH com média móvel de 7 dias, coletas com e sem RENACH, e SACs abertos">`;
-    if (J.tot[0] > 0) o += `<rect x="${x0 + J.tot[0] * passo}" y="${y1t}" width="${(J.tot[1] - J.tot[0] + 1) * passo}" height="${y3b - y1t}" fill="${ink}" opacity=".06"/>`;
-    // quadro 1: taxa
-    o += titulo(y1t, 'Taxa sem RENACH');
-    for (let t = 0; t <= ymax + 1e-9; t += ystep) o += grade(Y(t), pf(t, 0));
-    const caminho = (v, f) => { let p = '', on = false; for (let d = 0; d < N; d++) { if (v[d] == null) { on = false; continue; } p += (on ? 'L' : 'M') + X(d).toFixed(1) + ' ' + f(v[d]).toFixed(1); on = true; } return p; };
-    if (mmE) o += `<path d="${caminho(mmE, Y)}" fill="none" stroke="${cinza}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
-    const rp = passo < 7 ? 2 : 3;
-    for (let d = 0; d < N; d++) { const t = tx(d); if (t != null) o += `<circle cx="${X(d).toFixed(1)}" cy="${Y(t).toFixed(1)}" r="${rp}" fill="${azul}" opacity="${t > ymax ? .18 : .38}"/>`; }
-    o += `<path d="${caminho(mm, Y)}" fill="none" stroke="${azul}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
-    const T = evTend(S, J.tot);
-    if (T) o += `<line x1="${X(J.tot[0])}" y1="${Y(Math.max(0, T.y0))}" x2="${X(J.tot[1])}" y2="${Y(Math.max(0, T.y1))}" stroke="${ink}" stroke-width="1.6" stroke-dasharray="6 5"/>`;
-    let ult = N - 1; while (ult >= 0 && mm[ult] == null) ult--;
-    if (ult >= 0) o += `<circle cx="${X(ult).toFixed(1)}" cy="${Y(mm[ult]).toFixed(1)}" r="4.5" fill="${azul}" stroke="${surf}" stroke-width="2"/><text x="${X(ult) + 9}" y="${Y(mm[ult]) + 4}" font-size="12.5" font-weight="700" fill="${ink}">${pf(mm[ult])}</text>`;
-    // quadro 2: coletas, com o sem RENACH na base da coluna
-    o += titulo(y2t, 'Coletas por dia');
-    [0, maxC / 2, maxC].forEach(v => { o += grade(y2b - v / maxC * H2, nf(v)); });
-    for (let d = 0; d < N; d++) {
-      if (!S.col[d]) continue;
-      const hs = S.sem[d] / maxC * H2, hc = (S.col[d] - S.sem[d]) / maxC * H2, x = (X(d) - bw / 2).toFixed(1), vao = hs > 2 && hc > 3 ? 1.5 : 0;
-      if (hs > 0) o += `<rect x="${x}" y="${(y2b - hs).toFixed(1)}" width="${bw.toFixed(1)}" height="${hs.toFixed(1)}" fill="${laranja}"/>`;
-      if (hc > 0) o += `<rect x="${x}" y="${(y2b - hs - hc).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(.5, hc - vao).toFixed(1)}" fill="${cinza}" opacity=".5"/>`;
+
+  // pontos que merecem o número escrito: a maior alta, a maior baixa e os picos e vales que se destacam dos vizinhos
+  function notaveis(v, X, largura) {
+    const ds = []; for (let d = 0; d < v.length; d++) if (v[d] != null) ds.push(d);
+    if (ds.length < 3) return [];
+    const vals = ds.map(d => v[d]), mx = Math.max(...vals), mn = Math.min(...vals), amp = mx - mn;
+    if (amp <= 0) return [];
+    const cand = [];
+    for (let k = 1; k < ds.length - 1; k++) {
+      const a = v[ds[k - 1]], b = v[ds[k]], c = v[ds[k + 1]], pico = b > a && b >= c, vale = b < a && b <= c;
+      if (!pico && !vale) continue;
+      cand.push({d: ds[k], pico, forca: b === mx || b === mn ? 2 : Math.min(Math.abs(b - a), Math.abs(b - c)) / amp});
     }
-    // quadro 3: SACs
-    o += titulo(y3t, 'SACs abertos por dia');
-    [0, maxS].forEach(v => { o += grade(y3b - v / maxS * H3, nf(v)); });
-    for (let d = 0; d < N; d++) if (S.sac[d]) { const hh = S.sac[d] / maxS * H3; o += `<rect x="${(X(d) - bw / 2).toFixed(1)}" y="${(y3b - hh).toFixed(1)}" width="${bw.toFixed(1)}" height="${hh.toFixed(1)}" fill="${azul}" opacity=".6"/>`; }
-    // eixo dos dias
+    const max = Math.max(3, Math.floor(largura / 130)), sel = [];
+    cand.sort((x, y) => y.forca - x.forca).forEach(c => { if (sel.length < max && c.forca >= .25 && !sel.some(s => Math.abs(X(s.d) - X(c.d)) < 46)) sel.push(c); });
+    return sel;
+  }
+  // topo e passo "redondos" para o eixo de quantidades, sem deixar metade do gráfico vazia
+  function escala(v) {
+    const p = Math.pow(10, Math.floor(Math.log10(v))), f = v / p;
+    const op = [[1, .2], [1.2, .2], [1.5, .25], [2, .5], [2.5, .5], [3, .5], [4, 1], [5, 1], [6, 1], [8, 2], [10, 2]].find(o => f <= o[0] + 1e-9);
+    return [op[0] * p, op[1] * p];
+  }
+  function grafico() {
+    const box = $('evSvg');
+    // o gráfico mostra sempre o período dos botões, com uma linha só; a comparação entre períodos fica nas tabelas dela
+    const seg = [faixa(ALL, PERIODO)];
+    const r0 = Math.min(...seg.map(f => f[0])), r1 = Math.max(...seg.map(f => f[1])), N = r1 - r0 + 1;
+    const segDe = d => { let k = -1; seg.forEach((f, j) => { if (d >= f[0] && d <= f[1]) k = j; }); return k; };
+    LIN = linhas(seg);
+    const W = Math.max(320, Math.round((box.clientWidth || 916) - 16)), estreito = W < 560;
+    const x0 = 48, x1 = W - 66, passo = (x1 - x0) / N, X = d => x0 + (d - r0 + .5) * passo;
+    const yt = 34, HH = estreito ? 250 : 360, yb = yt + HH, H = yb + 30;
+    const ink = css('--ink'), muted = css('--muted'), line = css('--line'), surf = css('--surface');
+    const cor = {foco: css('--g3'), ref: css('--g2')};
+    let topo = 0; LIN.forEach(l => l.v.forEach(v => { if (v != null && v > topo) topo = v; }));
+    let ymax, ystep;
+    if (EV.met === 'tx') { ymax = Math.min(1, Math.max(.2, Math.ceil(topo * 10 + .3) / 10)); ystep = ymax > .6 ? .2 : .1; }   // folga em cima para o número do pico
+    else { [ymax, ystep] = escala(Math.max(1, topo * 1.12)); }
+    const Y = v => yb - Math.min(v, ymax) / ymax * HH;
+    let o = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de linhas por dia: ${h(MET[EV.met].nome)} de ${h(LIN.map(l => l.nome).join(' e de '))}">`;
+    for (let k = 0; k * ystep <= ymax + 1e-9; k++) { const v = k * ystep, y = Y(v); o += `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="${line}" stroke-width="1"/><text x="${x0 - 7}" y="${y + 4}" text-anchor="end" font-size="11.5" fill="${muted}">${EV.met === 'tx' ? Math.round(v * 100) + '%' : Number.isInteger(v) ? nf(v) : n1(v)}</text>`; }
     const cabe = Math.max(2, Math.floor((x1 - x0) / 58)), cada = [1, 2, 7, 14, 28, 56, 91, 182, 365].find(k => N / k <= cabe) || 365;
-    for (let d = 0; d < N; d += cada) o += `<text x="${X(d).toFixed(1)}" y="${y3b + 18}" text-anchor="middle" font-size="11.5" fill="${muted}">${dataCurta(ALL.d0 + d)}</text>`;
-    // data informada em "Antes e depois"
-    if (J.marco) { const xm = x0 + J.marco.m * passo; o += `<line x1="${xm}" x2="${xm}" y1="${y1t - 4}" y2="${y3b}" stroke="${laranja}" stroke-width="2"/><text x="${Math.min(xm + 5, x1 - 4)}" y="${y1t + 8}" text-anchor="${xm + 60 > x1 ? 'end' : 'start'}" font-size="11.5" font-weight="700" fill="${ink}" stroke="${surf}" stroke-width="3" paint-order="stroke">${dataCurta(ALL.d0 + J.marco.m)}</text>`; }
-    o += `<line id="evCruz" x1="0" x2="0" y1="${y1t}" y2="${y3b}" stroke="${ink}" stroke-width="1" opacity="0"/>`;
-    o += `<rect id="evAlvo" x="${x0}" y="${y1t}" width="${x1 - x0}" height="${y3b - y1t}" fill="transparent"/></svg>`;
+    for (let d = r0; d <= r1; d += cada) o += `<text x="${X(d).toFixed(1)}" y="${yb + 19}" text-anchor="middle" font-size="11.5" fill="${muted}">${dataCurta(ALL.d0 + d)}</text>`;
+    const pontos = l => { const p = []; for (let d = r0; d <= r1; d++) if (l.v[d] != null) p.push([X(d), Y(l.v[d]), d, segDe(d)]); return p; };
+    const traco = p => p.map((q, k) => (k && q[3] === p[k - 1][3] ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join('');
+    const foco = LIN[0], ref = LIN[1], pf0 = pontos(foco), raio = passo >= 14 ? 4.2 : passo >= 7 ? 3.2 : 0;
+    // a linha escolhida ganha uma sombra de área; a de comparação fica por baixo dela
+    seg.forEach((f, j) => { const p = pf0.filter(q => q[3] === j); if (p.length > 1) o += `<path d="${traco(p)}L${p[p.length - 1][0].toFixed(1)} ${yb}L${p[0][0].toFixed(1)} ${yb}Z" fill="${cor.foco}" opacity=".1"/>`; });
+    if (ref) o += `<path d="${traco(pontos(ref))}" fill="none" stroke="${cor.ref}" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+    o += `<path d="${traco(pf0)}" fill="none" stroke="${cor.foco}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    if (raio) pf0.forEach(q => { o += `<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="${raio}" fill="${cor.foco}" stroke="${surf}" stroke-width="2"/>`; });
+    // números escritos: fim das duas linhas e os pontos que se destacam na linha escolhida
+    const rotulo = (x, y, t, anc, peso) => `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${anc}" font-size="12.5" font-weight="${peso}" fill="${ink}" stroke="${surf}" stroke-width="4" paint-order="stroke" stroke-linejoin="round">${t}</text>`;
+    const fim = l => { let u = r1; while (u >= r0 && l.v[u] == null) u--; return u >= r0 ? u : -1; };
+    const uf = fim(foco), ur = ref ? fim(ref) : -1;
+    let yf = uf >= 0 ? Y(foco.v[uf]) + 4 : 0, yr = ur >= 0 ? Y(ref.v[ur]) + 4 : 0;
+    if (uf >= 0 && ur >= 0 && Math.abs(yf - yr) < 15) { const m = (yf + yr) / 2, cima = yf <= yr; yf = m + (cima ? -8 : 8); yr = m + (cima ? 8 : -8); }
+    // números na linha escolhida: o máximo que cabe sem um encostar no outro; picos e vales têm prioridade
+    const dest = {}; notaveis(foco.v, X, x1 - x0).forEach(c => { dest[c.d] = c; });
+    const esp = pf0.length > 1 ? (pf0[pf0.length - 1][0] - pf0[0][0]) / (pf0.length - 1) : 1e9, cadaR = Math.max(1, Math.ceil(46 / esp));
+    const cand = pf0.map((q, k) => { const c = dest[q[2]]; return {q, t: fmt(foco.v[q[2]]), c, pr: q[2] === uf ? -1 : c ? (c.forca >= 2 ? 4 : 3) : (pf0.length - 1 - k) % cadaR === 0 ? 2 : 1}; });
+    const caixas = uf >= 0 ? [{x: X(uf) - 6, y: yf - 14, w: 70, h: 20}] : [];
+    cand.filter(c => c.pr > 0).sort((a, b) => b.pr - a.pr || b.q[0] - a.q[0]).forEach(c => {
+      const w = c.t.length * 6.7 + 6, x = c.q[0], y = c.q[1], vale = c.c && !c.c.pico;
+      const baixo = (vale && y + 23 < yb) || y - 22 < yt - 14, yl = baixo ? y + 21 : y - 11;
+      const b = {x: x - w / 2, y: yl - 12, w, h: 15};
+      if (caixas.some(k => b.x < k.x + k.w && k.x < b.x + b.w && b.y < k.y + k.h && k.y < b.y + b.h)) return;
+      caixas.push(b);
+      if (c.c) o += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5.5" fill="${cor.foco}" stroke="${surf}" stroke-width="2.5"/>`;
+      o += `<text x="${x.toFixed(1)}" y="${yl.toFixed(1)}" text-anchor="middle" font-size="${c.c ? 12.5 : 11.5}" font-weight="${c.c ? 900 : 700}" fill="${ink}" stroke="${surf}" stroke-width="4" paint-order="stroke" stroke-linejoin="round">${c.t}</text>`;
+    });
+    if (ur >= 0) o += `<circle cx="${X(ur).toFixed(1)}" cy="${Y(ref.v[ur]).toFixed(1)}" r="5" fill="${cor.ref}" stroke="${surf}" stroke-width="2.5"/>` + rotulo(X(ur) + 10, yr, fmt(ref.v[ur]), 'start', 700);
+    if (uf >= 0) o += `<circle cx="${X(uf).toFixed(1)}" cy="${Y(foco.v[uf]).toFixed(1)}" r="6" fill="${cor.foco}" stroke="${surf}" stroke-width="2.5"/>` + rotulo(X(uf) + 10, yf, fmt(foco.v[uf]), 'start', 900);
+    o += `<line id="evCruz" x1="0" x2="0" y1="${yt}" y2="${yb}" stroke="${ink}" stroke-width="1.2" opacity="0"/>`;
+    o += `<circle id="evP1" r="6.5" fill="${cor.ref}" stroke="${surf}" stroke-width="3" opacity="0"/><circle id="evP0" r="7.5" fill="${cor.foco}" stroke="${surf}" stroke-width="3" opacity="0"/>`;
+    o += `<rect id="evAlvo" x="${x0}" y="${yt}" width="${x1 - x0}" height="${HH}" fill="transparent"/></svg>`;
     box.innerHTML = o;
-    G = {W, x0, passo, X, mm, mmE};
-    const key = (cor, estilo) => `<svg width="22" height="10" aria-hidden="true">${estilo === 'ponto' ? `<circle cx="11" cy="5" r="3.5" fill="${cor}" opacity=".5"/>` : estilo === 'caixa' ? `<rect x="5" y="0" width="12" height="10" fill="${cor}" opacity="${cor === cinza ? .5 : 1}"/>` : `<line x1="1" x2="21" y1="5" y2="5" stroke="${cor}" stroke-width="${estilo === 'traco' ? 1.6 : 2.4}" ${estilo === 'traco' ? 'stroke-dasharray="6 5"' : ''}/>`}</svg>`;
-    $('evLeg').innerHTML = [
-      [azul, 'linha', 'Média móvel de 7 dias'], [azul, 'ponto', 'Taxa de cada dia'],
-      ...(mmE ? [[cinza, 'linha', 'Estado, média móvel de 7 dias']] : []),
-      ...(T ? [[ink, 'traco', 'Tendência no período']] : []),
-      [laranja, 'caixa', 'Coletas sem RENACH'], [cinza, 'caixa', 'Coletas com RENACH'],
-      ...(J.marco ? [[laranja, 'linha', 'Data informada']] : [])
-    ].map(l => `<span>${key(l[0], l[1])}${l[2]}</span>`).join('') + (J.tot[0] > 0 ? `<span><svg width="22" height="10" aria-hidden="true"><rect width="22" height="10" fill="${ink}" opacity=".12"/></svg>Período escolhido</span>` : '');
-    $('evTit').textContent = 'A taxa sem RENACH no tempo: ' + S.nome;
-    $('evHint').textContent = 'Cada ponto é a taxa de um dia. A linha é a média móvel de 7 dias (as coletas sem RENACH dos 7 dias até a data, divididas pelas coletas dos mesmos dias), que tira o efeito do dia da semana. Passe o mouse ou use as setas do teclado para ler um dia.';
-    if (EV.dia != null) mostrarDia(Math.min(EV.dia, N - 1));
+    G = {W, x0, passo, X, Y, cor, r0, r1, ini: d => { const k = segDe(d); return k < 0 ? d : seg[k][0]; }};
+    const leg = $('evLeg'); leg.textContent = '';
+    LIN.forEach(l => { const s = document.createElement('span'); s.innerHTML = `<svg width="26" height="10" aria-hidden="true"><line x1="2" x2="24" y1="5" y2="5" stroke="${cor[l.papel]}" stroke-width="4" stroke-linecap="round"/></svg>`; s.append(l.nome); leg.append(s); });
+    $('evTit').textContent = (EV.met === 'tx' ? 'Taxa sem RENACH média: ' : MET[EV.met].nome + ' por dia: ') + foco.nome;
+    $('evHint').textContent = EV.met !== 'tx' ? '' : N === 1 ? 'O período tem um dia só: o ponto é a taxa desse dia. Escolha um período maior para ver a evolução.'
+      : 'Cada ponto é a taxa do período até aquela data: as coletas sem RENACH desde o primeiro dia do período divididas pelas coletas do mesmo intervalo. O último ponto é a taxa do período, a mesma dos quadros e das tabelas.';
+    if (EV.dia != null) mostrarDia(Math.max(r0, Math.min(EV.dia, r1)));
   }
   function mostrarDia(d) {
-    const tip = $('evTip'), cruz = $('evCruz');
-    if (d == null || !G) { EV.dia = null; tip.style.display = 'none'; if (cruz) cruz.setAttribute('opacity', '0'); return; }
+    const tip = $('evTip'), cruz = $('evCruz'), marca = [$('evP0'), $('evP1')];
+    if (d == null || !G) { EV.dia = null; tip.style.display = 'none'; if (cruz) cruz.setAttribute('opacity', '0'); marca.forEach(c => c && c.setAttribute('opacity', '0')); return; }
     EV.dia = d;
-    cruz.setAttribute('x1', G.X(d)); cruz.setAttribute('x2', G.X(d)); cruz.setAttribute('opacity', '.55');
+    cruz.setAttribute('x1', G.X(d)); cruz.setAttribute('x2', G.X(d)); cruz.setAttribute('opacity', '.5');
+    LIN.forEach((l, k) => { const c = marca[k]; if (!c) return; if (l.v[d] == null) { c.setAttribute('opacity', '0'); return; } c.setAttribute('cx', G.X(d)); c.setAttribute('cy', G.Y(l.v[d])); c.setAttribute('opacity', '1'); });
+    if (LIN.length < 2 && marca[1]) marca[1].setAttribute('opacity', '0');
+    // quadro: a data, uma linha por série com o número em destaque e, no fim, a distância entre as duas
+    const el = (tag, cls, texto) => { const e = document.createElement(tag); if (cls) e.className = cls; if (texto != null) e.textContent = texto; return e; };
+    const dia = diaSemana(ALL.d0 + d);
     tip.textContent = '';
-    const b = document.createElement('b'); b.textContent = dataCheia(ALL.d0 + d) + ', ' + diaSemana(ALL.d0 + d); tip.append(b);
-    const linha = (rot, val) => { const r = document.createElement('div'), a = document.createElement('span'), v = document.createElement('span'); a.textContent = rot; v.textContent = val; r.append(a, v); tip.append(r); };
-    linha('Taxa do dia', S.col[d] ? pf(S.sem[d] / S.col[d]) : 'sem coleta');
-    linha('Média móvel de 7 dias', pf(G.mm[d]));
-    if (G.mmE) linha('Estado, média de 7 dias', pf(G.mmE[d]));
-    linha('Coletas', nf(S.col[d])); linha('Sem RENACH', nf(S.sem[d])); linha('SACs abertos', nf(S.sac[d]));
+    tip.append(el('div', 'quando', dia + (dia === 'sábado' || dia === 'domingo' ? '' : '-feira') + ', ' + dataCheia(ALL.d0 + d)));
+    if (EV.met === 'tx') { const a0 = G.ini(d); tip.append(el('div', 'det', a0 === d ? 'Taxa do primeiro dia do período' : `Taxa de ${dataCurta(ALL.d0 + a0)} a ${dataCurta(ALL.d0 + d)}`)); }
+    LIN.forEach((l, k) => {
+      const r = el('div', 'lin'), i = el('i'); i.style.background = G.cor[l.papel];
+      r.append(i, el('span', '', l.nome), el('b', '', l.v[d] == null ? '–' : fmt(l.v[d]))); tip.append(r);
+      if (k === 0 && EV.met === 'tx') tip.append(el('div', 'det', l.S.col[d] ? `Só neste dia: ${pf(l.S.sem[d] / l.S.col[d])}, ${nf(l.S.sem[d])} sem RENACH em ${nf(l.S.col[d])} ${l.S.col[d] === 1 ? 'coleta' : 'coletas'}` : 'Sem coleta neste dia'));
+    });
+    const a = LIN[0].v[d], b = LIN[1] ? LIN[1].v[d] : null;
+    if (a != null && b != null) {
+      const dif = a - b, igual = Math.abs(dif) < (EV.met === 'tx' ? .0005 : .05);
+      const quanto = EV.met === 'tx' ? n1(Math.abs(dif * 100)) + ' p.p.' : (Number.isInteger(Math.abs(dif)) ? nf(Math.abs(dif)) : n1(Math.abs(dif)));
+      tip.append(el('div', 'dif', igual ? (EV.met === 'tx' ? (LIN[1].curto === 'o Estado' ? 'Igual ao Estado' : 'Igual à superintendência') : 'Igual à média') : `${quanto} ${dif > 0 ? 'acima' : 'abaixo'} ` + (EV.met === 'tx' ? 'd' + LIN[1].curto : LIN[1].media)));
+    }
     tip.style.display = 'block';
     const svg = $('evSvg').querySelector('svg'), r = svg.getBoundingClientRect(), bx = $('evBox').getBoundingClientRect(), k = r.width / G.W;
     const px = r.left - bx.left + G.X(d) * k, w = tip.offsetWidth;
-    tip.style.left = Math.max(w / 2 + 6, Math.min(bx.width - w / 2 - 6, px + (px > bx.width / 2 ? -(w / 2 + 14) : w / 2 + 14))) + 'px';
-    tip.style.top = (r.top - bx.top + 26 * k) + 'px';
+    tip.style.left = Math.max(w / 2 + 6, Math.min(bx.width - w / 2 - 6, px + (px > bx.width / 2 ? -(w / 2 + 18) : w / 2 + 18))) + 'px';
+    tip.style.top = (r.top - bx.top + 40 * k) + 'px';
   }
 
-  /* ── antes e depois de uma data ── */
-  function marco() {
-    const box = $('evMarco'), M = J.marco;
-    $('evLimpa').hidden = !M; $('evData').value = M ? isoDia(ALL.d0 + M.m) : $('evData').value;
-    if (!M) { box.innerHTML = ''; return; }
-    const A = evSoma(S, M.antes), D = evSoma(S, M.depois);
-    const dif = A.tx != null && D.tx != null ? D.tx - A.tx : null;
-    box.innerHTML =
-      `<div class="stats">
-         <div class="stat"><b>${pf(A.tx)}</b><span>antes: ${evRot(M.antes)}, ${nf(A.col)} coletas</span></div>
-         <div class="stat"><b>${pf(D.tx)}</b><span>depois: ${evRot(M.depois)}, ${nf(D.col)} coletas</span></div>
-         <div class="stat"><b>${dif == null ? '–' : ppTxt(dif)}</b><span>${dif == null ? 'sem coletas em um dos lados' : seta(Math.abs(dif) < .0005 ? 0 : dif, Math.abs(dif) < .0005 ? 'igual' : dif > 0 ? 'piorou' : 'melhorou', true)}</span></div>
+  /* ── contas por posto num intervalo de dias, usadas na tabela da superintendência e no quadro do posto ── */
+  function totais(f) {
+    const P = ALL.postos.length, c = new Int32Array(P), s = new Int32Array(P), z = new Int32Array(P);
+    for (let i = 0; i < P; i++) for (let d = f[0]; d <= f[1]; d++) { c[i] += ALL.com[i][d] + ALL.sem[i][d]; s[i] += ALL.sem[i][d]; }
+    ALL.sacs.forEach(q => { if (q[2] >= f[0] && q[2] <= f[1]) z[q[1]]++; });
+    return {c, s, z, tx: i => c[i] ? s[i] / c[i] : null};
+  }
+  // posição em taxa (1º = maior taxa) entre os postos com o mínimo de coletas, na mesma regra da aba Postos
+  function posicoes(T, ids, min) {
+    const ok = ids.filter(i => T.c[i] >= min).sort((a, b) => T.s[b] / T.c[b] - T.s[a] / T.c[a] || T.s[b] - T.s[a] || T.c[b] - T.c[a] || (ALL.postos[a].nome < ALL.postos[b].nome ? -1 : 1));
+    const pos = {}; ok.forEach((i, k) => { pos[i] = k + 1; });
+    return {pos, n: ok.length};
+  }
+  // posição no Estado por medida, com as mesmas regras de desempate da aba Postos
+  const RKS = {tx: {t: 'taxa', frase: m => `em taxa sem RENACH (entram os que têm pelo menos ${nf(m)} ${m === 1 ? 'coleta' : 'coletas'} no período); 1º é a maior taxa`, falta: m => `Menos de ${nf(m)} ${m === 1 ? 'coleta' : 'coletas'} no período`},
+    col: {t: 'coletas', frase: () => 'em quantidade de coletas; 1º é o que mais coletou', falta: () => ''},
+    sem: {t: 'sem RENACH', frase: () => 'em coletas sem RENACH; 1º é o que mais teve', falta: () => ''},
+    sac: {t: 'SACs', frase: () => 'em SACs abertos (entram os que têm SAC no período); 1º é o que mais teve', falta: () => 'Nenhum SAC no período'}};
+  function posicaoEstado(T, met, min) {
+    const nome = i => ALL.postos[i].nome, ordemP = (a, b) => T.s[b] - T.s[a] || T.c[b] - T.c[a] || (nome(a) < nome(b) ? -1 : nome(a) > nome(b) ? 1 : 0);
+    const ids = ALL.postos.map((_, i) => i).filter(i => T.c[i] || T.z[i]);
+    const lst = met === 'tx' ? ids.filter(i => T.c[i] >= min).sort((a, b) => T.s[b] / T.c[b] - T.s[a] / T.c[a] || ordemP(a, b))
+      : met === 'col' ? ids.sort((a, b) => T.c[b] - T.c[a] || T.s[b] - T.s[a] || ordemP(a, b))
+      : met === 'sem' ? ids.sort(ordemP)
+      : ids.filter(i => T.z[i] > 0).sort((a, b) => T.z[b] - T.z[a] || ordemP(a, b));
+    const pos = {}; lst.forEach((i, k) => { pos[i] = k + 1; });
+    return {pos, n: lst.length};
+  }
+  function contexto() {                              // período dos botões, mínimo de coletas e referência na escala dele
+    const f = faixa(ALL, PERIODO), n = f[1] - f[0] + 1, C = critNaEscala(ALL.crit, n).p;
+    return {f, n, min: C.min, ref: C.ref, T: totais(f), todos: ALL.postos.map((_, i) => i)};
+  }
+
+  /* ── tabela dos postos da superintendência escolhida ── */
+  function linhasSup() {
+    const X = contexto(), ids = idsDaSup(EV.sup), PE = posicaoEstado(X.T, EV.supRk, X.min), P = evPeriodos();
+    const minV = P.a ? Math.max(5, Math.round(ALL.crit.p.min * Math.min(P.a[1] - P.a[0] + 1, P.b[1] - P.b[0] + 1) / 30)) : 0;
+    const A = P.a ? totais(P.a) : null, B = P.a ? totais(P.b) : null;
+    const rows = ids.filter(i => X.T.c[i] || X.T.z[i]).map(i => {
+      const tem = A && A.c[i] >= minV && B.c[i] >= minV;
+      return {i, nome: tidy(ALL.postos[i].nome), col: X.T.c[i], sem: X.T.s[i], tx: X.T.c[i] ? X.T.s[i] / X.T.c[i] : 0, sac: X.T.z[i],
+        a: tem ? A.tx(i) : null, b: tem ? B.tx(i) : null, var: tem ? (B.tx(i) - A.tx(i)) * 100 : null, pos: PE.pos[i] || null};
+    });
+    const [sk, sd] = EV.supSort, nulo = v => v == null;
+    rows.sort((x, y) => sk === 'nome' ? sd * x.nome.localeCompare(y.nome, 'pt-BR') : (nulo(x[sk]) - nulo(y[sk])) || sd * (x[sk] - y[sk]) || y.sem - x.sem || x.nome.localeCompare(y.nome, 'pt-BR'));
+    return {rows, X, P, minV, nEst: PE.n};
+  }
+  function tabelaSup() {
+    const box = $('evSupBox'); box.hidden = !EV.sup;
+    if (!EV.sup) return;
+    const R = linhasSup(), [sk, sd] = EV.supSort;
+    $('evSupH').innerHTML = [['nome', 'Posto', 1], ['col', 'Coletas'], ['sem', 'Sem RENACH'], ['tx', 'Taxa'], ['sac', 'SACs'], ['pos', `Posição no Estado<small>${RKS[EV.supRk].t}</small>`]].map(c =>
+      `<th class="${c[2] ? 'l' : ''} ${c[1].includes('<small>') ? 'rk2' : ''}" ${c[0] === sk ? `aria-sort="${sd > 0 ? 'ascending' : 'descending'}"` : ''}><button data-k="${c[0]}">${c[1]}</button></th>`).join('');
+    const maxS = Math.max(1, ...R.rows.map(r => r.sem)), maxT = Math.max(.01, ...R.rows.map(r => r.tx)), maxV = Math.max(.01, ...R.rows.map(r => Math.abs(r.var || 0)));
+    const g1 = css('--g1'), g4 = css('--g4');
+    const bar = (v, max, cor, t) => `<span class="bar"><i style="width:${Math.min(100, Math.max(v ? 2 : 0, v / max * 100))}%;background:${cor}"></i><b>${t}</b></span>`;
+    const varia = v => v == null ? `<span title="Menos de ${nf(R.minV)} coletas em um dos períodos">–</span>` : `<span class="varc"><b>${sinal(v)}${n1(Math.abs(v))}</b><span class="var"><i style="${v >= 0 ? 'left:50%' : 'right:50%'};width:${(Math.abs(v) / maxV * 50).toFixed(1)}%;background:${v > 0 ? g1 : g4}"></i></span></span>`;
+    $('evSupRows').innerHTML = R.rows.map((r, k) =>
+      `<tr tabindex="0" data-i="${r.i}" aria-selected="${r.i === EV.posto}" class="${k < 3 ? 't3' : ''}">
+        <td class="l"><div class="cell"><span class="rk">${k + 1}</span><span class="nm">${h(r.nome)}</span></div></td>
+        <td>${nf(r.col)}</td>
+        <td>${bar(r.sem, maxS, '#F4A261', nf(r.sem))}</td>
+        <td>${bar(r.tx, maxT, r.col >= R.X.min ? '#E07A5F' : css('--g5'), pf(r.tx))}</td>
+        <td>${nf(r.sac)}</td>
+        <td>${r.pos ? `<b>${r.pos}º</b>` : `<span title="${RKS[EV.supRk].falta(R.X.min)}">–</span>`}</td>
+      </tr>`).join('');
+    $('evSupTit').textContent = `Postos de ${EV.sup}`;
+    $('evSupHint').textContent = `${nf(R.rows.length)} ${R.rows.length === 1 ? 'posto' : 'postos'}, com os números de ${evRot(R.X.f)}. ` +
+`A posição é entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(R.X.min)}. Ela acompanha a coluna que você escolher: Coletas, Sem RENACH, Taxa ou SACs. Clique em um posto para abrir o quadro dele.`;
+  }
+  function exportarSup() {
+    const R = linhasSup(); if (!R.rows.length) return;
+    const rows = [['Posição na lista', 'Posto', 'Superintendência', 'Coletas', 'Sem RENACH', 'Taxa sem RENACH', 'SACs', `Posição no Estado (${RKS[EV.supRk].t})`]];
+    R.rows.forEach((r, k) => rows.push([k + 1, r.nome, EV.sup, r.col, r.sem, r.tx, r.sac, r.pos || '']));
+    const info = [...sobre(), ['Superintendência', EV.sup], ['Período dos números', evRot(R.X.f)]].concat([['Posição no Estado', `Entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(R.X.min)}.`]]);
+    baixarDireto({filename: 'coleta-biometrica_postos-de-' + slugG(EV.sup) + '.xlsx', data: xlsx([{name: 'Postos', rows, pct: [5], widths: [16, 38, 26, 10, 13, 16, 8, 18], table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
+  }
+
+  /* ── quadro do posto: os achados, calculados pela própria página a partir da base ── */
+  function quadro() {
+    const i = EV.posto, P = ALL.postos[i], nome = tidy(P.nome), X = contexto(), T = X.T, ids = idsDaSup(P.sup), N = ALL.N;
+    const c = T.c[i], s = T.s[i], tx = T.tx(i);
+    const soma = (lst, v) => lst.reduce((a, k) => a + v[k], 0);
+    const txSup = soma(ids, T.c) ? soma(ids, T.s) / soma(ids, T.c) : null, eC = soma(X.todos, T.c), txEst = eC ? soma(X.todos, T.s) / eC : null;
+    const PS = posicoes(T, ids, X.min), PE = posicoes(T, X.todos, X.min);
+    const pp = d => n1(Math.abs(d * 100)) + ' p.p.';
+    const colN = n => `${nf(n)} ${n === 1 ? 'coleta' : 'coletas'}`;
+    // o período dos botões contra o anterior de mesmo tamanho (ou as duas metades, quando a base não tem o anterior inteiro)
+    const som = f => { let cc = 0, ss = 0; for (let d = f[0]; d <= f[1]; d++) { cc += ALL.com[i][d] + ALL.sem[i][d]; ss += ALL.sem[i][d]; } return {c: cc, s: ss, tx: cc ? ss / cc : null}; };
+    const PB = evPeriodos(true), U = som(PB.b), A = PB.a ? som(PB.a) : null, dif = A && A.tx != null && U.tx != null ? U.tx - A.tx : null;
+    const metades = PB.a && PB.b[0] !== X.f[0];        // o período foi partido em dois
+    const rotPer = {all: 'Desde o início', mes: 'Mês atual', sem: 'Última semana', semAtual: 'Semana atual', 1: 'Último dia'}[PERIODO];
+    // SACs do período
+    const sacsP = ALL.sacs.filter(q => q[1] === i && q[2] >= X.f[0] && q[2] <= X.f[1]).sort((a, b) => b[2] - a[2] || (a[0] < b[0] ? -1 : 1));
+    // referências na superintendência: taxa até o limite, com o mínimo de coletas
+    const outros = ids.filter(k => k !== i && T.c[k] >= X.min).map(k => ({k, nome: tidy(ALL.postos[k].nome), tx: T.s[k] / T.c[k], c: T.c[k]})).sort((a, b) => a.tx - b.tx || b.c - a.c);
+    const refs = outros.filter(o => o.tx <= X.ref), souRef = c >= X.min && tx <= X.ref;
+    const comp = o => tx == null ? '' : Math.abs(tx - o.tx) < .0005 ? 'mesma taxa deste posto' : `${pp(tx - o.tx)} ${o.tx < tx ? 'abaixo' : 'acima'} deste posto`;
+
+    /* quadros */
+    const maxB = Math.max(.01, tx || 0, txSup || 0, txEst || 0);
+    const qbar = (rot, v, cor) => `<div class="qbar"><span title="${h(rot)}">${h(rot)}</span><div class="qtrilho"><i style="width:${v == null ? 0 : Math.max(1, v / maxB * 100)}%;background:${cor}"></i></div><b>${pf(v)}</b></div>`;
+    const posTxt = (PX, rot) => PX.pos[i] ? `<span class="qnum">${PX.pos[i]}º <small>de ${nf(PX.n)}</small></span><span class="qsub">${rot}</span>` : `<span class="qnum">–</span><span class="qsub">${rot}: abaixo do mínimo de coletas</span>`;
+    // semana a semana (segunda a domingo), até as 8 últimas
+    const sem = []; let ini = 0;
+    while (ini < N) { let fim = ini; while (fim < N - 1 && new Date((ALL.d0 + fim + 1) * DIA_MS).getUTCDay() !== 1) fim++; sem.push([ini, fim]); ini = fim + 1; }
+    const semanas = sem.slice(-8).map(f => { const a = som(f); let cs = 0, ss = 0; ids.forEach(k => { for (let d = f[0]; d <= f[1]; d++) { cs += ALL.com[k][d] + ALL.sem[k][d]; ss += ALL.sem[k][d]; } }); return {f, tx: a.tx, c: a.c, s: a.s, sup: cs ? ss / cs : null}; });
+    const maxW = Math.max(.1, ...semanas.map(w => Math.max(w.tx || 0, w.sup || 0)));
+    const refsHtml = souRef && !refs.length ? `<p>Este posto é a única referência de ${h(P.sup)} no período.</p>`
+      : refs.length ? refs.slice(0, 4).map(o => `<div class="qref"><button data-k="p:${o.k}" title="Abrir o quadro deste posto">${h(o.nome)}</button><b>${pf(o.tx)}</b><span>${comp(o)}</span></div>`).join('') + (refs.length > 4 ? `<p class="qsub">e mais ${nf(refs.length - 4)}.</p>` : '')
+      : `<p>Nenhum ${souRef ? 'outro ' : ''}posto de ${h(P.sup)} está na faixa de referência (taxa de até ${pf(X.ref)}) no período.</p>` + (outros.length ? `<p>A menor taxa é a de <b>${h(outros[0].nome)}</b>, ${pf(outros[0].tx)}: ${comp(outros[0])}.</p>` : '');
+    const q = $('evQuadro');
+    q.innerHTML =
+      `<div class="qhead">
+         <div><p class="qsup">Superintendência ${h(P.sup)}</p><h3>${h(nome)}</h3><p class="hint">${rotPer}: ${evRot(X.f)}${X.n > 1 ? ` (${X.n} dias)` : ''}</p></div>
+         <div class="tools"><button class="limpar" data-q="sup">← Ver ${h(P.sup)}</button><button class="limpar" data-q="limpar">Limpar filtros</button></div>
        </div>
-       <p class="hint">${h(S.nome)}: ${M.depois[1] - M.depois[0] + 1} ${M.k === 1 ? 'dia' : 'dias'} a partir da data, contra ${M.antes[1] - M.antes[0] + 1} antes dela${M.incompleto ? ' (a base não tem mais dias anteriores)' : ''}. A tabela ao lado passa a usar essas mesmas duas faixas.</p>`;
+       <div class="qgrid">
+         <div class="qcard"><h4>Taxa sem RENACH</h4>
+           <span class="qnum">${pf(tx)}</span><span class="qsub">${nf(s)} sem RENACH em ${nf(c)} ${c === 1 ? 'coleta' : 'coletas'}</span>
+           ${qbar('Este posto', tx, css('--g3'))}${qbar(P.sup, txSup, css('--g2'))}${qbar('Estado', txEst, css('--g5'))}
+         </div>
+         <div class="qcard"><h4>Posição em taxa</h4>
+           <div class="qpar"><div>${posTxt(PS, 'na superintendência')}</div><div>${posTxt(PE, 'no Estado')}</div></div>
+           <span class="qsub" style="margin-top:10px">1º é a maior taxa. Entram postos com pelo menos ${colN(X.min)} no período.</span>
+         </div>
+         <div class="qcard"><h4>${rotPer}: evolução</h4>
+           ${dif == null ? `<span class="qnum">${pf(U.tx)}</span><span class="qsub">${U.tx == null ? 'Sem coleta no período.' : A ? 'Sem coleta no período anterior para comparar.' : 'A base ainda não tem um período anterior para comparar.'}</span>`
+             : `<span class="qnum">${sinal(dif)}${pp(dif)}</span><span class="qsub"><span class="dl ${Math.abs(dif) < .0005 ? 'neutro' : dif > 0 ? 'ruim' : 'bom'}"><i>${Math.abs(dif) < .0005 ? '●' : dif > 0 ? '▲' : '▼'}</i>${Math.abs(dif) < .0005 ? 'igual' : dif > 0 ? 'piorou' : 'melhorou'}</span></span>
+                <span class="qsub">de ${pf(A.tx)} (${evRot(PB.a)}) para ${pf(U.tx)} (${evRot(PB.b)})</span>`}
+           <span class="qsub">${dif == null ? '' : metades ? (PERIODO === 'all' ? 'Primeira metade do período contra a segunda.' : `A base ainda não tem ${PERIODO === 'mes' ? 'os mesmos dias do mês anterior' : PERIODO === 'semAtual' || PERIODO === 'sem' ? 'a semana anterior' : `os ${X.n} dias anteriores`}: compara as duas metades do que existe.`) : PERIODO === '1' ? 'Contra o dia anterior com coleta.' : PERIODO === 'sem' ? 'Contra a semana anterior.' : PERIODO === 'semAtual' ? 'Contra os mesmos dias da semana anterior.' : PERIODO === 'mes' ? 'Contra os mesmos dias do mês anterior.' : `Contra os ${PB.a[1] - PB.a[0] + 1} dias anteriores.`}</span>
+           <span class="qsub">${nf(U.s)} sem RENACH em ${colN(U.c)} de ${evRot(PB.b)}</span>
+         </div>
+         <div class="qcard"><h4>SACs: ${rotPer.toLowerCase()}</h4>
+           <span class="qnum">${nf(sacsP.length)}</span><span class="qsub">${sacsP.length === 1 ? 'SAC aberto' : 'SACs abertos'} de ${evRot(X.f)}</span>
+           ${sacsP.length ? `<div class="qsacs" tabindex="0" aria-label="Protocolos dos SACs do período">${sacsP.map(v => `<span>${h(v[0])}<em>${dataCurta(ALL.d0 + v[2])}</em></span>`).join('')}</div>` : ''}
+         </div>
+         <div class="qcard w2"><h4>Referências em ${h(P.sup)}</h4>${refsHtml}</div>
+         <div class="qcard w2"><h4>Taxa semana a semana</h4>
+           <div class="qsem">${semanas.map(w => `<div title="${w.c ? `${nf(w.s)} sem RENACH em ${nf(w.c)} coletas` : 'sem coleta'}"><b>${pf(w.tx)}</b><div class="col">${w.tx != null ? `<i style="height:${Math.max(2, w.tx / maxW * 100)}%"></i>` : ''}${w.sup != null ? `<u style="bottom:calc(${w.sup / maxW * 100}% - 1.5px)"></u>` : ''}</div><span>${evRot(w.f)}</span></div>`).join('')}</div>
+           <div class="qleg"><span><i></i>${h(nome)}</span><span><u></u>${h(P.sup)}</span></div>
+         </div>
+       </div>`;
+  }
+
+  /* ── escolha dos dois períodos ── */
+  const CAMPOS = ['evP1a', 'evP1b', 'evP2a', 'evP2b'];
+  function periodos() {
+    const P = evPeriodos(), iso = k => isoDia(ALL.d0 + k);
+    CAMPOS.forEach(id => { $(id).min = isoDia(ALL.d0); $(id).max = isoDia(ALL.d1); });
+    $('evP1a').value = P.a ? iso(P.a[0]) : ''; $('evP1b').value = P.a ? iso(P.a[1]) : '';
+    $('evP2a').value = iso(P.b[0]); $('evP2b').value = iso(P.b[1]);
+    $('evPVolta').hidden = !EV.custom; $('evPMsg').textContent = '';
+  }
+  function lerPeriodos() {
+    const v = CAMPOS.map(id => $(id).value), k = v.map(s => ISO.test(s) ? nDia(s) - ALL.d0 : NaN);
+    const erro = t => { $('evPMsg').textContent = t; };
+    if (k.some(x => isNaN(x))) return erro('Preencha as quatro datas.');
+    if (k.some(x => x < 0 || x > ALL.N - 1)) return erro(`As datas precisam estar entre ${dataCheia(ALL.d0)} e ${dataCheia(ALL.d1)}.`);
+    if (k[0] > k[1] || k[2] > k[3]) return erro('Em cada período, a primeira data não pode ser depois da segunda.');
+    EV.custom = {a: [k[0], k[1]], b: [k[2], k[3]]};
+    window.desenharEvolucao();
   }
 
   /* ── quem melhorou e quem piorou ── */
   function linhasRank() {
-    const fa = J.marco ? J.marco.antes : J.antes, fb = J.marco ? J.marco.depois : J.agora;
-    if (!fa) return {rows: [], fora: 0, min: 0, fa, fb};
-    const menor = Math.min(fa[1] - fa[0] + 1, fb[1] - fb[0] + 1), min = Math.max(5, Math.round(ALL.crit.p.min * menor / 30));
+    const P = evPeriodos(), fa = P.a, fb = P.b;
+    if (!fa) return {rows: [], fa, fb, min: 0, fora: 0};
+    const na = fa[1] - fa[0] + 1, nb = fb[1] - fb[0] + 1;
+    const min = Math.max(5, Math.round(ALL.crit.p.min * Math.min(na, nb) / 30));
     const som = (i, f) => { let c = 0, s = 0; for (let d = f[0]; d <= f[1]; d++) { c += ALL.com[i][d] + ALL.sem[i][d]; s += ALL.sem[i][d]; } return [c, s]; };
     let itens;
-    if (EV.uni === 'p') itens = ALL.postos.map((p, i) => ({k: 'p:' + i, nome: tidy(p.nome), sup: p.sup, ids: [i]}));
+    const drill = EV.uni === 's' && EV.rkSup ? EV.rkSup : null;   // postos de uma superintendência, com a posição entre todos os postos do Estado
+    if (EV.uni === 'p' || drill) itens = ALL.postos.map((p, i) => ({k: 'p:' + i, nome: tidy(p.nome), sup: p.sup, ids: [i]}));
     else { const g = {}; ALL.postos.forEach((p, i) => { (g[p.sup] = g[p.sup] || {k: 's:' + p.sup, nome: p.sup, sup: '', ids: []}).ids.push(i); }); itens = Object.keys(g).map(k => g[k]); }
-    const sacB = {}; ALL.sacs.forEach(s => { if (s[2] >= fb[0] && s[2] <= fb[1]) sacB[s[1]] = (sacB[s[1]] || 0) + 1; });
-    let fora = 0; const rows = [];
+    let fora = 0, rows = [];
     itens.forEach(it => {
-      let ca = 0, sa = 0, cb = 0, sb = 0, z = 0;
-      it.ids.forEach(i => { const x = som(i, fa), y = som(i, fb); ca += x[0]; sa += x[1]; cb += y[0]; sb += y[1]; z += sacB[i] || 0; });
+      let ca = 0, sa = 0, cb = 0, sb = 0;
+      it.ids.forEach(i => { const x = som(i, fa), y = som(i, fb); ca += x[0]; sa += x[1]; cb += y[0]; sb += y[1]; });
       if (ca + cb === 0) return;
-      if (ca < min || cb < min) { fora++; return; }
-      rows.push({k: it.k, nome: it.nome, sup: it.sup, a: sa / ca, b: sb / cb, var: sb / cb - sa / ca, ca, cb, col: cb, sac: z});
+      if (ca < min || cb < min) { if (!drill || it.sup === drill) fora++; return; }
+      const a = sa / ca, b = sb / cb;
+      rows.push({k: it.k, nome: it.nome, sup: it.sup, a, b, ca, sa, cb, sb, var: (b - a) * 100});
     });
+    // posição: 1º é a maior taxa
+    const pos = (k, campo) => rows.slice().sort((x, y) => y[k] - x[k] || (k === 'a' ? y.ca - x.ca : y.cb - x.cb) || x.nome.localeCompare(y.nome, 'pt-BR')).forEach((r, i) => { r[campo] = i + 1; });
+    pos('a', 'pa'); pos('b', 'pos');
+    rows.forEach(r => { r.dpos = r.pa - r.pos; });           // positivo: subiu no ranking
+    if (drill) rows = rows.filter(r => r.sup === drill);
     const [sk, sd] = EV.sort;
-    rows.sort((x, y) => sk === 'nome' ? sd * x.nome.localeCompare(y.nome, 'pt-BR') : sd * (x[sk] - y[sk]) || y.cb - x.cb || x.nome.localeCompare(y.nome, 'pt-BR'));
-    return {rows, fora, min, fa, fb};
+    rows.sort((x, y) => sk === 'nome' ? sd * x.nome.localeCompare(y.nome, 'pt-BR') : sd * (x[sk] - y[sk]) || x.pos - y.pos);
+    return {rows, fa, fb, min, fora, drill};
   }
   function ranking() {
-    const R = linhasRank(), um = EV.uni === 'p' ? 'posto' : 'superintendência', uns = EV.uni === 'p' ? 'postos' : 'superintendências';
-    const rotA = J.marco ? 'Antes' : J.tipo === 'metades' ? '1ª metade' : 'Antes', rotB = J.marco ? 'Depois' : J.tipo === 'metades' ? '2ª metade' : 'Agora';
+    const R = linhasRank(), p = EV.uni === 'p' || !!R.drill;
+    $('evRkVolta').hidden = !R.drill;
     [...$('evUni').children].forEach(b => b.setAttribute('aria-pressed', String(b.dataset.u === EV.uni)));
     const [sk, sd] = EV.sort;
-    $('evHrow').innerHTML = [['nome', EV.uni === 'p' ? 'Posto' : 'Superintendência', 1], ['a', rotA], ['b', rotB], ['var', 'Variação'], ['col', 'Coletas'], ['sac', 'SACs']].map(c =>
-      `<th class="${c[2] ? 'l' : ''}" ${c[0] === sk ? `aria-sort="${sd > 0 ? 'ascending' : 'descending'}"` : ''}><button data-k="${c[0]}">${c[1]}</button></th>`).join('');
-    const maxV = Math.max(.01, ...R.rows.map(r => Math.abs(r.var)));
+    $('evHrow').innerHTML = [['nome', p ? 'Posto' : 'Superintendência', 1], ['a', '1º período'], ['b', '2º período'], ['var', 'Variação<small>pontos percentuais</small>'], ['pos', `Posição<small>${p ? 'no Estado' : 'entre as superintendências'}</small>`], ['dpos', 'Variação da posição']].map(c =>
+      `<th class="${c[2] ? 'l' : ''} ${c[1].includes('<small>') ? 'rk2' : ''}" ${c[0] === sk ? `aria-sort="${sd > 0 ? 'ascending' : 'descending'}"` : ''}><button data-k="${c[0]}">${c[1]}</button></th>`).join('');
+    const maxV = Math.max(.01, ...R.rows.map(r => Math.abs(r.var || 0)));
     const g1 = css('--g1'), g4 = css('--g4');
-    const barra = v => { const w = Math.abs(v) / maxV * 50; return `<span class="varc"><b>${ppTxt(v).replace(' p.p.', '')}</b><span class="var"><i style="${v >= 0 ? 'left:50%' : 'right:50%'};width:${w.toFixed(1)}%;background:${v > 0 ? g1 : g4}"></i></span></span>`; };
-    $('evRows').innerHTML = R.rows.map((r, k) =>
-      `<tr tabindex="0" data-k="${h(r.k)}" aria-selected="${r.k === EV.esc}">
-        <td class="l"><div class="cell"><span class="rk">${k + 1}</span><span class="nm">${h(r.nome)}</span></div></td>
-        <td>${pf(r.a)}<small class="n">${nf(r.ca)} coletas</small></td>
-        <td>${pf(r.b)}<small class="n">${nf(r.cb)} coletas</small></td>
+    const dica = (c, s) => `${nf(c)} coletas, ${nf(s)} sem RENACH`;
+    const barra = v => `<span class="varc"><b>${sinal(v)}${n1(Math.abs(v))}</b><span class="var"><i style="${v >= 0 ? 'left:50%' : 'right:50%'};width:${(Math.abs(v) / maxV * 50).toFixed(1)}%;background:${v > 0 ? g1 : g4}"></i></span></span>`;
+    const mov = d => d === 0 ? '<span class="dl neutro"><i>●</i>manteve</span>' : `<span class="dl ${d > 0 ? 'ruim' : 'bom'}"><i>${d > 0 ? '▲' : '▼'}</i>${d > 0 ? 'subiu' : 'desceu'} ${nf(Math.abs(d))}</span>`;
+    $('evRows').innerHTML = R.rows.map(r =>
+      `<tr tabindex="0" data-k="${h(r.k)}">
+        <td class="l"><div class="cell"><span class="nm">${h(r.nome)}</span></div></td>
+        <td title="${dica(r.ca, r.sa)}">${pf(r.a)}</td>
+        <td title="${dica(r.cb, r.sb)}">${pf(r.b)}</td>
         <td>${barra(r.var)}</td>
-        <td>${nf(r.col)}</td>
-        <td>${nf(r.sac)}</td>
+        <td><b>${r.pos}º</b></td>
+        <td>${mov(r.dpos)}</td>
       </tr>`).join('');
     const e = $('evVazio'); e.hidden = R.rows.length > 0;
-    e.textContent = !R.fa ? 'A base ainda não tem um período anterior para comparar. Escolha um período menor ou informe uma data em "Antes e depois de uma data".'
-      : `Nenhum${EV.uni === 'p' ? '' : 'a'} ${um} tem pelo menos ${nf(R.min)} coletas nas duas faixas comparadas.`;
-    $('evRkTit').textContent = EV.uni === 'p' ? 'Postos: quem melhorou e quem piorou' : 'Superintendências: quem melhorou e quem piorou';
+    e.textContent = !R.fa ? 'A base ainda tem um dia só: não há dois períodos para comparar.' : `Nenhum${p ? ' posto' : 'a superintendência'} tem pelo menos ${nf(R.min)} coletas nos dois períodos.`;
+    $('evRkTit').textContent = (R.drill ? `Postos de ${R.drill}` : p ? 'Postos' : 'Superintendências') + ': quem melhorou e quem piorou';
     $('evRkHint').textContent = !R.fa ? '' :
-      `Taxa sem RENACH de ${evRot(R.fa)} (${rotA.toLowerCase()}) comparada com a de ${evRot(R.fb)} (${rotB.toLowerCase()}). A variação é em pontos percentuais: para cima, piorou; para baixo, melhorou. Entram ${uns} com pelo menos ${nf(R.min)} coletas em cada faixa` +
-      (R.fora ? `; ${nf(R.fora)} ${R.fora === 1 ? 'ficou' : 'ficaram'} de fora` : '') + `. Coletas e SACs são da faixa mais recente. Clique em uma linha para ver a evolução dela no gráfico.`;
+      `Taxa sem RENACH de ${evRot(R.fa)} contra ${evRot(R.fb)}${R.drill ? `, dos postos de ${R.drill}` : ''}. Na posição${R.drill ? ', entre os postos do Estado,' : ','} 1º é a maior taxa; subir é piorar. Entram ${p ? 'postos' : 'superintendências'} com pelo menos ${nf(R.min)} coletas em cada período` + (R.fora ? ` (${nf(R.fora)} de fora).` : '.') +
+      (!p ? ' Clique em uma superintendência para ver os postos dela.' : ' Clique em um posto para abrir o quadro dele.');
     return R;
   }
 
   /* ── exportações ── */
   const sobre = () => [['Painel', 'Coleta biométrica na 1ª habilitação, postos Poupatempo e unidades CIR'], ['Base', `${textoPeriodo(ALL.d0, ALL.d1)}` + (ALL.lidoEm ? `, atualizada em ${ALL.lidoEm}` : '')]];
-  function exportarSerie() {
-    const mm = evMM(S), mmE = E ? evMM(E) : null, rows = [['Data', 'Dia da semana', 'Coletas', 'Com RENACH', 'Sem RENACH', 'Taxa sem RENACH', 'Média móvel de 7 dias', 'SACs abertos'].concat(mmE ? ['Estado: média móvel de 7 dias'] : [])];
-    for (let d = 0; d < ALL.N; d++) rows.push([dataCheia(ALL.d0 + d), diaSemana(ALL.d0 + d), S.col[d], S.col[d] - S.sem[d], S.sem[d], S.col[d] ? S.sem[d] / S.col[d] : '', mm[d] == null ? '' : mm[d], S.sac[d]].concat(mmE ? [mmE[d] == null ? '' : mmE[d]] : []));
-    const info = [...sobre(), ['Analisado', S.nome], ['Média móvel de 7 dias', 'Coletas sem RENACH dos 7 dias até a data, divididas pelas coletas dos mesmos dias.']];
-    baixarDireto({filename: 'coleta-biometrica_evolucao_' + slugG(S.nome) + '.xlsx', data: xlsx([{name: 'Série diária', rows, pct: [5, 6, 8], widths: [12, 15, 10, 13, 13, 16, 22, 13, 30], table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
-  }
+  const slugG = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   function exportarRank() {
     const R = linhasRank(); if (!R.rows.length) return;
-    const p = EV.uni === 'p', rows = [['Posição', p ? 'Posto' : 'Superintendência'].concat(p ? ['Superintendência'] : [], ['Taxa antes', 'Coletas antes', 'Taxa depois', 'Coletas depois', 'Variação (pontos percentuais)', 'SACs depois'])];
-    R.rows.forEach((r, k) => rows.push([k + 1, r.nome].concat(p ? [r.sup] : [], [r.a, r.ca, r.b, r.cb, +(r.var * 100).toFixed(2), r.sac])));
-    const o = p ? 1 : 0, info = [...sobre(), ['Antes', evRot(R.fa)], ['Depois', evRot(R.fb)], ['Critério', `Pelo menos ${nf(R.min)} coletas em cada faixa.`], ['Linhas', R.rows.length]];
-    baixarDireto({filename: `coleta-biometrica_variacao_${p ? 'postos' : 'superintendencias'}.xlsx`, data: xlsx([{name: 'Variação', rows, pct: [2 + o, 4 + o], widths: [9, 38].concat(p ? [26] : [], [13, 15, 13, 15, 28, 13]), table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
+    const p = EV.uni === 'p' || !!R.drill, o = p ? 1 : 0;
+    const rows = [[p ? 'Posto' : 'Superintendência'].concat(p ? ['Superintendência'] : [], ['Taxa sem RENACH: 1º período', 'Taxa sem RENACH: 2º período', 'Variação (pontos percentuais)', p ? 'Posição no Estado' : 'Posição entre as superintendências', 'Posição no 1º período', 'Variação da posição', 'Coletas no 1º período', 'Coletas no 2º período'])];
+    R.rows.forEach(r => rows.push([r.nome].concat(p ? [r.sup] : [], [r.a, r.b, +r.var.toFixed(2), r.pos, r.pa, r.dpos, r.ca, r.cb])));
+    const info = [...sobre(), ['1º período', evRot(R.fa)], ['2º período', evRot(R.fb)], ['Posição', '1º é a maior taxa. Variação da posição positiva: subiu no ranking.'], ['Critério', `Pelo menos ${nf(R.min)} coletas em cada período.`]];
+    baixarDireto({filename: `coleta-biometrica_variacao_${R.drill ? 'postos-de-' + slugG(R.drill) : p ? 'postos' : 'superintendencias'}.xlsx`, data: xlsx([{name: 'Variação', rows, pct: [1 + o, 2 + o], widths: [38].concat(p ? [26] : [], [26, 26, 28, 32, 22, 20, 22, 22]), table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
   }
-  const slugG = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  // PDFs no mesmo estilo do da aba Postos: até 50 linhas, na ordem em que a tabela está
+  const carimbo = () => { const a = new Date(), d2 = n => String(n).padStart(2, '0'); return `Gerado em ${d2(a.getDate())}/${d2(a.getMonth() + 1)}/${a.getFullYear()}` + (ALL.lidoEm ? ', com a base atualizada em ' + ALL.lidoEm : '') + '.'; };
+  const cheio = f => f[0] === f[1] ? dataCheia(ALL.d0 + f[0]) : dataCheia(ALL.d0 + f[0]) + ' a ' + dataCheia(ALL.d0 + f[1]);
+  const varTxt = v => v == null ? '–' : sinal(v) + n1(Math.abs(v));
+  function exportarSupPdf() {
+    const R = linhasSup(); if (!R.rows.length) return;
+    const [sk, sd] = EV.supSort, top = R.rows.slice(0, 50);
+    const TIT = {tx: ['com maior percentual de erros ao fazer coleta sem gerar RENACH', 'com menor percentual de erros ao fazer coleta sem gerar RENACH'], sem: ['com mais coletas sem gerar RENACH', 'com menos coletas sem gerar RENACH'],
+      sac: ['com mais SACs abertos', 'com menos SACs abertos'], col: ['com mais coletas', 'com menos coletas'], nome: ['em ordem alfabética', 'em ordem alfabética'], pos: ['pela posição no Estado', 'pela posição no Estado'],
+      };
+    const rotPer = {all: 'desde o início', mes: 'mês atual', sem: 'última semana', semAtual: 'semana atual', 1: 'último dia'}[PERIODO];
+    const data = pdfTabela({titulo: `Postos de ${EV.sup} ` + TIT[sk][sd < 0 ? 0 : 1], periodo: `Período analisado: ${cheio(R.X.f)} (${rotPer})`,
+      colunas: [{t: 'Pos.', w: 34, alinh: 'c'}, {t: 'Posto', w: 230, alinh: 'l'}, {t: 'Coletas', w: 55, alinh: 'c'}, {t: 'Sem\nRENACH', w: 58, alinh: 'c'}, {t: 'Taxa', w: 55, alinh: 'c', negrito: true}, {t: 'SACs', w: 45, alinh: 'c'}, {t: 'No Estado\n' + RKS[EV.supRk].t, w: 78, alinh: 'c'}],
+      linhas: top.map((r, k) => [String(k + 1), r.nome, nf(r.col), nf(r.sem), pf(r.tx), nf(r.sac), r.pos ? r.pos + 'º' : '–']),
+      rodape: [].concat([`Última coluna: posição entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(R.X.min)}.`,
+        `${nf(top.length)} de ${nf(R.rows.length)} ${R.rows.length === 1 ? 'posto' : 'postos'} da superintendência. ` + carimbo()])});
+    baixarDireto({filename: `coleta-biometrica_postos-de-${slugG(EV.sup)}_${slugG(cheio(R.X.f))}.pdf`, data, tipo: 'application/pdf'});
+  }
+  function exportarRankPdf() {
+    const R = linhasRank(); if (!R.rows.length) return;
+    const p = EV.uni === 'p' || !!R.drill, [sk, sd] = EV.sort, top = R.rows.slice(0, 50), quem = R.drill ? `Postos de ${R.drill}` : p ? 'Postos' : 'Superintendências';
+    const TIT = {var: ['que mais pioraram na taxa de coleta sem RENACH', 'que mais melhoraram na taxa de coleta sem RENACH'], a: ['com maior taxa sem RENACH no 1º período', 'com menor taxa sem RENACH no 1º período'],
+      b: ['com maior taxa sem RENACH no 2º período', 'com menor taxa sem RENACH no 2º período'], pos: ['com menor taxa sem RENACH no 2º período', 'com maior taxa sem RENACH no 2º período'],
+      dpos: ['que mais subiram no ranking da taxa sem RENACH', 'que mais desceram no ranking da taxa sem RENACH'], nome: ['em ordem alfabética: comparação da taxa sem RENACH', 'em ordem alfabética: comparação da taxa sem RENACH']};
+    const mov = d => d === 0 ? 'manteve' : (d > 0 ? 'subiu ' : 'desceu ') + nf(Math.abs(d));
+    const colunas = R.drill
+      ? [{t: 'Pos.', w: 30, alinh: 'c'}, {t: 'Posto', w: 283, alinh: 'l'}, {t: '1º\nperíodo', w: 50, alinh: 'c'}, {t: '2º\nperíodo', w: 50, alinh: 'c'}, {t: 'Variação\n(p.p.)', w: 50, alinh: 'c', negrito: true}, {t: 'Posição\nno Estado', w: 40, alinh: 'c'}, {t: 'Variação\nda posição', w: 52, alinh: 'c'}]
+      : p
+      ? [{t: 'Pos.', w: 30, alinh: 'c'}, {t: 'Posto', w: 170, alinh: 'l'}, {t: 'Superintendência', w: 113, alinh: 'l'}, {t: '1º\nperíodo', w: 50, alinh: 'c'}, {t: '2º\nperíodo', w: 50, alinh: 'c'}, {t: 'Variação\n(p.p.)', w: 50, alinh: 'c', negrito: true}, {t: 'Posição\nno Estado', w: 40, alinh: 'c'}, {t: 'Variação\nda posição', w: 52, alinh: 'c'}]
+      : [{t: 'Pos.', w: 30, alinh: 'c'}, {t: 'Superintendência', w: 245, alinh: 'l'}, {t: '1º\nperíodo', w: 60, alinh: 'c'}, {t: '2º\nperíodo', w: 60, alinh: 'c'}, {t: 'Variação\n(p.p.)', w: 60, alinh: 'c', negrito: true}, {t: 'Posição', w: 45, alinh: 'c'}, {t: 'Variação\nda posição', w: 55, alinh: 'c'}];
+    const data = pdfTabela({titulo: quem + ' ' + TIT[sk][sd < 0 ? 0 : 1], periodo: `1º período: ${cheio(R.fa)} · 2º período: ${cheio(R.fb)}`, colunas,
+      linhas: top.map((r, k) => [String(k + 1), r.nome].concat(p && !R.drill ? [r.sup] : [], [pf(r.a), pf(r.b), varTxt(r.var), r.pos + 'º', mov(r.dpos)])),
+      rodape: ['Taxa de coleta sem RENACH nos dois períodos; variação em pontos percentuais.', `Na posição${R.drill ? ' (entre os postos do Estado)' : ''}, 1º é a maior taxa do 2º período; subir é piorar. Entram ${p ? 'postos' : 'superintendências'} com pelo menos ${nf(R.min)} coletas em cada período.`,
+        `${nf(top.length)} de ${nf(R.rows.length)} ${p ? 'postos' : 'superintendências'} da lista. ` + carimbo()]});
+    baixarDireto({filename: `coleta-biometrica_comparacao_${R.drill ? 'postos-de-' + slugG(R.drill) : p ? 'postos' : 'superintendencias'}_${slugG(cheio(R.fb))}.pdf`, data, tipo: 'application/pdf'});
+  }
 
   /* ── ciclo ── */
   window.desenharEvolucao = function () {
     if (!ALL) return;
-    montarSeletor();
-    $('evEsc').value = EV.esc;
-    S = evSerie(EV.esc); E = EV.esc === 'e' ? null : evSerie('e'); J = evJanelas();
-    cartoes(); grafico(); marco(); ranking();
-    $('evSrc').textContent = `Fonte: base de dados do painel, ${textoPeriodo(ALL.d0, ALL.d1)}` + (ALL.lidoEm ? `, atualizada em ${ALL.lidoEm}` : '') + '. O período termina sempre no último dia com coleta na base.';
+    if (!cbSup) {
+      cbSup = caixaBusca($('cbSup'), v => { EV.sup = v; EV.posto = null; EV.dia = null; window.desenharEvolucao(); });
+      cbPosto = caixaBusca($('cbPosto'), v => { EV.posto = v; if (v != null) EV.sup = ALL.postos[v].sup; EV.dia = null; window.desenharEvolucao(); });
+    }
+    if (EV.montado !== ALL) { EV.montado = ALL; EV.custom = null; }
+    listas();
+    const posto = EV.posto != null;
+    $('evQuadro').hidden = !posto; $('evBox').hidden = posto;
+    if (posto) { mostrarDia(null); quadro(); } else grafico();
+    tabelaSup(); periodos(); ranking();
+    $('evGrid').hidden = !EV.comp; $('evComp').setAttribute('aria-expanded', String(EV.comp));
+    $('evSrc').textContent = `Fonte: base de dados do painel, ${textoPeriodo(ALL.d0, ALL.d1)}` + (ALL.lidoEm ? `, atualizada em ${ALL.lidoEm}` : '') + '.';
   };
-  const redesenhar = () => { if (ABA === 'e' && !document.body.classList.contains('atualizando')) window.desenharEvolucao(); };
-  $('evEsc').addEventListener('change', e => { EV.esc = e.target.value; EV.dia = null; redesenhar(); });
-  $('evData').addEventListener('change', e => {
-    const v = e.target.value, m = ISO.test(v) ? nDia(v) - ALL.d0 : null;
-    EV.marco = m != null && m >= 1 && m <= ALL.N - 1 ? m : null;
-    if (v && EV.marco == null) { e.target.value = ''; $('evMarco').innerHTML = `<p class="hint">Escolha uma data entre ${dataCheia(ALL.d0 + 1)} e ${dataCheia(ALL.d1)}, que é o intervalo da base.</p>`; S = evSerie(EV.esc); J = evJanelas(); $('evLimpa').hidden = true; grafico(); ranking(); return; }
-    redesenhar();
-  });
-  $('evLimpa').addEventListener('click', () => { EV.marco = null; $('evData').value = ''; redesenhar(); });
-  $('evUni').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { EV.uni = b.dataset.u; ranking(); } });
-  $('evHrow').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k; EV.sort = [k, EV.sort[0] === k ? -EV.sort[1] : (k === 'nome' ? 1 : -1)]; ranking(); });
-  const abrirLinha = r => { if (!r) return; EV.esc = r.dataset.k; EV.dia = null; redesenhar(); $('evBox').scrollIntoView({block: 'start', behavior: liso()}); };
+  // abre a evolução de um posto ('p:número') ou de uma superintendência ('s:Nome')
+  window.escolherNaEvolucao = function (chaveEsc) {
+    if (chaveEsc[0] === 'p') { const i = +chaveEsc.slice(2); if (ALL.postos[i]) { EV.posto = i; EV.sup = ALL.postos[i].sup; } }
+    else { EV.sup = chaveEsc.slice(2); EV.posto = null; }
+    EV.dia = null;
+  };
+  const visivel = () => ABA === 'e' && !document.body.classList.contains('atualizando');
+  CAMPOS.forEach(id => $(id).addEventListener('change', lerPeriodos));
+  $('evPVolta').addEventListener('click', () => { EV.custom = null; window.desenharEvolucao(); });
+  $('evUni').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { EV.uni = b.dataset.u; EV.rkSup = null; ranking(); } });
+  $('evRkVolta').addEventListener('click', () => { EV.rkSup = null; ranking(); $('evGrid').scrollIntoView({block: 'nearest', behavior: liso()}); });
+  $('evHrow').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k; EV.sort = [k, EV.sort[0] === k ? -EV.sort[1] : (k === 'nome' || k === 'pos' ? 1 : -1)]; ranking(); });
+  const abrirLinha = r => {
+    if (!r) return;
+    if (EV.uni === 's' && !EV.rkSup && r.dataset.k[0] === 's') { EV.rkSup = r.dataset.k.slice(2); ranking(); $('evGrid').scrollIntoView({block: 'nearest', behavior: liso()}); return; }   // abre os postos dela ali mesmo
+    window.escolherNaEvolucao(r.dataset.k); window.desenharEvolucao(); $('tabE').scrollIntoView({block: 'start', behavior: liso()}); };
   $('evRows').addEventListener('click', e => abrirLinha(e.target.closest('tr')));
   $('evRows').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirLinha(e.target.closest('tr')); } });
-  $('evExp').addEventListener('click', exportarSerie);
+  $('evLimpar').addEventListener('click', () => { EV.sup = ''; EV.posto = null; EV.dia = null; window.desenharEvolucao(); });
   $('evRkExp').addEventListener('click', exportarRank);
-  const diaDoPonteiro = e => { const svg = $('evSvg').querySelector('svg'); if (!svg || !G) return null; const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * G.W / r.width; return Math.max(0, Math.min(ALL.N - 1, Math.floor((x - G.x0) / G.passo))); };
+  $('evComp').addEventListener('click', () => { EV.comp = !EV.comp; window.desenharEvolucao(); if (EV.comp) $('evComp').scrollIntoView({block: 'start', behavior: liso()}); });
+  $('evSupExp').addEventListener('click', exportarSup);
+  $('evSupPdf').addEventListener('click', exportarSupPdf);
+  $('evRkPdf').addEventListener('click', exportarRankPdf);
+  $('evSupH').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k; if (RKS[k]) EV.supRk = k; EV.supSort = [k, EV.supSort[0] === k ? -EV.supSort[1] : (k === 'nome' || k === 'pos' ? 1 : -1)]; tabelaSup(); });
+  const abrirPosto = r => { if (!r) return; window.escolherNaEvolucao('p:' + r.dataset.i); window.desenharEvolucao(); $('tabE').scrollIntoView({block: 'start', behavior: liso()}); };
+  $('evSupRows').addEventListener('click', e => abrirPosto(e.target.closest('tr')));
+  $('evSupRows').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirPosto(e.target.closest('tr')); } });
+  $('evQuadro').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.q === 'limpar') { EV.sup = ''; EV.posto = null; }
+    else if (b.dataset.q === 'sup') EV.posto = null;
+    else if (b.dataset.k) window.escolherNaEvolucao(b.dataset.k);
+    else return;
+    EV.dia = null; window.desenharEvolucao();
+  });
+  const diaDoPonteiro = e => { const svg = $('evSvg').querySelector('svg'); if (!svg || !G) return null; const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) * G.W / r.width; return Math.max(G.r0, Math.min(G.r1, G.r0 + Math.floor((x - G.x0) / G.passo))); };
   $('evSvg').addEventListener('pointermove', e => { if (e.target.id === 'evAlvo') mostrarDia(diaDoPonteiro(e)); });
   $('evSvg').addEventListener('pointerdown', e => { if (e.target.id === 'evAlvo') mostrarDia(diaDoPonteiro(e)); });
   $('evSvg').addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') mostrarDia(null); });
@@ -1582,18 +2152,19 @@ function evJanelas() {
     if (e.key === 'Escape') { mostrarDia(null); return; }
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     e.preventDefault();
-    mostrarDia(Math.max(0, Math.min(ALL.N - 1, (EV.dia == null ? (e.key === 'ArrowLeft' ? ALL.N : -1) : EV.dia) + (e.key === 'ArrowLeft' ? -1 : 1))));
+    if (!G) return;
+    mostrarDia(Math.max(G.r0, Math.min(G.r1, (EV.dia == null ? (e.key === 'ArrowLeft' ? G.r1 + 1 : G.r0 - 1) : EV.dia) + (e.key === 'ArrowLeft' ? -1 : 1))));
   });
   $('evSvg').addEventListener('blur', () => mostrarDia(null));
   let largura = 0;
-  new ResizeObserver(() => { const w = $('evSvg').clientWidth; if (w && Math.abs(w - largura) > 8) { largura = w; if (S && ABA === 'e') { EV.dia = null; grafico(); } } }).observe($('evSvg'));
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redesenhar);
+  new ResizeObserver(() => { const w = $('evSvg').clientWidth; if (w && Math.abs(w - largura) > 8) { largura = w; if (G && visivel() && EV.posto == null) { EV.dia = null; grafico(); } } }).observe($('evSvg'));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (visivel()) window.desenharEvolucao(); });
 })();
 
 /* ── controle: abas, período e abertura ── */
 const MOLDE_PAINEL = document.getElementById('tabA').innerHTML;
 let ALL = null;                                     // a base inteira, por dia
-let PERIODO = 'all';                                // 'all', '30', '7' ou '1'
+let PERIODO = 'all';                                // 'all', 'mes' (mês atual), 'sem' (última semana), 'semAtual' (semana atual) ou '1'
 let ABA = 'p';                                      // 'p' postos, 's' superintendências, 'e' evolução
 let PAINEL = null;                                  // o painel montado para o período em uso
 
@@ -1621,12 +2192,16 @@ function irAba(id, nome) {
 }
 // chamado pelo botão "Ver a evolução" do detalhe de um posto ou de uma superintendência
 function verEvolucao(chaveEsc) {
-  EV.esc = chaveEsc; EV.dia = null;
+  escolherNaEvolucao(chaveEsc);
   irAba('e');
   scrollTo({top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
 }
 function telaAtualizar(sim) {
   if (document.body.classList.contains('atualizando') === sim) return;
+  if (sim && !ACESSO.adm) {                          // senha de Atualizar dados, uma vez por aba do navegador
+    ACESSO.liberarAdm().then(ok => { if (ok) telaAtualizar(true); else try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} });
+    return;
+  }
   document.body.classList.toggle('atualizando', sim);
   document.getElementById('tabU').hidden = !sim;
   document.getElementById('tabE').hidden = sim || ABA !== 'e' || !PAINEL;
@@ -1643,12 +2218,13 @@ function telaAtualizar(sim) {
     const b = document.createElement('button'); b.className = 'ubtn'; b.textContent = 'Atualizar dados'; b.addEventListener('click', () => telaAtualizar(true)); box.append(b);
   };
   document.getElementById('tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) irAba(b.dataset.m); });
-  document.getElementById('per').addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.dataset.p !== PERIODO) { PERIODO = b.dataset.p; aplicarPeriodo(); } });
+  document.getElementById('per').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; EV.custom = null; if (b.dataset.p !== PERIODO) { PERIODO = b.dataset.p; aplicarPeriodo(); } else if (ABA === 'e') desenharEvolucao(); });
   document.getElementById('adm').addEventListener('click', () => telaAtualizar(true));
   document.getElementById('u-voltar').addEventListener('click', () => telaAtualizar(false));
-  if (location.hash === '#atualizar') telaAtualizar(true);
-  addEventListener('hashchange', () => telaAtualizar(location.hash === '#atualizar'));
   (async () => {
+    await ACESSO.entrar();                          // senha do painel antes de qualquer leitura da base
+    if (location.hash === '#atualizar') telaAtualizar(true);
+    addEventListener('hashchange', () => telaAtualizar(location.hash === '#atualizar'));
     try { ALL = decodificar(await lerBase('painel.json')); }
     catch (e) { falha(e && e.message ? e.message : String(e)); return; }
     try { document.body.classList.remove('aguardando'); box.hidden = true; aplicarPeriodo(); }
@@ -1832,7 +2408,7 @@ function telaAtualizar(sim) {
   function estadoBotoes() {
     const pode = !!E.up || (E.base !== undefined && !!resumo(E.base) && critMudou());
     $('u-gerar').disabled = !pode; $('u-checar').disabled = !E.esperado;
-    msg('u-mCrit', critMudou() ? 'Os critérios estão diferentes dos que estão na base. Para valerem para todos, baixe o arquivo no passo 4 e importe.' : '', 'warn');
+    msg('u-mCrit', critMudou() ? (EMBUTIDO ? 'Os critérios mudaram. O painel aberto já usa os valores novos.' : 'Os critérios estão diferentes dos que estão na base. Para valerem para todos, baixe o arquivo no passo 4 e importe.') : '', 'warn');
   }
 
   function mostrar() {
@@ -1898,7 +2474,18 @@ function telaAtualizar(sim) {
   CAMPOS.forEach(c => $(c[0]).addEventListener('change', () => { E.tocou = true; lerCrit(); mostrarCrit(); previa(); }));
   $('u-critPadrao').addEventListener('click', () => { E.tocou = true; E.crit = criterios(null); mostrarCrit(); if (ALL) { ALL.crit = E.crit; aplicarPeriodo(); } previa(); estadoBotoes(); });
 
+  // arquivo de teste: aplica direto na página aberta, sem Firebase
+  function aplicarLocal() {
+    const novo = fundir(LOCAL.painel, E.up, E.crit, agoraTxt());
+    if (!resumo(novo)) { msg('u-mGerar', 'Não há coletas para aplicar: carregue a planilha de coletas no passo 1.', 'bad'); return; }
+    LOCAL.painel = novo; ALL = decodificar(novo); E.base = novo; E.critBase = criterios(novo.criterios);
+    aplicarPeriodo(); travar(); $('u-arq').value = ''; msg('u-mArq', '');
+    telaAtualizar(false);
+  }
+  if (EMBUTIDO) { document.body.classList.add('local'); $('u-gerar').textContent = 'Aplicar ao painel'; }
+
   $('u-gerar').addEventListener('click', async () => {
+    if (EMBUTIDO) { aplicarLocal(); return; }
     $('u-gerar').disabled = true; msg('u-mGerar', 'Lendo o que já está na base…');
     try {
       let tudo = await lerBase('.json');
@@ -1910,7 +2497,7 @@ function telaAtualizar(sim) {
       E.esperado = resumo(tudo.painel);
       if (!E.esperado) throw new Error('Não há coletas para gravar: carregue a planilha de coletas no passo 1.');
       const a = document.createElement('a'), fim = E.esperado.d1;
-      a.href = URL.createObjectURL(new Blob([JSON.stringify(tudo)], {type: 'application/json'}));
+      a.href = URL.createObjectURL(new Blob([JSON.stringify({[ACESSO.chave]: tudo})], {type: 'application/json'}));   // importado na raiz: substitui tudo, e os dados ficam só no endereço da senha
       a.download = 'firebase_importar_ate_' + fim + '.json';
       document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       msg('u-mGerar', 'Arquivo ' + a.download + ' baixado. A base ficará com ' + frase(E.esperado) + '.' + (tinhaAntigo ? ' Os dados antigos, guardados por mês, saem na importação: a base por dia toma o lugar deles.' : '') + ' Agora importe no Firebase, seguindo os passos abaixo.', 'ok');
