@@ -411,6 +411,13 @@ body.pedindo{overflow:hidden}
 .acbot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}
 .acbot .ubtn:disabled{opacity:.7;cursor:wait}
 .acesso.sobre{background:rgba(10,18,34,.62);backdrop-filter:blur(3px)}
+
+/* prioridade de acompanhamento: a posição em taxa lida como prioridade (1º = maior taxa) */
+.qnum.pr-alta{color:var(--g1)} .qnum.pr-media{color:var(--g2)} .qnum.pr-baixa{color:var(--g4)}
+.qtermo{position:relative;display:block;height:6px;margin:10px 6px 0 0;border-radius:3px;background:linear-gradient(90deg,var(--g1) 0%,var(--g2) 40%,var(--g4) 75%);opacity:.9}
+.qtermo i{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--ink);border:2px solid var(--surface);box-sizing:border-box}
+.qprio{display:inline-block;margin-top:8px;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:800;border:1px solid currentColor}
+.qprio.pr-alta{color:var(--g1)} .qprio.pr-media{color:var(--g2)} .qprio.pr-baixa{color:var(--g4)}
 </style>
 </head>
 <body class="aguardando">
@@ -650,7 +657,7 @@ body.pedindo{overflow:hidden}
       <p class="umsg" id="u-mGerar" role="status" hidden></p>
       <ol class="ucomo so-firebase">
         <li>Abra o <a id="u-console" target="_blank" rel="noopener">Realtime Database no console do Firebase</a>.</li>
-        <li>Com a raiz da base na tela (a linha com o endereço <code id="u-raiz"></code>), clique nos três pontinhos à direita e em <b>Importar JSON</b>.</li>
+        <li>Na primeira linha da tela, a raiz, com o endereço <code id="u-raiz"></code>, clique nos três pontinhos à direita e em <b>Importar JSON</b>. Não use os pontinhos da linha de baixo, a que começa com <code>k</code>.</li>
         <li>Escolha o arquivo baixado e confirme em <b>Importar</b>.</li>
         <li>Volte aqui e clique em <b>Conferir a importação</b>.</li>
       </ol>
@@ -1922,7 +1929,14 @@ function caixaBusca(raiz, aoEscolher) {
     /* quadros */
     const maxB = Math.max(.01, tx || 0, txSup || 0, txEst || 0);
     const qbar = (rot, v, cor) => `<div class="qbar"><span title="${h(rot)}">${h(rot)}</span><div class="qtrilho"><i style="width:${v == null ? 0 : Math.max(1, v / maxB * 100)}%;background:${cor}"></i></div><b>${pf(v)}</b></div>`;
-    const posTxt = (PX, rot) => PX.pos[i] ? `<span class="qnum">${PX.pos[i]}º <small>de ${nf(PX.n)}</small></span><span class="qsub">${rot}</span>` : `<span class="qnum">–</span><span class="qsub">${rot}: abaixo do mínimo de coletas</span>`;
+    // posição em taxa lida como prioridade de acompanhamento: 1º é a maior taxa. Alta = o quarto de cima da lista, média = até a metade, baixa = a metade de baixo
+    const posTxt = (PX, rot) => {
+      if (!PX.pos[i]) return `<span class="qnum">–</span><span class="qsub">${rot}: abaixo do mínimo de coletas</span>`;
+      const fr = PX.n > 1 ? (PX.pos[i] - 1) / (PX.n - 1) : 0, nv = PX.pos[i] <= Math.ceil(PX.n / 4) ? 'alta' : PX.pos[i] <= Math.ceil(PX.n / 2) ? 'media' : 'baixa';
+      return `<span class="qnum pr-${nv}">${PX.pos[i]}º <small>de ${nf(PX.n)}</small></span><span class="qsub">${rot}</span>
+        <span class="qtermo" aria-hidden="true"><i style="left:${(fr * 100).toFixed(1)}%"></i></span>
+        <span class="qprio pr-${nv}">Prioridade ${nv === 'media' ? 'média' : nv}</span>`;
+    };
     // semana a semana (segunda a domingo), até as 8 últimas
     const sem = []; let ini = 0;
     while (ini < N) { let fim = ini; while (fim < N - 1 && new Date((ALL.d0 + fim + 1) * DIA_MS).getUTCDay() !== 1) fim++; sem.push([ini, fim]); ini = fim + 1; }
@@ -1942,9 +1956,9 @@ function caixaBusca(raiz, aoEscolher) {
            <span class="qnum">${pf(tx)}</span><span class="qsub">${nf(s)} sem RENACH em ${nf(c)} ${c === 1 ? 'coleta' : 'coletas'}</span>
            ${qbar('Este posto', tx, css('--g3'))}${qbar(P.sup, txSup, css('--g2'))}${qbar('Estado', txEst, css('--g5'))}
          </div>
-         <div class="qcard"><h4>Posição em taxa</h4>
+         <div class="qcard"><h4>Prioridade de acompanhamento</h4>
            <div class="qpar"><div>${posTxt(PS, 'na superintendência')}</div><div>${posTxt(PE, 'no Estado')}</div></div>
-           <span class="qsub" style="margin-top:10px">1º é a maior taxa. Entram postos com pelo menos ${colN(X.min)} no período.</span>
+           <span class="qsub" style="margin-top:10px">Pela taxa sem RENACH: 1º é a maior taxa. Alta é o quarto de cima da lista; média, até a metade. Entram postos com pelo menos ${colN(X.min)} no período.</span>
          </div>
          <div class="qcard"><h4>${rotPer}: evolução</h4>
            ${dif == null ? `<span class="qnum">${pf(U.tx)}</span><span class="qsub">${U.tx == null ? 'Sem coleta no período.' : A ? 'Sem coleta no período anterior para comparar.' : 'A base ainda não tem um período anterior para comparar.'}</span>`
@@ -2509,11 +2523,13 @@ function telaAtualizar(sim) {
     if (!E.esperado) return;
     msg('u-mGerar', 'Consultando a base…');
     try {
-      const reg = await lerBase('painel.json'), b = resumo(reg);
+      const tudo = EMBUTIDO ? null : await lerBase('.json'), reg = EMBUTIDO ? await lerBase('painel.json') : tudo && tudo.painel, b = resumo(reg);
       $('u-abrir').hidden = !igual(b, E.esperado);
-      if (igual(b, E.esperado)) { E.base = reg; E.critBase = criterios(reg.criterios); msg('u-mGerar', 'Importação conferida: a base está com ' + frase(b) + '. Clique em Abrir o painel atualizado.', 'ok'); }
+      const dentro = tudo && tudo[ACESSO.chave] && resumo(tudo[ACESSO.chave].painel);   // importado dentro do endereço, e não na raiz
+      if (!igual(b, E.esperado) && igual(dentro, E.esperado)) msg('u-mGerar', 'O arquivo foi importado dentro do endereço que começa com "' + ACESSO.chave.slice(0, 5) + '…", e não na raiz. Importe de novo o mesmo arquivo, agora com a raiz selecionada: a primeira linha da tela, com o endereço ' + BASE.replace('https://', '') + '. Isso corrige tudo, inclusive a cópia que ficou no lugar errado.', 'warn');
+      else if (igual(b, E.esperado)) { E.base = reg; E.critBase = criterios(reg.criterios); msg('u-mGerar', 'Importação conferida: a base está com ' + frase(b) + '. Clique em Abrir o painel atualizado.', 'ok'); }
       else if (!b) msg('u-mGerar', 'A base ainda não tem os dados novos. Confira se a importação foi feita com a raiz da base selecionada.', 'warn');
-      else msg('u-mGerar', 'A base ainda está diferente do arquivo gerado: tem ' + frase(b) + '. A importação ainda não foi feita ou foi feita com outro arquivo.', 'warn');
+      else msg('u-mGerar', 'A base ainda está com os dados anteriores (' + frase(b) + '). O arquivo foi baixado, mas falta importá-lo no Firebase: siga os passos abaixo e depois clique de novo em Conferir a importação.', 'warn');
       estadoBotoes();
     } catch (e) { msg('u-mGerar', e.message, 'bad'); }
   });
