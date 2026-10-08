@@ -1864,7 +1864,7 @@ function caixaBusca(raiz, aoEscolher) {
 
   /* ── tabela dos postos da superintendência escolhida ── */
   function linhasSup() {
-    const X = contexto(), ids = idsDaSup(EV.sup), PE = posicaoEstado(X.T, EV.supRk, X.min), P = evPeriodos();
+    const X = contexto(), ids = idsDaSup(EV.sup), PE = posicaoEstado(X.T, EV.supRk, 1), P = evPeriodos();   // aqui entra no ranking todo posto com pelo menos 1 coleta
     const minV = P.a ? Math.max(5, Math.round(ALL.crit.p.min * Math.min(P.a[1] - P.a[0] + 1, P.b[1] - P.b[0] + 1) / 30)) : 0;
     const A = P.a ? totais(P.a) : null, B = P.a ? totais(P.b) : null;
     const rows = ids.filter(i => X.T.c[i] || X.T.z[i]).map(i => {
@@ -1891,19 +1891,18 @@ function caixaBusca(raiz, aoEscolher) {
         <td class="l"><div class="cell"><span class="rk">${k + 1}</span><span class="nm">${h(r.nome)}</span></div></td>
         <td>${nf(r.col)}</td>
         <td>${bar(r.sem, maxS, '#F4A261', nf(r.sem))}</td>
-        <td>${bar(r.tx, maxT, r.col >= R.X.min ? '#E07A5F' : css('--g5'), pf(r.tx))}</td>
+        <td>${bar(r.tx, maxT, '#E07A5F', pf(r.tx))}</td>
         <td>${nf(r.sac)}</td>
-        <td>${r.pos ? `<b>${r.pos}º</b>` : `<span title="${RKS[EV.supRk].falta(R.X.min)}">–</span>`}</td>
+        <td>${r.pos ? `<b>${r.pos}º</b>` : `<span title="${RKS[EV.supRk].falta(1)}">–</span>`}</td>
       </tr>`).join('');
     $('evSupTit').textContent = `Postos de ${EV.sup}`;
-    $('evSupHint').textContent = `${nf(R.rows.length)} ${R.rows.length === 1 ? 'posto' : 'postos'}, com os números de ${evRot(R.X.f)}. ` +
-`A posição é entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(R.X.min)}. Ela acompanha a coluna que você escolher: Coletas, Sem RENACH, Taxa ou SACs. Clique em um posto para abrir o quadro dele.`;
+    $('evSupHint').textContent = 'Clique em um posto para abrir o quadro dele.';
   }
   function exportarSup() {
     const R = linhasSup(); if (!R.rows.length) return;
     const rows = [['Posição na lista', 'Posto', 'Superintendência', 'Coletas', 'Sem RENACH', 'Taxa sem RENACH', 'SACs', `Posição no Estado (${RKS[EV.supRk].t})`]];
     R.rows.forEach((r, k) => rows.push([k + 1, r.nome, EV.sup, r.col, r.sem, r.tx, r.sac, r.pos || '']));
-    const info = [...sobre(), ['Superintendência', EV.sup], ['Período dos números', evRot(R.X.f)]].concat([['Posição no Estado', `Entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(R.X.min)}.`]]);
+    const info = [...sobre(), ['Superintendência', EV.sup], ['Período dos números', evRot(R.X.f)]].concat([['Posição no Estado', `Entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(1)}.`]]);
     baixarDireto({filename: 'coleta-biometrica_postos-de-' + slugG(EV.sup) + '.xlsx', data: xlsx([{name: 'Postos', rows, pct: [5], widths: [16, 38, 26, 10, 13, 16, 8, 18], table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
   }
 
@@ -1913,7 +1912,7 @@ function caixaBusca(raiz, aoEscolher) {
     const c = T.c[i], s = T.s[i], tx = T.tx(i);
     const soma = (lst, v) => lst.reduce((a, k) => a + v[k], 0);
     const txSup = soma(ids, T.c) ? soma(ids, T.s) / soma(ids, T.c) : null, eC = soma(X.todos, T.c), txEst = eC ? soma(X.todos, T.s) / eC : null;
-    const PS = posicoes(T, ids, 1), PE = posicoes(T, X.todos, X.min);
+    const PS = posicoes(T, ids, 1), PE = posicoes(T, X.todos, 1);   // no quadro, entra todo posto com pelo menos 1 coleta
     const pp = d => n1(Math.abs(d * 100)) + ' p.p.';
     const colN = n => `${nf(n)} ${n === 1 ? 'coleta' : 'coletas'}`;
     // o período dos botões contra o anterior de mesmo tamanho (ou as duas metades, quando a base não tem o anterior inteiro)
@@ -1932,9 +1931,9 @@ function caixaBusca(raiz, aoEscolher) {
     const maxB = Math.max(.01, tx || 0, txSup || 0, txEst || 0);
     const qbar = (rot, v, cor) => `<div class="qbar"><span title="${h(rot)}">${h(rot)}</span><div class="qtrilho"><i style="width:${v == null ? 0 : Math.max(1, v / maxB * 100)}%;background:${cor}"></i></div><b>${pf(v)}</b></div>`;
     // posição em taxa: 1º é a maior taxa. A cor vai do vermelho (quarto de cima da lista) ao laranja (até a metade) e ao verde (metade de baixo);
-    // na superintendência entram todos os postos com coleta no período, no Estado só os que têm o mínimo de coletas
+    // na superintendência e no Estado entram todos os postos com pelo menos uma coleta no período
     const posTxt = (PX, rot) => {
-      if (!PX.pos[i]) return `<span class="qnum">–</span><span class="qsub">${rot}: abaixo do mínimo de coletas</span>`;
+      if (!PX.pos[i]) return `<span class="qnum">–</span><span class="qsub">${rot}: sem coleta no período</span>`;
       const fr = PX.n > 1 ? (PX.pos[i] - 1) / (PX.n - 1) : 0, nv = PX.pos[i] <= Math.ceil(PX.n / 4) ? 'alta' : PX.pos[i] <= Math.ceil(PX.n / 2) ? 'media' : 'baixa';
       return `<span class="qnum pr-${nv}">${PX.pos[i]}º <small>de ${nf(PX.n)}</small></span><span class="qsub">${rot}</span>
         <span class="qtermo" aria-hidden="true"><i style="left:${(fr * 100).toFixed(1)}%"></i></span>`;
@@ -1955,12 +1954,12 @@ function caixaBusca(raiz, aoEscolher) {
        </div>
        <div class="qgrid">
          <div class="qcard"><h4>Taxa sem RENACH</h4>
-           <span class="qnum">${pf(tx)}</span><span class="qsub">${nf(s)} sem RENACH em ${nf(c)} ${c === 1 ? 'coleta' : 'coletas'}</span>
+           <span class="qnum">${pf(tx)}</span>
            ${qbar('Este posto', tx, css('--g3'))}${qbar(P.sup, txSup, css('--g2'))}${qbar('Estado', txEst, css('--g5'))}
          </div>
          <div class="qcard"><h4>Posição em taxa sem RENACH</h4>
            <div class="qpar"><div>${posTxt(PS, 'na superintendência')}</div><div>${posTxt(PE, 'no Estado')}</div></div>
-           <div class="qmini"><span><b>${nf(c)}</b> ${c === 1 ? 'coleta' : 'coletas'}</span><span><b>${nf(s)}</b> sem RENACH</span></div>
+           <div class="qmini"><span><b>${nf(s)}</b> sem RENACH em <b>${nf(c)}</b> ${c === 1 ? 'coleta' : 'coletas'}</span></div>
          </div>
          <div class="qcard"><h4>${rotPer}: evolução</h4>
            ${dif == null ? `<span class="qnum">${pf(U.tx)}</span><span class="qsub">${U.tx == null ? 'Sem coleta no período.' : A ? 'Sem coleta no período anterior para comparar.' : 'A base ainda não tem um período anterior para comparar.'}</span>`
@@ -2085,7 +2084,7 @@ function caixaBusca(raiz, aoEscolher) {
     const data = pdfTabela({titulo: `Postos de ${EV.sup} ` + TIT[sk][sd < 0 ? 0 : 1], periodo: `Período analisado: ${cheio(R.X.f)} (${rotPer})`,
       colunas: [{t: 'Pos.', w: 34, alinh: 'c'}, {t: 'Posto', w: 230, alinh: 'l'}, {t: 'Coletas', w: 55, alinh: 'c'}, {t: 'Sem\nRENACH', w: 58, alinh: 'c'}, {t: 'Taxa', w: 55, alinh: 'c', negrito: true}, {t: 'SACs', w: 45, alinh: 'c'}, {t: 'No Estado\n' + RKS[EV.supRk].t, w: 78, alinh: 'c'}],
       linhas: top.map((r, k) => [String(k + 1), r.nome, nf(r.col), nf(r.sem), pf(r.tx), nf(r.sac), r.pos ? r.pos + 'º' : '–']),
-      rodape: [].concat([`Última coluna: posição entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(R.X.min)}.`,
+      rodape: [].concat([`Última coluna: posição entre os ${nf(R.nEst)} postos do Estado ${RKS[EV.supRk].frase(1)}.`,
         `${nf(top.length)} de ${nf(R.rows.length)} ${R.rows.length === 1 ? 'posto' : 'postos'} da superintendência. ` + carimbo()])});
     baixarDireto({filename: `coleta-biometrica_postos-de-${slugG(EV.sup)}_${slugG(cheio(R.X.f))}.pdf`, data, tipo: 'application/pdf'});
   }
