@@ -10,6 +10,7 @@
 window.addEventListener('error', function (e) {
   var box = document.getElementById('carregando');
   if (!box || !e || !e.message || window.erroJaMostrado) return;   // fica o primeiro erro, que é a causa
+  if (/ResizeObserver loop/.test(e.message)) return;                // aviso inofensivo do navegador ao redimensionar a janela, não é erro da página
   window.erroJaMostrado = true;
   document.body.classList.add('aguardando'); box.hidden = false; box.className = 'carregando erro';
   box.textContent = 'A página encontrou um erro e não terminou de abrir. Detalhe: ' + e.message + (e.lineno ? ' (linha ' + e.lineno + ')' : '');
@@ -420,6 +421,17 @@ body.pedindo{overflow:hidden}
 .qprio.pr-alta{color:var(--g1)} .qprio.pr-media{color:var(--g2)} .qprio.pr-baixa{color:var(--g4)}
 .qmini{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .qmini b{font-size:16px;font-weight:900;color:var(--ink);margin-right:3px}
+
+/* SACs: protocolos clicáveis e o quadro com o texto da manifestação */
+.protos button,.qsacs button{font:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;white-space:nowrap;background:var(--surface);color:var(--text);cursor:pointer}
+.protos button:hover,.qsacs button:hover,.protos button:focus-visible,.qsacs button:focus-visible{border-color:var(--blue);color:var(--ink)}
+.protos button em,.qsacs button em{font-style:normal;color:var(--muted);margin-left:5px}
+.sacdlg{width:min(640px,calc(100vw - 32px));max-height:min(80vh,720px);border:0;border-radius:14px;padding:22px 24px;background:var(--surface);color:var(--text);box-shadow:0 18px 50px rgba(0,0,0,.3)}
+.sacdlg::backdrop{background:rgba(10,18,34,.55)}
+.sachead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.sachead h3{margin:2px 0 0;font-size:20px;color:var(--ink)}
+.sactxt{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.55;background:var(--soft);border-radius:10px;padding:14px 16px}
+.sactxt.vazio{color:var(--muted);font-style:italic}
 </style>
 </head>
 <body class="aguardando">
@@ -576,7 +588,7 @@ body.pedindo{overflow:hidden}
           </div>
           <div class="tools">
             <div class="seg" id="evUni" role="group" aria-label="Linhas da tabela">
-              <button data-u="p">Posto</button><button data-u="s">Superintendência</button>
+              <button data-u="s">Superintendência</button><button data-u="p">Posto</button>
             </div>
             <button class="exp" id="evRkExp" title="Exporta para Excel a tabela na ordem atual">Exportar tabela</button>
             <button class="exp" id="evRkPdf" title="Gera um PDF de uma página com as 50 primeiras linhas da tabela, na ordem atual">Exportar PDF</button>
@@ -667,6 +679,10 @@ body.pedindo{overflow:hidden}
   </div>
 
   <button class="adm" id="adm">Atualizar dados</button>
+  <dialog class="sacdlg" id="sacDlg" aria-labelledby="sacTit">
+    <div class="sachead"><div><p class="qsup" id="sacSub"></p><h3 id="sacTit"></h3></div><button type="button" class="limpar" id="sacFechar">Fechar</button></div>
+    <p class="sactxt" id="sacTxt"></p>
+  </dialog>
   <div class="acesso" id="acesso" hidden role="dialog" aria-modal="true" aria-labelledby="acTit" aria-describedby="acTxt">
     <form class="accard" id="acForm" autocomplete="off">
       <h2 id="acTit"></h2>
@@ -899,7 +915,7 @@ const ACESSO = (function () {
      painel/atualizadoEm          texto, por exemplo "07/10/2026 15:10"
      painel/postos                lista de {posto, superintendencia}; a posição na lista é o número do posto
      painel/coletas/AAAA-MM-DD    um texto por dia: "posto:com:sem;posto:com:sem;…"  (coletas com e sem abertura de RENACH)
-     painel/sacs/AAAA-MM-DD       lista de [protocolo, posto] dos SACs abertos no dia
+     painel/sacs/AAAA-MM-DD       lista de [protocolo, posto, texto da manifestação] dos SACs abertos no dia (o texto pode faltar)
      painel/criterios             {p: {vol, min, ref, tax}, s: {vol, ref, tax}}  volumes para 30 dias, taxas em %
      painel/avisos                lista de textos (opcional) */
 const DIA_MS = 86400000;
@@ -949,7 +965,7 @@ function decodificar(reg) {
       com[i][d] += c; sem[i][d] += s; eCol[d] += c + s; eSem[d] += s;
     });
   });
-  const sacs = [], vistos = {}, avisos = lista(reg.avisos).map(txt).filter(Boolean);
+  const sacs = [], vistos = {}, sacInfo = {}, avisos = lista(reg.avisos).map(txt).filter(Boolean);   // sacInfo: protocolo → {posto, dia, texto}
   let fora = 0;
   const sr = reg.sacs && typeof reg.sacs === 'object' ? reg.sacs : {};
   Object.keys(sr).filter(k => ISO.test(k)).sort().forEach(k => {
@@ -959,11 +975,11 @@ function decodificar(reg) {
       if (!prot || vistos[prot] || !(i >= 0 && i < P)) return;
       vistos[prot] = true;
       if (d < 0 || d >= N) { fora++; return; }
-      sacs.push([prot, i, d]); eSac[d]++;
+      sacs.push([prot, i, d]); eSac[d]++; sacInfo[prot] = {i, d, texto: txt(lista(s)[2])};
     });
   });
   if (fora) avisos.push(`${fora} ${fora === 1 ? 'SAC ficou' : 'SACs ficaram'} de fora por ter data de abertura antes do primeiro ou depois do último dia com coleta na base.`);
-  return {postos, d0, d1, N, com, sem, sacs, eCol, eSem, eSac, crit: criterios(reg.criterios), avisos, lidoEm: txt(reg.atualizadoEm)};
+  return {postos, d0, d1, N, com, sem, sacs, sacInfo, eCol, eSem, eSac, crit: criterios(reg.criterios), avisos, lidoEm: txt(reg.atualizadoEm)};
 }
 
 // Dias do período escolhido, como posições a partir do primeiro dia da base.
@@ -1145,7 +1161,7 @@ function classify(md) {
   rank(rows, (a, b) => b.bad - a.bad || b.vol - a.vol || a.i - b.i, 'rVol');
   rank(rows, (a, b) => b.vol - a.vol || b.bad - a.bad || a.i - b.i, 'rCol');
   rows.forEach(p => { p.rTx = null; p.rZ = null; });
-  rank(rows.filter(p => p.vol >= C.min), (a, b) => b.tx - a.tx || b.bad - a.bad || a.i - b.i, 'rTx');
+  rank(rows.filter(p => p.vol >= C.min), (a, b) => b.tx - a.tx || a.vol - b.vol || a.i - b.i, 'rTx');
   rank(rows.filter(p => p.z > 0), (a, b) => b.z - a.z || b.bad - a.bad || a.i - b.i, 'rZ');
   if (md.id === 's') { md.ymax = Math.max(.3, Math.ceil(mx(rows, 'tx') * 10 - 1e-9) / 10); md.ystep = md.ymax > .6 ? .2 : .1; }
 }
@@ -1167,7 +1183,7 @@ function currentList() {
   if (S.q) { const q = norm(S.q); list = list.filter(p => p.key.includes(q) || norm(p.nome).includes(q)); }
   const [k, d] = S.sort || v.sort;
   const tie = (a, b) => b.bad - a.bad || b.vol - a.vol || a.i - b.i;
-  list.sort((a, b) => k === 'nome' ? d * (a.curto || a.nome).localeCompare(b.curto || b.nome, 'pt-BR') : (d * (a[k] - b[k]) || (k === 'tx' && d > 0 ? b.vol - a.vol : 0) || tie(a, b)));
+  list.sort((a, b) => k === 'nome' ? d * (a.curto || a.nome).localeCompare(b.curto || b.nome, 'pt-BR') : (d * (a[k] - b[k]) || (k === 'tx' ? d * (b.vol - a.vol) : 0) || tie(a, b)));
   return list;
 }
 function txColor(t) {
@@ -1344,7 +1360,7 @@ function drawDetail() {
      <div class="sacs">
        <h4>${p.z ? nf(p.z) + (p.z === 1 ? ' SAC aberto' : ' SACs abertos') + ' no período' : 'Nenhum SAC aberto no período'}</h4>
        ${p.z ? dayBars(days, 'SACs por dia de abertura') +
-       `<div class="protos" tabindex="0" aria-label="Protocolos dos SACs">${p.sacs.map(s => `<span>${esc(s[0])}<em>${dm(s[2] - 1)}</em></span>`).join('')}</div>` : ''}
+       `<div class="protos" tabindex="0" aria-label="Protocolos dos SACs">${p.sacs.map(s => `<button type="button" data-sac="${esc(s[0])}" title="Ver a manifestação">${esc(s[0])}<em>${dm(s[2] - 1)}</em></button>`).join('')}</div>` : ''}
      </div>`;
 }
 
@@ -1383,7 +1399,7 @@ function drillList(p) {
   return p.postos.map(i => base[i]).sort((a, b) => {
     if (sk === 'nome') return sd * a.nome.localeCompare(b.nome, 'pt-BR');
     if (sk === 'rk') return (a[f] == null) - (b[f] == null) || sd * ((a[f] || 0) - (b[f] || 0)) || tie(a, b);   // sem posição vai para o fim
-    return sd * (a[sk] - b[sk]) || tie(a, b);
+    return sd * (a[sk] - b[sk]) || (sk === 'tx' ? sd * (b.vol - a.vol) : 0) || tie(a, b);
   });
 }
 const GPOSTO = [null, 'Muito volume, taxa acima da média', 'Pouco volume, taxa acima da média', 'Muito volume, taxa abaixo da média', 'Pouco volume, taxa abaixo da média', 'Abaixo do mínimo de coletas'];
@@ -1603,7 +1619,8 @@ return {
 }
 
 /* ── aba Evolução: a linha do tempo de um posto ou superintendência, comparada com a média, e quem melhorou ou piorou ── */
-const EV = {sup: '', posto: null, met: 'tx', custom: null, comp: false, uni: 'p', sort: ['var', -1], supSort: ['tx', -1], supRk: 'tx', rkSup: null, dia: null, montado: null};
+const COMP_INICIO = '2026-10-06';                  // início do 2º período, já preenchido, na comparação entre períodos
+const EV = {sup: '', posto: null, met: 'tx', custom: null, comp: false, uni: 's', sort: ['var', -1], supSort: ['tx', -1], supRk: 'tx', rkSup: null, dia: null, montado: null};
 
 const evSomaFaixa = (S, f) => { let col = 0, sem = 0, sac = 0; for (let d = f[0]; d <= f[1]; d++) { col += S.col[d]; sem += S.sem[d]; sac += S.sac[d]; } return {col, sem, sac}; };
 // soma por dia de um conjunto de postos (pelos números deles na base)
@@ -1618,6 +1635,10 @@ const evRot = f => f[0] === f[1] ? dataCurta(ALL.d0 + f[0]) : dataCurta(ALL.d0 +
 // quando a base não tem o anterior inteiro, as duas metades do que existe.
 function evPeriodos(soBotoes) {
   if (EV.custom && !soBotoes) return {a: EV.custom.a, b: EV.custom.b, custom: true};
+  if (!soBotoes) {                                   // comparação entre períodos: o 2º começa em COMP_INICIO e vai até o último dia da base; o 1º é tudo o que veio antes
+    const m = nDia(COMP_INICIO) - ALL.d0;
+    if (m > 0 && m <= ALL.N - 1) return {a: [0, m - 1], b: [m, ALL.N - 1]};
+  }
   const tot = faixa(ALL, PERIODO), L = tot[1] - tot[0] + 1;
   if (PERIODO === '1' && L === 1 && tot[0] > 0) { let j = tot[0] - 1; while (j >= 0 && !ALL.eCol[j]) j--; if (j >= 0) return {a: [j, j], b: tot}; }
   const eq = faixaAnterior(ALL, PERIODO, tot);
@@ -1850,7 +1871,7 @@ function caixaBusca(raiz, aoEscolher) {
   }
   // posição em taxa (1º = maior taxa) entre os postos com o mínimo de coletas, na mesma regra da aba Postos
   function posicoes(T, ids, min) {
-    const ok = ids.filter(i => T.c[i] >= min).sort((a, b) => T.s[b] / T.c[b] - T.s[a] / T.c[a] || T.s[b] - T.s[a] || T.c[b] - T.c[a] || (ALL.postos[a].nome < ALL.postos[b].nome ? -1 : 1));
+    const ok = ids.filter(i => T.c[i] >= min).sort((a, b) => T.s[b] / T.c[b] - T.s[a] / T.c[a] || T.c[a] - T.c[b] || (ALL.postos[a].nome < ALL.postos[b].nome ? -1 : 1));
     const pos = {}; ok.forEach((i, k) => { pos[i] = k + 1; });
     return {pos, n: ok.length};
   }
@@ -1862,7 +1883,7 @@ function caixaBusca(raiz, aoEscolher) {
   function posicaoEstado(T, met, min) {
     const nome = i => ALL.postos[i].nome, ordemP = (a, b) => T.s[b] - T.s[a] || T.c[b] - T.c[a] || (nome(a) < nome(b) ? -1 : nome(a) > nome(b) ? 1 : 0);
     const ids = ALL.postos.map((_, i) => i).filter(i => T.c[i] || T.z[i]);
-    const lst = met === 'tx' ? ids.filter(i => T.c[i] >= min).sort((a, b) => T.s[b] / T.c[b] - T.s[a] / T.c[a] || ordemP(a, b))
+    const lst = met === 'tx' ? ids.filter(i => T.c[i] >= min).sort((a, b) => T.s[b] / T.c[b] - T.s[a] / T.c[a] || T.c[a] - T.c[b] || (nome(a) < nome(b) ? -1 : nome(a) > nome(b) ? 1 : 0))
       : met === 'col' ? ids.sort((a, b) => T.c[b] - T.c[a] || T.s[b] - T.s[a] || ordemP(a, b))
       : met === 'sem' ? ids.sort(ordemP)
       : ids.filter(i => T.z[i] > 0).sort((a, b) => T.z[b] - T.z[a] || ordemP(a, b));
@@ -1885,7 +1906,7 @@ function caixaBusca(raiz, aoEscolher) {
         a: tem ? A.tx(i) : null, b: tem ? B.tx(i) : null, var: tem ? (B.tx(i) - A.tx(i)) * 100 : null, pos: PE.pos[i] || null};
     });
     const [sk, sd] = EV.supSort, nulo = v => v == null;
-    rows.sort((x, y) => sk === 'nome' ? sd * x.nome.localeCompare(y.nome, 'pt-BR') : (nulo(x[sk]) - nulo(y[sk])) || sd * (x[sk] - y[sk]) || y.sem - x.sem || x.nome.localeCompare(y.nome, 'pt-BR'));
+    rows.sort((x, y) => sk === 'nome' ? sd * x.nome.localeCompare(y.nome, 'pt-BR') : (nulo(x[sk]) - nulo(y[sk])) || sd * (x[sk] - y[sk]) || (sk === 'tx' ? sd * (y.col - x.col) : 0) || y.sem - x.sem || x.nome.localeCompare(y.nome, 'pt-BR'));
     return {rows, X, P, minV, nEst: PE.n};
   }
   function tabelaSup() {
@@ -1982,7 +2003,7 @@ function caixaBusca(raiz, aoEscolher) {
          </div>
          <div class="qcard"><h4>SACs: ${rotPer.toLowerCase()}</h4>
            <span class="qnum">${nf(sacsP.length)}</span><span class="qsub">${sacsP.length === 1 ? 'SAC aberto' : 'SACs abertos'} de ${evRot(X.f)}</span>
-           ${sacsP.length ? `<div class="qsacs" tabindex="0" aria-label="Protocolos dos SACs do período">${sacsP.map(v => `<span>${h(v[0])}<em>${dataCurta(ALL.d0 + v[2])}</em></span>`).join('')}</div>` : ''}
+           ${sacsP.length ? `<div class="qsacs" tabindex="0" aria-label="Protocolos dos SACs do período">${sacsP.map(v => `<button type="button" data-sac="${h(v[0])}" title="Ver a manifestação">${h(v[0])}<em>${dataCurta(ALL.d0 + v[2])}</em></button>`).join('')}</div>` : ''}
          </div>
          <div class="qcard w2"><h4>Referências em ${h(P.sup)}</h4>${refsHtml}</div>
          <div class="qcard w2"><h4>Taxa semana a semana</h4>
@@ -2032,7 +2053,7 @@ function caixaBusca(raiz, aoEscolher) {
       rows.push({k: it.k, nome: it.nome, sup: it.sup, a, b, ca, sa, cb, sb, var: (b - a) * 100});
     });
     // posição: 1º é a maior taxa
-    const pos = (k, campo) => rows.slice().sort((x, y) => y[k] - x[k] || (k === 'a' ? y.ca - x.ca : y.cb - x.cb) || x.nome.localeCompare(y.nome, 'pt-BR')).forEach((r, i) => { r[campo] = i + 1; });
+    const pos = (k, campo) => rows.slice().sort((x, y) => y[k] - x[k] || (k === 'a' ? x.ca - y.ca : x.cb - y.cb) || x.nome.localeCompare(y.nome, 'pt-BR')).forEach((r, i) => { r[campo] = i + 1; });
     pos('a', 'pa'); pos('b', 'pos');
     rows.forEach(r => { r.dpos = r.pa - r.pos; });           // positivo: subiu no ranking
     if (drill) rows = rows.filter(r => r.sup === drill);
@@ -2259,6 +2280,24 @@ function telaAtualizar(sim) {
   })();
 })();
 
+/* ── SAC: clicar no protocolo abre o texto da manifestação ── */
+function abrirSac(prot) {
+  if (!ALL || !ALL.sacInfo) return;
+  const q = ALL.sacInfo[prot], dlg = document.getElementById('sacDlg');
+  document.getElementById('sacTit').textContent = prot;
+  document.getElementById('sacSub').textContent = q ? tidy(ALL.postos[q.i].nome) + ' · aberto em ' + dataCheia(ALL.d0 + q.d) : '';
+  const t = document.getElementById('sacTxt');
+  t.textContent = q && q.texto ? q.texto : 'A base não tem o texto desta manifestação. Ele passa a aparecer quando a planilha de SACs vier com a coluna Manifestação.';
+  t.classList.toggle('vazio', !(q && q.texto));
+  if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-sac]');
+  if (b) { e.preventDefault(); e.stopPropagation(); abrirSac(b.dataset.sac); return; }
+  const dlg = document.getElementById('sacDlg');
+  if (e.target.id === 'sacFechar' || e.target === dlg) dlg.close();     // botão Fechar ou clique fora do quadro
+}, true);
+
 /* ── tela Atualizar dados: lê as planilhas, confere, guarda os critérios e gera o arquivo para importar no Firebase ── */
 (function () {
   const $ = id => document.getElementById(id);
@@ -2279,6 +2318,7 @@ function telaAtualizar(sim) {
     status: ['status'],
     dataColeta: ['data coleta', 'data da coleta', 'dt coleta', 'data'],
     prot: ['numero protocolo', 'protocolo', 'sac protocolo', 'sac'],
+    texto: ['manifestacao', 'teor da manifestacao', 'texto da manifestacao'],   // opcional: o texto que o cidadão escreveu
     dataSac: ['data abertura sac', 'sac data abertura', 'data abertura', 'data de abertura', 'data']
   };
   const acha = (cab, nomes) => { for (const n of nomes) { const i = cab.findIndex(c => chave(c) === n); if (i >= 0) return i; } return -1; };
@@ -2339,7 +2379,7 @@ function telaAtualizar(sim) {
     const lidos = [];
     let sacIncompleto = 0, dataRuim = 0, repetidos = 0;
     if (sacs) {
-      const cs = sacs.linhas[0], sProt = acha(cs, COL.prot), sPosto = acha(cs, COL.posto), sData = acha(cs, COL.dataSac), vistos = {};
+      const cs = sacs.linhas[0], sProt = acha(cs, COL.prot), sPosto = acha(cs, COL.posto), sData = acha(cs, COL.dataSac), sTexto = acha(cs, COL.texto), vistos = {};
       for (let r = 1; r < sacs.linhas.length; r++) {
         const L = sacs.linhas[r], prot = txt(L[sProt]), posto = txt(L[sPosto]), bruto = L[sData];
         if (!prot && !posto && txt(bruto) === '') continue;
@@ -2348,7 +2388,7 @@ function telaAtualizar(sim) {
         if (!data) { dataRuim++; continue; }
         if (vistos[prot]) { repetidos++; continue; }
         vistos[prot] = true;
-        lidos.push({prot, posto, data});
+        lidos.push({prot, posto, data, texto: sTexto >= 0 ? txt(L[sTexto]) : ''});
       }
     }
     if (sacIncompleto) avisos.push(plural(sacIncompleto, 'linha de SAC ficou', 'linhas de SAC ficaram') + ' de fora por estar sem protocolo ou sem posto.');
@@ -2367,7 +2407,7 @@ function telaAtualizar(sim) {
     const coletas = {}, sacs = {};
     const ac = a.coletas && typeof a.coletas === 'object' ? a.coletas : {}, as = a.sacs && typeof a.sacs === 'object' ? a.sacs : {};
     Object.keys(ac).forEach(k => { if (ISO.test(k)) coletas[k] = ac[k]; });
-    Object.keys(as).forEach(k => { if (ISO.test(k)) sacs[k] = lista(as[k]).map(s => [txt(lista(s)[0]), +lista(s)[1]]); });
+    Object.keys(as).forEach(k => { if (ISO.test(k)) sacs[k] = lista(as[k]).map(s => { const v = lista(s), t = txt(v[2]); return t ? [txt(v[0]), +v[1], t] : [txt(v[0]), +v[1]]; }); });
     let avisos = lista(a.avisos).map(txt).filter(Boolean);
     if (up) {
       const num = {};
@@ -2383,7 +2423,7 @@ function telaAtualizar(sim) {
         up.sacs.forEach(s => {
           if (!(s.posto in num)) { orfaos[s.posto] = true; nOrf++; return; }
           if (jaTem[s.prot]) { dup++; return; }
-          (sacs[s.data] = sacs[s.data] || []).push([s.prot, num[s.posto]]);
+          (sacs[s.data] = sacs[s.data] || []).push(s.texto ? [s.prot, num[s.posto], s.texto] : [s.prot, num[s.posto]]);
         });
         const o = Object.keys(orfaos);
         if (nOrf) avisos.push(plural(nOrf, 'SAC ficou', 'SACs ficaram') + ' de fora porque o posto citado não tem coleta na base: ' + o.slice(0, 5).join(', ') + (o.length > 5 ? ' e mais ' + (o.length - 5) : '') + '.');
@@ -2395,10 +2435,10 @@ function telaAtualizar(sim) {
     return novo;
   }
   const resumo = reg => {                           // totais de um registro "painel", pelos mesmos passos que o painel usa para ler
-    try { const A = decodificar(reg); let col = 0, sem = 0; for (let d = 0; d < A.N; d++) { col += A.eCol[d]; sem += A.eSem[d]; } return {d0: isoDia(A.d0), d1: isoDia(A.d1), col, sem, sac: A.sacs.length, postos: A.postos.length, crit: JSON.stringify(A.crit), avisos: A.avisos}; }
+    try { const A = decodificar(reg); let col = 0, sem = 0; for (let d = 0; d < A.N; d++) { col += A.eCol[d]; sem += A.eSem[d]; } return {d0: isoDia(A.d0), d1: isoDia(A.d1), col, sem, sac: A.sacs.length, txt: Object.keys(A.sacInfo).filter(k => A.sacInfo[k].texto).length, postos: A.postos.length, crit: JSON.stringify(A.crit), avisos: A.avisos}; }
     catch (e) { return null; }
   };
-  const igual = (a, b) => !!a && !!b && ['d0', 'd1', 'col', 'sem', 'sac', 'crit'].every(k => a[k] === b[k]);
+  const igual = (a, b) => !!a && !!b && ['d0', 'd1', 'col', 'sem', 'sac', 'txt', 'crit'].every(k => a[k] === b[k]);
   const frase = r => `${intervalo(r.d0, r.d1)}: ${nf(r.col)} coletas, ${nf(r.sem)} sem RENACH (${taxa(r.sem, r.col)}) e ${nf(r.sac)} SACs`;
 
   /* ── leitura dos arquivos ── */
