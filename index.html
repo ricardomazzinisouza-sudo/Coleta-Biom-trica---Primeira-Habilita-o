@@ -432,6 +432,141 @@ body.pedindo{overflow:hidden}
 .sachead h3{margin:2px 0 0;font-size:20px;color:var(--ink)}
 .sactxt{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-size:15px;line-height:1.55;background:var(--soft);border-radius:10px;padding:14px 16px}
 .sactxt.vazio{color:var(--muted);font-style:italic}
+.per .pertit{flex:1 1 100%;margin:0 0 2px;font-size:15px;font-weight:700;color:var(--muted)}
+
+/* ── peças em comum: rótulo pequeno, número grande, lista de dias, nota ── */
+.rsk{font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+.rsnum{font-size:30px;font-weight:900;line-height:1.15;color:var(--ink);margin:2px 0 6px}
+.rsnum small{font-size:15px;font-weight:700;color:var(--muted)}
+.rsdias{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.rsdias li{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:baseline;font-size:14px;border-top:1px solid var(--line);padding-top:6px}
+.rsdias small{color:var(--muted)}
+.rscomo{font-size:12.5px;color:var(--muted);margin:18px 0 0;line-height:1.5}
+
+/* ── aba Alertas ── */
+body.alertas #tabA{display:none}
+body.aguardando #tabAl, body.semdados #tabAl, body.atualizando #tabAl{display:none}
+.abadge{display:inline-block;min-width:18px;padding:0 6px;margin-left:4px;border-radius:999px;background:var(--g1);color:#fff;font-size:11.5px;line-height:18px;font-weight:900;text-align:center;vertical-align:1px}
+.alhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px 20px;margin:4px 0 12px}
+.alhead h2{margin:0;font-size:22px;font-weight:900;color:var(--ink)}
+.alhead .hint{margin:4px 0 0;font-size:13.5px;color:var(--muted)}
+.alfiltro{display:grid;gap:4px;font-size:13px;font-weight:700;color:var(--muted)}
+.alfiltro select{font:inherit;font-size:15px;font-weight:700;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:9px;padding:8px 10px;min-width:240px}
+.altipos{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.altipos button{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer}
+.altipos button b{color:var(--ink);margin-left:3px}
+.altipos button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.altipos button[aria-pressed="true"] b{color:var(--surface)}
+.altipos button:disabled{opacity:.45;cursor:default}
+.alsab{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:18px;padding:16px 18px;margin-bottom:16px;border-left:5px solid var(--g2)}
+.alsab p{margin:0;font-size:14.5px;line-height:1.5;color:var(--text)}
+.alsab p.rsnum{font-size:32px;line-height:1.15;margin:4px 0 0}
+.alsab p.rsk{font-size:12.5px;color:var(--muted)}
+.almais{margin:2px 0 0}
+.alsab[hidden]{display:none}
+.algrupo{margin:0 0 18px}
+.algrupo h3{margin:0 0 8px;font-size:16px;font-weight:900;color:var(--ink)}
+.algrupo h3 small{font-weight:400;color:var(--muted);font-size:13px}
+.aldata{margin:12px 0 6px;font-size:12.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.al{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--g1);border-radius:10px;padding:10px 14px;margin-bottom:8px;cursor:pointer}
+.al:hover,.al:focus-visible{border-color:var(--blue);outline:none}
+.al-melhora{border-left-color:var(--g4)} .al-sabado{border-left-color:var(--g2)} .al-sac{border-left-color:var(--g3)}
+.alicone{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:14px;color:#fff;background:var(--g1)}
+.al-melhora .alicone{background:var(--g4)} .al-sabado .alicone{background:var(--g2)} .al-sac .alicone{background:var(--g3)}
+.altexto p{margin:0;font-size:14px;line-height:1.45;color:var(--text)}
+.alnome b{color:var(--ink);font-size:15px}
+.alnome span{color:var(--muted);font-size:12.5px;margin-left:8px}
+.alsacs{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.alsacs button{font:inherit;font-size:12px;border:1px solid var(--line);border-radius:6px;padding:1px 6px;background:var(--surface);color:var(--text);cursor:pointer}
+.alsacs button em{font-style:normal;color:var(--muted);margin-left:4px}
+.almini{display:block}
+.alvazio{color:var(--muted);font-size:14.5px;margin:6px 0 18px}
+.altit2{margin:26px 0 12px;font-size:20px;font-weight:900;color:var(--ink)}
+@media (max-width:700px){.al{grid-template-columns:28px minmax(0,1fr)}.al .almini{grid-column:2}.alsab{grid-template-columns:minmax(0,1fr)}.alfiltro select{min-width:0;width:100%}.alfiltro{width:100%}}
+
+/* ── Evolução: mapa de calor e mural ── */
+.evmapa{margin-bottom:16px}
+.hmscroll{overflow-x:auto;padding:0 8px 4px}
+.hmscroll svg{display:block}
+.hmnome{cursor:pointer}
+.hmnome:hover{text-decoration:underline}
+.hminfo{margin:0;padding:8px 16px 14px;font-size:13.5px;color:var(--text);min-height:20px}
+.evmural{margin-bottom:16px}
+.mlista{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;padding:0 16px 14px}
+.mcard{all:unset;display:grid;gap:6px;align-content:start;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--surface);cursor:pointer}
+.mcard:hover,.mcard:focus-visible{border-color:var(--blue)}
+.mhead{font-size:12px;color:var(--muted)}
+.mhead b{color:var(--ink)}
+.mtxt{font-size:14px;line-height:1.45;color:var(--text)}
+.mmais{margin:0 16px 16px}
+
+/* Alertas: card de vários dias, movimento comum */
+.al-comum{border-left-color:var(--g5);cursor:default} .al-comum .alicone{background:var(--ink)}
+.alpasso{display:inline-block;margin-left:10px;font-size:12px;font-weight:800;color:var(--surface);background:var(--g1);border-radius:999px;padding:1px 9px;vertical-align:1px}
+.al-dia.varios{cursor:pointer}
+.alevo{all:unset;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--blue);margin-top:4px;display:inline-block}
+.alevo:hover,.alevo:focus-visible{text-decoration:underline}
+.alsups{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.alsupb{font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface);color:var(--ink);cursor:pointer}
+.alsupb:hover{border-color:var(--blue)}
+.alsupb em{font-style:normal;font-weight:400;color:var(--muted);margin-left:4px}
+.alnome .alpasso{color:#fff;font-size:12px;margin-left:10px}
+.aldatas{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 2px}
+.aldt{font:inherit;font-size:12.5px;font-weight:700;border:1px solid var(--line);border-radius:999px;padding:2px 10px;background:var(--surface);color:var(--ink);cursor:pointer}
+.aldt[aria-pressed="true"]{background:var(--g1);border-color:var(--g1);color:#fff}
+.alpostosq{margin-top:8px!important;font-size:12.5px!important;color:var(--muted)!important}
+.alpb{font-weight:600}
+.alvolta{margin-bottom:8px}
+table.alsem{min-width:720px}
+table.alsem td small{color:var(--muted);font-size:12px;margin-left:4px}
+table.alsem tr.vpior td:first-child{box-shadow:inset 4px 0 0 var(--g1)}
+table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
+.alchip{display:inline-block;margin-left:8px;font-size:11px;font-weight:800;border-radius:999px;padding:1px 8px;color:#fff;vertical-align:1px}
+.alchip.pior{background:var(--g1)} .alchip.melhor{background:var(--g4)}
+.varc b.ruim{color:var(--g1)} .varc b.bom{color:var(--g4)}
+.alnota{margin:6px 0 0!important;font-size:12.5px!important}
+.algrupo .scroll{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+
+/* detalhe: posições em cartões e peso no Estado */
+.pbox{border:1px solid var(--line);border-radius:12px;padding:14px 15px;margin-top:12px;background:var(--surface)}
+.pbox h4{margin:0 0 10px;font-size:12.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.ptres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pq{min-width:0;display:flex;flex-direction:column}
+.pq .qtermo{margin-top:auto;position:relative;top:10px;margin-bottom:10px}
+.pqfalta{display:block;font-size:12px;color:var(--muted);margin-top:6px}
+.ppeso.acima{border-color:color-mix(in srgb,var(--g1) 55%,var(--line))}
+.ppeso.abaixo{border-color:color-mix(in srgb,var(--g4) 55%,var(--line))}
+.pvz{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 10px;margin-bottom:10px}
+.pvz b{font-size:34px;font-weight:900;line-height:1}
+.pvz span{font-size:15px;font-weight:700;color:var(--ink)}
+.ptres{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pfat{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch;gap:10px}
+.pft{background:var(--soft);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.pft b{font-size:26px;font-weight:900;line-height:1.1;color:var(--ink)}
+.pft span{font-size:13px;color:var(--muted);line-height:1.3}
+.pft.err{background:color-mix(in srgb,var(--cv) 14%,var(--surface))}
+.pft.err b{color:var(--cv)}
+.pfseta{align-self:center;font-style:normal;font-size:22px;font-weight:700;color:var(--muted)}
+.pnpostos{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.go.evogo{display:inline-flex;align-items:center;gap:10px;margin-top:14px;padding:10px 16px 10px 14px;border:0;border-radius:999px;background:var(--pill);color:#fff;font-weight:800;font-size:14.5px;box-shadow:0 2px 8px rgba(20,40,75,.18);transition:transform .15s,box-shadow .15s}
+.go.evogo:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(20,40,75,.25)}
+.go.evogo i{font-style:normal;font-size:20px;line-height:1;margin-left:2px}
+@media (max-width:520px){.ptres{gap:10px}.ptres .qnum{font-size:23px}.ptres .qnum small{display:block;font-size:12.5px}.ptres .qsub{font-size:12px}.pft b{font-size:22px}.pfat{gap:6px}.pft{padding:9px 10px}}
+
+.alconta{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 7px;margin-right:8px;border-radius:999px;background:var(--g1);color:#fff;font-size:13px;font-weight:900;vertical-align:2px;box-sizing:border-box}
+.alconta.zero{background:var(--soft);color:var(--muted)}
+.al-peso{grid-template-columns:70px minmax(0,1fr) minmax(0,520px);padding:8px 14px}
+.alvz{font-size:28px;font-weight:900;line-height:1;color:var(--g1);text-align:center}
+.alfat{margin:0}
+.alfat .pft{padding:7px 10px}
+.alfat .pft b{font-size:20px}
+.alfat .pft span{font-size:12.5px}
+.alexc{font-size:12.5px !important;color:var(--muted) !important}
+@media (max-width:860px){.al-peso{grid-template-columns:54px minmax(0,1fr);gap:6px 8px}.al-peso .alfat{grid-column:2}}
+@media (max-width:700px){.alvz{font-size:22px}.alfat .pft b{font-size:18px}}
+
+.stat .vsesel{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.stat .vsesel em{display:inline-block;margin-top:0;font-size:12.5px;line-height:1.5;font-style:normal;font-weight:800;color:#fff;border-radius:6px;padding:1px 7px;margin-right:2px;white-space:nowrap}
 </style>
 </head>
 <body class="aguardando">
@@ -453,8 +588,10 @@ body.pedindo{overflow:hidden}
       <button role="tab" data-m="p">Postos</button>
       <button role="tab" data-m="s">Superintendências</button>
       <button role="tab" data-m="e">Evolução</button>
+      <button role="tab" data-m="a">Alertas <span class="abadge" id="alBadge" hidden></span></button>
     </div>
-    <div class="per" id="per" role="group" aria-label="Período analisado">
+    <div class="per" id="per" role="group" aria-labelledby="perTit">
+      <h2 class="pertit" id="perTit">Escolha o período</h2>
       <button data-p="all">Desde o início</button>
       <button data-p="mes" title="Do dia 1 do mês até o último dia da base">Mês atual</button>
       <button data-p="sem" title="A última semana fechada, de segunda a domingo">Última semana</button>
@@ -462,6 +599,54 @@ body.pedindo{overflow:hidden}
       <button data-p="1">Último dia</button>
       <span id="perTxt"></span>
     </div>
+  </div>
+
+  <div id="tabAl" class="alertas" hidden>
+    <div class="alhead">
+      <div><button type="button" class="limpar alvolta" id="alVolta" hidden>← Todas as superintendências</button>
+        <h2 id="alTit">As superintendências entre si</h2>
+        <p class="hint" id="alSub"></p></div>
+      <label class="alfiltro">Superintendência
+        <select id="alSup"><option value="">Todas</option></select>
+      </label>
+    </div>
+    <div class="altipos" id="alTipos" role="group" aria-label="Tipo de alerta"></div>
+    <section class="panel alsab" id="alSab" hidden>
+      <div class="alsabnum"><p class="rsk" id="alSabTit">Sábados</p><p class="rsnum" id="alSabNum"></p></div>
+      <div><p id="alSabTxt"></p><ul class="rsdias" id="alSabDias"></ul></div>
+    </section>
+    <div id="alLista"></div>
+    <div class="evgrid" id="evGrid" hidden>   <!-- comparação entre períodos: fora de uso, guardada para o caso de voltar -->
+      <section class="panel evper">
+        <h3>Escolha o período</h3>
+        <div class="perlinha"><span>1º período</span><input type="date" id="evP1a" aria-label="1º período, de"><i>a</i><input type="date" id="evP1b" aria-label="1º período, até"></div>
+        <div class="perlinha"><span>2º período</span><input type="date" id="evP2a" aria-label="2º período, de"><i>a</i><input type="date" id="evP2b" aria-label="2º período, até"></div>
+        <button class="reset" id="evPVolta" hidden>Voltar ao período dos botões</button>
+        <p class="hint" id="evPMsg" role="status"></p>
+      </section>
+
+      <section class="panel evrank">
+        <div class="thead">
+          <div>
+            <h3 id="evRkTit">Quem melhorou e quem piorou</h3>
+            <p class="hint" id="evRkHint"></p>
+          </div>
+          <div class="tools">
+            <div class="seg" id="evUni" role="group" aria-label="Linhas da tabela">
+              <button data-u="s">Superintendência</button><button data-u="p">Posto</button>
+            </div>
+            <button class="exp" id="evRkExp" title="Exporta para Excel a tabela na ordem atual">Exportar tabela</button>
+            <button class="exp" id="evRkPdf" title="Gera um PDF de uma página com as 50 primeiras linhas da tabela, na ordem atual">Exportar PDF</button>
+            <button class="limpar" id="evRkVolta" hidden title="Volta para a comparação entre as superintendências">← Superintendências</button>
+          </div>
+        </div>
+        <div class="scroll" tabindex="0" aria-label="Tabela de variação entre os dois períodos">
+          <table><thead><tr id="evHrow"></tr></thead><tbody id="evRows"></tbody></table>
+          <div class="empty" id="evVazio" hidden></div>
+        </div>
+      </section>
+    </div>
+    <p class="rscomo" id="alComo"></p>
   </div>
 
   <div id="tabA">
@@ -556,6 +741,16 @@ body.pedindo{overflow:hidden}
       <div class="tip" id="evTip"></div>
     </section>
 
+    <section class="panel evmapa" id="evMapa">
+      <div class="thead">
+        <div><h3 id="evMapaTit">Dia a dia</h3>
+          <p class="hint">Cada quadrado é um dia: a cor é a taxa sem RENACH daquele dia (verde até 15%, amarelo até 25%, vermelho acima; claro quando houve só 1 ou 2 coletas). Traço cinza: dia sem coleta. Contorno escuro: dia fora do padrão. Colunas sombreadas: sábados. Linha pontilhada: 06/10, Carta Turbo Coleta Biométrica. Clique no nome para abrir.</p></div>
+        <div class="tools"><button class="exp" id="evMapaPdf" title="Gera um PDF colorido deste mapa, pensado para ler no celular">Baixar PDF</button></div>
+      </div>
+      <div class="hmscroll" id="evMapaSvg" tabindex="0" aria-label="Mapa de calor por dia"></div>
+      <p class="hminfo" id="evMapaInfo" aria-live="polite"></p>
+    </section>
+
     <section class="panel evsup" id="evSupBox" hidden>
       <div class="thead">
         <div>
@@ -570,37 +765,7 @@ body.pedindo{overflow:hidden}
       </div>
     </section>
 
-    <button class="evcomp" id="evComp" aria-expanded="false" aria-controls="evGrid"><span>Comparação entre períodos</span><i aria-hidden="true"></i></button>
-    <div class="evgrid" id="evGrid" hidden>
-      <section class="panel evper">
-        <h3>Escolha o período</h3>
-        <div class="perlinha"><span>1º período</span><input type="date" id="evP1a" aria-label="1º período, de"><i>a</i><input type="date" id="evP1b" aria-label="1º período, até"></div>
-        <div class="perlinha"><span>2º período</span><input type="date" id="evP2a" aria-label="2º período, de"><i>a</i><input type="date" id="evP2b" aria-label="2º período, até"></div>
-        <button class="reset" id="evPVolta" hidden>Voltar ao período dos botões</button>
-        <p class="hint" id="evPMsg" role="status"></p>
-      </section>
 
-      <section class="panel evrank">
-        <div class="thead">
-          <div>
-            <h3 id="evRkTit">Quem melhorou e quem piorou</h3>
-            <p class="hint" id="evRkHint"></p>
-          </div>
-          <div class="tools">
-            <div class="seg" id="evUni" role="group" aria-label="Linhas da tabela">
-              <button data-u="s">Superintendência</button><button data-u="p">Posto</button>
-            </div>
-            <button class="exp" id="evRkExp" title="Exporta para Excel a tabela na ordem atual">Exportar tabela</button>
-            <button class="exp" id="evRkPdf" title="Gera um PDF de uma página com as 50 primeiras linhas da tabela, na ordem atual">Exportar PDF</button>
-            <button class="limpar" id="evRkVolta" hidden title="Volta para a comparação entre as superintendências">← Superintendências</button>
-          </div>
-        </div>
-        <div class="scroll" tabindex="0" aria-label="Tabela de variação entre os dois períodos">
-          <table><thead><tr id="evHrow"></tr></thead><tbody id="evRows"></tbody></table>
-          <div class="empty" id="evVazio" hidden></div>
-        </div>
-      </section>
-    </div>
     <p class="src" id="evSrc"></p>
   </div>
 
@@ -787,6 +952,14 @@ function criarPdf(W, H) {
   const rgb = hex => [1, 3, 5].map(i => n(parseInt(hex.slice(i, i + 2), 16) / 255)).join(' ');
   return {
     ret(x, y, w, h, cor) { ops.push(`${rgb(cor)} rg ${n(x)} ${n(H - y - h)} ${n(w)} ${n(h)} re f`); },
+    // retângulo de cantos arredondados: preenchido (cor) e/ou com contorno ({borda, larg})
+    retR(x, y, w, h, r, cor, o) {
+      o = o || {}; r = Math.min(r, w / 2, h / 2); const k = r * .5523, X = x, Y = H - y - h;
+      const p = `${n(X + r)} ${n(Y)} m ${n(X + w - r)} ${n(Y)} l ${n(X + w - r + k)} ${n(Y)} ${n(X + w)} ${n(Y + r - k)} ${n(X + w)} ${n(Y + r)} c ${n(X + w)} ${n(Y + h - r)} l ${n(X + w)} ${n(Y + h - r + k)} ${n(X + w - r + k)} ${n(Y + h)} ${n(X + w - r)} ${n(Y + h)} c ${n(X + r)} ${n(Y + h)} l ${n(X + r - k)} ${n(Y + h)} ${n(X)} ${n(Y + h - r + k)} ${n(X)} ${n(Y + h - r)} c ${n(X)} ${n(Y + r)} l ${n(X)} ${n(Y + r - k)} ${n(X + r - k)} ${n(Y)} ${n(X + r)} ${n(Y)} c h`;
+      ops.push((cor ? `${rgb(cor)} rg ` : '') + (o.borda ? `${rgb(o.borda)} RG ${n(o.larg || 1)} w ` : '') + p + (cor && o.borda ? ' B' : cor ? ' f' : ' S'));
+    },
+    // linha reta; traco: [cheio, vazio] para tracejado
+    linha(x1, y1, x2, y2, cor, larg, traco) { ops.push(`${rgb(cor)} RG ${n(larg || 1)} w ${traco ? '[' + traco.map(n).join(' ') + '] 0 d ' : ''}${n(x1)} ${n(H - y1)} m ${n(x2)} ${n(H - y2)} l S [] 0 d`); },
     // alinh: 'l', 'c' ou 'r' em relação a x; max: largura disponível (o texto aperta até 78% e, se ainda não couber, é cortado com reticências)
     texto(t, x, y, tam, o) {
       o = o || {}; t = String(t);
@@ -937,6 +1110,25 @@ function textoPeriodo(a, b) {                       // "de 1 de setembro a 6 de 
 const txt = v => String(v === null || v === undefined ? '' : v).trim();
 const chave = v => txt(v).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const lista = v => (Array.isArray(v) ? v : v && typeof v === 'object' ? Object.keys(v).map(k => v[k]) : []).filter(x => x !== null && x !== undefined);
+
+// dados pessoais no texto das manifestações: CPF, RG, telefone, e-mail e número de RENACH ficam ocultos.
+// O protocolo do SAC continua sendo a chave para achar o caso no sistema.
+function cpfValido(d) {
+  if (!/^\d{11}$/.test(d) || /^(\d)\1{10}$/.test(d)) return false;
+  const dv = n => { let s = 0; for (let k = 0; k < n; k++) s += +d[k] * (n + 1 - k); const r = s * 10 % 11; return r === 10 ? 0 : r; };
+  return dv(9) === +d[9] && dv(10) === +d[10];
+}
+function mascararDados(t) {
+  if (!t) return t;
+  return String(t)
+    .replace(/[\w.+-]+@[\w-]+(\.[\w-]+)+/g, '[e-mail ocultado]')
+    .replace(/\b(renach)(\s*(n[ºo°.]*|n[uú]mero)?\s*:?\s*)([a-z]{2})?\d{6,11}/gi, '$1 [número ocultado]')
+    .replace(/\b(rg|r\.g\.)(\s*(n[ºo°.]*|n[uú]mero)?\s*:?\s*)[\dxX.\-]{7,13}/gi, '$1 [número ocultado]')
+    .replace(/(?<![\d.\/-])\d{2}\.\d{3}\.\d{3}-[\dxX](?![\d])/g, '[RG ocultado]')
+    .replace(/(?<![\d.\/-])\d{3}\.\d{3}\.\d{3}[-.\s]?\d{2}(?![\d])/g, '[CPF ocultado]')
+    .replace(/(?<![\d\/])\(?\d{2}\)?[\s.-]?9?\d{4}[\s.-]\d{4}(?![\d\/])/g, '[telefone ocultado]')
+    .replace(/(?<![\d\/.-])\d{10,11}(?![\d\/])/g, d => cpfValido(d) ? '[CPF ocultado]' : /^[1-9]{2}9\d{8}$/.test(d) ? '[telefone ocultado]' : d);
+}
 
 // critérios dos grupos: volumes para 30 dias, taxas em %; tax vazio = média do Estado no período
 const CRIT_PADRAO = {p: {vol: 200, min: 20, ref: 10, tax: null}, s: {vol: 1000, ref: 15, tax: null}};
@@ -1107,7 +1299,7 @@ const mx = (rows, k) => Math.max(0, ...rows.map(p => p[k]));
 const critDe = c => ({vol: c.vol, tax: c.tax == null ? T.tx : c.tax, min: c.min, ref: c.ref});   // taxa de corte vazia = média do Estado no período
 const TICKS = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000], TICKSN = [1, 5, 20, 100, 500, 2000, 10000, 50000, 200000];
 function modo(id, rows, def, o) {
-  return {id, rows, T, MAXVOL: mx(rows, 'vol'), MAXBAD: mx(rows, 'bad'), MAXZ: mx(rows, 'z'), DEF: def, C: {...def}, S: {view: 'all', grp: null, sort: null, q: ''}, sel: null,
+  return {id, rows, T, MAXVOL: mx(rows, 'vol'), MAXBAD: mx(rows, 'bad'), MAXZ: mx(rows, 'z'), DEF: def, C: {...def}, S: {view: id === 's' ? 'all' : 'taxa', grp: null, sort: null, q: ''}, sel: null,
     unit: 'coletas', volCol: 'Coletas', zCol: 'SACs', zSum: 'SACs', zView: 'Mais SACs', badCol: 'Sem RENACH', bad: 'coletas sem RENACH', badShort: 'sem RENACH',
     txName: 'taxa sem RENACH', txView: 'Taxa mais alta', ...o};
 }
@@ -1175,7 +1367,7 @@ const VIEWS = {
   grp: {label: () => gname(m.S.grp), f: p => p.g === m.S.grp, sort: ['bad', -1],
     desc: () => `Grupo: ${gname(m.S.grp).toLowerCase()}. Ordenado pela quantidade de coletas sem RENACH.`}
 };
-const VIEWKEYS = ['all', 'taxa', 'z', 'ref'];
+const VIEWKEYS = ['taxa', 'z', 'ref', 'all'];
 const cols = () => [{k: 'nome', t: m.col, l: 1}, {k: 'vol', t: m.volCol}, {k: 'bad', t: m.badCol}, {k: 'tx', t: 'Taxa'}, {k: 'z', t: m.zCol}];
 function currentList() {
   const S = m.S, v = VIEWS[S.view];
@@ -1186,10 +1378,7 @@ function currentList() {
   list.sort((a, b) => k === 'nome' ? d * (a.curto || a.nome).localeCompare(b.curto || b.nome, 'pt-BR') : (d * (a[k] - b[k]) || (k === 'tx' ? d * (b.vol - a.vol) : 0) || tie(a, b)));
   return list;
 }
-function txColor(t) {
-  const g = '#2E9E5B', a = '#F2B134', r = '#C8372D', c = m.C.tax, top = m.txTop(c);
-  return t <= c ? mix(g, a, c ? t / c : 1) : mix(a, r, Math.min(1, (t - c) / (top - c)));
-}
+function txColor(t) { return corPelaTaxa(t); }   // régua única: até 15% verde, até 25% amarelo, acima vermelho
 
 /* ── cabeçalho e abas ───────────────────────────────────── */
 function drawHead() {
@@ -1201,7 +1390,7 @@ function drawHead() {
   $('src').textContent = m.id === 's'
     ? 'Fonte: os mesmos números da aba Postos, somados por superintendência.'
     : `Fonte: base de dados do painel${DADOS.lidoEm ? ', atualizada em ' + DADOS.lidoEm : ''}.`;
-  if (ABA !== 'e') ABA = m.id;
+  if (ABA !== 'e' && ABA !== 'a') ABA = m.id;
   marcarAbas();
   $('maptitle').textContent = m.mapa; $('maphint').textContent = m.dica; $('tabhint').textContent = m.dicaTab;
   $('q').placeholder = m.busca; $('q').setAttribute('aria-label', m.busca + ' pelo nome');
@@ -1214,7 +1403,7 @@ function abrir(id, sel) {                          // troca de aba; sel abre um 
 }
 function drawViews() {
   const box = $('views');
-  if (box.dataset.m !== m.id) { box.innerHTML = VIEWKEYS.map(k => `<button data-v="${k}">${VIEWS[k].label()}</button>`).join(''); box.dataset.m = m.id; }
+  if (box.dataset.m !== m.id) { box.innerHTML = (m.id === 's' ? ['all', 'z', 'ref', 'taxa'] : VIEWKEYS).map(k => `<button data-v="${k}">${VIEWS[k].label()}</button>`).join(''); box.dataset.m = m.id; }
   [...box.children].forEach(el => el.setAttribute('aria-pressed', String(m.S.view === el.dataset.v)));
 }
 function drawSummary(list) {
@@ -1346,23 +1535,58 @@ function drawDetail() {
        <div class="stat"><b>${nf(p.vol)}</b><span>coletas no período</span></div>
        <div class="stat"><b>${nf(p.com)}</b><span>com RENACH</span></div>
        <div class="stat"><b style="color:${css('--g1')}">${nf(p.bad)}</b><span>sem RENACH</span></div>
-       <div class="stat"><b>${pf(p.tx)}</b><span>${cmp}</span></div>
+       <div class="stat"><b>${pf(p.tx)}</b>${vsEstado(p)}</div>
      </div>
      <div class="split" role="img" aria-label="${pf(p.tx)} das coletas sem RENACH"><i style="width:${Math.min(100, p.tx * 100)}%"></i></div>
      <div class="splitkey"><span>com RENACH</span><span>sem RENACH ${pf(p.tx)}</span></div>
-     <div class="pos">
-       <span>Em coletas sem RENACH: <b>${ord(p.rVol)}</b> de ${base.length}</span>
-       <span>Em taxa: <b>${ord(p.rTx)}</b>${p.rTx ? '' : ' (abaixo do mínimo de coletas)'}</span>
-       <span>Em SACs: <b>${ord(p.rZ)}</b></span>
-       <span>Peso no Estado: <b>${pf(T.bad ? p.bad / T.bad : 0)}</b> das coletas sem RENACH</span>
-     </div>
-     <button class="go" data-evo="p:${DADOS.gid[p.i]}">Ver a evolução deste posto no tempo</button>
+     ${posCards(p, base, 'o posto')}
+     <button class="go evogo" data-evo="p:${DADOS.gid[p.i]}">${ICONE_EVO}<span>Ver a evolução no tempo</span><i aria-hidden="true">›</i></button>
      <div class="sacs">
        <h4>${p.z ? nf(p.z) + (p.z === 1 ? ' SAC aberto' : ' SACs abertos') + ' no período' : 'Nenhum SAC aberto no período'}</h4>
        ${p.z ? dayBars(days, 'SACs por dia de abertura') +
        `<div class="protos" tabindex="0" aria-label="Protocolos dos SACs">${p.sacs.map(s => `<button type="button" data-sac="${esc(s[0])}" title="Ver a manifestação">${esc(s[0])}<em>${dm(s[2] - 1)}</em></button>`).join('')}</div>` : ''}
      </div>`;
 }
+
+// selo da diferença para a taxa do Estado: vermelho bem acima (mais de 5 pontos), laranja acima, verde abaixo
+function vsEstado(p) {
+  const d = (p.tx - T.tx) * 100;
+  if (Math.abs(d) < .05) return '<span>igual à taxa do Estado</span>';
+  const cor = d > 5 ? css('--g1') : d > 0 ? css('--g2') : css('--g4');
+  return `<span class="vsesel"><em style="background:${cor}">${d > 0 ? '+' : '−'}${pp(Math.abs(d))} p.p.</em> ${d > 0 ? 'acima' : 'abaixo'} do Estado</span>`;
+}
+// posições do posto (ou da superintendência) em cartões, e o peso dele nos erros do Estado em destaque
+function posCards(p, lst, quem) {
+  const n = k => lst.filter(q => q[k]).length, dele = quem === 'o posto' ? 'dele' : 'dela';
+  // cor ao longo da régua: 1º no vermelho, o meio no laranja, o fim no verde (a mesma régua desenhada embaixo do número)
+  const hx = c => [1, 3, 5].map(k => parseInt(c.slice(k, k + 2), 16)), mx = (a, b, f) => 'rgb(' + hx(a).map((v, k) => Math.round(v + (hx(b)[k] - v) * f)).join(',') + ')';
+  const corRegua = fr => fr <= .4 ? mx(css('--g1'), css('--g2'), fr / .4) : fr <= .75 ? mx(css('--g2'), css('--g4'), (fr - .4) / .35) : css('--g4');
+  const pos = (rot, rk, de, corFixa, falta) => {
+    if (!rk) return `<div class="pq"><span class="qnum">–</span><span class="qsub">${rot}</span><span class="pqfalta">${falta}</span></div>`;
+    const fr = de > 1 ? (rk - 1) / (de - 1) : 0, cor = corFixa || corRegua(fr);
+    return `<div class="pq"><span class="qnum" style="color:${cor}">${rk}º <small>de ${nf(de)}</small></span><span class="qsub">${rot}</span>
+      <span class="qtermo" aria-hidden="true"><i style="left:${(fr * 100).toFixed(1)}%;background:${cor}"></i></span></div>`;
+  };
+  const peso = T.bad ? p.bad / T.bad : 0, pesoCol = T.vol ? p.vol / T.vol : 0, vezes = pesoCol ? peso / pesoCol : 0;
+  const nivel = vezes >= 1.15 ? 'acima' : vezes > 0 && vezes <= .85 ? 'abaixo' : 'igual';
+  const corV = {acima: css('--g1'), abaixo: css('--g4'), igual: css('--ink')}[nivel];
+  const frase = {acima: `erra mais do que o tamanho ${dele}`, abaixo: `erra menos do que o tamanho ${dele}`, igual: `erra na medida do tamanho ${dele}`}[nivel];
+  return `<div class="pbox"><h4>${quem === 'o posto' ? 'Posição no Estado' : 'Posição entre as superintendências'}</h4>
+      <div class="ptres">
+        ${pos('em taxa sem RENACH', p.rTx, n('rTx'), corPelaTaxa(p.tx), 'abaixo do mínimo de coletas')}
+        ${pos('em coletas sem RENACH', p.rVol, lst.length, '', '')}
+      </div>
+    </div>
+    <div class="pbox ppeso ${nivel}"><h4>Peso no Estado</h4>
+      <div class="pvz"><b style="color:${corV}">${vezes ? pp(vezes).replace(/,0$/, '') + '×' : '–'}</b><span>${vezes ? frase : 'sem coletas no período'}</span></div>
+      <div class="pfat">
+        <div class="pft"><b>${pf(pesoCol)}</b><span>das coletas do Estado</span></div>
+        <i class="pfseta" aria-hidden="true">→</i>
+        <div class="pft err" style="--cv:${corV}"><b>${pf(peso)}</b><span>das coletas sem RENACH do Estado</span></div>
+      </div>
+    </div>`;
+}
+const ICONE_EVO = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 17l5-5 4 3 7-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h4v4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 /* ── superintendência: detalhe e ranking dos postos ─────── */
 function drawSup() {
@@ -1376,18 +1600,13 @@ function drawSup() {
        <div class="stat"><b>${nf(p.vol)}</b><span>coletas no período</span></div>
        <div class="stat"><b>${nf(p.com)}</b><span>com RENACH</span></div>
        <div class="stat"><b style="color:${css('--g1')}">${nf(p.bad)}</b><span>sem RENACH</span></div>
-       <div class="stat"><b>${pf(p.tx)}</b><span>${cmp}</span></div>
+       <div class="stat"><b>${pf(p.tx)}</b>${vsEstado(p)}</div>
      </div>
      <div class="split" role="img" aria-label="${pf(p.tx)} das coletas sem RENACH"><i style="width:${Math.min(100, p.tx * 100)}%"></i></div>
      <div class="splitkey"><span>com RENACH</span><span>sem RENACH ${pf(p.tx)}</span></div>
-     <div class="pos">
-       <span>Em coletas sem RENACH: <b>${ord(p.rVol)}</b> de ${sups.length}</span>
-       <span>Em taxa: <b>${ord(p.rTx)}</b></span>
-       <span>Em SACs: <b>${ord(p.rZ)}</b></span>
-       <span>Peso no Estado: <b>${pf(T.bad ? p.bad / T.bad : 0)}</b> das coletas sem RENACH</span>
-       <span>Postos e unidades: <b>${nf(p.postos.length)}</b></span>
-     </div>
-     <button class="go" data-evo="s:${esc(p.nome)}">Ver a evolução desta superintendência no tempo</button>
+     ${posCards(p, sups, 'a superintendência')}
+     <p class="pnpostos">${nf(p.postos.length)} postos e unidades</p>
+     <button class="go evogo" data-evo="s:${esc(p.nome)}">${ICONE_EVO}<span>Ver a evolução no tempo</span><i aria-hidden="true">›</i></button>
      <div class="sacs">
        <h4>${p.z ? nf(p.z) + (p.z === 1 ? ' SAC aberto' : ' SACs abertos') + ' no período' : 'Nenhum SAC aberto no período'}</h4>
        ${p.z ? dayBars(p.days, 'SACs por dia de abertura') : ''}
@@ -1413,7 +1632,7 @@ function drawDrill() {
   const gc = [null, css('--g1'), css('--g2'), css('--g3'), css('--g4'), css('--g5')];
   const gn = n => GPOSTO[n];
   const bar = (v, max, color, txt) => `<span class="bar"><i style="width:${max ? Math.min(100, Math.max(v ? 2 : 0, v / max * 100)) : 0}%;background:${color}"></i><b>${txt}</b></span>`;
-  const txc = t => { const c = P.C.tax, top = P.txTop(c); return t <= c ? mix('#2E9E5B', '#F2B134', c ? t / c : 1) : mix('#F2B134', '#C8372D', Math.min(1, (t - c) / (top - c))); };
+  const txc = t => corPelaTaxa(t);
   $('dhrow').innerHTML = [['nome', 'Posto', 1], ['vol', 'Coletas'], ['bad', 'Sem RENACH'], ['tx', 'Taxa'], ['z', 'SACs'], ['rk', `No Estado<small>${rk.t}</small>`]].map(c =>
     `<th class="${c[2] ? 'l' : ''}${c[0] === 'rk' ? 'rk2' : ''}" ${c[0] === sk ? `aria-sort="${sd > 0 ? 'ascending' : 'descending'}"` : ''}><button data-k="${c[0]}"${c[0] === 'rk' ? ` aria-label="Posição no Estado ${rk.frase}"` : ''}>${c[1]}</button></th>`).join('');
   $('drows').innerHTML = list.map((q, k) =>
@@ -1618,6 +1837,85 @@ return {
 };
 }
 
+/* ── detecção: dias, semanas e sábados fora do padrão de cada posto ou superintendência ──
+   Usado pela aba Alertas e pelo mapa de calor da Evolução. Cada regra compara o posto com ele mesmo
+   e só dispara quando a diferença é grande E a chance de ser acaso é menor que 1 em 1.000. */
+// cor pela taxa sem RENACH, a mesma em todo o painel: até 15% verde, até 25% amarelo, acima de 25% vermelho;
+// dentro de cada faixa a cor se intensifica para o extremo (vermelho no máximo a partir de 50%)
+function corPelaTaxa(tx) {
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const hex = c => [1, 3, 5].map(k => parseInt(c.slice(k, k + 2), 16)), mix = (a, b, f) => 'rgb(' + hex(a).map((v, k) => Math.round(v + (hex(b)[k] - v) * f)).join(',') + ')';
+  const sup = hex(css('--surface') || '#FFFFFF'), escuro = (sup[0] * .3 + sup[1] * .59 + sup[2] * .11) < 128;
+  const C = escuro ? {v: ['#8FD694', '#4CC35A'], a: ['#FFE27A', '#F5B400'], r: ['#FF9C94', '#F0443A']}
+                   : {v: ['#4CAF50', '#1B6B2A'], a: ['#D4AA00', '#B07400'], r: ['#E5483F', '#8E1B1B']};
+  const t = Math.round(tx * 1000) / 1000;
+  if (t <= .15) return mix(C.v[0], C.v[1], 1 - t / .15);
+  if (t <= .25) return mix(C.a[0], C.a[1], (t - .15) / .10);
+  return mix(C.r[0], C.r[1], Math.min(1, (t - .25) / .25));
+}
+// marcos que aparecem nos gráficos (linha pontilhada): ações que devem mexer na taxa
+const MARCOS = [{data: '2026-10-06', nome: 'Carta Turbo Coleta Biométrica'}];
+const DET = {
+  // regras na medida de cada posto: valem para postos pequenos (a partir de 3 coletas no dia) e grandes;
+  // a chance de acaso aceita é de 1 em 100 e a diferença mínima é contada sobre o normal do próprio posto
+  posto: {dia: {n: 3, k: 3, dif: .25, base: 20, p: .01}, virada: {rn: 10, bn: 25, dif: .15, z: 2.5}, sab: {sn: 10, un: 30, dif: .25}},
+  sup: {dia: {n: 8, k: 4, dif: .15, base: 60, p: .01}, virada: {rn: 30, bn: 60, dif: .10, z: 2.5}, sab: {sn: 30, un: 100, dif: .20}},
+  P: .001, JANELA: 7, ANTES: 21
+};
+// chance de ver k ou mais erros em n coletas, se a taxa real fosse p (binomial, cauda de cima)
+function caudaBin(k, n, p) {
+  if (k <= 0) return 1;
+  if (p <= 0) return 0;
+  if (p >= 1) return 1;
+  const lg = x => {                                   // log da função gama (Lanczos)
+    const g = 7, c = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+    if (x < 0.5) return Math.log(Math.PI / Math.sin(Math.PI * x)) - lg(1 - x);
+    x -= 1; let a = c[0]; const t = x + g + 0.5;
+    for (let i = 1; i < 9; i++) a += c[i] / (x + i);
+    return 0.5 * Math.log(2 * Math.PI) + (x + 0.5) * Math.log(t) - t + Math.log(a);
+  };
+  let pm = Math.exp(lg(n + 1) - lg(k + 1) - lg(n - k + 1) + k * Math.log(p) + (n - k) * Math.log(1 - p)), soma = 0;
+  for (let x = k; x <= n; x++) { soma += pm; if (pm < soma * 1e-12) break; pm *= (n - x) / (x + 1) * p / (1 - p); }
+  return Math.min(1, soma);
+}
+const detSemana = d => new Date((ALL.d0 + d) * DIA_MS).getUTCDay();          // 0 domingo … 6 sábado
+// dias de f em que a taxa passou muito do normal (o normal é o restante da base, sem o próprio dia)
+function detDias(S, f, tipo) {
+  const R = DET[tipo].dia, out = [];
+  let C = 0, E = 0; for (let d = 0; d < ALL.N; d++) { C += S.col[d]; E += S.sem[d]; }
+  for (let d = f[0]; d <= f[1]; d++) {
+    const n = S.col[d], k = S.sem[d];
+    if (n < R.n || k < (R.k || 0) || C - n < R.base) continue;
+    const r0 = Math.max((E - k) / (C - n), .5 / (C - n));
+    if (k / n - r0 < R.dif) continue;
+    const pv = caudaBin(k, n, r0);
+    if (pv < (R.p || DET.P)) out.push({d, n, k, r0, pv, exc: k - n * r0});
+  }
+  return out;
+}
+// mudança de patamar: os 7 dias que terminam em fim contra os 21 dias antes deles
+function detVirada(S, fim, tipo) {
+  const R = DET[tipo].virada, J = DET.JANELA, a = fim - J + 1, b0 = Math.max(0, a - DET.ANTES);
+  if (a - 1 < b0) return null;
+  let rn = 0, rk = 0, bn = 0, bk = 0;
+  for (let d = a; d <= fim; d++) { rn += S.col[d]; rk += S.sem[d]; }
+  for (let d = b0; d < a; d++) { bn += S.col[d]; bk += S.sem[d]; }
+  if (rn < R.rn || bn < R.bn) return null;
+  const r1 = rk / rn, r0 = bk / bn, pp = (rk + bk) / (rn + bn), se = Math.sqrt(pp * (1 - pp) * (1 / rn + 1 / bn)) || 1, z = (r1 - r0) / se;
+  if (Math.abs(r1 - r0) < R.dif || Math.abs(z) < R.z) return null;
+  return {a, fim, b0, rn, rk, bn, bk, r1, r0, z, piorou: r1 > r0};
+}
+// sábados de f contra os dias úteis de f
+function detSabado(S, f, tipo) {
+  const R = DET[tipo].sab; let sn = 0, sk = 0, un = 0, uk = 0;
+  for (let d = f[0]; d <= f[1]; d++) { const w = detSemana(d); if (w === 6) { sn += S.col[d]; sk += S.sem[d]; } else if (w > 0) { un += S.col[d]; uk += S.sem[d]; } }
+  if (sn < R.sn || un < R.un) return null;
+  const r0 = Math.max(uk / un, .5 / un);
+  if (sk / sn - r0 < R.dif) return null;
+  const pv = caudaBin(sk, sn, r0);
+  return pv < DET.P ? {sn, sk, un, uk, r1: sk / sn, r0, pv} : null;
+}
+
 /* ── aba Evolução: a linha do tempo de um posto ou superintendência, comparada com a média, e quem melhorou ou piorou ── */
 const COMP_INICIO = '2026-10-06';                  // início do 2º período, já preenchido, na comparação entre períodos
 const EV = {sup: '', posto: null, met: 'tx', custom: null, comp: false, uni: 's', sort: ['var', -1], supSort: ['tx', -1], supRk: 'tx', rkSup: null, dia: null, montado: null};
@@ -1731,13 +2029,14 @@ function caixaBusca(raiz, aoEscolher) {
       L.push({papel: 'ref', nome: taxa ? 'Estado' : 'Estado: média por superintendência', curto: 'o Estado', media: 'da média por superintendência', S: E, div: nSups});
     } else L.push({papel: 'foco', nome: 'Estado', S: E, div: 1});
     // dias sem nenhuma coleta no Estado (domingos e feriados) não entram na linha de coletas, sem RENACH e taxa
-    // taxa média do período: as coletas sem RENACH desde o primeiro dia do período até a data, divididas pelas coletas do mesmo intervalo;
-    // cada período começa do zero, e o último ponto é a taxa do período inteiro
+    // média móvel de 7 dias: as coletas sem RENACH dos 7 dias que terminam na data, divididas pelas coletas dos mesmos 7 dias
+    // (no começo do período, a conta usa os dias anteriores que a base tiver)
+    const JAN = 7;
     L.forEach(l => {
       l.v = new Array(ALL.N).fill(null);
-      seg.forEach(f => { let c = 0, s = 0; for (let d = f[0]; d <= f[1]; d++) {
-        c += l.S.col[d]; s += l.S.sem[d];
-        if (m !== 'sac' && !ALL.eCol[d]) { l.v[d] = null; continue; }
+      seg.forEach(f => { for (let d = f[0]; d <= f[1]; d++) {
+        if (m !== 'sac' && !ALL.eCol[d]) continue;
+        let c = 0, s = 0; for (let k = Math.max(0, d - JAN + 1); k <= d; k++) { c += l.S.col[k]; s += l.S.sem[k]; }
         l.v[d] = taxa ? (c ? s / c : null) : l.S[m][d] / l.div;
       } });
     });
@@ -1787,6 +2086,11 @@ function caixaBusca(raiz, aoEscolher) {
     const Y = v => yb - Math.min(v, ymax) / ymax * HH;
     let o = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de linhas por dia: ${h(MET[EV.met].nome)} de ${h(LIN.map(l => l.nome).join(' e de '))}">`;
     for (let k = 0; k * ystep <= ymax + 1e-9; k++) { const v = k * ystep, y = Y(v); o += `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="${line}" stroke-width="1"/><text x="${x0 - 7}" y="${y + 4}" text-anchor="end" font-size="11.5" fill="${muted}">${EV.met === 'tx' ? Math.round(v * 100) + '%' : Number.isInteger(v) ? nf(v) : n1(v)}</text>`; }
+    MARCOS.forEach(m => {                              // marco (ex.: Carta Turbo): linha pontilhada antes do dia
+      const d = nDia(m.data) - ALL.d0; if (d <= r0 || d > r1) return;
+      const xm = X(d) - passo / 2, dir = xm > (x0 + x1) / 2;
+      o += `<line x1="${xm}" x2="${xm}" y1="${yt - 6}" y2="${yb}" stroke="${muted}" stroke-width="1.4" stroke-dasharray="5 4"/><text x="${dir ? xm - 6 : xm + 6}" y="${yt + 4}" text-anchor="${dir ? 'end' : 'start'}" font-size="11.5" font-weight="700" fill="${muted}">${h(m.nome.split(' ').slice(0, 2).join(' '))} · ${dataCurta(ALL.d0 + d)}</text>`;
+    });
     const cabe = Math.max(2, Math.floor((x1 - x0) / 58)), cada = [1, 2, 7, 14, 28, 56, 91, 182, 365].find(k => N / k <= cabe) || 365;
     for (let d = r0; d <= r1; d += cada) o += `<text x="${X(d).toFixed(1)}" y="${yb + 19}" text-anchor="middle" font-size="11.5" fill="${muted}">${dataCurta(ALL.d0 + d)}</text>`;
     const pontos = l => { const p = []; for (let d = r0; d <= r1; d++) if (l.v[d] != null) p.push([X(d), Y(l.v[d]), d, segDe(d)]); return p; };
@@ -1826,9 +2130,8 @@ function caixaBusca(raiz, aoEscolher) {
     G = {W, x0, passo, X, Y, cor, r0, r1, ini: d => { const k = segDe(d); return k < 0 ? d : seg[k][0]; }};
     const leg = $('evLeg'); leg.textContent = '';
     LIN.forEach(l => { const s = document.createElement('span'); s.innerHTML = `<svg width="26" height="10" aria-hidden="true"><line x1="2" x2="24" y1="5" y2="5" stroke="${cor[l.papel]}" stroke-width="4" stroke-linecap="round"/></svg>`; s.append(l.nome); leg.append(s); });
-    $('evTit').textContent = (EV.met === 'tx' ? 'Taxa sem RENACH média: ' : MET[EV.met].nome + ' por dia: ') + foco.nome;
-    $('evHint').textContent = EV.met !== 'tx' ? '' : N === 1 ? 'O período tem um dia só: o ponto é a taxa desse dia. Escolha um período maior para ver a evolução.'
-      : 'Cada ponto é a taxa do período até aquela data: as coletas sem RENACH desde o primeiro dia do período divididas pelas coletas do mesmo intervalo. O último ponto é a taxa do período, a mesma dos quadros e das tabelas.';
+    $('evTit').textContent = (EV.met === 'tx' ? 'Taxa sem RENACH, média móvel de 7 dias: ' : MET[EV.met].nome + ' por dia: ') + foco.nome;
+    $('evHint').textContent = EV.met !== 'tx' ? '' : 'Cada ponto é a taxa dos 7 dias que terminam naquela data: as coletas sem RENACH desses dias divididas pelas coletas dos mesmos dias. Assim um dia isolado não distorce a linha, e uma virada aparece em poucos dias.';
     if (EV.dia != null) mostrarDia(Math.max(r0, Math.min(EV.dia, r1)));
   }
   function mostrarDia(d) {
@@ -1843,7 +2146,7 @@ function caixaBusca(raiz, aoEscolher) {
     const dia = diaSemana(ALL.d0 + d);
     tip.textContent = '';
     tip.append(el('div', 'quando', dia + (dia === 'sábado' || dia === 'domingo' ? '' : '-feira') + ', ' + dataCheia(ALL.d0 + d)));
-    if (EV.met === 'tx') { const a0 = G.ini(d); tip.append(el('div', 'det', a0 === d ? 'Taxa do primeiro dia do período' : `Taxa de ${dataCurta(ALL.d0 + a0)} a ${dataCurta(ALL.d0 + d)}`)); }
+    if (EV.met === 'tx') tip.append(el('div', 'det', `Média dos 7 dias de ${dataCurta(ALL.d0 + Math.max(0, d - 6))} a ${dataCurta(ALL.d0 + d)}`));
     LIN.forEach((l, k) => {
       const r = el('div', 'lin'), i = el('i'); i.style.background = G.cor[l.papel];
       r.append(i, el('span', '', l.nome), el('b', '', l.v[d] == null ? '–' : fmt(l.v[d]))); tip.append(r);
@@ -2029,7 +2332,7 @@ function caixaBusca(raiz, aoEscolher) {
     if (k.some(x => x < 0 || x > ALL.N - 1)) return erro(`As datas precisam estar entre ${dataCheia(ALL.d0)} e ${dataCheia(ALL.d1)}.`);
     if (k[0] > k[1] || k[2] > k[3]) return erro('Em cada período, a primeira data não pode ser depois da segunda.');
     EV.custom = {a: [k[0], k[1]], b: [k[2], k[3]]};
-    window.desenharEvolucao();
+    window.desenharComparacao();
   }
 
   /* ── quem melhorou e quem piorou ── */
@@ -2140,6 +2443,166 @@ function caixaBusca(raiz, aoEscolher) {
     baixarDireto({filename: `coleta-biometrica_comparacao_${R.drill ? 'postos-de-' + slugG(R.drill) : p ? 'postos' : 'superintendencias'}_${slugG(cheio(R.fb))}.pdf`, data, tipo: 'application/pdf'});
   }
 
+  /* ── mapa de calor: cada posto da superintendência (ou cada superintendência, no Estado) dia a dia ── */
+  let MAPA = null;                                   // o que está desenhado, para o texto do quadrado escolhido
+  function mapaCalor() {
+    const box = $('evMapaSvg'), f = faixa(ALL, PERIODO), sup = EV.sup, tipo = sup ? 'posto' : 'sup';
+    let rows = sup
+      ? idsDaSup(sup).map(i => ({k: 'p:' + i, i, nome: tidy(ALL.postos[i].nome), S: evSerie([i])}))
+      : [...new Set(ALL.postos.map(p => p.sup))].map(n => ({k: 's:' + n, nome: n, S: evSerie(idsDaSup(n))}));
+    rows.forEach(r => {
+      let c = 0, s = 0; for (let d = f[0]; d <= f[1]; d++) { c += r.S.col[d]; s += r.S.sem[d]; }
+      r.c = c; r.s = s; r.tx = c ? s / c : 0;
+      r.alerta = {}; detDias(r.S, f, tipo).forEach(a => { r.alerta[a.d] = a; });
+    });
+    rows = rows.filter(r => r.c > 0).sort((a, b) => b.tx - a.tx || b.c - a.c);
+    const nd = f[1] - f[0] + 1, semanal = nd > 62, cols = [];
+    if (!semanal) for (let d = f[0]; d <= f[1]; d++) cols.push({a: d, b: d});
+    else { let a = f[0]; while (a <= f[1]) { let b = a; while (b < f[1] && detSemana(b + 1) !== 1) b++; cols.push({a, b}); a = b + 1; } }
+    const larg = Math.max(320, $('evMapa').clientWidth - 2 || 900), estreito = larg < 640;
+    const xl = estreito ? 124 : 230, xr = 64, cw = Math.max(13, Math.min(28, Math.floor((larg - xl - xr - 4) / cols.length))), ch = estreito ? 21 : 23, yt = 36;
+    const W = Math.max(larg, xl + cols.length * cw + xr), H = yt + rows.length * ch + 4;
+    const ink = css('--ink'), muted = css('--muted'), line = css('--line'), soft = css('--soft'), surf = css('--surface');
+    const corte = (t, n) => t.length > n ? t.slice(0, n - 1) + '…' : t, maxN = estreito ? 15 : 30;
+    let o = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Mapa de calor da taxa sem RENACH por dia">`;
+    cols.forEach((c, j) => {
+      const x = xl + j * cw, sab = !semanal && detSemana(c.a) === 6;
+      if (sab) o += `<rect x="${x - 1}" y="2" width="${cw}" height="${H - 4}" rx="4" fill="${soft}"/>`;
+      if (semanal) { if (j % Math.max(1, Math.ceil(44 / cw)) === 0) o += `<text x="${x + cw / 2}" y="${yt - 10}" text-anchor="middle" font-size="10.5" fill="${muted}">${dataCurta(ALL.d0 + c.a)}</text>`; }
+      else {
+        const dia = isoDia(ALL.d0 + c.a).slice(8, 10);
+        if (cw >= 17 || j % 2 === 0) o += `<text x="${x + cw / 2 - 1}" y="${yt - 18}" text-anchor="middle" font-size="10.5" font-weight="${sab ? 800 : 400}" fill="${sab ? ink : muted}">${dia}</text>`;
+        o += `<text x="${x + cw / 2 - 1}" y="${yt - 6}" text-anchor="middle" font-size="9.5" font-weight="${sab ? 800 : 400}" fill="${sab ? ink : muted}">${'DSTQQSS'[detSemana(c.a)]}</text>`;
+      }
+    });
+    MARCOS.forEach(m => {                              // marco: linha pontilhada antes da coluna do dia
+      const d = nDia(m.data) - ALL.d0, j = cols.findIndex(c => d >= c.a && d <= c.b); if (j <= 0) return;
+      const xm = xl + j * cw - 2;
+      o += `<line x1="${xm}" x2="${xm}" y1="4" y2="${H - 2}" stroke="${ink}" stroke-width="1.5" stroke-dasharray="4 3"><title>${h(m.nome)} (${dataCurta(ALL.d0 + d)})</title></line>`;
+    });
+    rows.forEach((r, i) => {
+      const y = yt + i * ch, sel = EV.posto != null && r.i === EV.posto;
+      if (sel) o += `<rect x="0" y="${y - 1}" width="${W}" height="${ch}" fill="${soft}"/>`;
+      o += `<text class="hmnome" data-k="${h(r.k)}" x="${xl - 8}" y="${y + ch / 2 + 3}" text-anchor="end" font-size="${estreito ? 11 : 12.5}" font-weight="${sel ? 900 : 700}" fill="${ink}"><title>${h(r.nome)}</title>${h(corte(r.nome, maxN))}</text>`;
+      cols.forEach((c, j) => {
+        let n = 0, k = 0; for (let d = c.a; d <= c.b; d++) { n += r.S.col[d]; k += r.S.sem[d]; }
+        const x = xl + j * cw, al = !semanal && r.alerta[c.a];
+        if (!n) { o += `<rect data-r="${i}" data-c="${j}" x="${x + 2}" y="${y + ch / 2 - 1.5}" width="${cw - 6}" height="3" rx="1.5" fill="${line}"/>`; return; }
+        o += `<rect data-r="${i}" data-c="${j}" x="${x}" y="${y + 1}" width="${cw - 3}" height="${ch - 4}" rx="3" fill="${corTaxa(k / n)}" opacity="${n < 3 ? .45 : 1}"${al ? ` stroke="${ink}" stroke-width="2.4"` : ''}/>`;
+      });
+      o += `<text x="${xl + cols.length * cw + 6}" y="${y + ch / 2 + 3}" font-size="12" font-weight="800" fill="${corTaxa(r.tx)}">${pf(r.tx)}</text>`;
+    });
+    box.innerHTML = o + '</svg>';
+    MAPA = {rows, cols, semanal, f};
+    const nAl = rows.reduce((a, r) => a + Object.keys(r.alerta).length, 0);
+    $('evMapaTit').textContent = (sup ? `Postos de ${sup}` : 'Superintendências') + (semanal ? ', semana a semana' : ', dia a dia');
+    $('evMapaInfo').textContent = nAl ? `${nf(nAl)} ${nAl === 1 ? 'dia fora do padrão marcado' : 'dias fora do padrão marcados'} com contorno. Passe o mouse ou toque num quadrado para ver o dia.` : 'Passe o mouse ou toque num quadrado para ver o dia.';
+  }
+  function mapaDia(el) {
+    if (!MAPA || !el || el.dataset.r == null) return;
+    const r = MAPA.rows[+el.dataset.r], c = MAPA.cols[+el.dataset.c]; if (!r || !c) return;
+    let n = 0, k = 0; for (let d = c.a; d <= c.b; d++) { n += r.S.col[d]; k += r.S.sem[d]; }
+    const quando = MAPA.semanal ? `semana de ${dataCurta(ALL.d0 + c.a)} a ${dataCurta(ALL.d0 + c.b)}` : `${diaSemana(ALL.d0 + c.a)}, ${dataCheia(ALL.d0 + c.a)}`;
+    const al = !MAPA.semanal && r.alerta[c.a];
+    $('evMapaInfo').innerHTML = `<b>${h(r.nome)}</b> · ${quando}: ` + (n ? `${nf(k)} de ${nf(n)} ${n === 1 ? 'coleta' : 'coletas'} sem RENACH (<b style="color:${corTaxa(k / n)}">${pf(k / n)}</b>)` : 'sem coleta') +
+      (al ? `. <b>Fora do padrão</b>: o normal ${r.k[0] === 'p' ? 'do posto' : 'da superintendência'} é ${pf(al.r0)}.` : '.');
+  }
+
+  /* ── PDF do mapa de calor: uma página estreita e comprida, para ler no celular rolando para baixo ── */
+  // as mesmas cores da tela (paleta clara), em hexadecimal; claro = só 1 ou 2 coletas no dia
+  function corPdf(tx, claro) {
+    const hx = c => [1, 3, 5].map(k => parseInt(c.slice(k, k + 2), 16));
+    const mix = (a, b, f) => '#' + hx(a).map((v, k) => Math.round(v + (hx(b)[k] - v) * f).toString(16).padStart(2, '0')).join('');
+    const t = Math.round(tx * 1000) / 1000;
+    const c = t <= .15 ? mix('#4CAF50', '#1B6B2A', 1 - t / .15) : t <= .25 ? mix('#D4AA00', '#B07400', (t - .15) / .10) : mix('#E5483F', '#8E1B1B', Math.min(1, (t - .25) / .25));
+    return claro ? mix(c, '#FFFFFF', .58) : c;
+  }
+  const corTextoPdf = tx => { const t = Math.round(tx * 1000) / 1000; return t > .15 && t <= .25 ? '#946200' : corPdf(tx); };   // amarelo escurecido para ler no branco
+  function exportarMapaPdf() {
+    if (!MAPA || !MAPA.rows.length) return;
+    const {rows, cols, semanal, f} = MAPA, sup = EV.sup;
+    const MARINHO = '#1F2A44', TINTA = '#1F2A44', CINZA = '#5B6678', CLARO = '#8A94A6', SABADO = '#EEF2F8', FIO = '#E6EAF0';
+    const M = 16, fN = 7.8, taxW = 36;
+    const nomeW = Math.min(138, Math.max(64, ...rows.map(r => pdfLargura(r.nome, fN, true)))) + 8;
+    const cw = Math.max(6, Math.min(22, (470 - 2 * M - nomeW - taxW) / cols.length));
+    const W = Math.max(360, Math.round(2 * M + nomeW + cols.length * cw + taxW)), gx = W - M - taxW - cols.length * cw;
+    const rh = 13, cellH = 10;
+    const quebra = (t, tam, larg) => { const out = []; let l = ''; t.split(' ').forEach(p => { const c = l ? l + ' ' + p : p; if (pdfLargura(c, tam) > larg && l) { out.push(l); l = p; } else l = c; }); if (l) out.push(l); return out; };
+
+    // legenda: quadradinhos com texto, quebrando linha quando não cabe
+    const leg = [{t: 'até 15%', c: corPdf(.07)}, {t: '15 a 25%', c: corPdf(.2)}, {t: 'acima de 25%', c: corPdf(.4)}, {t: '1 ou 2 coletas', c: corPdf(.4, true)}];
+    if (!semanal) leg.push({t: 'fora do padrão', c: corPdf(.4), borda: true}, {t: 'sábado', c: SABADO});
+    const marcos = MARCOS.map(m => ({m, d: nDia(m.data) - ALL.d0})).map(o => ({...o, j: cols.findIndex(c => o.d >= c.a && o.d <= c.b)})).filter(o => o.j > 0);
+    marcos.forEach(o => leg.push({t: `${dataCurta(ALL.d0 + o.d)} ${o.m.nome}`, marco: true}));
+    const legL = []; let lx = 0, lin = [];
+    leg.forEach(it => { const w = 13 + pdfLargura(it.t, 7) + 12; if (lx + w > W - 2 * M && lin.length) { legL.push(lin); lin = []; lx = 0; } it.x = lx; lin.push(it); lx += w; });
+    legL.push(lin);
+
+    const notas = [
+      (semanal ? 'Cada quadrado é uma semana (segunda a domingo)' : 'Cada quadrado é um dia') + ': a cor é a taxa de coleta sem RENACH ' + (semanal ? 'da semana' : 'do dia') + ' (verde até 15%, amarelo até 25%, vermelho acima). Quadrado claro: só 1 ou 2 coletas. Traço cinza: sem coleta.',
+      (semanal ? '' : `Contorno: dia fora do padrão ${sup ? 'do próprio posto' : 'da própria superintendência'}, com taxa muito acima do normal ${sup ? 'dele' : 'dela'} e chance de acaso menor que 1 em 100. `) + `Ordem: da maior para a menor taxa no período; à direita, a taxa do período inteiro.`,
+      carimbo()
+    ].map(t => quebra(t, 6.8, W - 2 * M));
+    const yTit = M, hTit = 54, yLeg = yTit + hTit + 12, yCab = yLeg + legL.length * 12 + 8, hCab = 26, yG = yCab + hCab;
+    const yRod = yG + rows.length * rh + 14;
+    const H = Math.round(yRod + notas.reduce((a, l) => a + l.length, 0) * 9 + notas.length * 2 + M);
+    const P = criarPdf(W, H);
+
+    // faixa de título
+    let c = 0, s = 0, nAl = 0; rows.forEach(r => { c += r.c; s += r.s; nAl += Object.keys(r.alerta).length; });
+    const rotPer = {all: 'desde o início', mes: 'mês atual', sem: 'última semana', semAtual: 'semana atual', 1: 'último dia'}[PERIODO];
+    P.retR(M, yTit, W - 2 * M, hTit, 6, MARINHO);
+    P.texto((sup ? `Postos de ${sup}` : 'Superintendências') + (semanal ? ', semana a semana' : ', dia a dia'), M + 12, yTit + 19, 12, {negrito: true, cor: '#FFFFFF', max: W - 2 * M - 24});
+    P.texto(`Taxa de coleta sem RENACH · ${cheio(f)}` + (rotPer ? ` (${rotPer})` : ''), M + 12, yTit + 33, 8, {cor: '#C9D6EE', max: W - 2 * M - 24});
+    P.texto(`${nf(rows.length)} ${sup ? (rows.length === 1 ? 'posto' : 'postos') : 'superintendências'} · ${nf(c)} coletas · ${nf(s)} sem RENACH (${pf(c ? s / c : 0)})` + (semanal ? '' : ` · ${nf(nAl)} ${nAl === 1 ? 'dia fora do padrão' : 'dias fora do padrão'}`), M + 12, yTit + 45, 7.2, {cor: '#9FB0CE', max: W - 2 * M - 24});
+
+    // legenda
+    legL.forEach((l, i) => l.forEach(it => {
+      const x = M + it.x, y = yLeg + i * 12;
+      if (it.marco) P.linha(x + 4.5, y - 1, x + 4.5, y + 8, TINTA, .9, [1.8, 1.4]);
+      else if (it.borda) { P.retR(x - .5, y - .9, 10, 8.8, 2, TINTA); P.retR(x + .5, y + .1, 8, 6.8, 1.4, '#FFFFFF'); P.retR(x + 1.1, y + .7, 6.8, 5.6, 1, it.c); } else P.retR(x, y, 9, 7, 1.6, it.c);
+      P.texto(it.t, x + 13, y + 6.2, 7, {cor: CINZA});
+    }));
+
+    // cabeçalho das colunas: mês, dia e letra do dia da semana; sábados sombreados até o fim da grade
+    const yFim = yG + rows.length * rh;
+    cols.forEach((col, j) => {
+      const x = gx + j * cw, sab = !semanal && detSemana(col.a) === 6;
+      if (sab) P.retR(x - .4, yCab + 9, cw - .4, yFim - yCab - 8, 2, SABADO);
+      const iso = isoDia(ALL.d0 + col.a);
+      if (j === 0 || iso.slice(5, 7) !== isoDia(ALL.d0 + cols[j - 1].a).slice(5, 7)) P.texto(MESES[+iso.slice(5, 7) - 1].slice(0, 3).toUpperCase(), x, yCab + 6, 6.2, {negrito: true, cor: CINZA});
+      const passo = semanal ? Math.max(1, Math.ceil(24 / cw)) : cw >= 7.5 ? 1 : 2;
+      if (j % passo === 0) P.texto(semanal ? dataCurta(ALL.d0 + col.a) : iso.slice(8, 10), x + (cw - 1.6) / 2, yCab + 16, semanal ? 5.6 : 5.8, {negrito: sab, cor: sab ? TINTA : CLARO, alinh: 'c'});
+      if (!semanal) P.texto('DSTQQSS'[detSemana(col.a)], x + (cw - 1.6) / 2, yCab + 23, 5.2, {negrito: sab, cor: sab ? TINTA : CLARO, alinh: 'c'});
+    });
+    P.texto('Período', W - M, yCab + 23, 5.8, {negrito: true, cor: CINZA, alinh: 'r'});
+
+    // linhas
+    rows.forEach((r, i) => {
+      const y = yG + i * rh, sel = EV.posto != null && r.i === EV.posto;
+      if (sel) P.retR(M, y, W - 2 * M, rh, 3, '#E3EAF6');
+      if (i) P.linha(M, y, W - M, y, FIO, .35);
+      P.texto(r.nome, gx - 6, y + rh / 2 + 2.7, fN, {negrito: true, cor: TINTA, alinh: 'r', max: nomeW - 6});
+      cols.forEach((col, j) => {
+        let n = 0, k = 0; for (let d = col.a; d <= col.b; d++) { n += r.S.col[d]; k += r.S.sem[d]; }
+        const x = gx + j * cw, yc = y + (rh - cellH) / 2, w = cw - 1.6;
+        if (!n) { P.retR(x + w * .2, y + rh / 2 - .6, w * .6, 1.2, .6, '#D5DAE1'); return; }
+        if (!semanal && r.alerta[col.a]) {               // fora do padrão: anel escuro, fio branco e o quadrado por dentro
+          P.retR(x - .5, yc - .9, w + 1, cellH + 1.8, 2, TINTA); P.retR(x + .5, yc + .1, w - 1, cellH - .2, 1.4, '#FFFFFF');
+          P.retR(x + 1.1, yc + .7, w - 2.2, cellH - 1.4, 1, corPdf(k / n, n < 3));
+        } else P.retR(x, yc, w, cellH, 1.5, corPdf(k / n, n < 3));
+      });
+      P.texto(pf(r.tx), W - M, y + rh / 2 + 2.7, fN, {negrito: true, cor: corTextoPdf(r.tx), alinh: 'r'});
+    });
+    marcos.forEach(o => { const xm = gx + o.j * cw - .8; P.linha(xm, yCab + 9, xm, yFim + 2, TINTA, .8, [1.8, 1.4]); });
+    P.linha(M, yFim, W - M, yFim, FIO, .35);
+
+    // notas
+    let yn = yRod;
+    notas.forEach(l => { l.forEach(t => { P.texto(t, M, yn, 6.8, {cor: CINZA}); yn += 9; }); yn += 2; });
+    baixarDireto({filename: `coleta-biometrica_mapa_${sup ? 'postos-de-' + slugG(sup) : 'superintendencias'}_${slugG(cheio(f))}.pdf`, data: P.bytes(), tipo: 'application/pdf'});
+  }
+
   /* ── ciclo ── */
   window.desenharEvolucao = function () {
     if (!ALL) return;
@@ -2152,9 +2615,14 @@ function caixaBusca(raiz, aoEscolher) {
     const posto = EV.posto != null;
     $('evQuadro').hidden = !posto; $('evBox').hidden = posto;
     if (posto) { mostrarDia(null); quadro(); } else grafico();
-    tabelaSup(); periodos(); ranking();
-    $('evGrid').hidden = !EV.comp; $('evComp').setAttribute('aria-expanded', String(EV.comp));
+    mapaCalor(); tabelaSup();
     $('evSrc').textContent = `Fonte: base de dados do painel, ${textoPeriodo(ALL.d0, ALL.d1)}` + (ALL.lidoEm ? `, atualizada em ${ALL.lidoEm}` : '') + '.';
+  };
+  // quem melhorou e quem piorou: desenhada na aba Alertas
+  window.desenharComparacao = function () {
+    if (!ALL) return;
+    if (EV.montado !== ALL) { EV.montado = ALL; EV.custom = null; }
+    periodos(); ranking();
   };
   // abre a evolução de um posto ('p:número') ou de uma superintendência ('s:Nome')
   window.escolherNaEvolucao = function (chaveEsc) {
@@ -2164,20 +2632,26 @@ function caixaBusca(raiz, aoEscolher) {
   };
   const visivel = () => ABA === 'e' && !document.body.classList.contains('atualizando');
   CAMPOS.forEach(id => $(id).addEventListener('change', lerPeriodos));
-  $('evPVolta').addEventListener('click', () => { EV.custom = null; window.desenharEvolucao(); });
+  $('evPVolta').addEventListener('click', () => { EV.custom = null; window.desenharComparacao(); });
   $('evUni').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { EV.uni = b.dataset.u; EV.rkSup = null; ranking(); } });
   $('evRkVolta').addEventListener('click', () => { EV.rkSup = null; ranking(); $('evGrid').scrollIntoView({block: 'nearest', behavior: liso()}); });
   $('evHrow').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k; EV.sort = [k, EV.sort[0] === k ? -EV.sort[1] : (k === 'nome' || k === 'pos' ? 1 : -1)]; ranking(); });
   const abrirLinha = r => {
     if (!r) return;
     if (EV.uni === 's' && !EV.rkSup && r.dataset.k[0] === 's') { EV.rkSup = r.dataset.k.slice(2); ranking(); $('evGrid').scrollIntoView({block: 'nearest', behavior: liso()}); return; }   // abre os postos dela ali mesmo
-    window.escolherNaEvolucao(r.dataset.k); window.desenharEvolucao(); $('tabE').scrollIntoView({block: 'start', behavior: liso()}); };
+    verEvolucao(r.dataset.k); };   // abre o posto ou a superintendência na Evolução
   $('evRows').addEventListener('click', e => abrirLinha(e.target.closest('tr')));
   $('evRows').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirLinha(e.target.closest('tr')); } });
   $('evLimpar').addEventListener('click', () => { EV.sup = ''; EV.posto = null; EV.dia = null; window.desenharEvolucao(); });
   $('evRkExp').addEventListener('click', exportarRank);
-  $('evComp').addEventListener('click', () => { EV.comp = !EV.comp; window.desenharEvolucao(); if (EV.comp) $('evComp').scrollIntoView({block: 'start', behavior: liso()}); });
+  // mapa de calor: o texto acompanha o quadrado; o nome abre o posto (ou a superintendência)
+  ['mousemove', 'click'].forEach(ev => $('evMapaSvg').addEventListener(ev, e => {
+    const nome = e.target.closest('.hmnome');
+    if (nome && ev === 'click') { window.escolherNaEvolucao(nome.dataset.k); window.desenharEvolucao(); $('tabE').scrollIntoView({block: 'start', behavior: liso()}); return; }
+    const r = e.target.closest('rect[data-r]'); if (r) mapaDia(r);
+  }));
   $('evSupExp').addEventListener('click', exportarSup);
+  $('evMapaPdf').addEventListener('click', exportarMapaPdf);
   $('evSupPdf').addEventListener('click', exportarSupPdf);
   $('evRkPdf').addEventListener('click', exportarRankPdf);
   $('evSupH').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const k = b.dataset.k; if (RKS[k]) EV.supRk = k; EV.supSort = [k, EV.supSort[0] === k ? -EV.supSort[1] : (k === 'nome' || k === 'pos' ? 1 : -1)]; tabelaSup(); });
@@ -2207,13 +2681,182 @@ function caixaBusca(raiz, aoEscolher) {
   let largura = 0;
   new ResizeObserver(() => { const w = $('evSvg').clientWidth; if (w && Math.abs(w - largura) > 8) { largura = w; if (G && visivel() && EV.posto == null) { EV.dia = null; grafico(); } } }).observe($('evSvg'));
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (visivel()) window.desenharEvolucao(); });
+  let largMapa = 0;
+  addEventListener('resize', () => { const w = $('evMapa').clientWidth; if (visivel() && w && Math.abs(w - largMapa) > 8) { largMapa = w; mapaCalor(); } });
+})();
+
+/* ── aba Alertas: primeiro as superintendências entre si; clicando numa, os postos dela entre si ──
+   Duas leituras em cada nível:
+   1. Últimos 7 dias contra as 3 semanas anteriores: todos, do que mais piorou para o que mais melhorou,
+      com destaque para quem mudou de patamar (deteccao.js, detVirada).
+   2. Dias fora do padrão (detDias), juntando dias seguidos em um período.
+   3. Peso maior que o tamanho: a fatia dos erros do grupo bem maior que a fatia das coletas, e não por acaso. */
+(function () {
+  const $ = id => document.getElementById(id);
+  const nf = n => Math.round(n).toLocaleString('pt-BR');
+  const n1 = n => n.toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+  const pf = t => t == null || !isFinite(t) ? '–' : (t * 100).toLocaleString('pt-BR', {minimumFractionDigits: 1, maximumFractionDigits: 1}) + '%';
+  const h = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  const quando = d => `${diaSemana(ALL.d0 + d)}, ${dataCurta(ALL.d0 + d)}`;
+  const corTaxa = t => corPelaTaxa(t);
+  let FILTRO = '';
+
+  const idsDaSup = nome => ALL.postos.map((p, i) => p.sup === nome ? i : -1).filter(i => i >= 0);
+  // no Estado, as superintendências; dentro de uma, os postos dela
+  function entidades() {
+    if (!FILTRO) return [...new Set(ALL.postos.map(p => p.sup))].map(n => ({k: 's:' + n, nome: n, tipo: 'sup', S: evSerie(idsDaSup(n))}));
+    return idsDaSup(FILTRO).map(i => ({k: 'p:' + i, i, nome: tidy(ALL.postos[i].nome), tipo: 'posto', S: evSerie([i])}));
+  }
+  // últimos 7 dias contra as 3 semanas antes, para todos (a virada marca quem mudou de patamar)
+  function semana(e, fim) {
+    const a = fim - DET.JANELA + 1, b0 = Math.max(0, a - DET.ANTES);
+    let rn = 0, rk = 0, bn = 0, bk = 0;
+    for (let d = Math.max(0, a); d <= fim; d++) { rn += e.S.col[d]; rk += e.S.sem[d]; }
+    for (let d = b0; d < a; d++) { bn += e.S.col[d]; bk += e.S.sem[d]; }
+    const v = detVirada(e.S, fim, e.tipo);
+    return {a: Math.max(0, a), fim, b0, rn, rk, bn, bk, r1: rn ? rk / rn : null, r0: bn ? bk / bn : null, v};
+  }
+  // dias fora do padrão; dias seguidos (pulando os dias sem coleta) viram um período
+  function periodos(e, f) {
+    const dias = detDias(e.S, f, e.tipo).sort((x, y) => x.d - y.d), out = [];
+    dias.forEach(x => {
+      const ult = out[out.length - 1];
+      let seguido = false;
+      if (ult) { seguido = true; for (let d = ult.b + 1; d < x.d; d++) if (e.S.col[d]) { seguido = false; break; } }
+      if (seguido) { ult.b = x.d; ult.dias.push(x); } else out.push({a: x.d, b: x.d, dias: [x]});
+    });
+    out.forEach(p => {
+      p.n = p.dias.reduce((s, x) => s + x.n, 0); p.k = p.dias.reduce((s, x) => s + x.k, 0);
+      p.r0 = p.dias[0].r0; p.exc = p.dias.reduce((s, x) => s + x.exc, 0);
+    });
+    return out;
+  }
+
+  // peso maior que o tamanho: no período, a fatia de coletas sem RENACH passa de 1,2 vez a fatia de coletas,
+  // com volume mínimo e chance de acaso menor que 1 em 100 (contra a taxa do resto do grupo)
+  const PESO = {razao: 1.2, posto: 30, sup: 200, p: .01};
+  function pesos(E, f) {
+    const L = E.map(e => { let n = 0, k = 0; for (let d = f[0]; d <= f[1]; d++) { n += e.S.col[d]; k += e.S.sem[d]; } return {e, n, k}; });
+    const N = L.reduce((a, x) => a + x.n, 0), K = L.reduce((a, x) => a + x.k, 0);
+    if (!N || !K) return [];
+    return L.filter(x => {
+      if (x.n < PESO[x.e.tipo] || N - x.n <= 0) return false;
+      x.fc = x.n / N; x.fe = x.k / K; x.vz = x.fe / x.fc; x.exc = x.k - x.n * K / N;
+      return x.vz >= PESO.razao && caudaBin(x.k, x.n, (K - x.k) / (N - x.n)) < PESO.p;
+    }).sort((a, b) => b.exc - a.exc);
+  }
+  function cardPeso(x, grupo) {
+    return `<article class="al al-peso" tabindex="0" data-k="${h(x.e.k)}">
+      <span class="alvz">${n1(x.vz).replace(/,0$/, '')}×</span>
+      <div class="altexto"><p class="alnome"><b>${h(x.e.nome)}</b></p><p class="alexc">+${nf(x.exc)} sem RENACH acima da média ${grupo}</p></div>
+        <div class="pfat alfat">
+          <div class="pft"><b>${pf(x.fc)}</b><span>das coletas ${grupo}</span></div>
+          <i class="pfseta" aria-hidden="true">→</i>
+          <div class="pft err" style="--cv:${css('--g1')}"><b>${pf(x.fe)}</b><span>das coletas sem RENACH ${grupo}</span></div>
+        </div>
+    </article>`;
+  }
+
+  /* ── as últimas 4 semanas em barras: a cor é a taxa do dia; marco (Carta Turbo) em traço ── */
+  function barras(S, fim, marca) {
+    const ini = Math.max(0, fim - 27), n = fim - ini + 1, bw = 6, gap = 2, W = n * (bw + gap), H = 34;
+    const line = css('--line'), ink = css('--ink'), soft = css('--soft'), muted = css('--muted');
+    let o = `<svg class="almini" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true">`;
+    for (let d = ini; d <= fim; d++) {
+      const x = (d - ini) * (bw + gap), c = S.col[d], s = S.sem[d];
+      if (marca.faixa && d >= marca.faixa[0] && d <= marca.faixa[1]) o += `<rect x="${x - 1}" y="0" width="${bw + 2}" height="${H}" fill="${soft}"/>`;
+      if (MARCOS.some(m => nDia(m.data) - ALL.d0 === d)) o += `<line x1="${x - 1}" x2="${x - 1}" y1="0" y2="${H}" stroke="${muted}" stroke-dasharray="2 2"/>`;
+      if (!c) { o += `<rect x="${x}" y="${H - 3}" width="${bw}" height="2" fill="${line}"/>`; continue; }
+      const t = s / c, hh = Math.max(3, t * (H - 4)), dest = marca.dias && d >= marca.dias[0] && d <= marca.dias[1];
+      o += `<rect x="${x}" y="${H - hh}" width="${bw}" height="${hh}" rx="1.5" fill="${corTaxa(t)}" opacity="${c < 3 ? .45 : 1}"${dest ? ` stroke="${ink}" stroke-width="1.6"` : ''}/>`;
+    }
+    return o + '</svg>';
+  }
+
+  function tabelaSemana(L, f) {
+    const ok = L.filter(x => x.w.rn >= (x.e.tipo === 'sup' ? 20 : 5) && x.w.bn >= (x.e.tipo === 'sup' ? 40 : 10));
+    const fora = L.length - ok.length;
+    ok.sort((a, b) => (b.w.r1 - b.w.r0) - (a.w.r1 - a.w.r0) || b.w.rn - a.w.rn);
+    const maxD = Math.max(.05, ...ok.map(x => Math.abs(x.w.r1 - x.w.r0)));
+    const linhas = ok.map(x => {
+      const w = x.w, dif = w.r1 - w.r0, sobe = dif > .0005, desce = dif < -.0005;
+      const chip = w.v ? `<span class="alchip ${w.v.piorou ? 'pior' : 'melhor'}" title="A diferença é grande e o volume da semana mostra que não é acaso">${w.v.piorou ? 'piora confirmada' : 'melhora confirmada'}</span>` : '';
+      return `<tr tabindex="0" data-k="${h(x.e.k)}" class="${w.v ? (w.v.piorou ? 'vpior' : 'vmelhor') : ''}">
+        <td class="l"><span class="nm">${h(x.e.nome)}</span>${chip}</td>
+        <td>${pf(w.r0)} <small>${nf(w.bk)} de ${nf(w.bn)}</small></td>
+        <td><b style="color:${corTaxa(w.r1)}">${pf(w.r1)}</b> <small>${nf(w.rk)} de ${nf(w.rn)}</small></td>
+        <td><span class="varc"><b class="${sobe ? 'ruim' : desce ? 'bom' : ''}">${sobe ? '▲ +' : desce ? '▼ −' : ''}${n1(Math.abs(dif * 100))}</b><span class="var"><i style="${dif >= 0 ? 'left:50%' : 'right:50%'};width:${(Math.abs(dif) / maxD * 50).toFixed(1)}%;background:${dif > 0 ? css('--g1') : css('--g4')}"></i></span></span></td>
+        <td>${barras(x.e.S, f[1], {faixa: [w.a, w.fim]})}</td>
+      </tr>`;
+    }).join('');
+    return `<div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">${FILTRO ? 'Posto' : 'Superintendência'}</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Últimos 7 dias</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div>` +
+      (fora ? `<p class="hint alnota">${nf(fora)} ${fora === 1 ? (FILTRO ? 'posto ficou' : 'superintendência ficou') : (FILTRO ? 'postos ficaram' : 'superintendências ficaram')} de fora por ter poucas coletas para comparar.</p>` : '');
+  }
+  function cardPeriodo(e, p) {
+    const um = p.a === p.b, quandoTxt = um ? quando(p.a) : `${quando(p.a)} a ${quando(p.b)}`;
+    return `<article class="al al-dia" tabindex="0" data-k="${h(e.k)}">
+      <span class="alicone" aria-hidden="true">▲</span>
+      <div class="altexto"><p class="alnome"><b>${h(e.nome)}</b>${um ? '' : `<span class="alpasso">período de ${p.dias.length} dias</span>`}</p>
+        <p><b>${quandoTxt}</b>: ${nf(p.k)} de ${nf(p.n)} coletas sem RENACH (<b style="color:${corTaxa(p.k / p.n)}">${pf(p.k / p.n)}</b>). O normal ${e.tipo === 'posto' ? 'do posto' : 'da superintendência'} é ${pf(p.r0)}.</p></div>
+      ${barras(e.S, Math.min(ALL.N - 1, p.b + 7), {dias: [p.a, p.b]})}
+    </article>`;
+  }
+
+  function preencherFiltro() {
+    const sel = $('alSup'); if (sel.options.length > 1) return;
+    [...new Set(ALL.postos.map(p => p.sup))].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; sel.append(o); });
+  }
+  window.contarAlertas = function () {               // o número na aba: postos fora do comum no período, no Estado inteiro
+    if (!ALL) return;
+    const f = faixa(ALL, PERIODO), b = $('alBadge');
+    const n = ALL.postos.filter((p, i) => detDias(evSerie([i]), f, 'posto').length).length;
+    b.hidden = !n; b.textContent = n;
+  };
+  window.desenharAlertas = function () {
+    if (!ALL) return;
+    preencherFiltro();
+    $('alSup').value = FILTRO;
+    const f = faixa(ALL, PERIODO), E = entidades();
+    const L = E.map(e => ({e, w: semana(e, f[1]), p: periodos(e, f)}));
+    $('alTit').textContent = FILTRO ? `${FILTRO}: os postos entre si` : 'As superintendências entre si';
+    $('alSub').innerHTML = FILTRO ? 'Cada posto comparado com ele mesmo. Clique em um posto para abrir na Evolução.' : 'Cada superintendência comparada com ela mesma. Clique em uma para ver os postos dela.';
+    $('alVolta').hidden = !FILTRO;
+    $('alTipos').innerHTML = ''; $('alSab').hidden = true;
+    const grupo = FILTRO ? 'de ' + FILTRO : 'do Estado', P = [];
+    L.forEach(x => x.p.forEach(p => P.push({e: x.e, p})));
+    P.sort((a, b) => b.p.b - a.p.b || b.p.exc - a.p.exc);
+    const conta = n => `<span class="alconta${n ? '' : ' zero'}">${nf(n)}</span>`;
+    const W = pesos(E, f);
+    let o = `<section class="algrupo"><h3>Últimos 7 dias contra as 3 semanas anteriores <small>${dataCurta(ALL.d0 + Math.max(0, f[1] - 6))} a ${dataCurta(ALL.d0 + f[1])}; do que mais piorou para o que mais melhorou</small></h3>${tabelaSemana(L, f)}</section>`;
+    if (FILTRO) o += `<section class="algrupo"><h3>${conta(P.length)}Fora do comum <small>dias em que a taxa do posto disparou acima do normal dele; dias seguidos viram um período</small></h3>` +
+      (P.length ? P.map(x => cardPeriodo(x.e, x.p)).join('') : `<p class="alvazio">Nenhum posto de ${h(FILTRO)} fora do comum no período escolhido.</p>`) + '</section>';
+    o += `<section class="algrupo"><h3>${conta(W.length)}Pesam mais do que o tamanho</h3>` +
+      (W.length ? W.map(x => cardPeso(x, grupo)).join('') : `<p class="alvazio">Nenhum${FILTRO ? ' posto' : 'a superintendência'} pesa mais do que o tamanho no período escolhido.</p>`) + '</section>';
+    $('alLista').innerHTML = o;
+    $('alComo').innerHTML = '<b>Como ler.</b> Cada um é comparado com ele mesmo, na medida dele. ' +
+      `<b>Fora do comum</b>: dia em que a taxa ficou bem acima do normal (${Math.round(DET.posto.dia.dif * 100)} pontos para posto, com pelo menos ${DET.posto.dia.n} coletas; ${Math.round(DET.sup.dia.dif * 100)} pontos para superintendência), com chance menor que 1 em 100 de ser acaso. ` +
+      `<b>Pesam mais do que o tamanho</b>: a fatia dos erros passa de ${n1(PESO.razao)} vez a fatia das coletas, com pelo menos ${PESO.posto} coletas (posto) ou ${PESO.sup} (superintendência) e chance menor que 1 em 100 de ser acaso; a ordem é pelos erros acima da média. ` +
+      `<b>Piora ou melhora confirmada</b>: a taxa dos últimos 7 dias ficou ${Math.round(DET.posto.virada.dif * 100)} pontos ou mais (posto) ou ${Math.round(DET.sup.virada.dif * 100)} ou mais (superintendência) longe da taxa das 3 semanas anteriores, com volume que mostra que não é acaso. ` +
+      MARCOS.map(m => `O traço pontilhado nas barras marca ${dataCurta(nDia(m.data))}: ${h(m.nome)}.`).join(' ');
+  };
+  const visivel = () => ABA === 'a' && !document.body.classList.contains('atualizando');
+  const entrar = k => {
+    if (k[0] === 's') { FILTRO = k.slice(2); window.desenharAlertas(); $('tabAl').scrollIntoView({block: 'start', behavior: 'smooth'}); }
+    else verEvolucao(k);
+  };
+  $('alSup').addEventListener('change', e => { FILTRO = e.target.value; window.desenharAlertas(); });
+  $('alVolta').addEventListener('click', () => { FILTRO = ''; window.desenharAlertas(); });
+  $('alLista').addEventListener('click', e => { const el = e.target.closest('[data-k]'); if (el) entrar(el.dataset.k); });
+  $('alLista').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset && e.target.dataset.k) { e.preventDefault(); entrar(e.target.dataset.k); } });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (visivel()) window.desenharAlertas(); });
 })();
 
 /* ── controle: abas, período e abertura ── */
 const MOLDE_PAINEL = document.getElementById('tabA').innerHTML;
 let ALL = null;                                     // a base inteira, por dia
 let PERIODO = 'all';                                // 'all', 'mes' (mês atual), 'sem' (última semana), 'semAtual' (semana atual) ou '1'
-let ABA = 'p';                                      // 'p' postos, 's' superintendências, 'e' evolução
+let ABA = 'p';                                      // 'p' postos, 's' superintendências, 'e' evolução, 'a' alertas
 let PAINEL = null;                                  // o painel montado para o período em uso
 
 function marcarAbas() {
@@ -2228,14 +2871,18 @@ function aplicarPeriodo() {
   [...document.getElementById('per').querySelectorAll('button')].forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === PERIODO)));
   const n = f[1] - f[0] + 1;
   document.getElementById('perTxt').textContent = (n === 1 ? dataCheia(ALL.d0 + f[1]) + ', ' + diaSemana(ALL.d0 + f[1]) : dataCheia(ALL.d0 + f[0]) + ' a ' + dataCheia(ALL.d0 + f[1]) + ' · ' + n + ' dias');
-  if (ABA === 'e') desenharEvolucao();
+  if (ABA === 'e') desenharEvolucao(); else if (ABA === 'a') desenharAlertas();
+  contarAlertas();
 }
 function irAba(id, nome) {
   if (!PAINEL) return;
   ABA = id;
   document.body.classList.toggle('evolucao', id === 'e');
+  document.body.classList.toggle('alertas', id === 'a');
   document.getElementById('tabE').hidden = id !== 'e';
+  document.getElementById('tabAl').hidden = id !== 'a';
   if (id === 'e') { marcarAbas(); desenharEvolucao(); }
+  else if (id === 'a') { marcarAbas(); desenharAlertas(); }
   else PAINEL.abrir(id, nome);
 }
 // chamado pelo botão "Ver a evolução" do detalhe de um posto ou de uma superintendência
@@ -2253,6 +2900,7 @@ function telaAtualizar(sim) {
   document.body.classList.toggle('atualizando', sim);
   document.getElementById('tabU').hidden = !sim;
   document.getElementById('tabE').hidden = sim || ABA !== 'e' || !PAINEL;
+  document.getElementById('tabAl').hidden = sim || ABA !== 'a' || !PAINEL;
   try { history.replaceState(null, '', location.pathname + location.search + (sim ? '#atualizar' : '')); } catch (e) {}
   if (sim) { scrollTo(0, 0); window.dispatchEvent(new Event('abriu-atualizar')); }
   else if (PAINEL) irAba(ABA);                       // redesenha no tamanho certo
@@ -2266,7 +2914,7 @@ function telaAtualizar(sim) {
     const b = document.createElement('button'); b.className = 'ubtn'; b.textContent = 'Atualizar dados'; b.addEventListener('click', () => telaAtualizar(true)); box.append(b);
   };
   document.getElementById('tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) irAba(b.dataset.m); });
-  document.getElementById('per').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; EV.custom = null; if (b.dataset.p !== PERIODO) { PERIODO = b.dataset.p; aplicarPeriodo(); } else if (ABA === 'e') desenharEvolucao(); });
+  document.getElementById('per').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; EV.custom = null; if (b.dataset.p !== PERIODO) { PERIODO = b.dataset.p; aplicarPeriodo(); } else if (ABA === 'e') desenharEvolucao(); else if (ABA === 'a') desenharAlertas(); });
   document.getElementById('adm').addEventListener('click', () => telaAtualizar(true));
   document.getElementById('u-voltar').addEventListener('click', () => telaAtualizar(false));
   (async () => {
@@ -2275,7 +2923,7 @@ function telaAtualizar(sim) {
     addEventListener('hashchange', () => telaAtualizar(location.hash === '#atualizar'));
     try { ALL = decodificar(await lerBase('painel.json')); }
     catch (e) { falha(e && e.message ? e.message : String(e)); return; }
-    try { document.body.classList.remove('aguardando'); box.hidden = true; aplicarPeriodo(); }
+    try { document.body.classList.remove('aguardando'); box.hidden = true; aplicarPeriodo(); irAba(ABA); }
     catch (e) { ALL = null; PAINEL = null; falha('A página encontrou um erro ao montar o painel. Detalhe: ' + (e && e.message ? e.message : e)); }
   })();
 })();
@@ -2287,7 +2935,7 @@ function abrirSac(prot) {
   document.getElementById('sacTit').textContent = prot;
   document.getElementById('sacSub').textContent = q ? tidy(ALL.postos[q.i].nome) + ' · aberto em ' + dataCheia(ALL.d0 + q.d) : '';
   const t = document.getElementById('sacTxt');
-  t.textContent = q && q.texto ? q.texto : 'A base não tem o texto desta manifestação. Ele passa a aparecer quando a planilha de SACs vier com a coluna Manifestação.';
+  t.textContent = q && q.texto ? mascararDados(q.texto) : 'A base não tem o texto desta manifestação. Ele passa a aparecer quando a planilha de SACs vier com a coluna Manifestação.';
   t.classList.toggle('vazio', !(q && q.texto));
   if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
 }
@@ -2388,7 +3036,7 @@ document.addEventListener('click', e => {
         if (!data) { dataRuim++; continue; }
         if (vistos[prot]) { repetidos++; continue; }
         vistos[prot] = true;
-        lidos.push({prot, posto, data, texto: sTexto >= 0 ? txt(L[sTexto]) : ''});
+        lidos.push({prot, posto, data, texto: sTexto >= 0 ? mascararDados(txt(L[sTexto])) : ''});
       }
     }
     if (sacIncompleto) avisos.push(plural(sacIncompleto, 'linha de SAC ficou', 'linhas de SAC ficaram') + ' de fora por estar sem protocolo ou sem posto.');
