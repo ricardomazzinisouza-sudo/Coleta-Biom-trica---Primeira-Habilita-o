@@ -567,6 +567,33 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
 
 .stat .vsesel{display:block;margin-top:3px;font-size:12.5px;color:var(--muted);line-height:1.6}
 .stat .vsesel em{display:inline-block;margin-top:0;font-size:12.5px;line-height:1.5;font-style:normal;font-weight:800;color:#fff;border-radius:6px;padding:1px 7px;margin-right:2px;white-space:nowrap}
+
+.hmtip{position:fixed;z-index:50;min-width:190px;max-width:260px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(15,23,42,.18);padding:10px 12px;pointer-events:none;font-size:13px;color:var(--text)}
+.hmtip[hidden]{display:none}
+.hmtip p{margin:0}
+.hmtn{font-weight:900;color:var(--ink);font-size:14px}
+.hmtd{color:var(--muted);font-size:12.5px;margin-top:1px}
+.hmtx{font-size:24px;font-weight:900;line-height:1.1;margin:6px 0 6px}
+.hmtx small{font-size:12px;font-weight:700;color:var(--muted);margin-left:6px}
+.hmtl{display:flex;justify-content:space-between;gap:14px;padding:2px 0;border-top:1px solid var(--line)}
+.hmtl span{color:var(--muted)}
+.hmtl b{color:var(--ink);font-weight:800}
+.hmtal{margin-top:6px !important;font-size:12px;font-weight:800;color:#fff;background:var(--g1);border-radius:6px;padding:3px 7px}
+
+.qev{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:stretch}
+.qevp{background:var(--soft);border-radius:9px;padding:8px 10px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.qevp span{font-size:12px;font-weight:700;color:var(--muted)}
+.qevp b{font-size:24px;font-weight:900;line-height:1.15}
+.qevp small{font-size:11.5px;color:var(--muted)}
+.qevs{align-self:center;font-style:normal;font-size:18px;font-weight:700;color:var(--muted)}
+.qevd{display:inline-block;margin-top:10px;font-size:14px;font-weight:900;color:#fff;border-radius:8px;padding:3px 10px}
+.qevd.ruim{background:var(--g1)} .qevd.bom{background:var(--g4)} .qevd.neutro{background:var(--g5)}
+.qatip{margin-top:12px;font-size:13px;color:var(--text);border-left:3px solid var(--g1);padding:6px 0 6px 10px;background:color-mix(in srgb,var(--g1) 8%,transparent);border-radius:0 8px 8px 0}
+.qatip > b{color:var(--g1);display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;margin-bottom:2px}
+.qatip span{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:baseline;padding:2px 10px 2px 0}
+.qatip em{font-style:normal;font-weight:900}
+.qatip span small{color:var(--muted);font-size:11.5px;min-width:78px;text-align:right}
+.qatmais{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
 </style>
 </head>
 <body class="aguardando">
@@ -748,7 +775,7 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
         <div class="tools"><button class="exp" id="evMapaPdf" title="Gera um PDF colorido deste mapa, pensado para ler no celular">Baixar PDF</button></div>
       </div>
       <div class="hmscroll" id="evMapaSvg" tabindex="0" aria-label="Mapa de calor por dia"></div>
-      <p class="hminfo" id="evMapaInfo" aria-live="polite"></p>
+      <p class="hminfo" id="evMapaInfo" hidden></p>
     </section>
 
     <section class="panel evsup" id="evSupBox" hidden>
@@ -2255,6 +2282,7 @@ function caixaBusca(raiz, aoEscolher) {
     const som = f => { let cc = 0, ss = 0; for (let d = f[0]; d <= f[1]; d++) { cc += ALL.com[i][d] + ALL.sem[i][d]; ss += ALL.sem[i][d]; } return {c: cc, s: ss, tx: cc ? ss / cc : null}; };
     const PB = evPeriodos(true), U = som(PB.b), A = PB.a ? som(PB.a) : null, dif = A && A.tx != null && U.tx != null ? U.tx - A.tx : null;
     const metades = PB.a && PB.b[0] !== X.f[0];        // o período foi partido em dois
+    const atip = detDias(evSerie([i]), X.f, 'posto').sort((x, y) => y.d - x.d);   // dias fora do padrão no período, do mais recente
     const rotPer = {all: 'Desde o início', mes: 'Mês atual', sem: 'Última semana', semAtual: 'Semana atual', 1: 'Último dia'}[PERIODO];
     // SACs do período
     const sacsP = ALL.sacs.filter(q => q[1] === i && q[2] >= X.f[0] && q[2] <= X.f[1]).sort((a, b) => b[2] - a[2] || (a[0] < b[0] ? -1 : 1));
@@ -2299,10 +2327,13 @@ function caixaBusca(raiz, aoEscolher) {
          </div>
          <div class="qcard"><h4>${rotPer}: evolução</h4>
            ${dif == null ? `<span class="qnum">${pf(U.tx)}</span><span class="qsub">${U.tx == null ? 'Sem coleta no período.' : A ? 'Sem coleta no período anterior para comparar.' : 'A base ainda não tem um período anterior para comparar.'}</span>`
-             : `<span class="qnum">${sinal(dif)}${pp(dif)}</span><span class="qsub"><span class="dl ${Math.abs(dif) < .0005 ? 'neutro' : dif > 0 ? 'ruim' : 'bom'}"><i>${Math.abs(dif) < .0005 ? '●' : dif > 0 ? '▲' : '▼'}</i>${Math.abs(dif) < .0005 ? 'igual' : dif > 0 ? 'piorou' : 'melhorou'}</span></span>
-                <span class="qsub">de ${pf(A.tx)} (${evRot(PB.a)}) para ${pf(U.tx)} (${evRot(PB.b)})</span>`}
-           <span class="qsub">${dif == null ? '' : metades ? (PERIODO === 'all' ? 'Primeira metade do período contra a segunda.' : `A base ainda não tem ${PERIODO === 'mes' ? 'os mesmos dias do mês anterior' : PERIODO === 'semAtual' || PERIODO === 'sem' ? 'a semana anterior' : `os ${X.n} dias anteriores`}: compara as duas metades do que existe.`) : PERIODO === '1' ? 'Contra o dia anterior com coleta.' : PERIODO === 'sem' ? 'Contra a semana anterior.' : PERIODO === 'semAtual' ? 'Contra os mesmos dias da semana anterior.' : PERIODO === 'mes' ? 'Contra os mesmos dias do mês anterior.' : `Contra os ${PB.a[1] - PB.a[0] + 1} dias anteriores.`}</span>
-           <span class="qsub">${nf(U.s)} sem RENACH em ${colN(U.c)} de ${evRot(PB.b)}</span>
+             : `<div class="qev">
+                  <div class="qevp"><span>${evRot(PB.a)}</span><b style="color:${corTaxa(A.tx)}">${pf(A.tx)}</b><small>${nf(A.s)} de ${colN(A.c)}</small></div>
+                  <i class="qevs" aria-hidden="true">→</i>
+                  <div class="qevp"><span>${evRot(PB.b)}</span><b style="color:${corTaxa(U.tx)}">${pf(U.tx)}</b><small>${nf(U.s)} de ${colN(U.c)}</small></div>
+                </div>
+                <span class="qevd ${Math.abs(dif) < .0005 ? 'neutro' : dif > 0 ? 'ruim' : 'bom'}">${Math.abs(dif) < .0005 ? '● igual' : (dif > 0 ? '▲ +' : '▼ −') + pp(dif) + (dif > 0 ? ' piorou' : ' melhorou')}</span>`}
+           ${atip.length ? `<div class="qatip"><b>${atip.length === 1 ? 'Dia fora do padrão' : nf(atip.length) + ' dias fora do padrão'}</b>${atip.slice(0, 4).map(a => `<span>${diaSemana(ALL.d0 + a.d).slice(0, 3)}, ${dataCurta(ALL.d0 + a.d)}<em style="color:${corTaxa(a.k / a.n)}">${pf(a.k / a.n)}</em><small>normal ${pf(a.r0)}</small></span>`).join('')}${atip.length > 4 ? `<small class="qatmais">e mais ${nf(atip.length - 4)}</small>` : ''}</div>` : ''}
          </div>
          <div class="qcard"><h4>SACs: ${rotPer.toLowerCase()}</h4>
            <span class="qnum">${nf(sacsP.length)}</span><span class="qsub">${sacsP.length === 1 ? 'SAC aberto' : 'SACs abertos'} de ${evRot(X.f)}</span>
@@ -2493,19 +2524,33 @@ function caixaBusca(raiz, aoEscolher) {
       o += `<text x="${xl + cols.length * cw + 6}" y="${y + ch / 2 + 3}" font-size="12" font-weight="800" fill="${corTaxa(r.tx)}">${pf(r.tx)}</text>`;
     });
     box.innerHTML = o + '</svg>';
-    MAPA = {rows, cols, semanal, f};
-    const nAl = rows.reduce((a, r) => a + Object.keys(r.alerta).length, 0);
+    MAPA = {rows, cols, semanal, f, ref: sup ? evSerie(idsDaSup(sup)) : evSerie(ALL.postos.map((p, i) => i)), refNome: sup ? sup : 'Estado'};
     $('evMapaTit').textContent = (sup ? `Postos de ${sup}` : 'Superintendências') + (semanal ? ', semana a semana' : ', dia a dia');
-    $('evMapaInfo').textContent = nAl ? `${nf(nAl)} ${nAl === 1 ? 'dia fora do padrão marcado' : 'dias fora do padrão marcados'} com contorno. Passe o mouse ou toque num quadrado para ver o dia.` : 'Passe o mouse ou toque num quadrado para ver o dia.';
   }
-  function mapaDia(el) {
-    if (!MAPA || !el || el.dataset.r == null) return;
-    const r = MAPA.rows[+el.dataset.r], c = MAPA.cols[+el.dataset.c]; if (!r || !c) return;
-    let n = 0, k = 0; for (let d = c.a; d <= c.b; d++) { n += r.S.col[d]; k += r.S.sem[d]; }
-    const quando = MAPA.semanal ? `semana de ${dataCurta(ALL.d0 + c.a)} a ${dataCurta(ALL.d0 + c.b)}` : `${diaSemana(ALL.d0 + c.a)}, ${dataCheia(ALL.d0 + c.a)}`;
-    const al = !MAPA.semanal && r.alerta[c.a];
-    $('evMapaInfo').innerHTML = `<b>${h(r.nome)}</b> · ${quando}: ` + (n ? `${nf(k)} de ${nf(n)} ${n === 1 ? 'coleta' : 'coletas'} sem RENACH (<b style="color:${corTaxa(k / n)}">${pf(k / n)}</b>)` : 'sem coleta') +
-      (al ? `. <b>Fora do padrão</b>: o normal ${r.k[0] === 'p' ? 'do posto' : 'da superintendência'} é ${pf(al.r0)}.` : '.');
+
+
+  // janelinha que acompanha o mouse (ou o toque) com os números do quadrado
+  function mapaTip(el, ev) {
+    let tip = $('hmTip');
+    if (!tip) { tip = document.createElement('div'); tip.id = 'hmTip'; tip.className = 'hmtip'; tip.setAttribute('role', 'tooltip'); document.body.append(tip); }
+    if (!MAPA || !el || el.dataset.r == null) { tip.hidden = true; return; }
+    const r = MAPA.rows[+el.dataset.r], c = MAPA.cols[+el.dataset.c]; if (!r || !c) { tip.hidden = true; return; }
+    let n = 0, k = 0, rn = 0, rk = 0;
+    for (let d = c.a; d <= c.b; d++) { n += r.S.col[d]; k += r.S.sem[d]; rn += MAPA.ref.col[d]; rk += MAPA.ref.sem[d]; }
+    const quando = MAPA.semanal ? `Semana de ${dataCurta(ALL.d0 + c.a)} a ${dataCurta(ALL.d0 + c.b)}` : `${diaSemana(ALL.d0 + c.a)}, ${dataCheia(ALL.d0 + c.a)}`;
+    const al = !MAPA.semanal && r.alerta[c.a], posto = r.k[0] === 'p';
+    const linha = (rot, v, cor) => `<div class="hmtl"><span>${rot}</span><b${cor ? ` style="color:${cor}"` : ''}>${v}</b></div>`;
+    tip.innerHTML = `<p class="hmtn">${h(r.nome)}</p><p class="hmtd">${quando}</p>` +
+      (n ? `<p class="hmtx" style="color:${corTaxa(k / n)}">${pf(k / n)}<small>sem RENACH</small></p>
+        ${linha('Coletas', nf(n))}${linha('Sem RENACH', nf(k))}
+        ${rn ? linha(`${h(MAPA.refNome)} ${MAPA.semanal ? 'na semana' : 'no dia'}`, pf(rk / rn), corTaxa(rk / rn)) : ''}
+        ${linha(`${posto ? 'Posto' : 'Superintendência'} no período`, pf(r.tx), corTaxa(r.tx))}
+        ${al ? `<p class="hmtal">Fora do padrão: o normal ${posto ? 'do posto' : 'da superintendência'} é ${pf(al.r0)}</p>` : ''}`
+        : '<p class="hmtd">Sem coleta.</p>');
+    tip.hidden = false;
+    const W = tip.offsetWidth, H = tip.offsetHeight, x = ev.clientX, y = ev.clientY;
+    tip.style.left = Math.max(8, Math.min(innerWidth - W - 8, x + 16 + W > innerWidth ? x - W - 16 : x + 16)) + 'px';
+    tip.style.top = Math.max(8, Math.min(innerHeight - H - 8, y + 16 + H > innerHeight ? y - H - 12 : y + 12)) + 'px';
   }
 
   /* ── PDF do mapa de calor: uma página estreita e comprida, para ler no celular rolando para baixo ── */
@@ -2648,8 +2693,11 @@ function caixaBusca(raiz, aoEscolher) {
   ['mousemove', 'click'].forEach(ev => $('evMapaSvg').addEventListener(ev, e => {
     const nome = e.target.closest('.hmnome');
     if (nome && ev === 'click') { window.escolherNaEvolucao(nome.dataset.k); window.desenharEvolucao(); $('tabE').scrollIntoView({block: 'start', behavior: liso()}); return; }
-    const r = e.target.closest('rect[data-r]'); if (r) mapaDia(r);
+    const r = e.target.closest('rect[data-r]');
+    mapaTip(r, e);
   }));
+  $('evMapaSvg').addEventListener('mouseleave', () => mapaTip(null));
+  addEventListener('scroll', () => { const tp = $('hmTip'); if (tp) tp.hidden = true; }, {passive: true});
   $('evSupExp').addEventListener('click', exportarSup);
   $('evMapaPdf').addEventListener('click', exportarMapaPdf);
   $('evSupPdf').addEventListener('click', exportarSupPdf);
