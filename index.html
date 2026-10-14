@@ -594,6 +594,29 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
 .qatip em{font-style:normal;font-weight:900}
 .qatip span small{color:var(--muted);font-size:11.5px;min-width:78px;text-align:right}
 .qatmais{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+
+.qacoes{display:grid;grid-template-columns:minmax(200px,.9fr) minmax(0,1.4fr) auto;gap:10px 18px;align-items:center;border:1px solid var(--line);border-left:4px solid var(--g3);border-radius:10px;padding:12px 15px;margin:0 0 14px;background:var(--surface)}
+.qactit{display:flex;gap:10px;align-items:center}
+.qacico{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--g3);color:#fff;font-weight:900;font-size:14px;flex:none}
+.qactit h4{margin:0;font-size:12.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}
+.qactit p{margin:2px 0 0;font-size:14px;font-weight:700;color:var(--ink)}
+.qacev .qevp b.qacesp{color:var(--muted)}
+.qacpouco{opacity:.55}
+.qacselo .qevd{margin-top:0}
+@media (max-width:860px){.qacoes{grid-template-columns:minmax(0,1fr)}}
+
+.alcont{display:inline-block;margin-left:8px;font-size:11.5px;font-weight:800;color:#fff;background:var(--g3);border-radius:999px;padding:1px 8px;vertical-align:1px;white-space:nowrap}
+.alcont.prev{background:transparent;color:var(--g3);box-shadow:inset 0 0 0 1.5px var(--g3)}
+.alnome .alcont{color:#fff;margin-left:10px}.alnome .alcont.prev{color:var(--g3)}
+.alcobre{display:block;font-size:11.5px;font-weight:700;color:var(--g3);margin-top:1px}
+.hmtcont{margin-top:6px !important;font-size:12px;font-weight:800;color:#fff;background:var(--g3);border-radius:6px;padding:3px 7px}
+
+.uacoes{margin:10px 0;font-size:13.5px}
+.uacoes summary{cursor:pointer;font-weight:700;color:var(--blue)}
+.uacoes table{border-collapse:collapse;margin-top:8px;width:100%;max-width:760px}
+.uacoes th,.uacoes td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}
+.uacoes tr.conf td{background:color-mix(in srgb,var(--g2) 14%,transparent)}
+.uacoes tr.ruim td{background:color-mix(in srgb,var(--g1) 16%,transparent);font-weight:700}
 </style>
 </head>
 <body class="aguardando">
@@ -771,7 +794,7 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
     <section class="panel evmapa" id="evMapa">
       <div class="thead">
         <div><h3 id="evMapaTit">Dia a dia</h3>
-          <p class="hint">Cada quadrado é um dia: a cor é a taxa sem RENACH daquele dia (verde até 15%, amarelo até 25%, vermelho acima; claro quando houve só 1 ou 2 coletas). Traço cinza: dia sem coleta. Contorno escuro: dia fora do padrão. Colunas sombreadas: sábados. Linha pontilhada: 06/10, Carta Turbo Coleta Biométrica. Clique no nome para abrir.</p></div>
+          <p class="hint">Cada quadrado é um dia: a cor é a taxa sem RENACH daquele dia (verde até 15%, amarelo até 25%, vermelho acima; claro quando houve só 1 ou 2 coletas). Traço cinza: dia sem coleta. Contorno escuro: dia fora do padrão. Colunas sombreadas: sábados. Linha pontilhada: 06/10, Carta Turbo Coleta Biométrica. C: contato do chefe de Atendimento. Clique no nome para abrir.</p></div>
         <div class="tools"><button class="exp" id="evMapaPdf" title="Gera um PDF colorido deste mapa, pensado para ler no celular">Baixar PDF</button></div>
       </div>
       <div class="hmscroll" id="evMapaSvg" tabindex="0" aria-label="Mapa de calor por dia"></div>
@@ -804,8 +827,8 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
 
     <section class="passo">
       <h3><span>1</span>Escolha as planilhas</h3>
-      <p>A planilha de coletas (Superintendência, Posto, data da coleta e Status) e a de SACs (protocolo, posto e data de abertura). Pode ser um arquivo com as duas abas ou os dois arquivos, selecionados juntos. A planilha pode trazer a base inteira ou só os dias novos: os dias que ela cobre substituem os mesmos dias na base e o restante é mantido. Nada é enviado a lugar nenhum; a leitura acontece aqui no navegador.</p>
-      <input type="file" id="u-arq" multiple accept=".xlsx,.xlsm,.csv" aria-label="Planilhas de coletas e de SACs">
+      <p>A planilha de coletas (Superintendência, Posto, data da coleta e Status) e a de SACs (protocolo, posto e data de abertura). Junto, se quiser, a planilha de contatos dos chefes (Data da Visita, Poupatempo Visitado e Superintendência); ela também pode ser carregada sozinha. Pode ser um arquivo com várias abas ou vários arquivos, selecionados juntos. A planilha pode trazer a base inteira ou só os dias novos: os dias que ela cobre substituem os mesmos dias na base e o restante é mantido. Nada é enviado a lugar nenhum; a leitura acontece aqui no navegador.</p>
+      <input type="file" id="u-arq" multiple accept=".xlsx,.xlsm,.csv" aria-label="Planilhas de coletas, de SACs e de contatos">
       <p class="umsg" id="u-mArq" role="status" hidden></p>
     </section>
 
@@ -818,8 +841,10 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
           <tr><th scope="row">Sem abertura de RENACH</th><td><b id="u-nSem"></b><small id="u-nTaxa"></small></td></tr>
           <tr><th scope="row">Postos e unidades</th><td><b id="u-nPostos"></b><small id="u-nSups"></small></td></tr>
           <tr><th scope="row">SACs na planilha</th><td><b id="u-nSac"></b><small id="u-perSac"></small></td></tr>
+          <tr><th scope="row">Contatos dos chefes</th><td><b id="u-nAc"></b><small id="u-perAc"></small></td></tr>
           <tr><th scope="row">Como a base fica depois da importação</th><td><b id="u-fica"></b><small id="u-ficaDet"></small></td></tr>
         </table>
+        <details class="uacoes" id="u-acLista" hidden><summary>Ver como cada contato foi ligado a um posto</summary><table><thead><tr><th>Data</th><th>Na planilha</th><th>No painel</th></tr></thead><tbody id="u-acRows"></tbody></table></details>
         <div class="umsg warn" id="u-avisos" hidden></div>
         <p class="umsg" id="u-naBase" role="status" hidden></p>
       </div>
@@ -1117,7 +1142,8 @@ const ACESSO = (function () {
      painel/coletas/AAAA-MM-DD    um texto por dia: "posto:com:sem;posto:com:sem;…"  (coletas com e sem abertura de RENACH)
      painel/sacs/AAAA-MM-DD       lista de [protocolo, posto, texto da manifestação] dos SACs abertos no dia (o texto pode faltar)
      painel/criterios             {p: {vol, min, ref, tax}, s: {vol, ref, tax}}  volumes para 30 dias, taxas em %
-     painel/avisos                lista de textos (opcional) */
+     painel/avisos                lista de textos (opcional)
+     painel/acoes                 lista de [AAAA-MM-DD, posto como escrito na planilha, superintendência] (contatos dos chefes) */
 const DIA_MS = 86400000;
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 const SEMANA = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
@@ -1166,6 +1192,32 @@ function criterios(c) {
           s: {vol: Math.round(num(s.vol, P.s.vol, 1, 1e9)), ref: num(s.ref, P.s.ref, 0, 100), tax: num(s.tax, null, 0, 100)}};
 }
 
+// ações dos chefes: o nome do posto vem escrito à mão ("Jarinú", "Unidade Altinóoplis", "Lindoia"); procura dentro da superintendência informada.
+// Devolve {i, certeza} (certeza: 1 igual, .95 contido no nome do painel, menos que isso parecido) ou {i: -1}
+const ACAO_IGNORA = new Set(['ppt', 'cir', 'posto', 'postos', 'avancado', 'unidade', 'poupatempo', 'atende', 'facil', 'de', 'do', 'da', 'dos', 'das', 'e', 'coleta', 'ganha', 'tempo']);
+const acaoPalavras = s => chave(s).split(' ').filter(w => w && !ACAO_IGNORA.has(w));
+function casarPosto(nome, sup, postos) {
+  const a = acaoPalavras(nome), ks = acaoPalavras(String(sup).replace(/^\s*[IVXLCDM]+\s*[–—-]\s*/, '')).join(' ');
+  const cs = postos.map((p, i) => ({i, w: acaoPalavras(p.nome)})).filter(c => acaoPalavras(postos[c.i].sup).join(' ') === ks);
+  if (!a.length || !cs.length) return {i: -1, certeza: 0};
+  const A = a.join(' '), igual = cs.filter(c => c.w.join(' ') === A);
+  if (igual.length === 1) return {i: igual[0].i, certeza: 1};
+  const dentro = cs.filter(c => a.every(w => c.w.includes(w)));
+  if (dentro.length === 1) return {i: dentro[0].i, certeza: .95};
+  // abreviações do painel: "S J Boa Vista" é "São João da Boa Vista" (letra solta vale pela inicial)
+  const abrev = (w, x) => w.length === x.length && w.every((p, k) => p === x[k] || (p.length === 1 && x[k][0] === p) || (x[k].length === 1 && p[0] === x[k]));
+  const curto = cs.filter(c => c.w.some(p => p.length === 1) && abrev(c.w, a));
+  if (curto.length === 1) return {i: curto[0].i, certeza: .9};
+  const sim = (x, y) => {                             // parecença entre dois textos (bigramas de letras)
+    const g = s => { const o = []; for (let k = 0; k < s.length - 1; k++) o.push(s.slice(k, k + 2)); return o; };
+    const gx = g(x), gy = g(y); if (!gx.length || !gy.length) return 0;
+    const m = {}; gy.forEach(b => { m[b] = (m[b] || 0) + 1; }); let c = 0; gx.forEach(b => { if (m[b]) { m[b]--; c++; } });
+    return 2 * c / (gx.length + gy.length);
+  };
+  const r = cs.map(c => ({i: c.i, s: sim(A, c.w.join(' '))})).sort((x, y) => y.s - x.s);
+  return r[0].s >= .75 && (!r[1] || r[0].s - r[1].s >= .1) ? {i: r[0].i, certeza: r[0].s} : {i: -1, certeza: r[0].s};
+}
+
 // Lê o registro "painel" da base e devolve tudo por dia, pronto para qualquer recorte
 function decodificar(reg) {
   if (!reg || typeof reg !== 'object') throw new Error('A base de dados ainda não tem dados. Clique em Atualizar dados para carregar as planilhas e gerar o arquivo de importação.');
@@ -1198,7 +1250,27 @@ function decodificar(reg) {
     });
   });
   if (fora) avisos.push(`${fora} ${fora === 1 ? 'SAC ficou' : 'SACs ficaram'} de fora por ter data de abertura antes do primeiro ou depois do último dia com coleta na base.`);
-  return {postos, d0, d1, N, com, sem, sacs, sacInfo, eCol, eSem, eSac, crit: criterios(reg.criterios), avisos, lidoEm: txt(reg.atualizadoEm)};
+  // ações: cada contato vira {i: posto, d: dia (pode passar do fim da base), iso}; as de posto não reconhecido entram nos avisos
+  const acoes = [], semPosto = [];
+  lista(reg.acoes).forEach(v => {
+    v = lista(v); const iso = txt(v[0]), nome = txt(v[1]), sup = txt(v[2]);
+    if (!ISO.test(iso) || !nome) return;
+    const c = casarPosto(nome, sup, postos);
+    if (c.i < 0) { semPosto.push(nome + (sup ? ' (' + sup + ')' : '')); return; }
+    acoes.push({i: c.i, d: nDia(iso) - d0, iso});
+  });
+  acoes.sort((a, b) => a.d - b.d || a.i - b.i);
+  if (semPosto.length) avisos.push(`${semPosto.length} ${semPosto.length === 1 ? 'contato da planilha de ações ficou' : 'contatos da planilha de ações ficaram'} de fora porque o posto não foi reconhecido: ${semPosto.slice(0, 5).join(', ')}${semPosto.length > 5 ? ' e mais ' + (semPosto.length - 5) : ''}.`);
+  return {postos, d0, d1, N, com, sem, sacs, sacInfo, eCol, eSem, eSac, acoes, crit: criterios(reg.criterios), avisos, lidoEm: txt(reg.atualizadoEm)};
+}
+
+// ações de um posto (ou de vários), da mais antiga para a mais recente
+const acoesDe = ids => { const s = new Set(ids); return (ALL.acoes || []).filter(a => s.has(a.i)); };
+// antes e depois do primeiro contato: os 7 dias anteriores (com dados) contra os dias seguintes que a base já tiver
+function antesDepois(i, a) {
+  const S = evSerie([i]), soma = (x, y) => { let c = 0, s = 0; for (let d = Math.max(0, x); d <= Math.min(ALL.N - 1, y); d++) { c += S.col[d]; s += S.sem[d]; } return {c, s, tx: c ? s / c : null, a: Math.max(0, x), b: Math.min(ALL.N - 1, y)}; };
+  const fimAntes = Math.min(a.d - 1, ALL.N - 1);           // quando o contato passa do fim da base, os últimos 7 dias que ela tem
+  return {antes: soma(fimAntes - 6, fimAntes), depois: a.d + 1 <= ALL.N - 1 ? soma(a.d + 1, ALL.N - 1) : null};
 }
 
 // Dias do período escolhido, como posições a partir do primeiro dia da base.
@@ -2269,6 +2341,27 @@ function caixaBusca(raiz, aoEscolher) {
     baixarDireto({filename: 'coleta-biometrica_postos-de-' + slugG(EV.sup) + '.xlsx', data: xlsx([{name: 'Postos', rows, pct: [5], widths: [16, 38, 26, 10, 13, 16, 8, 18], table: true}, {name: 'Sobre', rows: info, widths: [24, 110]}])});
   }
 
+  /* ── ações dos chefes no quadro do posto: datas dos contatos e a taxa antes e depois do primeiro ── */
+  function faixaAcoes(i) {
+    const A = acoesDe([i]); if (!A.length) return '';
+    const a = A[0], hoje = new Date(), hojeIso = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}`;
+    const datas = A.map(x => dataCurta(ALL.d0 + x.d)).join(', ');
+    const tile = (rot, v, sub) => `<div class="qevp"><span>${rot}</span>${v}<small>${sub}</small></div>`;
+    const R = antesDepois(i, a), ant = R.antes, dep = R.depois, MIN = 10;
+    let dir;
+    if (a.iso > hojeIso) dir = tile('A partir de ' + dataCurta(ALL.d0 + a.d + 1), '<b class="qacesp">–</b>', 'contato previsto para ' + dataCurta(ALL.d0 + a.d));
+    else if (!dep || !dep.c) dir = tile('A partir de ' + dataCurta(ALL.d0 + a.d + 1), '<b class="qacesp">–</b>', `aguardando coletas: a base vai até ${dataCurta(ALL.d1)}`);
+    else dir = tile(`${dataCurta(ALL.d0 + dep.a)} a ${dataCurta(ALL.d0 + dep.b)}`, `<b style="color:${corTaxa(dep.tx)}"${dep.c < MIN ? ' class="qacpouco"' : ''}>${pf(dep.tx)}</b>`, `${nf(dep.s)} de ${nf(dep.c)} ${dep.c === 1 ? 'coleta' : 'coletas'}${dep.c < MIN ? ' · ainda poucas' : ''}`);
+    const esq = tile(ant.c ? `${dataCurta(ALL.d0 + ant.a)} a ${dataCurta(ALL.d0 + ant.b)}` : '7 dias antes', ant.c ? `<b style="color:${corTaxa(ant.tx)}">${pf(ant.tx)}</b>` : '<b class="qacesp">–</b>', ant.c ? `${nf(ant.s)} de ${nf(ant.c)} ${ant.c === 1 ? 'coleta' : 'coletas'}` : 'sem coleta nos 7 dias antes');
+    let selo = '';
+    if (dep && dep.c >= MIN && ant.c) { const d = dep.tx - ant.tx; selo = `<span class="qevd ${Math.abs(d) < .0005 ? 'neutro' : d > 0 ? 'ruim' : 'bom'}">${Math.abs(d) < .0005 ? '● igual' : (d > 0 ? '▲ +' : '▼ −') + n1(Math.abs(d * 100)) + ' p.p.' + (d > 0 ? ' piorou' : ' melhorou')}</span>`; }
+    return `<div class="qacoes">
+        <div class="qactit"><span class="qacico" aria-hidden="true">✓</span><div><h4>Contato do chefe de Atendimento</h4><p>${A.length === 1 ? (a.iso > hojeIso ? 'Previsto para ' : 'Em ') + datas : nf(A.length) + ' contatos: ' + datas}</p></div></div>
+        <div class="qev qacev">${esq}<i class="qevs" aria-hidden="true">→</i>${dir}</div>
+        <div class="qacselo">${selo}</div>
+      </div>`;
+  }
+
   /* ── quadro do posto: os achados, calculados pela própria página a partir da base ── */
   function quadro() {
     const i = EV.posto, P = ALL.postos[i], nome = tidy(P.nome), X = contexto(), T = X.T, ids = idsDaSup(P.sup), N = ALL.N;
@@ -2316,6 +2409,7 @@ function caixaBusca(raiz, aoEscolher) {
          <div><p class="qsup">Superintendência ${h(P.sup)}</p><h3>${h(nome)}</h3><p class="hint">${rotPer}: ${evRot(X.f)}${X.n > 1 ? ` (${X.n} dias)` : ''}</p></div>
          <div class="tools"><button class="limpar" data-q="sup">← Ver ${h(P.sup)}</button><button class="limpar" data-q="limpar">Limpar filtros</button></div>
        </div>
+       ${faixaAcoes(i)}
        <div class="qgrid">
          <div class="qcard"><h4>Taxa sem RENACH</h4>
            <span class="qnum">${pf(tx)}</span>
@@ -2476,6 +2570,11 @@ function caixaBusca(raiz, aoEscolher) {
 
   /* ── mapa de calor: cada posto da superintendência (ou cada superintendência, no Estado) dia a dia ── */
   let MAPA = null;                                   // o que está desenhado, para o texto do quadrado escolhido
+  // "C" de contato do chefe dentro do quadrado do dia; em dia sem coleta, num quadradinho azul
+  function letraC(cx, cy, tam, caixa) {
+    const fundo = caixa ? `<rect x="${cx - tam * .62}" y="${cy - tam * .62}" width="${tam * 1.24}" height="${tam * 1.24}" rx="3" fill="${css('--g3')}"/>` : '';
+    return `<g pointer-events="none">${fundo}<text x="${cx}" y="${cy + tam * .36}" text-anchor="middle" font-size="${tam}" font-weight="900" fill="#fff" stroke="rgba(15,23,42,.55)" stroke-width="${caixa ? 0 : 2.2}" paint-order="stroke">C</text></g>`;
+  }
   function mapaCalor() {
     const box = $('evMapaSvg'), f = faixa(ALL, PERIODO), sup = EV.sup, tipo = sup ? 'posto' : 'sup';
     let rows = sup
@@ -2485,6 +2584,7 @@ function caixaBusca(raiz, aoEscolher) {
       let c = 0, s = 0; for (let d = f[0]; d <= f[1]; d++) { c += r.S.col[d]; s += r.S.sem[d]; }
       r.c = c; r.s = s; r.tx = c ? s / c : 0;
       r.alerta = {}; detDias(r.S, f, tipo).forEach(a => { r.alerta[a.d] = a; });
+      r.contato = {}; if (r.i != null) acoesDe([r.i]).forEach(a => { r.contato[a.d] = true; });
     });
     rows = rows.filter(r => r.c > 0).sort((a, b) => b.tx - a.tx || b.c - a.c);
     const nd = f[1] - f[0] + 1, semanal = nd > 62, cols = [];
@@ -2518,8 +2618,9 @@ function caixaBusca(raiz, aoEscolher) {
       cols.forEach((c, j) => {
         let n = 0, k = 0; for (let d = c.a; d <= c.b; d++) { n += r.S.col[d]; k += r.S.sem[d]; }
         const x = xl + j * cw, al = !semanal && r.alerta[c.a];
-        if (!n) { o += `<rect data-r="${i}" data-c="${j}" x="${x + 2}" y="${y + ch / 2 - 1.5}" width="${cw - 6}" height="3" rx="1.5" fill="${line}"/>`; return; }
+        if (!n) { o += `<rect data-r="${i}" data-c="${j}" x="${x + 2}" y="${y + ch / 2 - 1.5}" width="${cw - 6}" height="3" rx="1.5" fill="${line}"/>`; if (!semanal && r.contato[c.a]) o += letraC(x + (cw - 3) / 2, y + 1 + (ch - 4) / 2, Math.min(13, ch - 7, cw - 4), true); return; }
         o += `<rect data-r="${i}" data-c="${j}" x="${x}" y="${y + 1}" width="${cw - 3}" height="${ch - 4}" rx="3" fill="${corTaxa(k / n)}" opacity="${n < 3 ? .45 : 1}"${al ? ` stroke="${ink}" stroke-width="2.4"` : ''}/>`;
+        if (!semanal && r.contato[c.a]) o += letraC(x + (cw - 3) / 2, y + 1 + (ch - 4) / 2, Math.min(13, ch - 7, cw - 4), false);
       });
       o += `<text x="${xl + cols.length * cw + 6}" y="${y + ch / 2 + 3}" font-size="12" font-weight="800" fill="${corTaxa(r.tx)}">${pf(r.tx)}</text>`;
     });
@@ -2546,7 +2647,7 @@ function caixaBusca(raiz, aoEscolher) {
         ${rn ? linha(`${h(MAPA.refNome)} ${MAPA.semanal ? 'na semana' : 'no dia'}`, pf(rk / rn), corTaxa(rk / rn)) : ''}
         ${linha(`${posto ? 'Posto' : 'Superintendência'} no período`, pf(r.tx), corTaxa(r.tx))}
         ${al ? `<p class="hmtal">Fora do padrão: o normal ${posto ? 'do posto' : 'da superintendência'} é ${pf(al.r0)}</p>` : ''}`
-        : '<p class="hmtd">Sem coleta.</p>');
+        : '<p class="hmtd">Sem coleta.</p>') + (!MAPA.semanal && r.contato && r.contato[c.a] ? '<p class="hmtcont">Contato do chefe de Atendimento neste dia</p>' : '');
     tip.hidden = false;
     const W = tip.offsetWidth, H = tip.offsetHeight, x = ev.clientX, y = ev.clientY;
     tip.style.left = Math.max(8, Math.min(innerWidth - W - 8, x + 16 + W > innerWidth ? x - W - 16 : x + 16)) + 'px';
@@ -2577,6 +2678,7 @@ function caixaBusca(raiz, aoEscolher) {
     // legenda: quadradinhos com texto, quebrando linha quando não cabe
     const leg = [{t: 'até 15%', c: corPdf(.07)}, {t: '15 a 25%', c: corPdf(.2)}, {t: 'acima de 25%', c: corPdf(.4)}, {t: '1 ou 2 coletas', c: corPdf(.4, true)}];
     if (!semanal) leg.push({t: 'fora do padrão', c: corPdf(.4), borda: true}, {t: 'sábado', c: SABADO});
+    if (!semanal && rows.some(r => r.contato && Object.keys(r.contato).length)) leg.push({t: 'contato do chefe', c: '#2F5597', letra: 'C'});
     const marcos = MARCOS.map(m => ({m, d: nDia(m.data) - ALL.d0})).map(o => ({...o, j: cols.findIndex(c => o.d >= c.a && o.d <= c.b)})).filter(o => o.j > 0);
     marcos.forEach(o => leg.push({t: `${dataCurta(ALL.d0 + o.d)} ${o.m.nome}`, marco: true}));
     const legL = []; let lx = 0, lin = [];
@@ -2606,6 +2708,7 @@ function caixaBusca(raiz, aoEscolher) {
       const x = M + it.x, y = yLeg + i * 12;
       if (it.marco) P.linha(x + 4.5, y - 1, x + 4.5, y + 8, TINTA, .9, [1.8, 1.4]);
       else if (it.borda) { P.retR(x - .5, y - .9, 10, 8.8, 2, TINTA); P.retR(x + .5, y + .1, 8, 6.8, 1.4, '#FFFFFF'); P.retR(x + 1.1, y + .7, 6.8, 5.6, 1, it.c); } else P.retR(x, y, 9, 7, 1.6, it.c);
+      if (it.letra) P.texto(it.letra, x + 4.5, y + 5.8, 6, {negrito: true, cor: '#FFFFFF', alinh: 'c'});
       P.texto(it.t, x + 13, y + 6.2, 7, {cor: CINZA});
     }));
 
@@ -2631,11 +2734,13 @@ function caixaBusca(raiz, aoEscolher) {
       cols.forEach((col, j) => {
         let n = 0, k = 0; for (let d = col.a; d <= col.b; d++) { n += r.S.col[d]; k += r.S.sem[d]; }
         const x = gx + j * cw, yc = y + (rh - cellH) / 2, w = cw - 1.6;
-        if (!n) { P.retR(x + w * .2, y + rh / 2 - .6, w * .6, 1.2, .6, '#D5DAE1'); return; }
+        const cont = !semanal && r.contato && r.contato[col.a];
+        if (!n) { if (cont) { P.retR(x, yc, w, cellH, 1.5, '#2F5597'); P.texto('C', x + w / 2, yc + cellH / 2 + 2.3, Math.min(6.5, w), {negrito: true, cor: '#FFFFFF', alinh: 'c'}); } else P.retR(x + w * .2, y + rh / 2 - .6, w * .6, 1.2, .6, '#D5DAE1'); return; }
         if (!semanal && r.alerta[col.a]) {               // fora do padrão: anel escuro, fio branco e o quadrado por dentro
           P.retR(x - .5, yc - .9, w + 1, cellH + 1.8, 2, TINTA); P.retR(x + .5, yc + .1, w - 1, cellH - .2, 1.4, '#FFFFFF');
           P.retR(x + 1.1, yc + .7, w - 2.2, cellH - 1.4, 1, corPdf(k / n, n < 3));
         } else P.retR(x, yc, w, cellH, 1.5, corPdf(k / n, n < 3));
+        if (cont) P.texto('C', x + w / 2, yc + cellH / 2 + 2.3, Math.min(6.5, w), {negrito: true, cor: '#FFFFFF', alinh: 'c'});
       });
       P.texto(pf(r.tx), W - M, y + rh / 2 + 2.7, fN, {negrito: true, cor: corTextoPdf(r.tx), alinh: 'r'});
     });
@@ -2751,6 +2856,18 @@ function caixaBusca(raiz, aoEscolher) {
   let FILTRO = '';
 
   const idsDaSup = nome => ALL.postos.map((p, i) => p.sup === nome ? i : -1).filter(i => i >= 0);
+  // contato do chefe: selo no posto (último contato) e, na superintendência, quantos postos já foram contatados
+  const hojeIso = () => { const a = new Date(); return `${a.getFullYear()}-${String(a.getMonth() + 1).padStart(2, '0')}-${String(a.getDate()).padStart(2, '0')}`; };
+  function seloContato(e) {
+    if (e.tipo === 'posto') {
+      const A = acoesDe([e.i]); if (!A.length) return '';
+      const u = A[A.length - 1], prev = u.iso > hojeIso();
+      return `<span class="alcont${prev ? ' prev' : ''}" title="${A.length === 1 ? 'Contato do chefe de Atendimento' : nf(A.length) + ' contatos do chefe de Atendimento: ' + A.map(x => dataCurta(ALL.d0 + x.d)).join(', ')}">${prev ? 'contato previsto ' : 'contatado '}${dataCurta(ALL.d0 + u.d)}</span>`;
+    }
+    if (!(ALL.acoes || []).length) return '';
+    const ids = idsDaSup(e.nome), com = new Set(acoesDe(ids).map(a => a.i)).size;
+    return com ? `<span class="alcobre">${nf(com)} de ${nf(ids.length)} postos contatados</span>` : '';
+  }
   // no Estado, as superintendências; dentro de uma, os postos dela
   function entidades() {
     if (!FILTRO) return [...new Set(ALL.postos.map(p => p.sup))].map(n => ({k: 's:' + n, nome: n, tipo: 'sup', S: evSerie(idsDaSup(n))}));
@@ -2797,7 +2914,7 @@ function caixaBusca(raiz, aoEscolher) {
   function cardPeso(x, grupo) {
     return `<article class="al al-peso" tabindex="0" data-k="${h(x.e.k)}">
       <span class="alvz">${n1(x.vz).replace(/,0$/, '')}×</span>
-      <div class="altexto"><p class="alnome"><b>${h(x.e.nome)}</b></p><p class="alexc">+${nf(x.exc)} sem RENACH acima da média ${grupo}</p></div>
+      <div class="altexto"><p class="alnome"><b>${h(x.e.nome)}</b>${seloContato(x.e)}</p><p class="alexc">+${nf(x.exc)} sem RENACH acima da média ${grupo}</p></div>
         <div class="pfat alfat">
           <div class="pft"><b>${pf(x.fc)}</b><span>das coletas ${grupo}</span></div>
           <i class="pfseta" aria-hidden="true">→</i>
@@ -2831,7 +2948,7 @@ function caixaBusca(raiz, aoEscolher) {
       const w = x.w, dif = w.r1 - w.r0, sobe = dif > .0005, desce = dif < -.0005;
       const chip = w.v ? `<span class="alchip ${w.v.piorou ? 'pior' : 'melhor'}" title="A diferença é grande e o volume da semana mostra que não é acaso">${w.v.piorou ? 'piora confirmada' : 'melhora confirmada'}</span>` : '';
       return `<tr tabindex="0" data-k="${h(x.e.k)}" class="${w.v ? (w.v.piorou ? 'vpior' : 'vmelhor') : ''}">
-        <td class="l"><span class="nm">${h(x.e.nome)}</span>${chip}</td>
+        <td class="l"><span class="nm">${h(x.e.nome)}</span>${chip}${seloContato(x.e)}</td>
         <td>${pf(w.r0)} <small>${nf(w.bk)} de ${nf(w.bn)}</small></td>
         <td><b style="color:${corTaxa(w.r1)}">${pf(w.r1)}</b> <small>${nf(w.rk)} de ${nf(w.rn)}</small></td>
         <td><span class="varc"><b class="${sobe ? 'ruim' : desce ? 'bom' : ''}">${sobe ? '▲ +' : desce ? '▼ −' : ''}${n1(Math.abs(dif * 100))}</b><span class="var"><i style="${dif >= 0 ? 'left:50%' : 'right:50%'};width:${(Math.abs(dif) / maxD * 50).toFixed(1)}%;background:${dif > 0 ? css('--g1') : css('--g4')}"></i></span></span></td>
@@ -2845,7 +2962,7 @@ function caixaBusca(raiz, aoEscolher) {
     const um = p.a === p.b, quandoTxt = um ? quando(p.a) : `${quando(p.a)} a ${quando(p.b)}`;
     return `<article class="al al-dia" tabindex="0" data-k="${h(e.k)}">
       <span class="alicone" aria-hidden="true">▲</span>
-      <div class="altexto"><p class="alnome"><b>${h(e.nome)}</b>${um ? '' : `<span class="alpasso">período de ${p.dias.length} dias</span>`}</p>
+      <div class="altexto"><p class="alnome"><b>${h(e.nome)}</b>${um ? '' : `<span class="alpasso">período de ${p.dias.length} dias</span>`}${seloContato(e)}</p>
         <p><b>${quandoTxt}</b>: ${nf(p.k)} de ${nf(p.n)} coletas sem RENACH (<b style="color:${corTaxa(p.k / p.n)}">${pf(p.k / p.n)}</b>). O normal ${e.tipo === 'posto' ? 'do posto' : 'da superintendência'} é ${pf(p.r0)}.</p></div>
       ${barras(e.S, Math.min(ALL.N - 1, p.b + 7), {dias: [p.a, p.b]})}
     </article>`;
@@ -3015,12 +3132,15 @@ document.addEventListener('click', e => {
     dataColeta: ['data coleta', 'data da coleta', 'dt coleta', 'data'],
     prot: ['numero protocolo', 'protocolo', 'sac protocolo', 'sac'],
     texto: ['manifestacao', 'teor da manifestacao', 'texto da manifestacao'],   // opcional: o texto que o cidadão escreveu
-    dataSac: ['data abertura sac', 'sac data abertura', 'data abertura', 'data de abertura', 'data']
+    dataSac: ['data abertura sac', 'sac data abertura', 'data abertura', 'data de abertura', 'data'],
+    acPosto: ['poupatempo visitado', 'posto visitado', 'unidade visitada'],
+    acData: ['data da visita', 'data do contato', 'data do alinhamento', 'data visita', 'data']
   };
   const acha = (cab, nomes) => { for (const n of nomes) { const i = cab.findIndex(c => chave(c) === n); if (i >= 0) return i; } return -1; };
   const tipoDaAba = cab => {
     if (acha(cab, COL.status) >= 0 && acha(cab, COL.posto) >= 0 && acha(cab, COL.sup) >= 0) return 'coletas';
     if (acha(cab, COL.prot) >= 0 && acha(cab, COL.posto) >= 0 && acha(cab, COL.dataSac) >= 0) return 'sacs';
+    if (acha(cab, COL.acPosto) >= 0 && acha(cab, COL.acData) >= 0 && acha(cab, COL.sup) >= 0) return 'acoes';
     return '';
   };
 
@@ -3094,10 +3214,26 @@ document.addEventListener('click', e => {
     return {postos, dias, cmin: dc[0], cmax: dc[dc.length - 1], ndias: dc.length, col, sem, temSacs: !!sacs, sacs: lidos, smin: ds[0] || '', smax: ds[ds.length - 1] || '', avisos};
   }
 
+  /* ── contatos dos chefes: [data, posto como escrito, superintendência]; a planilha traz o histórico inteiro e substitui o da base ── */
+  function lerAcoes(aba) {
+    const cab = aba.linhas[0], cD = acha(cab, COL.acData), cP = acha(cab, COL.acPosto), cS = acha(cab, COL.sup), out = [];
+    let semData = 0, incompletas = 0;
+    for (let r = 1; r < aba.linhas.length; r++) {
+      const L = aba.linhas[r], nome = txt(L[cP]), sup = txt(L[cS]).replace(/^\s*[IVXLCDM]+\s*[–—-]\s*/, '');
+      if (!nome && !sup && txt(L[cD]) === '') continue;
+      if (!nome || !sup) { incompletas++; continue; }
+      const data = dataISO(L[cD], aba.sistema1904);
+      if (!data) { semData++; continue; }
+      out.push([data, nome, sup]);
+    }
+    out.sort((a, b) => a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0);
+    return {lista: out, semData, incompletas};
+  }
+
   /* ── junta a planilha com o que já está na base ──
      Os dias cobertos pela planilha (do primeiro ao último) substituem os mesmos dias da base; os demais ficam como estão.
      Os postos guardam o número que já tinham; os novos entram no fim da lista. */
-  function fundir(antigo, up, crit, agora) {
+  function fundir(antigo, up, crit, agora, acoes) {
     const a = antigo && typeof antigo === 'object' ? antigo : {};
     const postos = lista(a.postos).map(p => ({posto: txt(p.posto), superintendencia: txt(p.superintendencia)}));
     const coletas = {}, sacs = {};
@@ -3127,14 +3263,16 @@ document.addEventListener('click', e => {
       }
     }
     const novo = {atualizadoEm: agora, postos, coletas, sacs, criterios: crit};
+    const contatos = acoes ? acoes.lista : lista(a.acoes).map(v => lista(v).map(txt));
+    if (contatos.length) novo.acoes = contatos;
     if (avisos.length) novo.avisos = avisos;
     return novo;
   }
   const resumo = reg => {                           // totais de um registro "painel", pelos mesmos passos que o painel usa para ler
-    try { const A = decodificar(reg); let col = 0, sem = 0; for (let d = 0; d < A.N; d++) { col += A.eCol[d]; sem += A.eSem[d]; } return {d0: isoDia(A.d0), d1: isoDia(A.d1), col, sem, sac: A.sacs.length, txt: Object.keys(A.sacInfo).filter(k => A.sacInfo[k].texto).length, postos: A.postos.length, crit: JSON.stringify(A.crit), avisos: A.avisos}; }
+    try { const A = decodificar(reg); let col = 0, sem = 0; for (let d = 0; d < A.N; d++) { col += A.eCol[d]; sem += A.eSem[d]; } return {d0: isoDia(A.d0), d1: isoDia(A.d1), col, sem, sac: A.sacs.length, ac: lista(reg.acoes).length, txt: Object.keys(A.sacInfo).filter(k => A.sacInfo[k].texto).length, postos: A.postos.length, crit: JSON.stringify(A.crit), avisos: A.avisos}; }
     catch (e) { return null; }
   };
-  const igual = (a, b) => !!a && !!b && ['d0', 'd1', 'col', 'sem', 'sac', 'txt', 'crit'].every(k => a[k] === b[k]);
+  const igual = (a, b) => !!a && !!b && ['d0', 'd1', 'col', 'sem', 'sac', 'ac', 'txt', 'crit'].every(k => a[k] === b[k]);
   const frase = r => `${intervalo(r.d0, r.d1)}: ${nf(r.col)} coletas, ${nf(r.sem)} sem RENACH (${taxa(r.sem, r.col)}) e ${nf(r.sac)} SACs`;
 
   /* ── leitura dos arquivos ── */
@@ -3154,7 +3292,7 @@ document.addEventListener('click', e => {
   }
 
   /* ── estado da tela ── */
-  const E = {up: null, base: undefined, erroBase: '', crit: null, critBase: null, esperado: null};
+  const E = {up: null, acoes: null, base: undefined, erroBase: '', crit: null, critBase: null, esperado: null};
   const agoraTxt = () => { const a = new Date(), d2 = n => String(n).padStart(2, '0'); return d2(a.getDate()) + '/' + d2(a.getMonth() + 1) + '/' + a.getFullYear() + ' ' + d2(a.getHours()) + ':' + d2(a.getMinutes()); };
 
   // critérios: os campos da tela, o que está na base e o que vale agora no painel
@@ -3169,7 +3307,7 @@ document.addEventListener('click', e => {
   }
   const critMudou = () => JSON.stringify(E.crit) !== JSON.stringify(E.critBase);
   function estadoBotoes() {
-    const pode = !!E.up || (E.base !== undefined && !!resumo(E.base) && critMudou());
+    const pode = !!E.up || !!E.acoes || (E.base !== undefined && !!resumo(E.base) && critMudou());
     $('u-gerar').disabled = !pode; $('u-checar').disabled = !E.esperado;
     msg('u-mCrit', critMudou() ? (EMBUTIDO ? 'Os critérios mudaram. O painel aberto já usa os valores novos.' : 'Os critérios estão diferentes dos que estão na base. Para valerem para todos, baixe o arquivo no passo 4 e importe.') : '', 'warn');
   }
@@ -3177,19 +3315,37 @@ document.addEventListener('click', e => {
   function mostrar() {
     const u = E.up;
     $('u-p2').removeAttribute('aria-disabled'); $('u-conf').hidden = false;
-    $('u-nCol').textContent = nf(u.col); $('u-perCol').textContent = intervalo(u.cmin, u.cmax) + ', ' + plural(u.ndias, 'dia com coleta', 'dias com coleta');
-    $('u-nSem').textContent = nf(u.sem); $('u-nTaxa').textContent = taxa(u.sem, u.col) + ' das coletas';
-    $('u-nPostos').textContent = nf(u.postos.length); $('u-nSups').textContent = plural(new Set(u.postos.map(p => p.superintendencia)).size, 'superintendência', 'superintendências');
-    $('u-nSac').textContent = u.temSacs ? nf(u.sacs.length) : '–'; $('u-perSac').textContent = u.temSacs && u.sacs.length ? intervalo(u.smin, u.smax) : 'Nenhuma planilha de SACs foi lida: os SACs da base ficam como estão.';
+    $('u-nCol').textContent = u ? nf(u.col) : '–'; $('u-perCol').textContent = u ? intervalo(u.cmin, u.cmax) + ', ' + plural(u.ndias, 'dia com coleta', 'dias com coleta') : 'Nenhuma planilha de coletas foi lida: as coletas da base ficam como estão.';
+    $('u-nSem').textContent = u ? nf(u.sem) : '–'; $('u-nTaxa').textContent = u ? taxa(u.sem, u.col) + ' das coletas' : '';
+    $('u-nPostos').textContent = u ? nf(u.postos.length) : '–'; $('u-nSups').textContent = u ? plural(new Set(u.postos.map(p => p.superintendencia)).size, 'superintendência', 'superintendências') : '';
+    $('u-nSac').textContent = u && u.temSacs ? nf(u.sacs.length) : '–'; $('u-perSac').textContent = u && u.temSacs && u.sacs.length ? intervalo(u.smin, u.smax) : 'Nenhuma planilha de SACs foi lida: os SACs da base ficam como estão.';
+    mostrarAcoes();
     previa();
   }
+  // contatos: quantos, e a ligação de cada um com um posto do painel (os que não são idênticos aparecem primeiro, para conferir)
+  function mostrarAcoes() {
+    const a = E.acoes, rows = $('u-acRows');
+    $('u-acLista').hidden = !a; rows.textContent = '';
+    if (!a) { $('u-nAc').textContent = '–'; $('u-perAc').textContent = 'Nenhuma planilha de contatos foi lida: os contatos da base ficam como estão.'; return; }
+    const P = ALL ? ALL.postos : [], liga = a.lista.map(v => ({v, c: casarPosto(v[1], v[2], P)}));
+    const ok = liga.filter(x => x.c.i >= 0).length, ds = a.lista.map(v => v[0]);
+    $('u-nAc').textContent = nf(a.lista.length);
+    $('u-perAc').textContent = (ds.length ? intervalo(ds[0], ds[ds.length - 1]) + ', ' : '') + `${nf(ok)} ligados a um posto do painel` + (ok < liga.length ? `, ${nf(liga.length - ok)} sem posto (ficam de fora)` : '') + (a.semData ? `, ${plural(a.semData, 'linha', 'linhas')} sem data reconhecida` : '') + '.';
+    liga.sort((x, y) => (x.c.i < 0 ? 0 : x.c.certeza < 1 ? 1 : 2) - (y.c.i < 0 ? 0 : y.c.certeza < 1 ? 1 : 2));
+    liga.forEach(x => {
+      const tr = document.createElement('tr'); tr.className = x.c.i < 0 ? 'ruim' : x.c.certeza < 1 ? 'conf' : '';
+      [br(x.v[0]), x.v[1] + ' (' + x.v[2] + ')', x.c.i < 0 ? 'não reconhecido' : tidy(P[x.c.i].nome)].forEach(s => { const td = document.createElement('td'); td.textContent = s; tr.append(td); });
+      rows.append(tr);
+    });
+  }
   function previa() {                                // como a base fica: o que está lá mais a planilha
-    const u = E.up; if (!u) return;
-    if (E.base === undefined) { $('u-fica').textContent = '…'; $('u-ficaDet').textContent = E.erroBase || 'Consultando a base…'; msg('u-naBase', E.erroBase, 'bad'); listarAvisos(u.avisos); return; }
-    const novo = fundir(E.base, u, E.crit, ''), depois = resumo(novo), antes = resumo(E.base);
+    const u = E.up; if (!u && !E.acoes) return;
+    if (E.base === undefined) { $('u-fica').textContent = '…'; $('u-ficaDet').textContent = E.erroBase || 'Consultando a base…'; msg('u-naBase', E.erroBase, 'bad'); listarAvisos(u ? u.avisos : []); return; }
+    const novo = fundir(E.base, u, E.crit, '', E.acoes), depois = resumo(novo), antes = resumo(E.base);
     $('u-fica').textContent = depois ? intervalo(depois.d0, depois.d1) : '–';
-    $('u-ficaDet').textContent = depois ? `${nf(depois.col)} coletas, ${nf(depois.sem)} sem RENACH (${taxa(depois.sem, depois.col)}), ${nf(depois.sac)} SACs, ${nf(depois.postos)} postos e unidades` : '';
+    $('u-ficaDet').textContent = depois ? `${nf(depois.col)} coletas, ${nf(depois.sem)} sem RENACH (${taxa(depois.sem, depois.col)}), ${nf(depois.sac)} SACs, ${nf(depois.postos)} postos e unidades, ${plural(depois.ac, 'contato', 'contatos')} dos chefes` : '';
     listarAvisos(novo.avisos || []);
+    if (!u) { msg('u-naBase', antes ? 'Só os contatos dos chefes mudam: a lista da planilha substitui a que está na base. Coletas, SACs e critérios ficam como estão.' : 'A base ainda não tem coletas: carregue também a planilha de coletas.', antes ? '' : 'bad'); return; }
     if (!antes) msg('u-naBase', 'A base ainda não tem dados no formato por dia: este será o primeiro carregamento.');
     else if (igual(antes, depois)) msg('u-naBase', 'A base já está com estes mesmos números. Não é preciso importar de novo.', 'ok');
     else if (u.cmin > antes.d1 || u.cmax < antes.d0) msg('u-naBase', `Hoje a base tem ${frase(antes)}. A planilha acrescenta ${u.cmin === u.cmax ? 'o dia ' + br(u.cmin) : 'os dias de ' + intervalo(u.cmin, u.cmax)}; o que já está na base fica como está.`);
@@ -3203,7 +3359,7 @@ document.addEventListener('click', e => {
     lst.forEach(a => { const li = document.createElement('li'); li.textContent = a; ul.append(li); });
     av.append(ul);
   }
-  function travar() { $('u-p2').setAttribute('aria-disabled', 'true'); $('u-conf').hidden = true; E.up = null; E.esperado = null; $('u-abrir').hidden = true; msg('u-mGerar', ''); estadoBotoes(); }
+  function travar() { $('u-p2').setAttribute('aria-disabled', 'true'); $('u-conf').hidden = true; E.up = null; E.acoes = null; E.esperado = null; $('u-abrir').hidden = true; msg('u-mGerar', ''); estadoBotoes(); }
 
   async function consultarBase() {
     E.erroBase = '';
@@ -3221,15 +3377,23 @@ document.addEventListener('click', e => {
     let abas = [];
     try { for (const f of arquivos) abas = abas.concat(await lerArquivo(f)); }
     catch (e) { msg('u-mArq', 'Não consegui abrir um dos arquivos. Use planilhas .xlsx ou .csv. Detalhe: ' + (e && e.message ? e.message : e), 'bad'); return; }
-    const col = abas.filter(a => a.tipo === 'coletas'), sac = abas.filter(a => a.tipo === 'sacs');
+    const col = abas.filter(a => a.tipo === 'coletas'), sac = abas.filter(a => a.tipo === 'sacs'), acs = abas.filter(a => a.tipo === 'acoes');
     const onde = a => 'aba "' + a.aba + '" de ' + a.arquivo;
-    if (!col.length) { msg('u-mArq', 'Não encontrei a planilha de coletas. Ela precisa ter, na primeira linha, as colunas Superintendência, Posto Poupatempo, data_coleta e Status.', 'bad'); return; }
+    if (acs.length > 1) { msg('u-mArq', 'Há mais de uma planilha de contatos (' + acs.map(onde).join('; ') + '). Selecione só uma.', 'bad'); return; }
+    if (!col.length && acs.length && !sac.length) {    // só os contatos dos chefes
+      E.acoes = lerAcoes(acs[0]);
+      msg('u-mArq', 'Contatos dos chefes: ' + onde(acs[0]) + ', ' + plural(E.acoes.lista.length, 'contato', 'contatos') + '. Coletas e SACs da base ficam como estão.', 'ok');
+      mostrar(); estadoBotoes(); consultarBase(); return;
+    }
+    if (!col.length) { msg('u-mArq', 'Não encontrei a planilha de coletas. Ela precisa ter, na primeira linha, as colunas Superintendência, Posto Poupatempo, data_coleta e Status. A planilha de contatos precisa das colunas Data da Visita, Poupatempo Visitado e Superintendência.', 'bad'); return; }
     if (col.length > 1) { msg('u-mArq', 'Há mais de uma planilha de coletas (' + col.map(onde).join('; ') + '). Selecione só uma.', 'bad'); return; }
     if (sac.length > 1) { msg('u-mArq', 'Há mais de uma planilha de SACs (' + sac.map(onde).join('; ') + '). Selecione só uma.', 'bad'); return; }
     try { E.up = agregar(col[0], sac[0] || null); }
     catch (e) { msg('u-mArq', e.message, 'bad'); return; }
+    if (acs.length) E.acoes = lerAcoes(acs[0]);
     msg('u-mArq', 'Coletas: ' + onde(col[0]) + ', ' + plural(col[0].linhas.length - 1, 'linha', 'linhas') + '. '
-      + (sac[0] ? 'SACs: ' + onde(sac[0]) + ', ' + plural(sac[0].linhas.length - 1, 'linha', 'linhas') + '.' : 'SACs: nenhuma planilha com as colunas numero_protocolo, Posto Poupatempo e data_abertura_sac.'), sac[0] ? 'ok' : 'warn');
+      + (sac[0] ? 'SACs: ' + onde(sac[0]) + ', ' + plural(sac[0].linhas.length - 1, 'linha', 'linhas') + '.' : 'SACs: nenhuma planilha com as colunas numero_protocolo, Posto Poupatempo e data_abertura_sac.')
+      + (acs[0] ? ' Contatos dos chefes: ' + onde(acs[0]) + '.' : ''), sac[0] ? 'ok' : 'warn');
     mostrar(); estadoBotoes();
     consultarBase();
   });
@@ -3239,7 +3403,7 @@ document.addEventListener('click', e => {
 
   // arquivo de teste: aplica direto na página aberta, sem Firebase
   function aplicarLocal() {
-    const novo = fundir(LOCAL.painel, E.up, E.crit, agoraTxt());
+    const novo = fundir(LOCAL.painel, E.up, E.crit, agoraTxt(), E.acoes);
     if (!resumo(novo)) { msg('u-mGerar', 'Não há coletas para aplicar: carregue a planilha de coletas no passo 1.', 'bad'); return; }
     LOCAL.painel = novo; ALL = decodificar(novo); E.base = novo; E.critBase = criterios(novo.criterios);
     aplicarPeriodo(); travar(); $('u-arq').value = ''; msg('u-mArq', '');
@@ -3256,7 +3420,7 @@ document.addEventListener('click', e => {
       const tinhaAntigo = 'meses' in tudo;
       delete tudo.meses;                                           // formato antigo, por mês: substituído pela base por dia
       E.base = tudo.painel === undefined ? null : tudo.painel;
-      tudo.painel = fundir(E.base, E.up, E.crit, agoraTxt());
+      tudo.painel = fundir(E.base, E.up, E.crit, agoraTxt(), E.acoes);
       E.esperado = resumo(tudo.painel);
       if (!E.esperado) throw new Error('Não há coletas para gravar: carregue a planilha de coletas no passo 1.');
       const a = document.createElement('a'), fim = E.esperado.d1;
