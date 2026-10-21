@@ -617,6 +617,11 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
 .uacoes th,.uacoes td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}
 .uacoes tr.conf td{background:color-mix(in srgb,var(--g2) 14%,transparent)}
 .uacoes tr.ruim td{background:color-mix(in srgb,var(--g1) 16%,transparent);font-weight:700}
+
+#evTip .tdia{margin:10px 0 0;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22);display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+#evTip .tdia span{flex-basis:100%;font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;opacity:.8}
+#evTip .tdia b{display:inline;font-size:20px;font-weight:900;line-height:1.2;padding:0}
+#evTip .tdia small{font-size:12px;opacity:.9}
 </style>
 </head>
 <body class="aguardando">
@@ -2246,6 +2251,14 @@ function caixaBusca(raiz, aoEscolher) {
     $('evHint').textContent = EV.met !== 'tx' ? '' : 'Cada ponto é a taxa dos 7 dias que terminam naquela data: as coletas sem RENACH desses dias divididas pelas coletas dos mesmos dias. Assim um dia isolado não distorce a linha, e uma virada aparece em poucos dias.';
     if (EV.dia != null) mostrarDia(Math.max(r0, Math.min(EV.dia, r1)));
   }
+  // cores dentro da caixa escura: a mesma régua (15% e 25%) na versão clara, que aparece bem sobre o azul-marinho
+  function corNaCaixa(tx) {
+    const hx = c => [1, 3, 5].map(k => parseInt(c.slice(k, k + 2), 16)), mix = (a, b, f) => 'rgb(' + hx(a).map((v, k) => Math.round(v + (hx(b)[k] - v) * f)).join(',') + ')';
+    const t = Math.round(tx * 1000) / 1000;
+    if (t <= .15) return mix('#8FD694', '#4CC35A', 1 - t / .15);
+    if (t <= .25) return mix('#FFE27A', '#F5B400', (t - .15) / .10);
+    return mix('#FF9C94', '#F0443A', Math.min(1, (t - .25) / .25));
+  }
   function mostrarDia(d) {
     const tip = $('evTip'), cruz = $('evCruz'), marca = [$('evP0'), $('evP1')];
     if (d == null || !G) { EV.dia = null; tip.style.display = 'none'; if (cruz) cruz.setAttribute('opacity', '0'); marca.forEach(c => c && c.setAttribute('opacity', '0')); return; }
@@ -2270,11 +2283,29 @@ function caixaBusca(raiz, aoEscolher) {
       const quanto = EV.met === 'tx' ? n1(Math.abs(dif * 100)) + ' p.p.' : (Number.isInteger(Math.abs(dif)) ? nf(Math.abs(dif)) : n1(Math.abs(dif)));
       tip.append(el('div', 'dif', igual ? (EV.met === 'tx' ? (LIN[1].curto === 'o Estado' ? 'Igual ao Estado' : 'Igual à superintendência') : 'Igual à média') : `${quanto} ${dif > 0 ? 'acima' : 'abaixo'} ` + (EV.met === 'tx' ? 'd' + LIN[1].curto : LIN[1].media)));
     }
+    if (EV.met === 'tx') {                            // embaixo, em destaque: a taxa e o total só deste dia
+      const F = LIN[0], c = F.S.col[d], s = F.S.sem[d], box = el('div', 'tdia');
+      box.append(el('span', '', 'Neste dia'));
+      if (c) { const n = el('b', '', pf(s / c)); n.style.color = corNaCaixa(s / c); box.append(n, el('small', '', `${nf(s)} sem RENACH em ${nf(c)} ${c === 1 ? 'coleta' : 'coletas'}`)); }
+      else box.append(el('small', '', 'Sem coleta neste dia'));
+      tip.append(box);
+    }
     tip.style.display = 'block';
     const svg = $('evSvg').querySelector('svg'), r = svg.getBoundingClientRect(), bx = $('evBox').getBoundingClientRect(), k = r.width / G.W;
     const px = r.left - bx.left + G.X(d) * k, w = tip.offsetWidth;
-    tip.style.left = Math.max(w / 2 + 6, Math.min(bx.width - w / 2 - 6, px + (px > bx.width / 2 ? -(w / 2 + 18) : w / 2 + 18))) + 'px';
-    tip.style.top = (r.top - bx.top + 40 * k) + 'px';
+    const cx = Math.max(w / 2 + 6, Math.min(bx.width - w / 2 - 6, px + (px > bx.width / 2 ? -(w / 2 + 18) : w / 2 + 18)));
+    tip.style.left = cx + 'px';
+    // altura: abaixo das linhas (ou acima, se não couber) no trecho que a caixa cobre, para não esconder a evolução
+    const hh = tip.offsetHeight, topo = r.top - bx.top, x0 = cx - w / 2 - 12, x1 = cx + w / 2 + 12;
+    let yMin = Infinity, yMax = -Infinity;
+    for (let q = G.r0; q <= G.r1; q++) {
+      const xq = r.left - bx.left + G.X(q) * k; if (xq < x0 || xq > x1) continue;
+      LIN.forEach(l => { if (l.v[q] == null) return; const y = topo + G.Y(l.v[q]) * k; yMin = Math.min(yMin, y); yMax = Math.max(yMax, y); });
+    }
+    const piso = topo + G.Y(0) * k, teto = topo + 4;
+    let y = topo + 40 * k;
+    if (isFinite(yMax)) { if (yMax + 16 + hh <= piso) y = yMax + 16; else if (yMin - 16 - hh >= teto) y = yMin - 16 - hh; else y = yMax + 16; }                    // sem espaço livre: fica abaixo das linhas, mesmo passando do eixo
+    tip.style.top = y + 'px';
   }
 
   /* ── contas por posto num intervalo de dias, usadas na tabela da superintendência e no quadro do posto ── */
