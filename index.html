@@ -622,6 +622,15 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
 #evTip .tdia span{flex-basis:100%;font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;opacity:.8}
 #evTip .tdia b{display:inline;font-size:20px;font-weight:900;line-height:1.2;padding:0}
 #evTip .tdia small{font-size:12px;opacity:.9}
+
+body.alertas #per{display:none}
+.alsupn{display:block;font-size:11.5px;color:var(--muted);font-weight:600;margin-top:1px}
+.alpos{display:inline-grid;place-items:center;min-width:22px;height:22px;margin-right:8px;border-radius:6px;background:var(--soft);color:var(--muted);font-size:12px;font-weight:800;vertical-align:1px}
+.al-dia .alicone{font-size:13px}
+.alnome .alsupn{margin-left:0;font-size:11.5px}
+
+.altit3{margin:22px 0 10px;font-size:18px;font-weight:900;color:var(--ink)}
+.altit3:empty{display:none}
 </style>
 </head>
 <body class="aguardando">
@@ -665,6 +674,8 @@ table.alsem tr.vmelhor td:first-child{box-shadow:inset 4px 0 0 var(--g4)}
         <select id="alSup"><option value="">Todas</option></select>
       </label>
     </div>
+    <div id="alSups"></div>
+    <h3 class="altit3" id="alTit3"></h3>
     <div class="altipos" id="alTipos" role="group" aria-label="Tipo de alerta"></div>
     <section class="panel alsab" id="alSab" hidden>
       <div class="alsabnum"><p class="rsk" id="alSabTit">Sábados</p><p class="rsnum" id="alSabNum"></p></div>
@@ -2881,12 +2892,13 @@ function caixaBusca(raiz, aoEscolher) {
   addEventListener('resize', () => { const w = $('evMapa').clientWidth; if (visivel() && w && Math.abs(w - largMapa) > 8) { largMapa = w; mapaCalor(); } });
 })();
 
-/* ── aba Alertas: primeiro as superintendências entre si; clicando numa, os postos dela entre si ──
-   Duas leituras em cada nível:
-   1. Últimos 7 dias contra as 3 semanas anteriores: todos, do que mais piorou para o que mais melhorou,
-      com destaque para quem mudou de patamar (deteccao.js, detVirada).
-   2. Dias fora do padrão (detDias), juntando dias seguidos em um período.
-   3. Peso maior que o tamanho: a fatia dos erros do grupo bem maior que a fatia das coletas, e não por acaso. */
+/* ── aba Alertas: só a semana atual, para ação dos chefes de Atendimento ──
+   A janela é fixa: da segunda-feira até o último dia da base (com a base atualizada na segunda com os dados de sábado,
+   é a semana que acabou). Se a semana em andamento ainda tem menos de 3 dias com coleta, vale a semana fechada anterior.
+   Três listas de postos, no Estado inteiro ou numa superintendência:
+   1. Top 20 pioras: a taxa da semana contra a das 3 semanas anteriores.
+   2. Top 10 maiores pesos: fatia dos erros da superintendência bem maior que a fatia das coletas, na semana.
+   3. Top 10 fora da curva: dias da semana com taxa muito acima do normal do próprio posto (detDias). */
 (function () {
   const $ = id => document.getElementById(id);
   const nf = n => Math.round(n).toLocaleString('pt-BR');
@@ -2916,54 +2928,52 @@ function caixaBusca(raiz, aoEscolher) {
     if (!FILTRO) return [...new Set(ALL.postos.map(p => p.sup))].map(n => ({k: 's:' + n, nome: n, tipo: 'sup', S: evSerie(idsDaSup(n))}));
     return idsDaSup(FILTRO).map(i => ({k: 'p:' + i, i, nome: tidy(ALL.postos[i].nome), tipo: 'posto', S: evSerie([i])}));
   }
-  // últimos 7 dias contra as 3 semanas antes, para todos (a virada marca quem mudou de patamar)
-  function semana(e, fim) {
-    const a = fim - DET.JANELA + 1, b0 = Math.max(0, a - DET.ANTES);
-    let rn = 0, rk = 0, bn = 0, bk = 0;
-    for (let d = Math.max(0, a); d <= fim; d++) { rn += e.S.col[d]; rk += e.S.sem[d]; }
-    for (let d = b0; d < a; d++) { bn += e.S.col[d]; bk += e.S.sem[d]; }
-    const v = detVirada(e.S, fim, e.tipo);
-    return {a: Math.max(0, a), fim, b0, rn, rk, bn, bk, r1: rn ? rk / rn : null, r0: bn ? bk / bn : null, v};
+  // a semana dos alertas
+  function semanaAlerta() {
+    let f = faixa(ALL, 'semAtual'), n = 0;
+    for (let d = f[0]; d <= f[1]; d++) if (ALL.eCol[d]) n++;
+    if (n < 3) f = faixa(ALL, 'sem');
+    return f;
   }
-  // dias fora do padrão; dias seguidos (pulando os dias sem coleta) viram um período
-  function periodos(e, f) {
-    const dias = detDias(e.S, f, e.tipo).sort((x, y) => x.d - y.d), out = [];
-    dias.forEach(x => {
-      const ult = out[out.length - 1];
-      let seguido = false;
-      if (ult) { seguido = true; for (let d = ult.b + 1; d < x.d; d++) if (e.S.col[d]) { seguido = false; break; } }
-      if (seguido) { ult.b = x.d; ult.dias.push(x); } else out.push({a: x.d, b: x.d, dias: [x]});
-    });
-    out.forEach(p => {
-      p.n = p.dias.reduce((s, x) => s + x.n, 0); p.k = p.dias.reduce((s, x) => s + x.k, 0);
-      p.r0 = p.dias[0].r0; p.exc = p.dias.reduce((s, x) => s + x.exc, 0);
-    });
-    return out;
-  }
+  const postosDoFiltro = () => (FILTRO ? idsDaSup(FILTRO) : ALL.postos.map((p, i) => i)).map(i => ({k: 'p:' + i, i, nome: tidy(ALL.postos[i].nome), sup: ALL.postos[i].sup, tipo: 'posto', S: evSerie([i])}));
+  const soma = (S, a, b) => { let c = 0, s = 0; for (let d = Math.max(0, a); d <= b; d++) { c += S.col[d]; s += S.sem[d]; } return {c, s, tx: c ? s / c : null}; };
 
-  // peso maior que o tamanho: no período, a fatia de coletas sem RENACH passa de 1,2 vez a fatia de coletas,
-  // com volume mínimo e chance de acaso menor que 1 em 100 (contra a taxa do resto do grupo)
-  const PESO = {razao: 1.2, posto: 30, sup: 200, p: .01};
-  function pesos(E, f) {
-    const L = E.map(e => { let n = 0, k = 0; for (let d = f[0]; d <= f[1]; d++) { n += e.S.col[d]; k += e.S.sem[d]; } return {e, n, k}; });
-    const N = L.reduce((a, x) => a + x.n, 0), K = L.reduce((a, x) => a + x.k, 0);
-    if (!N || !K) return [];
-    return L.filter(x => {
-      if (x.n < PESO[x.e.tipo] || N - x.n <= 0) return false;
-      x.fc = x.n / N; x.fe = x.k / K; x.vz = x.fe / x.fc; x.exc = x.k - x.n * K / N;
-      return x.vz >= PESO.razao && caudaBin(x.k, x.n, (K - x.k) / (N - x.n)) < PESO.p;
-    }).sort((a, b) => b.exc - a.exc);
+  // 1. pioras: a semana contra as 3 semanas antes dela; entra posto com pelo menos 10 coletas na semana e 20 antes
+  const PIORA = {rn: 10, bn: 20};
+  function pioras(E, f) {
+    return E.map(e => {
+      const w = soma(e.S, f[0], f[1]), b = soma(e.S, f[0] - DET.ANTES, f[0] - 1);
+      if (w.c < PIORA.rn || b.c < PIORA.bn) return null;
+      const dif = w.tx - b.tx, pp = (w.s + b.s) / (w.c + b.c), se = Math.sqrt(pp * (1 - pp) * (1 / w.c + 1 / b.c)) || 1;
+      return {e, w, b, dif, conf: dif >= DET.posto.virada.dif && dif / se >= DET.posto.virada.z};
+    }).filter(x => x && x.dif > .0005).sort((a, b) => b.dif - a.dif || b.w.c - a.w.c).slice(0, 20);
   }
-  function cardPeso(x, grupo) {
-    return `<article class="al al-peso" tabindex="0" data-k="${h(x.e.k)}">
-      <span class="alvz">${n1(x.vz).replace(/,0$/, '')}×</span>
-      <div class="altexto"><p class="alnome"><b>${h(x.e.nome)}</b>${seloContato(x.e)}</p><p class="alexc">+${nf(x.exc)} sem RENACH acima da média ${grupo}</p></div>
-        <div class="pfat alfat">
-          <div class="pft"><b>${pf(x.fc)}</b><span>das coletas ${grupo}</span></div>
-          <i class="pfseta" aria-hidden="true">→</i>
-          <div class="pft err" style="--cv:${css('--g1')}"><b>${pf(x.fe)}</b><span>das coletas sem RENACH ${grupo}</span></div>
-        </div>
-    </article>`;
+  // 2. pesos: dentro da própria superintendência, na semana; fatia dos erros pelo menos 1,2 vez a das coletas e chance de acaso menor que 1 em 100
+  const PESO = {razao: 1.2, n: 15, p: .01};
+  function pesos(E, f) {
+    const porSup = {};
+    ALL.postos.forEach((p, i) => { const g = porSup[p.sup] || (porSup[p.sup] = {N: 0, K: 0}); const x = soma(evSerie([i]), f[0], f[1]); g.N += x.c; g.K += x.s; });
+    return E.map(e => {
+      const x = soma(e.S, f[0], f[1]), g = porSup[e.sup];
+      if (x.c < PESO.n || !g.K || g.N - x.c <= 0) return null;
+      const fc = x.c / g.N, fe = x.s / g.K, vz = fe / fc;
+      if (vz < PESO.razao || caudaBin(x.s, x.c, (g.K - x.s) / (g.N - x.c)) >= PESO.p) return null;
+      return {e, n: x.c, k: x.s, fc, fe, vz, exc: x.s - x.c * g.K / g.N};
+    }).filter(Boolean).sort((a, b) => b.exc - a.exc).slice(0, 10);
+  }
+  // 3. fora da curva: dias seguidos viram um período; a ordem é pelas coletas sem RENACH acima do normal
+  function foraDaCurva(E, f) {
+    const P = [];
+    E.forEach(e => {
+      const dias = detDias(e.S, f, 'posto').sort((x, y) => x.d - y.d), out = [];
+      dias.forEach(x => {
+        const ult = out[out.length - 1]; let seguido = false;
+        if (ult) { seguido = true; for (let d = ult.b + 1; d < x.d; d++) if (e.S.col[d]) { seguido = false; break; } }
+        if (seguido) { ult.b = x.d; ult.dias.push(x); } else out.push({a: x.d, b: x.d, dias: [x]});
+      });
+      out.forEach(p => { p.n = p.dias.reduce((s, x) => s + x.n, 0); p.k = p.dias.reduce((s, x) => s + x.k, 0); p.r0 = p.dias[0].r0; p.exc = p.dias.reduce((s, x) => s + x.exc, 0); P.push({e, p}); });
+    });
+    return P.sort((a, b) => b.p.exc - a.p.exc).slice(0, 10);
   }
 
   /* ── as últimas 4 semanas em barras: a cor é a taxa do dia; marco (Carta Turbo) em traço ── */
@@ -2982,32 +2992,60 @@ function caixaBusca(raiz, aoEscolher) {
     return o + '</svg>';
   }
 
-  function tabelaSemana(L, f) {
-    const ok = L.filter(x => x.w.rn >= (x.e.tipo === 'sup' ? 20 : 5) && x.w.bn >= (x.e.tipo === 'sup' ? 40 : 10));
-    const fora = L.length - ok.length;
-    ok.sort((a, b) => (b.w.r1 - b.w.r0) - (a.w.r1 - a.w.r0) || b.w.rn - a.w.rn);
-    const maxD = Math.max(.05, ...ok.map(x => Math.abs(x.w.r1 - x.w.r0)));
-    const linhas = ok.map(x => {
-      const w = x.w, dif = w.r1 - w.r0, sobe = dif > .0005, desce = dif < -.0005;
-      const chip = w.v ? `<span class="alchip ${w.v.piorou ? 'pior' : 'melhor'}" title="A diferença é grande e o volume da semana mostra que não é acaso">${w.v.piorou ? 'piora confirmada' : 'melhora confirmada'}</span>` : '';
-      return `<tr tabindex="0" data-k="${h(x.e.k)}" class="${w.v ? (w.v.piorou ? 'vpior' : 'vmelhor') : ''}">
-        <td class="l"><span class="nm">${h(x.e.nome)}</span>${chip}${seloContato(x.e)}</td>
-        <td>${pf(w.r0)} <small>${nf(w.bk)} de ${nf(w.bn)}</small></td>
-        <td><b style="color:${corTaxa(w.r1)}">${pf(w.r1)}</b> <small>${nf(w.rk)} de ${nf(w.rn)}</small></td>
-        <td><span class="varc"><b class="${sobe ? 'ruim' : desce ? 'bom' : ''}">${sobe ? '▲ +' : desce ? '▼ −' : ''}${n1(Math.abs(dif * 100))}</b><span class="var"><i style="${dif >= 0 ? 'left:50%' : 'right:50%'};width:${(Math.abs(dif) / maxD * 50).toFixed(1)}%;background:${dif > 0 ? css('--g1') : css('--g4')}"></i></span></span></td>
-        <td>${barras(x.e.S, f[1], {faixa: [w.a, w.fim]})}</td>
+  const supTxt = e => FILTRO ? '' : `<span class="alsupn">${h(e.sup)}</span>`;
+  function tabelaPioras(L, f) {
+    const maxD = Math.max(.05, ...L.map(x => x.dif));
+    const linhas = L.map((x, k) => `<tr tabindex="0" data-k="${h(x.e.k)}" class="${x.conf ? 'vpior' : ''}">
+        <td class="l"><span class="alpos">${k + 1}</span><span class="nm">${h(x.e.nome)}</span>${x.conf ? '<span class="alchip pior" title="A diferença é grande e o volume mostra que não é acaso">piora confirmada</span>' : ''}${seloContato(x.e)}${supTxt(x.e)}</td>
+        <td>${pf(x.b.tx)} <small>${nf(x.b.s)} de ${nf(x.b.c)}</small></td>
+        <td><b style="color:${corTaxa(x.w.tx)}">${pf(x.w.tx)}</b> <small>${nf(x.w.s)} de ${nf(x.w.c)}</small></td>
+        <td><span class="varc"><b class="ruim">▲ +${n1(x.dif * 100)}</b><span class="var"><i style="left:50%;width:${(x.dif / maxD * 50).toFixed(1)}%;background:${css('--g1')}"></i></span></span></td>
+        <td>${barras(x.e.S, f[1], {faixa: [f[0], f[1]]})}</td>
+      </tr>`).join('');
+    return `<div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">Posto</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Esta semana</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div>`;
+  }
+  // visão do coordenador (filtro em "Todas"): as superintendências na mesma semana, contra as 3 semanas antes
+  function tabelaSups(f) {
+    const R = DET.sup.virada;
+    const L = [...new Set(ALL.postos.map(p => p.sup))].map(n => {
+      const e = {k: 's:' + n, nome: n, tipo: 'sup', S: evSerie(idsDaSup(n))}, w = soma(e.S, f[0], f[1]), b = soma(e.S, f[0] - DET.ANTES, f[0] - 1);
+      if (w.c < 20 || b.c < 40) return null;
+      const dif = w.tx - b.tx, pp = (w.s + b.s) / (w.c + b.c), se = Math.sqrt(pp * (1 - pp) * (1 / w.c + 1 / b.c)) || 1;
+      return {e, w, b, dif, conf: Math.abs(dif) >= R.dif && Math.abs(dif / se) >= R.z};
+    }).filter(Boolean).sort((a, b) => b.dif - a.dif || b.w.c - a.w.c);
+    const maxD = Math.max(.05, ...L.map(x => Math.abs(x.dif)));
+    const linhas = L.map(x => {
+      const sobe = x.dif > .0005, desce = x.dif < -.0005;
+      return `<tr tabindex="0" data-sup="${h(x.e.nome)}" class="${x.conf ? (x.dif > 0 ? 'vpior' : 'vmelhor') : ''}">
+        <td class="l"><span class="nm">${h(x.e.nome)}</span>${x.conf ? `<span class="alchip ${x.dif > 0 ? 'pior' : 'melhor'}" title="A diferença é grande e o volume mostra que não é acaso">${x.dif > 0 ? 'piora confirmada' : 'melhora confirmada'}</span>` : ''}${seloContato(x.e)}</td>
+        <td>${pf(x.b.tx)} <small>${nf(x.b.s)} de ${nf(x.b.c)}</small></td>
+        <td><b style="color:${corTaxa(x.w.tx)}">${pf(x.w.tx)}</b> <small>${nf(x.w.s)} de ${nf(x.w.c)}</small></td>
+        <td><span class="varc"><b class="${sobe ? 'ruim' : desce ? 'bom' : ''}">${sobe ? '▲ +' : desce ? '▼ −' : ''}${n1(Math.abs(x.dif * 100))}</b><span class="var"><i style="${x.dif >= 0 ? 'left:50%' : 'right:50%'};width:${(Math.abs(x.dif) / maxD * 50).toFixed(1)}%;background:${x.dif > 0 ? css('--g1') : css('--g4')}"></i></span></span></td>
+        <td>${barras(x.e.S, f[1], {faixa: [f[0], f[1]]})}</td>
       </tr>`;
     }).join('');
-    return `<div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">${FILTRO ? 'Posto' : 'Superintendência'}</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Últimos 7 dias</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div>` +
-      (fora ? `<p class="hint alnota">${nf(fora)} ${fora === 1 ? (FILTRO ? 'posto ficou' : 'superintendência ficou') : (FILTRO ? 'postos ficaram' : 'superintendências ficaram')} de fora por ter poucas coletas para comparar.</p>` : '');
+    return `<section class="algrupo"><h3>Superintendências <small>taxa desta semana contra a das 3 semanas anteriores, da que mais piorou para a que mais melhorou; clique em uma para ver os postos dela</small></h3>
+      <div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">Superintendência</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Esta semana</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div></section>`;
   }
-  function cardPeriodo(e, p) {
+  function cardPeriodo(e, p, k) {
     const um = p.a === p.b, quandoTxt = um ? quando(p.a) : `${quando(p.a)} a ${quando(p.b)}`;
     return `<article class="al al-dia" tabindex="0" data-k="${h(e.k)}">
-      <span class="alicone" aria-hidden="true">▲</span>
-      <div class="altexto"><p class="alnome"><b>${h(e.nome)}</b>${um ? '' : `<span class="alpasso">período de ${p.dias.length} dias</span>`}${seloContato(e)}</p>
-        <p><b>${quandoTxt}</b>: ${nf(p.k)} de ${nf(p.n)} coletas sem RENACH (<b style="color:${corTaxa(p.k / p.n)}">${pf(p.k / p.n)}</b>). O normal ${e.tipo === 'posto' ? 'do posto' : 'da superintendência'} é ${pf(p.r0)}.</p></div>
+      <span class="alicone" aria-hidden="true">${k + 1}</span>
+      <div class="altexto"><p class="alnome"><b>${h(e.nome)}</b>${um ? '' : `<span class="alpasso">período de ${p.dias.length} dias</span>`}${seloContato(e)}${supTxt(e)}</p>
+        <p><b>${quandoTxt}</b>: ${nf(p.k)} de ${nf(p.n)} coletas sem RENACH (<b style="color:${corTaxa(p.k / p.n)}">${pf(p.k / p.n)}</b>). O normal do posto é ${pf(p.r0)}.</p></div>
       ${barras(e.S, Math.min(ALL.N - 1, p.b + 7), {dias: [p.a, p.b]})}
+    </article>`;
+  }
+  function cardPeso(x, k) {
+    const g = 'de ' + x.e.sup;
+    return `<article class="al al-peso" tabindex="0" data-k="${h(x.e.k)}">
+      <span class="alvz">${n1(x.vz).replace(/,0$/, '')}×</span>
+      <div class="altexto"><p class="alnome"><b>${k + 1}. ${h(x.e.nome)}</b>${seloContato(x.e)}${supTxt(x.e)}</p><p class="alexc">+${nf(x.exc)} sem RENACH acima da média ${h(g)} na semana</p></div>
+        <div class="pfat alfat">
+          <div class="pft"><b>${pf(x.fc)}</b><span>das coletas ${h(g)}</span></div>
+          <i class="pfseta" aria-hidden="true">→</i>
+          <div class="pft err" style="--cv:${css('--g1')}"><b>${pf(x.fe)}</b><span>das coletas sem RENACH ${h(g)}</span></div>
+        </div>
     </article>`;
   }
 
@@ -3015,9 +3053,10 @@ function caixaBusca(raiz, aoEscolher) {
     const sel = $('alSup'); if (sel.options.length > 1) return;
     [...new Set(ALL.postos.map(p => p.sup))].sort((a, b) => a.localeCompare(b, 'pt-BR')).forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; sel.append(o); });
   }
-  window.contarAlertas = function () {               // o número na aba: postos fora do comum no período, no Estado inteiro
+  let VISTA = 'pioras';
+  window.contarAlertas = function () {               // o número na aba: postos fora da curva na semana, no Estado inteiro
     if (!ALL) return;
-    const f = faixa(ALL, PERIODO), b = $('alBadge');
+    const f = semanaAlerta(), b = $('alBadge');
     const n = ALL.postos.filter((p, i) => detDias(evSerie([i]), f, 'posto').length).length;
     b.hidden = !n; b.textContent = n;
   };
@@ -3025,38 +3064,40 @@ function caixaBusca(raiz, aoEscolher) {
     if (!ALL) return;
     preencherFiltro();
     $('alSup').value = FILTRO;
-    const f = faixa(ALL, PERIODO), E = entidades();
-    const L = E.map(e => ({e, w: semana(e, f[1]), p: periodos(e, f)}));
-    $('alTit').textContent = FILTRO ? `${FILTRO}: os postos entre si` : 'As superintendências entre si';
-    $('alSub').innerHTML = FILTRO ? 'Cada posto comparado com ele mesmo. Clique em um posto para abrir na Evolução.' : 'Cada superintendência comparada com ela mesma. Clique em uma para ver os postos dela.';
-    $('alVolta').hidden = !FILTRO;
-    $('alTipos').innerHTML = ''; $('alSab').hidden = true;
-    const grupo = FILTRO ? 'de ' + FILTRO : 'do Estado', P = [];
-    L.forEach(x => x.p.forEach(p => P.push({e: x.e, p})));
-    P.sort((a, b) => b.p.b - a.p.b || b.p.exc - a.p.exc);
-    const conta = n => `<span class="alconta${n ? '' : ' zero'}">${nf(n)}</span>`;
-    const W = pesos(E, f);
-    let o = `<section class="algrupo"><h3>Últimos 7 dias contra as 3 semanas anteriores <small>${dataCurta(ALL.d0 + Math.max(0, f[1] - 6))} a ${dataCurta(ALL.d0 + f[1])}; do que mais piorou para o que mais melhorou</small></h3>${tabelaSemana(L, f)}</section>`;
-    if (FILTRO) o += `<section class="algrupo"><h3>${conta(P.length)}Fora do comum <small>dias em que a taxa do posto disparou acima do normal dele; dias seguidos viram um período</small></h3>` +
-      (P.length ? P.map(x => cardPeriodo(x.e, x.p)).join('') : `<p class="alvazio">Nenhum posto de ${h(FILTRO)} fora do comum no período escolhido.</p>`) + '</section>';
-    o += `<section class="algrupo"><h3>${conta(W.length)}Pesam mais do que o tamanho</h3>` +
-      (W.length ? W.map(x => cardPeso(x, grupo)).join('') : `<p class="alvazio">Nenhum${FILTRO ? ' posto' : 'a superintendência'} pesa mais do que o tamanho no período escolhido.</p>`) + '</section>';
+    const f = semanaAlerta(), E = postosDoFiltro();
+    const A = {pioras: pioras(E, f), pesos: pesos(E, f), fora: foraDaCurva(E, f)};
+    const ondeTxt = FILTRO ? 'em ' + FILTRO : 'no Estado';
+    $('alTit').textContent = `Alertas da semana: ${dataCurta(ALL.d0 + f[0])} a ${dataCurta(ALL.d0 + f[1])}`;
+    $('alSub').innerHTML = `Postos ${h(ondeTxt)}. Só entra o que aconteceu nesta semana. Clique em um posto para abrir na Evolução.`;
+    $('alVolta').hidden = !FILTRO; $('alSab').hidden = true;
+    const T = [['pioras', 'Top 20 pioras'], ['pesos', 'Top 10 maiores pesos'], ['fora', 'Top 10 fora da curva']];
+    $('alTipos').innerHTML = T.map(([k, r]) => `<button type="button" data-v="${k}" aria-pressed="${VISTA === k}">${r} <b>${nf(A[k].length)}</b></button>`).join('');
+    let o;
+    if (VISTA === 'pioras') o = `<section class="algrupo"><h3>Postos que mais pioraram ${h(ondeTxt)} <small>taxa desta semana contra a das 3 semanas anteriores; entra posto com pelo menos ${PIORA.rn} coletas na semana</small></h3>` +
+      (A.pioras.length ? tabelaPioras(A.pioras, f) : `<p class="alvazio">Nenhum posto ${h(ondeTxt)} piorou nesta semana.</p>`) + '</section>';
+    else if (VISTA === 'pesos') o = `<section class="algrupo"><h3>Postos que mais pesam na própria superintendência <small>fatia das coletas sem RENACH da superintendência bem maior que a fatia das coletas, nesta semana</small></h3>` +
+      (A.pesos.length ? A.pesos.map(cardPeso).join('') : `<p class="alvazio">Nenhum posto ${h(ondeTxt)} pesa mais do que o tamanho nesta semana.</p>`) + '</section>';
+    else o = `<section class="algrupo"><h3>Dias fora da curva <small>dias desta semana em que a taxa do posto disparou acima do normal dele; dias seguidos viram um período</small></h3>` +
+      (A.fora.length ? A.fora.map((x, k) => cardPeriodo(x.e, x.p, k)).join('') : `<p class="alvazio">Nenhum posto ${h(ondeTxt)} saiu da curva nesta semana.</p>`) + '</section>';
+    $('alSups').innerHTML = FILTRO ? '' : tabelaSups(f);
+    $('alTit3').textContent = FILTRO ? '' : 'Postos';
     $('alLista').innerHTML = o;
-    $('alComo').innerHTML = '<b>Como ler.</b> Cada um é comparado com ele mesmo, na medida dele. ' +
-      `<b>Fora do comum</b>: dia em que a taxa ficou bem acima do normal (${Math.round(DET.posto.dia.dif * 100)} pontos para posto, com pelo menos ${DET.posto.dia.n} coletas; ${Math.round(DET.sup.dia.dif * 100)} pontos para superintendência), com chance menor que 1 em 100 de ser acaso. ` +
-      `<b>Pesam mais do que o tamanho</b>: a fatia dos erros passa de ${n1(PESO.razao)} vez a fatia das coletas, com pelo menos ${PESO.posto} coletas (posto) ou ${PESO.sup} (superintendência) e chance menor que 1 em 100 de ser acaso; a ordem é pelos erros acima da média. ` +
-      `<b>Piora ou melhora confirmada</b>: a taxa dos últimos 7 dias ficou ${Math.round(DET.posto.virada.dif * 100)} pontos ou mais (posto) ou ${Math.round(DET.sup.virada.dif * 100)} ou mais (superintendência) longe da taxa das 3 semanas anteriores, com volume que mostra que não é acaso. ` +
+    $('alComo').innerHTML = '<b>Como ler.</b> A semana vai da segunda-feira até o último dia da base; se ela ainda tem menos de 3 dias com coleta, vale a semana anterior inteira. ' +
+      `<b>Superintendências</b>: entra quem tem pelo menos 20 coletas na semana e 40 nas 3 semanas antes; <b>confirmada</b> quando a diferença passa de ${Math.round(DET.sup.virada.dif * 100)} pontos e o volume mostra que não é acaso. ` +
+      `<b>Pioras</b>: taxa da semana contra a das 3 semanas anteriores, com pelo menos ${PIORA.rn} coletas na semana e ${PIORA.bn} antes; <b>piora confirmada</b> quando a diferença passa de ${Math.round(DET.posto.virada.dif * 100)} pontos e o volume mostra que não é acaso. ` +
+      `<b>Maiores pesos</b>: a fatia dos erros da superintendência passa de ${n1(PESO.razao)} vez a fatia das coletas, com pelo menos ${PESO.n} coletas na semana e chance menor que 1 em 100 de ser acaso; a ordem é pelos erros acima da média. ` +
+      `<b>Fora da curva</b>: dia com taxa bem acima do normal do posto (${Math.round(DET.posto.dia.dif * 100)} pontos ou mais, com pelo menos ${DET.posto.dia.n} coletas) e chance menor que 1 em 100 de ser acaso. ` +
       MARCOS.map(m => `O traço pontilhado nas barras marca ${dataCurta(nDia(m.data))}: ${h(m.nome)}.`).join(' ');
   };
   const visivel = () => ABA === 'a' && !document.body.classList.contains('atualizando');
-  const entrar = k => {
-    if (k[0] === 's') { FILTRO = k.slice(2); window.desenharAlertas(); $('tabAl').scrollIntoView({block: 'start', behavior: 'smooth'}); }
-    else verEvolucao(k);
-  };
   $('alSup').addEventListener('change', e => { FILTRO = e.target.value; window.desenharAlertas(); });
   $('alVolta').addEventListener('click', () => { FILTRO = ''; window.desenharAlertas(); });
-  $('alLista').addEventListener('click', e => { const el = e.target.closest('[data-k]'); if (el) entrar(el.dataset.k); });
-  $('alLista').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset && e.target.dataset.k) { e.preventDefault(); entrar(e.target.dataset.k); } });
+  $('alTipos').addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (b) { VISTA = b.dataset.v; window.desenharAlertas(); } });
+  const abrirSup = n => { FILTRO = n; window.desenharAlertas(); $('tabAl').scrollIntoView({block: 'start', behavior: 'smooth'}); };
+  $('alSups').addEventListener('click', e => { const s = e.target.closest('[data-sup]'); if (s) abrirSup(s.dataset.sup); });
+  $('alSups').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.dataset && e.target.dataset.sup) { e.preventDefault(); abrirSup(e.target.dataset.sup); } });
+  $('alLista').addEventListener('click', e => { const s = e.target.closest('[data-sup]'); if (s) { abrirSup(s.dataset.sup); return; } const el = e.target.closest('[data-k]'); if (el) verEvolucao(el.dataset.k); });
+  $('alLista').addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const d = e.target.dataset || {}; if (d.sup) { e.preventDefault(); abrirSup(d.sup); } else if (d.k) { e.preventDefault(); verEvolucao(d.k); } });
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (visivel()) window.desenharAlertas(); });
 })();
 
