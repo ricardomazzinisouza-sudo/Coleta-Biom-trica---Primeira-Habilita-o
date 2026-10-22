@@ -2946,26 +2946,29 @@ function caixaBusca(raiz, aoEscolher) {
   const soma = (S, a, b) => { let c = 0, s = 0; for (let d = Math.max(0, a); d <= b; d++) { c += S.col[d]; s += S.sem[d]; } return {c, s, tx: c ? s / c : null}; };
 
   // 1. pioras: a semana contra as 3 semanas antes dela; entra posto com pelo menos 10 coletas na semana e 20 antes
-  const PIORA = {rn: 10, bn: 20};
+  const PIORA = {rn: 10, bn: 20, dif: .05, k: 3, tx: .15};   // alerta: acima de 15% na semana, subiu 5 pontos ou mais, com pelo menos 3 coletas sem RENACH
   function pioras(E, f) {
     return E.map(e => {
       const w = soma(e.S, f[0], f[1]), b = soma(e.S, f[0] - DET.ANTES, f[0] - 1);
       if (w.c < PIORA.rn || b.c < PIORA.bn) return null;
       const dif = w.tx - b.tx, pp = (w.s + b.s) / (w.c + b.c), se = Math.sqrt(pp * (1 - pp) * (1 / w.c + 1 / b.c)) || 1;
       return {e, w, b, dif, conf: dif >= DET.posto.virada.dif && dif / se >= DET.posto.virada.z};
-    }).filter(x => x && x.dif > .0005 && Math.round(x.w.tx * 1000) / 1000 > .15).sort((a, b) => b.dif - a.dif || b.w.c - a.w.c);   // só quem já está acima de 15% na semana
+    }).filter(x => x && x.dif >= PIORA.dif - 1e-9 && x.w.s >= PIORA.k && Math.round(x.w.tx * 1000) / 1000 > PIORA.tx).sort((a, b) => b.dif - a.dif || b.w.c - a.w.c);
   }
   // 2. pesos: dentro da própria superintendência, na semana; fatia dos erros pelo menos 1,2 vez a das coletas e chance de acaso menor que 1 em 100
-  const PESO = {razao: 1.2, n: 15, p: .01};
+  // só posto que prejudica de verdade: acima de 15% na semana (não é referência), com pelo menos 5 coletas sem RENACH
+  // e 3 acima da média da superintendência; a taxa do resto da superintendência tem um piso, para um erro solitário
+  // numa superintendência sem erros não virar "100% dos erros"
+  const PESO = {razao: 1.2, n: 15, k: 5, exc: 3, tx: .15, p: .01};
   function pesos(E, f) {
     const porSup = {};
     ALL.postos.forEach((p, i) => { const g = porSup[p.sup] || (porSup[p.sup] = {N: 0, K: 0}); const x = soma(evSerie([i]), f[0], f[1]); g.N += x.c; g.K += x.s; });
     return E.map(e => {
       const x = soma(e.S, f[0], f[1]), g = porSup[e.sup];
       if (x.c < PESO.n || !g.K || g.N - x.c <= 0) return null;
-      const fc = x.c / g.N, fe = x.s / g.K, vz = fe / fc;
-      if (vz < PESO.razao || caudaBin(x.s, x.c, (g.K - x.s) / (g.N - x.c)) >= PESO.p) return null;
-      return {e, n: x.c, k: x.s, fc, fe, vz, exc: x.s - x.c * g.K / g.N};
+      const fc = x.c / g.N, fe = x.s / g.K, vz = fe / fc, exc = x.s - x.c * g.K / g.N, resto = Math.max((g.K - x.s) / (g.N - x.c), .5 / (g.N - x.c));
+      if (vz < PESO.razao || x.s < PESO.k || exc < PESO.exc || Math.round(x.tx * 1000) / 1000 <= PESO.tx || caudaBin(x.s, x.c, resto) >= PESO.p) return null;
+      return {e, n: x.c, k: x.s, fc, fe, vz, exc};
     }).filter(Boolean).sort((a, b) => b.vz - a.vz || b.exc - a.exc);   // criticidade: quantas vezes a fatia dos erros passa a fatia das coletas
   }
   // 3. fora da curva: dias seguidos viram um período; a ordem é pelas coletas sem RENACH acima do normal
@@ -3113,7 +3116,7 @@ function caixaBusca(raiz, aoEscolher) {
       (A.fora.length ? A.fora.map((x, k) => cardPeriodo(x.e, x.p, k)).join('') : `<p class="alvazio">Nenhum posto ${h(ondeTxt)} saiu da curva nesta semana.</p>`) + '</section>';
     let o;
     if (FILTRO) o = tabelaPostosSup(E, f) + secPesos + secFora;
-    else if (VISTA === 'pioras') o = `<section class="algrupo"><h3>Postos acima de 15% que pioraram ${h(ondeTxt)} <small>taxa da semana contra a das 3 semanas anteriores; entra posto com pelo menos ${PIORA.rn} coletas na semana</small></h3>` +
+    else if (VISTA === 'pioras') o = `<section class="algrupo"><h3>Postos acima de 15% que pioraram ${h(ondeTxt)} <small>subiram ${Math.round(PIORA.dif * 100)} pontos ou mais contra as 3 semanas anteriores</small></h3>` +
       (A.pioras.length ? tabelaPioras(A.pioras, f) : `<p class="alvazio">Nenhum posto ${h(ondeTxt)} acima de 15% piorou nesta semana.</p>`) + '</section>';
     else if (VISTA === 'pesos') o = secPesos;
     else o = secFora;
@@ -3122,8 +3125,8 @@ function caixaBusca(raiz, aoEscolher) {
     $('alLista').innerHTML = o;
     $('alComo').innerHTML = '<b>Como ler.</b> A semana atual vai da segunda-feira até o último dia da base; a última semana é a de segunda a domingo anterior a ela. ' +
       `<b>Superintendências</b>: entra quem tem pelo menos 20 coletas na semana e 40 nas 3 semanas antes; <b>confirmada</b> quando a diferença passa de ${Math.round(DET.sup.virada.dif * 100)} pontos e o volume mostra que não é acaso. ` +
-      `<b>Alertas</b>: postos com taxa acima de 15% na semana que pioraram em relação às 3 semanas anteriores, com pelo menos ${PIORA.rn} coletas na semana e ${PIORA.bn} antes; <b>piora confirmada</b> quando a diferença passa de ${Math.round(DET.posto.virada.dif * 100)} pontos e o volume mostra que não é acaso. ` +
-      `<b>Maiores pesos</b>: a fatia dos erros da superintendência passa de ${n1(PESO.razao)} vez a fatia das coletas, com pelo menos ${PESO.n} coletas na semana e chance menor que 1 em 100 de ser acaso; a ordem é pelo multiplicador: quantas vezes a fatia dos erros passa a fatia das coletas. ` +
+      `<b>Alertas</b>: postos com taxa acima de 15% na semana que subiram ${Math.round(PIORA.dif * 100)} pontos ou mais em relação às 3 semanas anteriores, com pelo menos ${PIORA.rn} coletas e ${PIORA.k} sem RENACH na semana e ${PIORA.bn} coletas antes; <b>piora confirmada</b> quando a diferença passa de ${Math.round(DET.posto.virada.dif * 100)} pontos e o volume mostra que não é acaso. ` +
+      `<b>Maiores pesos</b>: posto acima de 15% na semana cuja fatia dos erros da superintendência passa de ${n1(PESO.razao)} vez a fatia das coletas, com pelo menos ${PESO.n} coletas, ${PESO.k} sem RENACH e ${PESO.exc} acima da média da superintendência, e chance menor que 1 em 100 de ser acaso; a ordem é pelo multiplicador: quantas vezes a fatia dos erros passa a fatia das coletas. ` +
       `<b>Fora da curva</b>: dia com taxa bem acima do normal do posto (${Math.round(DET.posto.dia.dif * 100)} pontos ou mais, com pelo menos ${DET.posto.dia.n} coletas) e chance menor que 1 em 100 de ser acaso. ` +
       MARCOS.map(m => `O traço pontilhado nas barras marca ${dataCurta(nDia(m.data))}: ${h(m.nome)}.`).join(' ');
   };
