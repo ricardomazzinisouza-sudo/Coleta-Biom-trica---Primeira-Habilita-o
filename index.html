@@ -631,6 +631,13 @@ body.alertas #per{display:none}
 
 .altit3{margin:22px 0 10px;font-size:18px;font-weight:900;color:var(--ink)}
 .altit3:empty{display:none}
+
+.alhead{align-items:flex-end}
+.alsemana{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.alsemana button{border:1.5px solid var(--line);background:var(--surface);color:var(--muted);padding:7px 14px;border-radius:9px;font:inherit;font-size:14px;font-weight:800;cursor:pointer;display:grid;text-align:left;line-height:1.2}
+.alsemana button small{font-size:11.5px;font-weight:600;opacity:.85}
+.alsemana button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+@media (max-width:700px){.alsemana{margin-left:0;width:100%}.alsemana button{flex:1}}
 </style>
 </head>
 <body class="aguardando">
@@ -670,6 +677,7 @@ body.alertas #per{display:none}
       <div><button type="button" class="limpar alvolta" id="alVolta" hidden>← Todas as superintendências</button>
         <h2 id="alTit">As superintendências entre si</h2>
         <p class="hint" id="alSub"></p></div>
+      <div class="alsemana" id="alSemana" role="group" aria-label="Semana dos alertas"></div>
       <label class="alfiltro">Superintendência
         <select id="alSup"><option value="">Todas</option></select>
       </label>
@@ -2893,10 +2901,9 @@ function caixaBusca(raiz, aoEscolher) {
 })();
 
 /* ── aba Alertas: só a semana atual, para ação dos chefes de Atendimento ──
-   A janela é fixa: da segunda-feira até o último dia da base (com a base atualizada na segunda com os dados de sábado,
-   é a semana que acabou). Se a semana em andamento ainda tem menos de 3 dias com coleta, vale a semana fechada anterior.
+   A janela é a semana atual (da segunda-feira até o último dia da base) ou, se escolhida, a semana anterior a ela.
    Três listas de postos, no Estado inteiro ou numa superintendência:
-   1. Top 20 pioras: a taxa da semana contra a das 3 semanas anteriores.
+   1. Top 10 pioras: a taxa da semana contra a das 3 semanas anteriores.
    2. Top 10 maiores pesos: fatia dos erros da superintendência bem maior que a fatia das coletas, na semana.
    3. Top 10 fora da curva: dias da semana com taxa muito acima do normal do próprio posto (detDias). */
 (function () {
@@ -2929,11 +2936,11 @@ function caixaBusca(raiz, aoEscolher) {
     return idsDaSup(FILTRO).map(i => ({k: 'p:' + i, i, nome: tidy(ALL.postos[i].nome), tipo: 'posto', S: evSerie([i])}));
   }
   // a semana dos alertas
-  function semanaAlerta() {
-    let f = faixa(ALL, 'semAtual'), n = 0;
-    for (let d = f[0]; d <= f[1]; d++) if (ALL.eCol[d]) n++;
-    if (n < 3) f = faixa(ALL, 'sem');
-    return f;
+  // semana atual: da segunda-feira até o último dia da base; última semana: a de segunda a domingo anterior a ela
+  let SEMANA = 'atual';
+  function semanaAlerta(qual) {
+    const f = faixa(ALL, 'semAtual');
+    return (qual || SEMANA) === 'atual' ? f : [Math.max(0, f[0] - 7), f[0] - 1];
   }
   const postosDoFiltro = () => (FILTRO ? idsDaSup(FILTRO) : ALL.postos.map((p, i) => i)).map(i => ({k: 'p:' + i, i, nome: tidy(ALL.postos[i].nome), sup: ALL.postos[i].sup, tipo: 'posto', S: evSerie([i])}));
   const soma = (S, a, b) => { let c = 0, s = 0; for (let d = Math.max(0, a); d <= b; d++) { c += S.col[d]; s += S.sem[d]; } return {c, s, tx: c ? s / c : null}; };
@@ -2946,7 +2953,7 @@ function caixaBusca(raiz, aoEscolher) {
       if (w.c < PIORA.rn || b.c < PIORA.bn) return null;
       const dif = w.tx - b.tx, pp = (w.s + b.s) / (w.c + b.c), se = Math.sqrt(pp * (1 - pp) * (1 / w.c + 1 / b.c)) || 1;
       return {e, w, b, dif, conf: dif >= DET.posto.virada.dif && dif / se >= DET.posto.virada.z};
-    }).filter(x => x && x.dif > .0005).sort((a, b) => b.dif - a.dif || b.w.c - a.w.c).slice(0, 20);
+    }).filter(x => x && x.dif > .0005).sort((a, b) => b.dif - a.dif || b.w.c - a.w.c).slice(0, 10);
   }
   // 2. pesos: dentro da própria superintendência, na semana; fatia dos erros pelo menos 1,2 vez a das coletas e chance de acaso menor que 1 em 100
   const PESO = {razao: 1.2, n: 15, p: .01};
@@ -3002,7 +3009,7 @@ function caixaBusca(raiz, aoEscolher) {
         <td><span class="varc"><b class="ruim">▲ +${n1(x.dif * 100)}</b><span class="var"><i style="left:50%;width:${(x.dif / maxD * 50).toFixed(1)}%;background:${css('--g1')}"></i></span></span></td>
         <td>${barras(x.e.S, f[1], {faixa: [f[0], f[1]]})}</td>
       </tr>`).join('');
-    return `<div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">Posto</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Esta semana</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div>`;
+    return `<div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">Posto</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Na semana</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div>`;
   }
   // visão do coordenador (filtro em "Todas"): as superintendências na mesma semana, contra as 3 semanas antes
   function tabelaSups(f) {
@@ -3024,8 +3031,8 @@ function caixaBusca(raiz, aoEscolher) {
         <td>${barras(x.e.S, f[1], {faixa: [f[0], f[1]]})}</td>
       </tr>`;
     }).join('');
-    return `<section class="algrupo"><h3>Superintendências <small>taxa desta semana contra a das 3 semanas anteriores, da que mais piorou para a que mais melhorou; clique em uma para ver os postos dela</small></h3>
-      <div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">Superintendência</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Esta semana</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div></section>`;
+    return `<section class="algrupo"><h3>Superintendências <small>taxa da semana contra a das 3 semanas anteriores, da que mais piorou para a que mais melhorou; clique em uma para ver os postos dela</small></h3>
+      <div class="scroll" tabindex="0"><table class="alsem"><thead><tr><th class="l"><button tabindex="-1">Superintendência</button></th><th><button tabindex="-1">3 semanas antes</button></th><th><button tabindex="-1">Na semana</button></th><th><button tabindex="-1">Variação <small>pontos</small></button></th><th><button tabindex="-1">Últimas 4 semanas</button></th></tr></thead><tbody>${linhas}</tbody></table></div></section>`;
   }
   function cardPeriodo(e, p, k) {
     const um = p.a === p.b, quandoTxt = um ? quando(p.a) : `${quando(p.a)} a ${quando(p.b)}`;
@@ -3056,7 +3063,7 @@ function caixaBusca(raiz, aoEscolher) {
   let VISTA = 'pioras';
   window.contarAlertas = function () {               // o número na aba: postos fora da curva na semana, no Estado inteiro
     if (!ALL) return;
-    const f = semanaAlerta(), b = $('alBadge');
+    const f = semanaAlerta('atual'), b = $('alBadge');
     const n = ALL.postos.filter((p, i) => detDias(evSerie([i]), f, 'posto').length).length;
     b.hidden = !n; b.textContent = n;
   };
@@ -3068,12 +3075,14 @@ function caixaBusca(raiz, aoEscolher) {
     const A = {pioras: pioras(E, f), pesos: pesos(E, f), fora: foraDaCurva(E, f)};
     const ondeTxt = FILTRO ? 'em ' + FILTRO : 'no Estado';
     $('alTit').textContent = `Alertas da semana: ${dataCurta(ALL.d0 + f[0])} a ${dataCurta(ALL.d0 + f[1])}`;
+    $('alSemana').innerHTML = [['atual', 'Semana atual', semanaAlerta('atual')], ['anterior', 'Última semana', semanaAlerta('anterior')]]
+      .map(([k, r, g]) => `<button type="button" data-s="${k}" aria-pressed="${SEMANA === k}">${r} <small>${dataCurta(ALL.d0 + g[0])} a ${dataCurta(ALL.d0 + g[1])}</small></button>`).join('');
     $('alSub').innerHTML = `Postos ${h(ondeTxt)}. Só entra o que aconteceu nesta semana. Clique em um posto para abrir na Evolução.`;
     $('alVolta').hidden = !FILTRO; $('alSab').hidden = true;
-    const T = [['pioras', 'Top 20 pioras'], ['pesos', 'Top 10 maiores pesos'], ['fora', 'Top 10 fora da curva']];
+    const T = [['pioras', 'Top 10 pioras'], ['pesos', 'Top 10 maiores pesos'], ['fora', 'Top 10 fora da curva']];
     $('alTipos').innerHTML = T.map(([k, r]) => `<button type="button" data-v="${k}" aria-pressed="${VISTA === k}">${r} <b>${nf(A[k].length)}</b></button>`).join('');
     let o;
-    if (VISTA === 'pioras') o = `<section class="algrupo"><h3>Postos que mais pioraram ${h(ondeTxt)} <small>taxa desta semana contra a das 3 semanas anteriores; entra posto com pelo menos ${PIORA.rn} coletas na semana</small></h3>` +
+    if (VISTA === 'pioras') o = `<section class="algrupo"><h3>Postos que mais pioraram ${h(ondeTxt)} <small>taxa da semana contra a das 3 semanas anteriores; entra posto com pelo menos ${PIORA.rn} coletas na semana</small></h3>` +
       (A.pioras.length ? tabelaPioras(A.pioras, f) : `<p class="alvazio">Nenhum posto ${h(ondeTxt)} piorou nesta semana.</p>`) + '</section>';
     else if (VISTA === 'pesos') o = `<section class="algrupo"><h3>Postos que mais pesam na própria superintendência <small>fatia das coletas sem RENACH da superintendência bem maior que a fatia das coletas, nesta semana</small></h3>` +
       (A.pesos.length ? A.pesos.map(cardPeso).join('') : `<p class="alvazio">Nenhum posto ${h(ondeTxt)} pesa mais do que o tamanho nesta semana.</p>`) + '</section>';
@@ -3082,7 +3091,7 @@ function caixaBusca(raiz, aoEscolher) {
     $('alSups').innerHTML = FILTRO ? '' : tabelaSups(f);
     $('alTit3').textContent = FILTRO ? '' : 'Postos';
     $('alLista').innerHTML = o;
-    $('alComo').innerHTML = '<b>Como ler.</b> A semana vai da segunda-feira até o último dia da base; se ela ainda tem menos de 3 dias com coleta, vale a semana anterior inteira. ' +
+    $('alComo').innerHTML = '<b>Como ler.</b> A semana atual vai da segunda-feira até o último dia da base; a última semana é a de segunda a domingo anterior a ela. ' +
       `<b>Superintendências</b>: entra quem tem pelo menos 20 coletas na semana e 40 nas 3 semanas antes; <b>confirmada</b> quando a diferença passa de ${Math.round(DET.sup.virada.dif * 100)} pontos e o volume mostra que não é acaso. ` +
       `<b>Pioras</b>: taxa da semana contra a das 3 semanas anteriores, com pelo menos ${PIORA.rn} coletas na semana e ${PIORA.bn} antes; <b>piora confirmada</b> quando a diferença passa de ${Math.round(DET.posto.virada.dif * 100)} pontos e o volume mostra que não é acaso. ` +
       `<b>Maiores pesos</b>: a fatia dos erros da superintendência passa de ${n1(PESO.razao)} vez a fatia das coletas, com pelo menos ${PESO.n} coletas na semana e chance menor que 1 em 100 de ser acaso; a ordem é pelos erros acima da média. ` +
@@ -3092,6 +3101,7 @@ function caixaBusca(raiz, aoEscolher) {
   const visivel = () => ABA === 'a' && !document.body.classList.contains('atualizando');
   $('alSup').addEventListener('change', e => { FILTRO = e.target.value; window.desenharAlertas(); });
   $('alVolta').addEventListener('click', () => { FILTRO = ''; window.desenharAlertas(); });
+  $('alSemana').addEventListener('click', e => { const b = e.target.closest('button[data-s]'); if (b) { SEMANA = b.dataset.s; window.desenharAlertas(); } });
   $('alTipos').addEventListener('click', e => { const b = e.target.closest('button[data-v]'); if (b) { VISTA = b.dataset.v; window.desenharAlertas(); } });
   const abrirSup = n => { FILTRO = n; window.desenharAlertas(); $('tabAl').scrollIntoView({block: 'start', behavior: 'smooth'}); };
   $('alSups').addEventListener('click', e => { const s = e.target.closest('[data-sup]'); if (s) abrirSup(s.dataset.sup); });
